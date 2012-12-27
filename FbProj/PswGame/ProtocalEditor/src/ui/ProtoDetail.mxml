@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="690" height="526">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label y="17" left="17" right="17" height="22" backgroundColor="#0FD000" fontSize="16"
+			 text="请求包" verticalAlign="middle"/>
+	<s:DataGrid y="39" left="17" right="17" requestedRowCount="4">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="dataField1" headerText="字段"></s:GridColumn>
+				<s:GridColumn dataField="dataField2" headerText="类型"></s:GridColumn>
+				<s:GridColumn dataField="dataField3" headerText="变量个数"></s:GridColumn>
+				<s:GridColumn dataField="dataField3" headerText="说明"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object dataField1="示例数据" dataField2="示例数据" dataField3="示例数据"></fx:Object>
+		</s:typicalItem>
+		<s:ArrayList>
+			<fx:Object dataField1="数据1" dataField2="数据1" dataField3="数据1"></fx:Object>
+		</s:ArrayList>
+	</s:DataGrid>
+	
+	
+	<s:Label y="168" left="17" right="17" height="22" backgroundColor="#1859FF" fontSize="16"
+			 text="返回包" verticalAlign="middle"/>
+	<s:DataGrid y="190" left="17" right="17" requestedRowCount="4">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="dataField1" headerText="字段"></s:GridColumn>
+				<s:GridColumn dataField="dataField2" headerText="类型"></s:GridColumn>
+				<s:GridColumn dataField="dataField3" headerText="变量个数"></s:GridColumn>
+				<s:GridColumn dataField="dataField3" headerText="说明"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object dataField1="示例数据" dataField2="示例数据" dataField3="示例数据"></fx:Object>
+		</s:typicalItem>
+		<s:ArrayList>
+			<fx:Object dataField1="数据1" dataField2="数据1" dataField3="数据1"></fx:Object>
+		</s:ArrayList>
+	</s:DataGrid>
+	
+	
+	<s:Label y="318" left="17" right="17" height="22" backgroundColor="#FF7272" fontSize="16"
+			 text="错误码" verticalAlign="middle"/>
+	<s:DataGrid y="340" left="17" right="17" requestedRowCount="4">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="dataField1" headerText="字段"></s:GridColumn>
+				<s:GridColumn dataField="dataField2" headerText="类型"></s:GridColumn>
+				<s:GridColumn dataField="dataField3" headerText="变量个数"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object dataField1="示例数据" dataField2="示例数据" dataField3="示例数据"></fx:Object>
+		</s:typicalItem>
+		<s:ArrayList>
+			<fx:Object dataField1="数据1" dataField2="数据1" dataField3="数据1"></fx:Object>
+		</s:ArrayList>
+	</s:DataGrid>
+</s:TitleWindow>

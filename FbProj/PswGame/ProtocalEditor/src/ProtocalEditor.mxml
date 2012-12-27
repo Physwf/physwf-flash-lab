@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:ui="ui.*"
+					   width="1200" height="650">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<ui:SideList y="51" left="1078" width="115" height="575">
+	</ui:SideList>
+	<s:TabBar x="10" y="10" dataProvider="{viewstack1}"/>
+	<mx:ViewStack id="viewstack1" x="10" y="42" width="1036" height="583">
+		<s:NavigatorContent width="100%" height="100%" label="命令">
+			<ui:ProtoOverall x="0" y="0" width="1041" height="583">
+			</ui:ProtoOverall>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="错误码">
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="公用结构体">
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="结构体">
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</s:WindowedApplication>

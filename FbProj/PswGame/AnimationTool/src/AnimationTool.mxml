@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="451" height="179" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import cookie.Cookie;
+			
+			import file.FileTool;
+			
+			private var fileTool:FileTool = new FileTool();
+			
+			private function init():void
+			{
+				open.addEventListener(MouseEvent.CLICK,onOpen);
+				var writeMode:String = Cookie.instance.getWriteMode();
+				if(writeMode == "Jack")
+				{
+					Jack.selected = true;
+				}else 
+				if(writeMode == "Sprite")
+				{
+					Sprite.selected = true;
+				} else
+				if(writeMode == "Elves")
+				{
+					Elves.selected = true;
+				}else
+				{
+					Sprite.selected = true;
+				}
+				
+			}
+			
+			private function onOpen(e:MouseEvent):void
+			{
+				fileTool.read(stage);
+			}
+			
+			public function get mode():String
+			{
+				if(Jack.selected)
+				{
+					return "Jack";
+				}
+				if(Sprite.selected)
+				{
+					return "Sprite";
+				}
+				if(Elves.selected)
+				{
+					return "Elves";
+				}
+				return null;
+			}
+			
+			private function onClick():void
+			{
+				if(Jack.selected)
+				{
+					Cookie.instance.setWriteMode("Jack");
+				}else
+				if(Sprite.selected)
+				{
+					Cookie.instance.setWriteMode("Sprite");
+				}else
+				if(Elves.selected)
+				{
+					Cookie.instance.setWriteMode("Elves");
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Button x="355" y="132" label="打开" id="open"/>
+	<s:Group x="39" y="24" width="364" height="34">
+		<s:RadioButton x="21" y="8" label="Jack" id="Jack" click="onClick()"/>
+		<s:RadioButton x="152" y="8" label="Sprite" id ="Sprite" click="onClick()"/>
+		<s:RadioButton x="299" y="8" label="Elves" id ="Elves" click="onClick()"/>
+	</s:Group>
+</s:WindowedApplication>
