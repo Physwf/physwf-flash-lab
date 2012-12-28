@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="352" height="147" initialize="init()" click="getXML()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import templates.StructTemplate;
+			private var platform_url:String="http://10.1.1.5/su/proto/download.php?project=ultraman_login";
+			private var stuctTemplate:String;
+			private var templateFile:File;
+			private var serverType:String;
+			
+			private function init():void
+			{
+				templateFile = File.applicationDirectory.resolvePath("templates/StructTemplate.txt");
+				function onComplete(e:Event):void
+				{
+					stuctTemplate = templateFile.data.readUTFBytes(templateFile.data.length);
+					trace(stuctTemplate);
+					serverType = "LOGIN"
+				};
+				templateFile.addEventListener(Event.COMPLETE,onComplete);
+				templateFile.load();
+			}
+			
+			private function getXML():void
+			{
+				var urlLoader:URLLoader = new URLLoader();
+				urlLoader.addEventListener(Event.COMPLETE,onXMLLoaded);
+				urlLoader.load(new URLRequest(platform_url));
+			}
+			
+			private function onXMLLoaded(e:Event):void
+			{
+				var proto:XML = XML(e.target.data);
+				var structList:XMLList = proto.struct_list[0].struct;
+				var struct:XML;
+				for(var i:int =0;i<structList.length();++i)
+				{
+					struct = structList[i];
+					StructTemplate.serverType = serverType;
+					var structTemp:StructTemplate = new StructTemplate(struct);
+					structTemp.definition = stuctTemplate;
+					structTemp.getDefinition();
+					
+					var file:File = new File("E:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+structTemp.className+".as");
+					var fs:FileStream = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeUTFBytes(structTemp.definition);
+					fs.close();
+				}
+				
+			}
+		]]>
+	</fx:Script>
+</s:WindowedApplication>
