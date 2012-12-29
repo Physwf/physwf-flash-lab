@@ -51,11 +51,18 @@ package struct
 					break;
 				case MODE_ARRAY:
 					//如果是字符串，不做处理，否则用矢量数组替换原有类型
-					$type = "Vector.<"+$type+">";
+					if(type == FieldStruct.TYPE_CAHR) 
+						$type = "String";
+					else
+						$type = "Vector.<"+$type+">";
 					break;
 				case MODE_VARLIST:
 					//同上
-					$type = "Vector.<"+$type+">";
+					if(type == FieldStruct.TYPE_CAHR) 
+						$type = "String";
+					else
+						$type = "Vector.<"+$type+">";
+					break;
 					break;
 			}
 			return "public var "+name+":"+$type+";";

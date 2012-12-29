@@ -9,9 +9,12 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import struct.ClassStruct;
+			
 			import templates.StructTemplate;
-			private var platform_url:String="http://10.1.1.5/su/proto/download.php?project=ultraman_login";
-			private var stuctTemplate:String;
+//			private var platform_url:String="http://10.1.1.5/su/proto/download.php?project=ultraman_login";
+			private var platform_url:String="C:/Users/Physwf/SkyDrive/文档/ultraman_login_proto.xml";
+			private var classTemplate:String;
 			private var templateFile:File;
 			private var serverType:String;
 			
@@ -20,8 +23,7 @@
 				templateFile = File.applicationDirectory.resolvePath("templates/StructTemplate.txt");
 				function onComplete(e:Event):void
 				{
-					stuctTemplate = templateFile.data.readUTFBytes(templateFile.data.length);
-					trace(stuctTemplate);
+					classTemplate = templateFile.data.readUTFBytes(templateFile.data.length);
 					serverType = "LOGIN"
 				};
 				templateFile.addEventListener(Event.COMPLETE,onComplete);
@@ -44,14 +46,12 @@
 				{
 					struct = structList[i];
 					StructTemplate.serverType = serverType;
-					var structTemp:StructTemplate = new StructTemplate(struct);
-					structTemp.definition = stuctTemplate;
-					structTemp.getDefinition();
-					
-					var file:File = new File("E:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+structTemp.className+".as");
+					var classStruct:ClassStruct = new ClassStruct(struct);
+					classStruct.template = classTemplate;
+					var file:File = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+classStruct.name+".as");
 					var fs:FileStream = new FileStream();
 					fs.open(file,FileMode.WRITE);
-					fs.writeUTFBytes(structTemp.definition);
+					fs.writeUTFBytes(classStruct.getDefinitioin());
 					fs.close();
 				}
 				
