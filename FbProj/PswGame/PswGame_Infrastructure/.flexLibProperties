@@ -38,6 +38,7 @@
     <classEntry path="com.physwf.infras.pswloader.ModuleLoader"/>
     <classEntry path="com.physwf.infras.utils.ByteUtils"/>
     <classEntry path="com.physwf.infras.utils.AlgebraUtils"/>
+    <classEntry path="com.physwf.components.rpc.RPCConnectioin"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
