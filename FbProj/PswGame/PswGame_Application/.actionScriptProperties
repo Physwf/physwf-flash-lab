@@ -35,9 +35,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="PswGame_Application.as"/>
-    <application path="EnvironmentDLL.as"/>
+    <application path="SystemStartup.as"/>
     <application path="LoginPlugin.as"/>
+    <application path="EnvironmentDLL.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
