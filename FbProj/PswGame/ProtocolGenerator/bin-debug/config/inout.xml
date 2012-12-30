@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <project name="ATM">
+ 		<server name="Login" url="http://10.1.1.5/su/proto/download.php?project=ultraman_login" output=""/>
+ 		<server name="Online" url="http://10.1.1.5/su/proto/download.php?project=ultraman_online" output=""/>
+ </project>

@@ -2,38 +2,99 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="352" height="147" initialize="init()" click="getXML()">
+					   width="352" height="147" initialize="init()">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import struct.ClassStruct;
+			import spark.components.CheckBox;
+			import spark.components.RadioButton;
+			
+			import struct.MsgStruct;
+			import struct.StructStruct;
 			
 			import templates.StructTemplate;
+			
+			private var config:XML;
 //			private var platform_url:String="http://10.1.1.5/su/proto/download.php?project=ultraman_login";
 			private var platform_url:String="C:/Users/Physwf/SkyDrive/文档/ultraman_login_proto.xml";
-			private var classTemplate:String;
-			private var templateFile:File;
+			private var outputDir:String = "F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"
+			private var structTemplate:String;
+			private var msgTemplate:String;
+			private var configFile:File;
+			private var structTemplateFile:File;
+			private var msgTemplateFile:File;
 			private var serverType:String;
+			private var so:SharedObject;
 			
 			private function init():void
 			{
-				templateFile = File.applicationDirectory.resolvePath("templates/StructTemplate.txt");
+				so = SharedObject.getLocal("protocolGenerator/project");
+				loadStructTemplate();
+				loadMsgTemplate();
+				readConfig();
+			}
+			
+			private function readConfig():void
+			{
+				configFile = File.applicationDirectory.resolvePath("config/inout.xml");
+				function onConfigLoaded(e:Event):void
+				{
+					config = XML(configFile.data.readUTFBytes(configFile.data.length));
+					for(var i:int=0;i<config.server.length();++i)
+					{
+						var rBtn:RadioButton = new RadioButton();
+						rBtn.label = config.server[i].@name;
+						if(so.data["name"] == rBtn.label) rBtn.selected = true;
+						else if(so.data["name"] == null) 
+						{
+							so.data["name"] = rBtn.label;
+							rBtn.selected = true;
+						}
+						rBtn.x = 40 + i * rBtn.label.length * 10;
+						rBtn.y = 30;
+						rBtn.addEventListener(MouseEvent.CLICK,function onClick(e:Event):void
+						{
+							platform_url = config.server.(@name == e.target.label)[0].@url;
+							so.data["name"] = rBtn.label;
+						});
+						addElement(rBtn);
+					}
+				};
+				configFile.addEventListener(Event.COMPLETE,onConfigLoaded);
+				configFile.load();
+			}
+			
+			private function loadStructTemplate():void
+			{
+				structTemplateFile = File.applicationDirectory.resolvePath("templates/StructTemplate.txt");
 				function onComplete(e:Event):void
 				{
-					classTemplate = templateFile.data.readUTFBytes(templateFile.data.length);
-					serverType = "LOGIN"
+					structTemplate = structTemplateFile.data.readUTFBytes(structTemplateFile.data.length);
+//					serverType = "LOGIN";
 				};
-				templateFile.addEventListener(Event.COMPLETE,onComplete);
-				templateFile.load();
+				structTemplateFile.addEventListener(Event.COMPLETE,onComplete);
+				structTemplateFile.load();
+			}
+			
+			private function loadMsgTemplate():void
+			{
+				msgTemplateFile = File.applicationDirectory.resolvePath("templates/MsgTemplate.txt");
+				function onComplete(e:Event):void
+				{
+					msgTemplate = msgTemplateFile.data.readUTFBytes(msgTemplateFile.data.length);
+				};
+				msgTemplateFile.addEventListener(Event.COMPLETE,onComplete);
+				msgTemplateFile.load();
 			}
 			
 			private function getXML():void
 			{
 				var urlLoader:URLLoader = new URLLoader();
 				urlLoader.addEventListener(Event.COMPLETE,onXMLLoaded);
+				
 				urlLoader.load(new URLRequest(platform_url));
 			}
 			
@@ -41,21 +102,54 @@
 			{
 				var proto:XML = XML(e.target.data);
 				var structList:XMLList = proto.struct_list[0].struct;
-				var struct:XML;
+				var structRaw:XML;
 				for(var i:int =0;i<structList.length();++i)
 				{
-					struct = structList[i];
+					structRaw = structList[i];
+					var sName:String = structRaw.@name;
+					if(verifyName(sName)) continue;
 					StructTemplate.serverType = serverType;
-					var classStruct:ClassStruct = new ClassStruct(struct);
-					classStruct.template = classTemplate;
+					var classStruct:StructStruct = new StructStruct(structRaw);
+					classStruct.template = structTemplate;
 					var file:File = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+classStruct.name+".as");
 					var fs:FileStream = new FileStream();
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(classStruct.getDefinitioin());
 					fs.close();
 				}
-				
+				var protoList:XMLList = proto.protocol_list[0].protocol;
+				var msg:XML;
+				for(i=0;i<protoList.length();++i)
+				{
+					msg = protoList[i];
+					var rawInput:XML = structList.(@name == msg.@struct_in)[0];
+					var rawOutput:XML = structList.(@name == msg.@struct_out)[0];
+					
+					var msgStruct:MsgStruct = new MsgStruct(msg,rawInput,rawOutput);
+					
+					msgStruct.template = msgTemplate;
+					file = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+msgStruct.reqName+".as");
+					fs = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeUTFBytes(msgStruct.getMsgRequest());
+					fs.close();
+					
+					msgStruct.template = msgTemplate;
+					file = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+msgStruct.resName+".as");
+					fs = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeUTFBytes(msgStruct.getMsgRespond());
+					fs.close();
+				}
+			}
+			
+			private function verifyName(name:String):Boolean
+			{
+				if(name.slice(0,3) == "cli" ) return true;
+				if(name.slice(0,2) == "db" ) return true;
+				return false;
 			}
 		]]>
 	</fx:Script>
+	<s:Button x="256" y="93" label="Do" click="getXML()"/>
 </s:WindowedApplication>

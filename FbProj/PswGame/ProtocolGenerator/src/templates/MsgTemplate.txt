@@ -1,0 +1,20 @@
+package
+{
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.ByteArray;
+	
+	final public class {className} extends MsgBase
+	{
+		{filed}
+		public function {className}({mid})
+		{
+			{super}
+		}
+		
+		override protected function {prefix}Body({arg}:IData{direction}):void
+		{
+			{r/w}
+		}
+	}
+}

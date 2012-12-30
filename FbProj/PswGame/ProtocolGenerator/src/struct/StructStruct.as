@@ -1,12 +1,12 @@
 package struct
 {
-	public class ClassStruct
+	public class StructStruct
 	{
 		public var template:String;
 		public var name:String;
 		public var fields:Vector.<FieldStruct>;
 		
-		public function ClassStruct(rawData:XML)
+		public function StructStruct(rawData:XML)
 		{
 			name = rawData.@name;
 			fields = new <FieldStruct>[];
