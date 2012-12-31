@@ -1,10 +1,11 @@
 package com.physwf.system.entity
 {
+	import com.physwf.system.services.MyService;
 	import com.physwf.system.vo.LoginInfo;
 	import com.physwf.system.vo.PetInfo;
 	import com.physwf.system.vo.UserInfo;
 
-	public class MyInfo
+	public class MySelf
 	{
 		/**
 		 *登陆信息 
@@ -19,9 +20,16 @@ package com.physwf.system.entity
 		 */		
 		public static var petInfo:PetInfo;
 		
-		public function MyInfo()
+		public static var service:MyService;
+		
+		public function MySelf()
 		{
 			
+		}
+		
+		public static function initialize():void
+		{
+			service = new MyService();
 		}
 	}
 }

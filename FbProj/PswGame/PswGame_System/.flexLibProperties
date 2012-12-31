@@ -4,10 +4,12 @@
     <classEntry path="com.physwf.system.vo.LoginInfo"/>
     <classEntry path="com.physwf.system.vo.UserInfo"/>
     <classEntry path="com.physwf.system.vo.PetInfo"/>
-    <classEntry path="com.physwf.system.entity.MyInfo"/>
+    <classEntry path="com.physwf.system.entity.MySelf"/>
     <classEntry path="com.physwf.system.controllers.MapController"/>
     <classEntry path="com.physwf.system.vo.MapInfo"/>
     <classEntry path="com.physwf.system.events.MapEvent"/>
+    <classEntry path="com.physwf.system.vo.SkillInfo"/>
+    <classEntry path="com.physwf.system.services.MyService"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

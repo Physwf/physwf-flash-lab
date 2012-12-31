@@ -1,16 +1,18 @@
 package com.physwf.system.controllers
 {
+	import com.physwf.system.entity.MapSystem;
+
 	public class MapController
 	{
-		public static var instance:MapController = new MapController();
+		private var mapsystem:MapSystem;
 		
 		public function MapController()
 		{
 		}
 		
-		public function initialize():void
+		public function initialize(model:MapSystem):void
 		{
-			
+			mapsystem = model;
 		}
 	}
 }
