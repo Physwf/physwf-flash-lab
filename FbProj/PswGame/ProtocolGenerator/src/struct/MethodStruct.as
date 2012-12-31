@@ -56,7 +56,7 @@ package struct
 					throw "参数类型有误！";
 				default:
 					return 	name +"= new "+ type + "();\n" +
-					name+".readExternal(input)";
+					"\t\t\t"+name+".readExternal(input)";
 			}
 		}
 		
@@ -71,11 +71,11 @@ package struct
 				default:
 					loopBody =  getReadLoopBody();
 			}
-			var forLoop:String = "\t\t\t"+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
+			var forLoop:String = ""+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
 				"\t\t\tfor(var i:int=0;i<"+size+";++i)\n" +
 				"\t\t\t{\n" +
-				"\t\\tt\t{loopBody}\n" +
-				"\t\\tt\tname.push(item)\n" +
+				"\t\t\t\t{loopBody}\n" +
+				"\t\t\t\t"+name+".push(item)\n" +
 				"\t\t\t}\n";
 			return forLoop.replace("{loopBody}",loopBody);
 		}
@@ -184,9 +184,9 @@ package struct
 					loopBody =  getWriteLoopBody();
 			}
 			var forLoop:String = "" +
-				"\t\t\tfor(var i:int=0;i<"+size+";++i)\n" +
+				"for(var i:int=0;i<"+size+";++i)\n" +
 				"\t\t\t{\n" +
-				"\t\\tt\t{loopBody}\n" +
+				"\t\t\t\t{loopBody}\n" +
 				"\t\t\t}\n";
 			return forLoop.replace("{loopBody}",loopBody);
 		}
@@ -231,7 +231,7 @@ package struct
 					loopBody =  getWriteLoopBody();
 			}
 			var forLoop:String = "" +
-				"\t\t\tfor(var i:int=0;i<"+name+"Len;++i)\n" +
+				"\t\t\tfor(var i:int=0;i<"+name+".length;++i)\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
 				"\t\t\t}";

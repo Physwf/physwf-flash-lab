@@ -1,5 +1,6 @@
 package {package}
 {
+	{extends}
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;

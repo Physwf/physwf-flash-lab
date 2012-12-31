@@ -2,12 +2,14 @@
  <project name="ATM">
  		<server name="Login" 
  				packageName="com.physwf.application.login.msg" 
+ 				extendsName = ""
  				url="http://10.1.1.5/su/proto/download.php?project=ultraman_login" 
  				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Application/src/com/physwf/application/login/msg/"
  		/>
  		<server name="Online" 
  				packageName="" 
+ 				extendsName = "com.physwf.components.rpc.msg.MsgBase"
  				url="http://10.1.1.5/su/proto/download.php?project=ultraman_online" 
- 				output=""
+ 				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/"
  		/>
  </project>

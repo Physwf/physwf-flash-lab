@@ -55,6 +55,7 @@
 							platform_url = config.server.(@name == rBtn.label)[0].@url;
 							StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
 							outputDir = config.server.(@name == rBtn.label)[0].@output;
 						}
 						else if(so.data["name"] == null) 
@@ -63,6 +64,7 @@
 							platform_url = config.server.(@name == rBtn.label)[0].@url;
 							StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
 							outputDir = config.server.(@name == rBtn.label)[0].@output;
 							rBtn.selected = true;
 						}
@@ -73,7 +75,8 @@
 							platform_url = config.server.(@name == e.target.label)[0].@url;
 							StructStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
 							MsgStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
-							outputDir = config.server.(@name == e.target.label)[0].@packageName;
+							MsgStruct.extendsName = config.server.(@name == e.target.label)[0].@extendsName;
+							outputDir = config.server.(@name == e.target.label)[0].@output;
 							so.data["name"] = rBtn.label;
 						});
 						addElement(rBtn);
