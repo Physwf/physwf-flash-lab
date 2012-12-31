@@ -8,7 +8,7 @@ package com.physwf.application.login
 	import com.physwf.application.login.view.Loading;
 	import com.physwf.application.login.view.SignInPanel;
 	import com.physwf.application.login.view.StartPanel;
-	import com.physwf.system.entity.MyInfo;
+	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.LoginInfo;
 	
 	import flash.display.Loader;
@@ -56,7 +56,7 @@ package com.physwf.application.login
 			loginInfo.host = serverConfig.ip[0].@host;
 			loginInfo.port = uint(serverConfig.ip[0].@port);
 			
-			MyInfo.loginInfo = loginInfo;
+			MySelf.loginInfo = loginInfo;
 			loadAssets();
 		}
 		
@@ -86,7 +86,7 @@ package com.physwf.application.login
 			
 			startPanel.onStartClick = function ():void
 			{
-				LoginService.instance.connectLoginServer(MyInfo.loginInfo.host,MyInfo.loginInfo.port,onConnected);
+				LoginService.instance.connectLoginServer(MySelf.loginInfo.host,MySelf.loginInfo.port,onConnected);
 			};
 			
 			mRoot.addChild(startPanel);
@@ -104,12 +104,9 @@ package com.physwf.application.login
 				
 			signInPanel.onSignIn = function():void
 			{
-				MyInfo.loginInfo.userID = signInPanel.userID;
-				MyInfo.loginInfo.password = signInPanel.password;
-				
 				Loading.showLightLoading(mRoot);
 
-				LoginService.instance.login(MyInfo.loginInfo.userID,MyInfo.loginInfo.password);
+				LoginService.instance.login(signInPanel.userID,signInPanel.password);
 			};
 			signInPanel.onRegister = function():void
 			{

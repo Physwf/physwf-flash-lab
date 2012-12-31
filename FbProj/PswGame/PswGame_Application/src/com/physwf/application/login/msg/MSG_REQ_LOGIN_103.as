@@ -9,8 +9,8 @@ package com.physwf.application.login.msg
 		public var channel:int;
 		public var which_game:int;
 		public var user_ip:int;
-		public var img_id:int;
-		public var verify_code:int;
+		public var img_id:ByteArray;
+		public var verify_code:ByteArray;
 		public var tag:*;
 		
 		public function MSG_REQ_LOGIN_103()
@@ -50,13 +50,13 @@ package com.physwf.application.login.msg
 			output.writeUnsignedInt(which_game);
 			output.writeUnsignedInt(user_ip);
 			
-			var img_idData:ByteArray = new ByteArray();
-			img_idData.length = 16;
-			output.writeBytes(img_idData);
+//			var img_idData:ByteArray = new ByteArray();
+//			img_idData.length = 16;
+			output.writeBytes(img_id);
 			
-			var verify_codeData:ByteArray = new ByteArray();
-			verify_codeData.length = 6;
-			output.writeBytes(verify_codeData);
+//			var verify_codeData:ByteArray = new ByteArray();
+//			verify_codeData.length = 6;
+			output.writeBytes(verify_code);
 			
 			var tagData:ByteArray = new ByteArray();
 			tagData.length = 64;

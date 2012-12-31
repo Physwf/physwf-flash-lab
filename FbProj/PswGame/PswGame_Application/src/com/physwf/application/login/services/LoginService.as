@@ -5,6 +5,7 @@ package com.physwf.application.login.services
 	import com.physwf.application.login.msg.MSG_REQ_LOGIN_103;
 	import com.physwf.application.login.msg.MessageManager;
 	import com.physwf.application.login.rpc.RPCClient;
+	import com.physwf.system.entity.MySelf;
 
 	public class LoginService
 	{
@@ -27,14 +28,17 @@ package com.physwf.application.login.services
 		
 		public function login(uid:String,password:String):void
 		{
+			MySelf.loginInfo.userID = uid;
+			MySelf.loginInfo.password = password;
+			MySelf.loginInfo.which_game = LoginContext.which_game;
 			var msg:MSG_REQ_LOGIN_103 = new MSG_REQ_LOGIN_103();
 			msg.uid = uint(uid);
 			msg.password = MD5.hash(MD5.hash(password));//要哈希
 			msg.channel = LoginContext.channel;
 			msg.which_game = LoginContext.which_game ;
-//			msg.user_ip = LoginContext.user_ip;
-//			msg.img_id = LoginContext.img_id;
-//			msg.verify_code  = LoginContext.img_id;
+			msg.user_ip = LoginContext.user_ip;
+			msg.img_id = LoginContext.img_id;
+			msg.verify_code  = LoginContext.img_id;
 //			msg.tag = LoginContext.tag;
 			RPCClient.call(msg);
 		}

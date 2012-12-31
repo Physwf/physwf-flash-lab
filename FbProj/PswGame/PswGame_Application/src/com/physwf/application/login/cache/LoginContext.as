@@ -1,16 +1,27 @@
 package com.physwf.application.login.cache
 {
+	import flash.utils.ByteArray;
+
 	public class LoginContext
 	{
 		private static var mChannel:int;
 		private static var mProductID:int;
 		private static var mProductName:String;
 		
-		private static var mUserIP:String;
+		private static var mUserIP:int;
 		private static var mTag:*;
-		
-		private static var mImgID:String;
-		private static var mVerifyCode:String;
+		/**
+		 *验证码图片id 
+		 */		
+		private static var mImgID:ByteArray;
+		/**
+		 *验证码 
+		 */		
+		private static var mVerifyCode:ByteArray;
+		/**
+		 *验证码图片数据 
+		 */		
+		private static var mImgData:ByteArray;
 		
 		public function LoginContext()
 		{
@@ -19,6 +30,7 @@ package com.physwf.application.login.cache
 		public static function initialize():void
 		{
 			mChannel=65;
+			mUserIP = 0;
 		}
 		
 		public static function setProductInfo(pid:String,pName:String):void
@@ -37,7 +49,7 @@ package com.physwf.application.login.cache
 			return mProductID;
 		}
 		
-		public static function get user_ip():String
+		public static function get user_ip():int
 		{
 			return mUserIP;
 		}
@@ -47,14 +59,44 @@ package com.physwf.application.login.cache
 			return mTag;
 		}
 		
-		public static function get img_id():String
+		public static function set img_id(v:ByteArray):void
 		{
+			mImgID = v;
+		}
+		
+		public static function get img_id():ByteArray
+		{
+			if(!mImgID)
+			{
+				mImgID = new ByteArray();
+				mImgID.length = 16;
+			}
 			return mImgID;
 		}
 		
-		public static function get verify_code():String
+		public static function set verify_code(v:ByteArray):void
 		{
+			mVerifyCode = v;
+		}
+		
+		public static function get verify_code():ByteArray
+		{
+			if(!mVerifyCode)
+			{
+				mVerifyCode = new ByteArray();
+				mVerifyCode.length = 6;
+			}
 			return mVerifyCode;
+		}
+		
+		public static function set img_data(v:ByteArray):void
+		{
+			mImgData = v;
+		}
+		
+		public static function get img_data():ByteArray
+		{
+			return mImgData;
 		}
 	}
 }
