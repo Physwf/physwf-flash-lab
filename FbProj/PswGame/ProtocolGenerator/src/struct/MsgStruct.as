@@ -4,6 +4,8 @@ package struct
 	{
 		public var template:String;
 		public var name:String;
+		public static var packageName:String;
+		
 //		public var fields:Vector.<FieldStruct>;
 		
 		public var msgID:String;
@@ -48,6 +50,7 @@ package struct
 		{
 			var nameReg:RegExp = new RegExp("{className}","g");
 			template = template.replace(nameReg,reqName);
+			template = template.replace("{package}",packageName);
 			
 			for(var i:int=0;i<fieldsInput.length;++i)
 			{
@@ -66,6 +69,7 @@ package struct
 		{
 			var nameReg:RegExp = new RegExp("{className}","g");
 			template = template.replace(nameReg,resName);
+			template = template.replace("{package}",packageName);
 			
 			for(var i:int=0;i<fieldsOutput.length;++i)
 			{
@@ -77,7 +81,6 @@ package struct
 				template = template.replace("{direction}","Input");
 				template = template.replace("{r/w}",fieldsOutput[i].method.getRead()+(i+1<fieldsOutput.length?"\n\t\t\t{r/w}":"\t\t\t"));
 			}
-			trace(template)
 			return template;
 		}
 	}

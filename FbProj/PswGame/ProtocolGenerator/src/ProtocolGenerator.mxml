@@ -9,6 +9,8 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			
 			import spark.components.CheckBox;
 			import spark.components.RadioButton;
 			
@@ -47,10 +49,21 @@
 					{
 						var rBtn:RadioButton = new RadioButton();
 						rBtn.label = config.server[i].@name;
-						if(so.data["name"] == rBtn.label) rBtn.selected = true;
+						if(so.data["name"] == rBtn.label) 
+						{
+							rBtn.selected = true;
+							platform_url = config.server.(@name == rBtn.label)[0].@url;
+							StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							outputDir = config.server.(@name == rBtn.label)[0].@output;
+						}
 						else if(so.data["name"] == null) 
 						{
 							so.data["name"] = rBtn.label;
+							platform_url = config.server.(@name == rBtn.label)[0].@url;
+							StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
+							outputDir = config.server.(@name == rBtn.label)[0].@output;
 							rBtn.selected = true;
 						}
 						rBtn.x = 40 + i * rBtn.label.length * 10;
@@ -58,6 +71,9 @@
 						rBtn.addEventListener(MouseEvent.CLICK,function onClick(e:Event):void
 						{
 							platform_url = config.server.(@name == e.target.label)[0].@url;
+							StructStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
+							MsgStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
+							outputDir = config.server.(@name == e.target.label)[0].@packageName;
 							so.data["name"] = rBtn.label;
 						});
 						addElement(rBtn);
@@ -111,7 +127,7 @@
 					StructTemplate.serverType = serverType;
 					var classStruct:StructStruct = new StructStruct(structRaw);
 					classStruct.template = structTemplate;
-					var file:File = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+classStruct.name+".as");
+					var file:File = new File(outputDir+classStruct.name+".as");
 					var fs:FileStream = new FileStream();
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(classStruct.getDefinitioin());
@@ -128,19 +144,20 @@
 					var msgStruct:MsgStruct = new MsgStruct(msg,rawInput,rawOutput);
 					
 					msgStruct.template = msgTemplate;
-					file = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+msgStruct.reqName+".as");
+					file = new File(outputDir+msgStruct.reqName+".as");
 					fs = new FileStream();
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(msgStruct.getMsgRequest());
 					fs.close();
 					
 					msgStruct.template = msgTemplate;
-					file = new File("F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"+msgStruct.resName+".as");
+					file = new File(outputDir+msgStruct.resName+".as");
 					fs = new FileStream();
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(msgStruct.getMsgRespond());
 					fs.close();
 				}
+				Alert.show("Done!","Ok",4,null,function ():void {exit()});
 			}
 			
 			private function verifyName(name:String):Boolean

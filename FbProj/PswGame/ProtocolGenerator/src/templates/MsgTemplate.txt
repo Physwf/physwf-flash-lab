@@ -1,4 +1,4 @@
-package
+package {package}
 {
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;

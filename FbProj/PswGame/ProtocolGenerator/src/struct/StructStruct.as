@@ -3,6 +3,7 @@ package struct
 	public class StructStruct
 	{
 		public var template:String;
+		public static var packageName:String;
 		public var name:String;
 		public var fields:Vector.<FieldStruct>;
 		
@@ -20,6 +21,8 @@ package struct
 		{
 			var nameReg:RegExp = new RegExp("{className}","g");
 			template = template.replace(nameReg,name);
+			template = template.replace("{package}",packageName);
+			
 			for(var i:int=0;i<fields.length;++i)
 			{
 				template = template.replace("{filed}",fields[i].getDeclaration() + (i+1<fields.length?"\n\t\t{filed}":"\n\t\t"));
