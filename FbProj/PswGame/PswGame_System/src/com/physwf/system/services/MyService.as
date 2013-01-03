@@ -11,12 +11,15 @@ package com.physwf.system.services
 		
 		public function login():void
 		{
-			var msg_login:MSG_REQ_LOGIN_1001 = new MSG_REQ_LOGIN_1001();
-			msg_login.from_game = MySelf.loginInfo.which_game;
-//			msg_login.to_game =;
-			msg_login.sess = MySelf.loginInfo.session.readUTFBytes(MySelf.loginInfo.session.length);
-			RPCConnectioin.online.call(msg_login);
+			var msg:MSG_REQ_LOGIN_1001 = new MSG_REQ_LOGIN_1001();
+			msg.from_game = MySelf.loginInfo.which_game;
+			msg.to_game = 0;
+			msg.sess = MySelf.loginInfo.session.readUTFBytes(MySelf.loginInfo.session.length);
+			msg.tad = MySelf.loginInfo.tad;
+			msg.role_tm = MySelf.loginInfo.roleInfo.createTime;
+			RPCConnectioin.online.call(msg);
 		}
+		
 		
 	}
 }

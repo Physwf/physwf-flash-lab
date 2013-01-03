@@ -6,13 +6,14 @@ package com.physwf.system.controllers
 	{
 		private var mapsystem:MapSystem;
 		
-		public function MapController()
-		{
-		}
-		
-		public function initialize(model:MapSystem):void
+		public function MapController(model:MapSystem)
 		{
 			mapsystem = model;
+		}
+		
+		public function initialize():void
+		{
+			
 		}
 	}
 }

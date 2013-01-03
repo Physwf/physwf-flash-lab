@@ -14,6 +14,16 @@ package com.physwf.system.vo
 		
 		public var session:ByteArray;
 		
+		public var tad:String;
+		/**
+		 *所登录的服务器信息 
+		 */		
+		public var serverInfo:ServerInfo;
+		/**
+		 *所选择的角色信息 
+		 */		
+		public var roleInfo:RoleInfo;
+		
 		public function LoginInfo()
 		{
 		}

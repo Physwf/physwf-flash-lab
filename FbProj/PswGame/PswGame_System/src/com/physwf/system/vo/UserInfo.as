@@ -17,7 +17,7 @@ package com.physwf.system.vo
 		/**
 		 *经验 
 		 */		
-		public var exp:String;
+		public var exp:uint;
 		/**
 		 *当前所在的地图ID 
 		 */		
@@ -33,7 +33,7 @@ package com.physwf.system.vo
 		/**
 		 *裸模id 
 		 */		
-		public var resouce_id:uint;
+		public var resource_id:uint;
 		/**
 		 *力量 
 		 */		
@@ -105,11 +105,11 @@ package com.physwf.system.vo
 		/**
 		 *暴击 
 		 */		
-		public var mutiattack:uint;
+		public var multiattack:uint;
 		/**
 		 *暴击闪避 
 		 */		
-		public var mutiavoid:uint;
+		public var multiavoid:uint;
 		
 		public function UserInfo()
 		{

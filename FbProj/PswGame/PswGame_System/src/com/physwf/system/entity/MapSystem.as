@@ -17,7 +17,6 @@ package com.physwf.system.entity
 		
 		public function initialize():void
 		{
-			controller = new MapController(this);
 		}
 
 	} 
