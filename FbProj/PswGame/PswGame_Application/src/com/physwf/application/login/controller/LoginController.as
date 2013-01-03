@@ -12,7 +12,11 @@ package com.physwf.application.login.controller
 		public static var instance:LoginController = new LoginController();
 		
 		public var onLoginSuccess:Function;
-
+		public var onLoginError:Function;
+		public var onGetServerList:Function;
+		public var onGetRoles:Function;
+		public var onRoleCreated:Function;
+		
 		public function LoginController()
 		{
 		}
@@ -21,6 +25,10 @@ package com.physwf.application.login.controller
 		{
 			RPCClient.addEventListener(MessageEvent.MSG_SUCCESS_+103,onMessage);
 			RPCClient.addEventListener(MessageEvent.MSG_ERROR_+103,onMessage);
+			
+			RPCClient.addEventListener(MessageEvent.MSG_SUCCESS_+105,onMessage);
+			RPCClient.addEventListener(MessageEvent.MSG_SUCCESS_+106,onMessage);
+			RPCClient.addEventListener(MessageEvent.MSG_SUCCESS_+107,onMessage);
 		}
 		
 		private function onMessage(e:MessageEvent):void
@@ -38,12 +46,22 @@ package com.physwf.application.login.controller
 				{
 					LoginContext.img_id = MSG_RES_LOGIN_103(msg).img_id;
 					LoginContext.img_data = MSG_RES_LOGIN_103(msg).img_data;
-//					onLoginSuccess();
+					onLoginError();
 					break;
 				}
-					
-				default:
+				case MessageEvent.MSG_SUCCESS_+105://获得服务器列表
 				{
+					onGetServerList()
+					break;
+				}
+				case MessageEvent.MSG_SUCCESS_+106://获得角色列表
+				{
+					onGetRoles();
+					break;
+				}
+				case MessageEvent.MSG_SUCCESS_+107://创建角色成功
+				{
+					onRoleCreated();
 					break;
 				}
 			}

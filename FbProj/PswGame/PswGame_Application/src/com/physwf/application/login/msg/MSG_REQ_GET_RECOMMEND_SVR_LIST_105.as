@@ -11,7 +11,7 @@ package com.physwf.application.login.msg
 		
 		public function MSG_REQ_GET_RECOMMEND_SVR_LIST_105()
 		{
-			
+			super(msgid);
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
