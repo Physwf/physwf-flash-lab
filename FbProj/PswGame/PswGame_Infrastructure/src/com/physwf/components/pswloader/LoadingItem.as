@@ -32,10 +32,10 @@ package com.physwf.components.pswloader
 			return _priority;
 		}
 		
-		public function stop():void
-		{
-			
-		}
+//		public function stop():void
+//		{
+//			
+//		}
 		
 		internal function _parseOptions(props:Object):void
 		{

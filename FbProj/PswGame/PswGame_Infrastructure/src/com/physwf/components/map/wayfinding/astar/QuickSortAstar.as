@@ -1,20 +1,18 @@
 package com.physwf.components.map.wayfinding.astar
 {
-	import com.physwf.components.ds.heap.MinHeap;
 	import com.physwf.components.interfaces.INumerical;
-	import com.physwf.components.map.data.IMapData;
-	import com.physwf.components.map.data.config.GridTypeConfig;
+	import com.physwf.components.map.data.GridTypeMapData;
 	
 	import flash.display.DisplayObject;
 	
 	/**
-	 * 二叉堆寻路 
+	 * 快速排序寻路 
 	 * @author joe
 	 * 
 	 */
 	public class QuickSortAstar implements IAstar
 	{
-		private var _mapData:IMapData;
+		private var _mapData:GridTypeMapData;
 		//		private var _openList:BinaryHeap;
 		private var _openList:Vector.<Node>;
 		private var _closedList:Vector.<Node>;
@@ -33,7 +31,7 @@ package com.physwf.components.map.wayfinding.astar
 			
 		}
 		
-		public function initialze(landform:DisplayObject, config:GridTypeConfig):void
+		public function analyze(landform:DisplayObject):void
 		{
 			// TODO Auto Generated method stub
 			
@@ -168,12 +166,12 @@ package com.physwf.components.map.wayfinding.astar
 			return _path;
 		}
 		
-		public function set mapData(data:IMapData):void
+		public function set mapData(data:GridTypeMapData):void
 		{
 			_mapData = data;
 		}
 		
-		public function get mapData():IMapData
+		public function get mapData():GridTypeMapData
 		{
 			return _mapData;
 		}

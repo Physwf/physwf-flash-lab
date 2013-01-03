@@ -11,7 +11,7 @@ package com.physwf.components.map.data
 	 * @author joe
 	 * 
 	 */	
-	public class GridTypeMapData implements IMapData
+	public class GridTypeMapData
 	{
 		private var _startNode:Node;
 		private var _endNode:Node;

@@ -1,6 +1,5 @@
 package com.physwf.components.map.wayfinding.astar {
-	import com.physwf.components.map.data.IMapData;
-	import com.physwf.components.map.data.config.GridTypeConfig;
+	import com.physwf.components.map.data.GridTypeMapData;
 	
 	import flash.display.DisplayObject;
 
@@ -12,7 +11,7 @@ package com.physwf.components.map.wayfinding.astar {
 	 */
 	public interface IAstar 
 	{
-		function initialze(landform:DisplayObject,config:GridTypeConfig):void;
+		function analyze(landform:DisplayObject):void;
 		/**
 		 * 尝试在起点和终点之间寻到一条道路 
 		 * @param sx
@@ -34,12 +33,12 @@ package com.physwf.components.map.wayfinding.astar {
 		 * @param data
 		 * 
 		 */		
-		function set mapData(data:IMapData):void;
+		function set mapData(data:GridTypeMapData):void;
 		/**
 		 *获取地图数据 
 		 * @return 
 		 * 
 		 */		
-		function get mapData():IMapData;
+		function get mapData():GridTypeMapData;
 	} // end interface
 } // end package

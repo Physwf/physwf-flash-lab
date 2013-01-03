@@ -1,9 +1,7 @@
 package com.physwf.components.map.wayfinding.astar
 {
 	import com.physwf.components.ds.heap.MinHeap;
-	import com.physwf.components.interfaces.INumerical;
-	import com.physwf.components.map.data.IMapData;
-	import com.physwf.components.map.data.config.GridTypeConfig;
+	import com.physwf.components.map.data.GridTypeMapData;
 	
 	import flash.display.DisplayObject;
 
@@ -14,7 +12,7 @@ package com.physwf.components.map.wayfinding.astar
 	 */
 	public class BiHeapAStar implements IAstar
 	{
-		private var _mapData:IMapData;
+		private var _mapData:GridTypeMapData;
 		private var _openList:MinHeap;
 		private var _closedList:Vector.<Node>;
 		private var _path:Vector.<Node>;
@@ -32,7 +30,7 @@ package com.physwf.components.map.wayfinding.astar
 			
 		}
 		
-		public function initialze(landform:DisplayObject, config:GridTypeConfig):void
+		public function analyze(landform:DisplayObject):void
 		{
 			// TODO Auto Generated method stub
 			
@@ -149,12 +147,12 @@ package com.physwf.components.map.wayfinding.astar
 			return _path;
 		}
 		
-		public function set mapData(data:IMapData):void
+		public function set mapData(data:GridTypeMapData):void
 		{
 			_mapData = data;
 		}
 		
-		public function get mapData():IMapData
+		public function get mapData():GridTypeMapData
 		{
 			return _mapData;
 		}
