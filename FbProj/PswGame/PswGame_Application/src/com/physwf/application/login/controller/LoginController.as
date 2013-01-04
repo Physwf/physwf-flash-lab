@@ -1,11 +1,21 @@
 package com.physwf.application.login.controller
 {
 	import com.physwf.application.login.cache.LoginContext;
+	import com.physwf.application.login.cache.OnlineInfo;
+	import com.physwf.application.login.msg.MSG_REQ_GET_RECOMMEND_SVR_LIST_105;
+	import com.physwf.application.login.msg.MSG_RES_CREATE_ROLE_107;
+	import com.physwf.application.login.msg.MSG_RES_GET_RECOMMEND_SVR_LIST_105;
+	import com.physwf.application.login.msg.MSG_RES_GET_ROLE_INFO_106;
 	import com.physwf.application.login.msg.MSG_RES_LOGIN_103;
 	import com.physwf.application.login.msg.MsgBase;
+	import com.physwf.application.login.msg.recommend_area_list_t;
+	import com.physwf.application.login.msg.recommend_svrs_t;
+	import com.physwf.application.login.msg.role_info_t;
 	import com.physwf.application.login.rpc.MessageEvent;
 	import com.physwf.application.login.rpc.RPCClient;
 	import com.physwf.system.entity.MySelf;
+	import com.physwf.system.vo.RoleInfo;
+	import com.physwf.system.vo.ServerInfo;
 
 	public class LoginController
 	{
@@ -51,16 +61,40 @@ package com.physwf.application.login.controller
 				}
 				case MessageEvent.MSG_SUCCESS_+105://获得服务器列表
 				{
+					OnlineInfo.onlines = new <ServerInfo>[];
+					var serverList:Vector.<recommend_area_list_t> = MSG_RES_GET_RECOMMEND_SVR_LIST_105(msg).recommend_svr_list;
+					for(var i:int=0;i<serverList.length; i++)
+					{
+						var sInfo:ServerInfo = new ServerInfo();
+						sInfo.area_id = serverList[i].area_id;
+						sInfo.id = serverList[i].online_id;
+						sInfo.ip = serverList[i].online_ip;
+						sInfo.port = serverList[i].online_port;
+						sInfo.user_num = serverList[i].user_num;
+						OnlineInfo.onlines.push(sInfo);
+					}
 					onGetServerList()
 					break;
 				}
 				case MessageEvent.MSG_SUCCESS_+106://获得角色列表
 				{
+					OnlineInfo.roles = new <RoleInfo>[];
+					var roleList:Vector.<role_info_t> = MSG_RES_GET_ROLE_INFO_106(msg).roles;
+					for(i=0;i<roleList.length;++i)
+					{
+						var roleInfo:RoleInfo = new RoleInfo();
+						roleInfo.createTime = roleList[i].role_tm;
+						roleInfo.nick = roleList[i].nick;
+						roleInfo.prof = roleList[i].prof;
+						OnlineInfo.roles.push(roleInfo);
+					}
 					onGetRoles();
 					break;
 				}
 				case MessageEvent.MSG_SUCCESS_+107://创建角色成功
 				{
+//					MySelf.loginInfo.roleInfo = new RoleInfo();
+					MySelf.loginInfo.roleInfo.createTime = MSG_RES_CREATE_ROLE_107(msg).role_tm;
 					onRoleCreated();
 					break;
 				}

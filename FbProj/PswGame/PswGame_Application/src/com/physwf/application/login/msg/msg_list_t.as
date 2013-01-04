@@ -28,7 +28,7 @@ package com.physwf.application.login.msg
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(msg_list.length);
-			for(var i:int=0;i<msg_listLen;++i)
+			for(var i:int=0;i<msg_list.length;++i)
 			{
 				msg_list[i].writeExternal(output);
 			}			

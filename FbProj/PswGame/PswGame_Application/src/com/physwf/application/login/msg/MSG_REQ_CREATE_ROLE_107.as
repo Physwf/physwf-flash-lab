@@ -1,5 +1,6 @@
 package com.physwf.application.login.msg
 {
+	import 
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
@@ -15,7 +16,7 @@ package com.physwf.application.login.msg
 		
 		public function MSG_REQ_CREATE_ROLE_107()
 		{
-			super(msgid);
+			super(107)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void

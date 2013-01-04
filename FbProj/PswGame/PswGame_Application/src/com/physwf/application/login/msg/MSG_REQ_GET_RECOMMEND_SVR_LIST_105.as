@@ -1,5 +1,6 @@
 package com.physwf.application.login.msg
 {
+	import 
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
@@ -11,7 +12,7 @@ package com.physwf.application.login.msg
 		
 		public function MSG_REQ_GET_RECOMMEND_SVR_LIST_105()
 		{
-			super(msgid);
+			super(105)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
