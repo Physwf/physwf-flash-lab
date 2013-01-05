@@ -82,5 +82,11 @@ package com.physwf.components.map.camera
 			//
 			moveTo(tx,ty);
 		}
+		
+		public function get viewprot():Rectangle
+		{
+			return mViewprot;
+		}
+
 	}
 }

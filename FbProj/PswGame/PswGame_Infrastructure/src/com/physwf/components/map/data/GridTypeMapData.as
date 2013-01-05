@@ -26,7 +26,7 @@ package com.physwf.components.map.data
 			
 		}
 		
-		public function initialize(landform:DisplayObject, rect:Rectangle, gridSize:uint, angle:int):void
+		public function initialize(landform:DisplayObject, rect:Rectangle, gridSize:uint):void
 		{
 			var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 			bmd.draw(landform);

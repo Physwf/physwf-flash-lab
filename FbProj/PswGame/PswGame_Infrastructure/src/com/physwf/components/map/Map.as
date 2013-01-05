@@ -22,6 +22,11 @@ package com.physwf.components.map
 			mAstar = new BiHeapAStar();
 		}
 		
+		public function get bottom():Sprite
+		{
+			return mBottom;
+		}
+		
 		public function set landform(v:DisplayObject):void
 		{
 			mLandform = v;

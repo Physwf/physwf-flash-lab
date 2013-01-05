@@ -28,13 +28,12 @@ package com.physwf.components.map.wayfinding.astar
 		
 		public function QuickSortAstar()
 		{
-			
+			_mapData = new GridTypeMapData();
 		}
 		
 		public function analyze(landform:DisplayObject):void
 		{
-			// TODO Auto Generated method stub
-			
+			_mapData.initialize(landform,landform.getRect(landform),10);
 		}
 		
 		public function tryFindPath(sx:int, sy:int, ex:int, ey:int):Boolean
