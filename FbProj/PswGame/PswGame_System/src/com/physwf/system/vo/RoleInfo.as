@@ -4,7 +4,7 @@ package com.physwf.system.vo
 	{
 		public var createTime:uint;
 		public var nick:String;
-		public var prof:String;
+		public var prof:uint;
 		
 		public function RoleInfo()
 		{

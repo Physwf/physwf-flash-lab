@@ -12,7 +12,7 @@ package com.physwf.system.vo
 		public var host:String;
 		public var port:uint;
 		
-		public var session:ByteArray;
+		public var session:String="";
 		
 		public var tad:String;
 		/**

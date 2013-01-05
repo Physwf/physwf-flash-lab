@@ -1,8 +1,10 @@
-package com.physwf.system.entity {
+package com.physwf.system.entity 
+{
 
-	public class NPCSystem {
-
-		public function NPCSystem() {
+	public class NPCSystem 
+	{
+		public function NPCSystem() 
+		{
 		}
 
 	} // end class
