@@ -6,7 +6,7 @@ package
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
 	
-	[SWF(width="1000",height="600")]
+	[SWF(width="1000",height="600",frameRate="3")]
 	public class Client extends Sprite
 	{
 		private var _app:Application;
