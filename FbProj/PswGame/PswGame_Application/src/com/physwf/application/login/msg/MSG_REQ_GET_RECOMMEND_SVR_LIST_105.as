@@ -1,6 +1,6 @@
 package com.physwf.application.login.msg
 {
-	import 
+	
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
@@ -18,11 +18,11 @@ package com.physwf.application.login.msg
 		override protected function writeBody(output:IDataOutput):void
 		{
 			var sessionData:ByteArray = new ByteArray();
-			sessionData.writeUTFBytes(session)
+			sessionData.writeUTFBytes(session);
 			sessionData.length = 16;
 			output.writeBytes(sessionData)
 			var tadData:ByteArray = new ByteArray();
-			tadData.writeUTFBytes(tad)
+//			tadData.writeUTFBytes(tad)
 			tadData.length = 128;
 			output.writeBytes(tadData)			
 		}

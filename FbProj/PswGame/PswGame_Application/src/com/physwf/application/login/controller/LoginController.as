@@ -16,6 +16,8 @@ package com.physwf.application.login.controller
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.RoleInfo;
 	import com.physwf.system.vo.ServerInfo;
+	
+	import flash.utils.ByteArray;
 
 	public class LoginController
 	{

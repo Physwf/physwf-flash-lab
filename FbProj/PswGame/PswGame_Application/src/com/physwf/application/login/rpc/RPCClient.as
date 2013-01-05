@@ -15,6 +15,7 @@ package com.physwf.application.login.rpc
 	{
 		private static var rawSocket:Socket;
 		private static var buffer:ByteArray;
+		private static var helpBuffer:ByteArray;
 		private static var msgQueue:Vector.<MsgBase>;
 		private static var mConnectedCallBack:Function;
 		
@@ -28,6 +29,7 @@ package com.physwf.application.login.rpc
 		{
 			rawSocket = new Socket();
 			buffer = new ByteArray();
+			helpBuffer = new ByteArray();
 			msgQueue = new <MsgBase>[];
 			sHelpEventDispatcher = new EventDispatcher();
 			
@@ -53,25 +55,44 @@ package com.physwf.application.login.rpc
 		
 		private static function onSocketData(e:ProgressEvent):void
 		{
-			var helpBuffer:ByteArray = new ByteArray();
+			buffer.clear();
+			if(helpBuffer.length>0)
+			{
+				buffer.writeBytes(helpBuffer);
+				helpBuffer.clear();
+			}
 			if(rawSocket.bytesAvailable)
 			{
-				rawSocket.readBytes(buffer,0,rawSocket.bytesAvailable);//读入缓冲
-				helpBuffer.writeBytes(buffer)//取样至测试缓冲
+				rawSocket.readBytes(buffer,buffer.length,rawSocket.bytesAvailable);//读入缓冲
 			}
-			if(helpBuffer.length>4)
+			buffer.position = 0;
+			
+			while(buffer.bytesAvailable)
 			{
-				helpBuffer.position = 0;
-				var msgLen:int = helpBuffer.readUnsignedInt();
-				if(buffer.length>=msgLen)
+				if(buffer.bytesAvailable >= MsgBase.HEAD_LENGTH)
 				{
-					var mid:uint = helpBuffer.readUnsignedShort();
-					var MSG:Class = MessageManager.instance.getMSG(mid);
-					var msg:MsgBase = new MSG(mid) as MsgBase;
-					msg.readExternal(buffer);
-					msgQueue.push(msg);
+					var msgLen:int = buffer.readUnsignedInt() - MsgBase.HEAD_LENGTH;
+					if(buffer.bytesAvailable >= msgLen)
+					{
+						var mid:uint = buffer.readUnsignedShort();
+						var MSG:Class = MessageManager.instance.getMSG(mid);
+						var msg:MsgBase = new MSG(mid) as MsgBase;
+						buffer.position -= 6;
+						msg.readExternal(buffer);
+						msgQueue.push(msg);
+					}
+					else
+					{
+						buffer.position -= MsgBase.HEAD_LENGTH;
+						buffer.readBytes(helpBuffer,0,buffer.bytesAvailable);
+					}
+				}
+				else
+				{
+					buffer.readBytes(helpBuffer,0,buffer.bytesAvailable);
 				}
 			}
+
 			if(msgQueue.length>0)
 			{
 				var message:MsgBase = msgQueue.shift();

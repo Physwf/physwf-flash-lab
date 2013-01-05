@@ -7,8 +7,8 @@ package com.physwf.application.login.msg
 	
 	public class stru_pet_t implements IExternalizable
 	{
-		public var petid:uint;
-		public var pettype:uint;
+		public var pet_id:uint;
+		public var pet_type:uint;
 		public var nick:String;
 		public var level:uint;
 		public var exp:uint;
@@ -46,8 +46,8 @@ package com.physwf.application.login.msg
 		
 		public function readExternal(input:IDataInput):void
 		{
-			petid = input.readUnsignedInt();
-			pettype = input.readUnsignedInt();
+			pet_id = input.readUnsignedInt();
+			pet_type = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
 			level = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
@@ -82,8 +82,8 @@ package com.physwf.application.login.msg
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(petid);
-			output.writeInt(pettype);
+			output.writeInt(pet_id);
+			output.writeInt(pet_type);
 			var nickData:ByteArray = new ByteArray();
 			nickData.writeUTFBytes(nick)
 			nickData.length = 16;

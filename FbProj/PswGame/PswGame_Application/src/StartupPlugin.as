@@ -1,29 +1,32 @@
 package
 {
-	import com.physwf.application.login.Login;
 	import com.physwf.application.plugin.IPlugin;
 	import com.physwf.application.plugin.PluginInfo;
+	import com.physwf.application.startup.Startup;
 	
 	import flash.display.Sprite;
 	
-	public class LoginPlugin extends Sprite implements IPlugin
+	public class StartupPlugin extends Sprite implements IPlugin
 	{
-		private var mLogin:Login;
+		private var mStartup:Startup;
 		private var mInfo:PluginInfo;
 		
-		public function LoginPlugin()
+		public function StartupPlugin()
 		{
-			super();
+			
 		}
-		
+
 		public function execute(root:Sprite):void
 		{
-			mLogin = new Login(root);
-			mLogin.initialize();
+			mStartup = new Startup();
+			mStartup.initialize();
 		}
 		
 		public function dispose():void
 		{
+			mStartup = null;
+			mInfo = null;
 		}
+		
 	}
 }

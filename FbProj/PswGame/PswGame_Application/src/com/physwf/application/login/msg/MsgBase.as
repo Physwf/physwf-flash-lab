@@ -54,6 +54,11 @@ package com.physwf.application.login.msg
 		public function readExternal(input:IDataInput):void
 		{
 			readHead(input);
+			if(statusCode>0) 
+			{
+				trace("statusCode:",statusCode);
+				return;
+			}
 			readBody(input);
 		}
 		

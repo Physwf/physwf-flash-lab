@@ -41,7 +41,7 @@ package com.physwf.application.login.services
 			msg.which_game = LoginContext.which_game ;
 			msg.user_ip = LoginContext.user_ip;
 			msg.img_id = LoginContext.img_id;
-			msg.verify_code  = LoginContext.img_id;
+			msg.verify_code  = LoginContext.verify_code;
 //			msg.tag = LoginContext.tag;
 			RPCClient.call(msg);
 		}
@@ -49,8 +49,8 @@ package com.physwf.application.login.services
 		public function getServerList():void
 		{
 			var msg:MSG_REQ_GET_RECOMMEND_SVR_LIST_105 = new MSG_REQ_GET_RECOMMEND_SVR_LIST_105();
-			msg.session = MySelf.loginInfo.session.readUTFBytes(MySelf.loginInfo.session.length);
-			msg.tad = LoginContext.tag as String;
+			msg.session = MySelf.loginInfo.session;
+			msg.tad = LoginContext.tad;
 			RPCClient.call(msg);
 		}
 		
@@ -58,7 +58,7 @@ package com.physwf.application.login.services
 		{
 			var msg:MSG_REQ_GET_ROLE_INFO_106 = new MSG_REQ_GET_ROLE_INFO_106();
 //			msg.area_id = 
-			msg.session = MySelf.loginInfo.session.readUTFBytes(MySelf.loginInfo.session.length);
+			msg.session = MySelf.loginInfo.session;
 //			msg.tad
 			RPCClient.call(msg);
 		}
@@ -70,7 +70,7 @@ package com.physwf.application.login.services
 			msg.nick = nick;
 			msg.prof = prof;
 //			msg.channel
-			msg.session = MySelf.loginInfo.session.readUTFBytes(MySelf.loginInfo.session.length);
+			msg.session = MySelf.loginInfo.session;
 			//			msg.tad
 			RPCClient.call(msg);
 		}

@@ -9,7 +9,7 @@ package com.physwf.application.login.cache
 		private static var mProductName:String;
 		
 		private static var mUserIP:int;
-		private static var mTag:*;
+		private static var mTag:String;
 		/**
 		 *验证码图片id 
 		 */		
@@ -31,6 +31,7 @@ package com.physwf.application.login.cache
 		{
 			mChannel=65;
 			mUserIP = 0;
+			mTag = "";
 		}
 		
 		public static function setProductInfo(pid:String,pName:String):void
@@ -54,7 +55,7 @@ package com.physwf.application.login.cache
 			return mUserIP;
 		}
 		
-		public static function get tag():*
+		public static function get tad():String
 		{
 			return mTag;
 		}

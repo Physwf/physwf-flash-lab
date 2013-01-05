@@ -2,10 +2,13 @@ package com.physwf.application.login
 {
 	import com.physwf.application.interfaces.IDestroyable;
 	import com.physwf.application.login.cache.LoginContext;
+	import com.physwf.application.login.cache.OnlineInfo;
 	import com.physwf.application.login.controller.LoginController;
 	import com.physwf.application.login.rpc.MessageEvent;
 	import com.physwf.application.login.services.LoginService;
 	import com.physwf.application.login.view.Loading;
+	import com.physwf.application.login.view.SelectAreaPanel;
+	import com.physwf.application.login.view.SelectRolePanel;
 	import com.physwf.application.login.view.SignInPanel;
 	import com.physwf.application.login.view.StartPanel;
 	import com.physwf.system.entity.MySelf;
@@ -66,7 +69,7 @@ package com.physwf.application.login
 			Loading.showMainLoading(mRoot);
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onAssetsLoaded);
-			loader.load(new URLRequest("resource/LoginAssets.swf"),new LoaderContext(false,ApplicationDomain.currentDomain));//需要制定ApplicationDomain吗？
+			loader.load(new URLRequest("resource/login/LoginAssets.swf"),new LoaderContext(false,ApplicationDomain.currentDomain));//需要制定ApplicationDomain吗？
 		}
 		
 		private function onAssetsLoaded(e:Event):void
@@ -100,6 +103,7 @@ package com.physwf.application.login
 			{
 				mRoot.removeChild(signInPanel);
 				Loading.removeLightLoading(mRoot);
+				setpSelectArea();
 			};
 				
 			signInPanel.onSignIn = function():void
@@ -119,6 +123,41 @@ package com.physwf.application.login
 		private function stepRegister():void
 		{
 			
+		}
+		
+		private function setpSelectArea():void
+		{
+			var selectAreaPanel:SelectAreaPanel = new SelectAreaPanel("McSelectArea");
+			
+			LoginController.instance.onGetServerList = function ():void
+			{
+				selectAreaPanel.setAreas(OnlineInfo.onlines);
+				mRoot.addChild(selectAreaPanel);
+			};
+			selectAreaPanel.onAreaSelected = function ():void
+			{
+				MySelf.loginInfo.serverInfo = selectAreaPanel.getSelectArea();
+				mRoot.removeChild(selectAreaPanel);
+				setpSelectRole();
+			};
+			LoginService.instance.getServerList();
+		}
+		
+		private function setpSelectRole():void
+		{
+			var selectRolePanel:SelectRolePanel = new SelectRolePanel("McSelectRole");
+			
+			LoginController.instance.onGetRoles = function ():void
+			{
+				selectRolePanel.setRoles(OnlineInfo.roles);
+				mRoot.addChild(selectRolePanel);
+			};
+			selectRolePanel.onRoleSelected = function ():void
+			{
+				MySelf.loginInfo.roleInfo = selectRolePanel.getRoleSelected();
+				mRoot.removeChild(selectRolePanel);
+			};
+			LoginService.instance.getRoles();
 		}
 		
 		public function dispose():void

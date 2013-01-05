@@ -1,6 +1,6 @@
 package com.physwf.application.login.msg
 {
-	import 
+	
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;

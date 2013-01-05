@@ -20,6 +20,9 @@ package com.physwf.application.login.msg
 		public function registerMessage():void
 		{
 			regMsg(103,MSG_RES_LOGIN_103);
+			regMsg(105,MSG_RES_GET_RECOMMEND_SVR_LIST_105);
+			regMsg(106,MSG_RES_GET_ROLE_INFO_106);
+			regMsg(107,MSG_RES_CREATE_ROLE_107);
 		}
 		
 		private function regMsg(mid:uint,MSG:Class):void
