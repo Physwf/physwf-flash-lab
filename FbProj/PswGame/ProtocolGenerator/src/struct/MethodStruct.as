@@ -67,7 +67,10 @@ package struct
 			switch(type)
 			{
 				case FieldStruct.TYPE_CAHR:
-					return name+ " = input.readUTFBytes("+size+");";//定长数组 {args} = size,变长数组{args} = input.readUnsignedInt();
+					var readStr:String = name + " = input.readUTFBytes("+size+");";//定长数组 {args} = size,变长数组{args} = input.readUnsignedInt();
+//					var readByteArr:String =  name+ "Data = new ByteArray();" +
+//						"\n\t\t\tinput.readBytes("+name+"Data,0,"+size+");"
+					return readStr;
 				default:
 					loopBody =  getReadLoopBody();
 			}
@@ -176,10 +179,19 @@ package struct
 			switch(type)
 			{
 				case FieldStruct.TYPE_CAHR:
-					return "var "+name+"Data:ByteArray = new ByteArray();" +
-					"\n\t\t\t" + name+"Data.writeUTFBytes("+name+")" +
-					"\n\t\t\t"+ name+"Data.length = "+ size +";"+
-					"\n\t\t\toutput.writeBytes("+name+"Data)";
+					var writeStr:String = "\n\t\t\t\tvar "+name+"Data:ByteArray = new ByteArray();" +
+					"\n\t\t\t\t" + name+"Data.writeUTFBytes("+name+")" +
+					"\n\t\t\t\t"+ name+"Data.length = "+ size +";"+
+					"\n\t\t\t\toutput.writeBytes("+name+"Data)";
+					var writeByte:String = "\n\t\t\t\toutput.writeBytes("+name+"_data)";
+					return "if("+name+"_data)" +
+						"\n\t\t\t{" +
+							writeByte +
+						"\n\t\t\t}" +
+						"\n\t\t\telse" +
+						"\n\t\t\t{" +
+							writeStr +
+						"\n\t\t\t}" ;
 				default:
 					loopBody =  getWriteLoopBody();
 			}

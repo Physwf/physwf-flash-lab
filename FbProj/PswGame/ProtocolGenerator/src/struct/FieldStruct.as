@@ -44,6 +44,7 @@ package struct
 		public function getDeclaration():String
 		{
 			var $type:String = Utils.transformType(type);
+			var declar:String = "public var "+name+":"+$type+";";
 			switch(mode)
 			{
 				case MODE_SINGLE:
@@ -65,7 +66,12 @@ package struct
 					break;
 					break;
 			}
-			return "public var "+name+":"+$type+";";
+			declar = "public var "+name+":"+$type+";";
+			if(type == FieldStruct.TYPE_CAHR)
+			{
+				declar += "\n\t\t\tpublic var "+ name + "_data:ByteArray";
+			}
+			return declar;
 		}
 		
 	}
