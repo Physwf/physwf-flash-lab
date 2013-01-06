@@ -69,7 +69,7 @@ package struct
 			declar = "public var "+name+":"+$type+";";
 			if(type == FieldStruct.TYPE_CAHR)
 			{
-				declar += "\n\t\t\tpublic var "+ name + "_data:ByteArray";
+				declar += "\n\t\tpublic var "+ name + "_data:ByteArray";
 			}
 			return declar;
 		}

@@ -28,7 +28,11 @@
 			private var configFile:File;
 			private var structTemplateFile:File;
 			private var msgTemplateFile:File;
+			private var msgManagerFile:File;
+			private var msgManagerFs:FileStream;
+			private var msgMngPath:String;
 			private var serverType:String;
+			
 			private var so:SharedObject;
 			
 			private function init():void
@@ -57,6 +61,7 @@
 							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 							MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
 							outputDir = config.server.(@name == rBtn.label)[0].@output;
+							msgMngPath = config.server.(@name == rBtn.label)[0].@msgManagerPath;
 						}
 						else if(so.data["name"] == null) 
 						{
@@ -66,6 +71,7 @@
 							MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 							MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
 							outputDir = config.server.(@name == rBtn.label)[0].@output;
+							msgMngPath = config.server.(@name == rBtn.label)[0].@msgManagerPath;
 							rBtn.selected = true;
 						}
 						rBtn.x = 40 + i * rBtn.label.length * 10;
@@ -77,6 +83,7 @@
 							MsgStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
 							MsgStruct.extendsName = config.server.(@name == e.target.label)[0].@extendsName;
 							outputDir = config.server.(@name == e.target.label)[0].@output;
+							msgMngPath = config.server.(@name == e.target.label)[0].@msgManagerPath;
 							so.data["name"] = rBtn.label;
 						});
 						addElement(rBtn);
@@ -122,6 +129,16 @@
 				var proto:XML = XML(e.target.data);
 				var structList:XMLList = proto.struct_list[0].struct;
 				var structRaw:XML;
+				if(msgMngPath) 
+				{
+					msgManagerFile = new File(msgMngPath);
+					msgManagerFs = new FileStream();
+					msgManagerFs.open(msgManagerFile,FileMode.READ);
+					var msgManagerContent:String = msgManagerFs.readUTFBytes(msgManagerFs.bytesAvailable);
+					msgManagerFs.close();
+					var reg:RegExp = /registerMessage\(\):void+\s+\{(\s+|[a-z]+|[A+Z]+)\}/;
+					msgManagerContent = msgManagerContent.replace(reg,"registerMessage():void\n\t\t{\n\t\t\t{register}\n\t\t}");
+				}
 				for(var i:int =0;i<structList.length();++i)
 				{
 					structRaw = structList[i];
@@ -159,6 +176,18 @@
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(msgStruct.getMsgRespond());
 					fs.close();
+					
+					if(msgMngPath&&i+1<protoList.length())
+					{
+						msgManagerContent =	msgManagerContent.replace("{register}","regMsg("+msgStruct.msgID+","+msgStruct.resName+");\n\t\t\t{register}");
+					}
+					else
+					{
+						msgManagerContent = msgManagerContent.replace("{register}","regMsg("+msgStruct.msgID+","+msgStruct.resName+");");
+						msgManagerFs.open(msgManagerFile,FileMode.WRITE);
+						msgManagerFs.writeUTFBytes(msgManagerContent);
+						msgManagerFs.close();
+					}
 				}
 				Alert.show("Done!","Ok",4,null,function ():void {exit()});
 			}

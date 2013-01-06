@@ -54,7 +54,8 @@ package struct
 			var nameReg:RegExp = new RegExp("{className}","g");
 			template = template.replace(nameReg,reqName);
 			template = template.replace("{package}",packageName);
-			template = template.replace("{extends}","import "+extendsName);
+			if(extendsName) template = template.replace("{extends}","import "+extendsName);
+			else template = template.replace("{extends}","");
 			checkInputEmpty();
 			for(var i:int=0;i<fieldsInput.length;++i)
 			{
@@ -74,7 +75,8 @@ package struct
 			var nameReg:RegExp = new RegExp("{className}","g");
 			template = template.replace(nameReg,resName);
 			template = template.replace("{package}",packageName);
-			template = template.replace("{extends}","import "+extendsName);
+			if(extendsName) template = template.replace("{extends}","import "+extendsName);
+			else template = template.replace("{extends}","");
 			checkOutputEmpty();
 			for(var i:int=0;i<fieldsOutput.length;++i)
 			{
