@@ -9,6 +9,8 @@ package com.physwf.application.login.services
 	import com.physwf.application.login.msg.MessageManager;
 	import com.physwf.application.login.rpc.RPCClient;
 	import com.physwf.system.entity.MySelf;
+	
+	import flash.utils.ByteArray;
 
 	public class LoginService
 	{
@@ -42,37 +44,44 @@ package com.physwf.application.login.services
 			msg.user_ip = LoginContext.user_ip;
 			msg.img_id = LoginContext.img_id;
 			msg.verify_code  = LoginContext.verify_code;
-//			msg.tag = LoginContext.tag;
+			
+//			msg. = LoginContext.tadData;
 			RPCClient.call(msg);
 		}
 		
 		public function getServerList():void
 		{
 			var msg:MSG_REQ_GET_RECOMMEND_SVR_LIST_105 = new MSG_REQ_GET_RECOMMEND_SVR_LIST_105();
-			msg.session = MySelf.loginInfo.session;
-			msg.tad = LoginContext.tad;
+			msg.session_data = MySelf.loginInfo.session;
+			msg.tad_data = LoginContext.tadData;
 			RPCClient.call(msg);
 		}
 		
 		public function getRoles():void
 		{
 			var msg:MSG_REQ_GET_ROLE_INFO_106 = new MSG_REQ_GET_ROLE_INFO_106();
-//			msg.area_id = 
-			msg.session = MySelf.loginInfo.session;
-//			msg.tad
+			msg.area_id = MySelf.loginInfo.serverInfo.area_id;
+			msg.session_data = MySelf.loginInfo.session;
+			msg.tad_data = LoginContext.tadData;
 			RPCClient.call(msg);
 		}
 		
 		public function createRole(nick:String,prof:uint):void
 		{
 			var msg:MSG_REQ_CREATE_ROLE_107 = new MSG_REQ_CREATE_ROLE_107();
-//			msg.area_id
+			msg.area_id = MySelf.loginInfo.serverInfo.area_id;
 			msg.nick = nick;
 			msg.prof = prof;
-//			msg.channel
-			msg.session = MySelf.loginInfo.session;
-			//			msg.tad
+			msg.channel = LoginContext.channel;
+			msg.session_data = MySelf.loginInfo.session;
+			msg.tad_data = LoginContext.tadData;
 			RPCClient.call(msg);
+		}
+		
+		public function close():void
+		{
+			MessageManager.instance.dispose();
+			RPCClient.close();
 		}
 	}
 }

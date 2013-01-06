@@ -10,6 +10,7 @@ package com.physwf.application.login.msg
 		public var pet_id:uint;
 		public var pet_type:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var level:uint;
 		public var exp:uint;
 		public var hp:uint;
@@ -84,10 +85,17 @@ package com.physwf.application.login.msg
 		{
 			output.writeInt(pet_id);
 			output.writeInt(pet_type);
-			var nickData:ByteArray = new ByteArray();
-			nickData.writeUTFBytes(nick)
-			nickData.length = 16;
-			output.writeBytes(nickData)
+			if(nick_data)
+			{
+				output.writeBytes(nick_data)
+			}
+			else
+			{
+				var nickData:ByteArray = new ByteArray();
+				nickData.writeUTFBytes(nick)
+				nickData.length = 16;
+				output.writeBytes(nickData)
+			}
 			output.writeShort(level);
 			output.writeInt(exp);
 			output.writeInt(hp);

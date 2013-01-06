@@ -17,6 +17,8 @@ package com.physwf.application.login
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
@@ -27,7 +29,7 @@ package com.physwf.application.login
 	 * @author joe
 	 * 
 	 */	
-	public class Login implements IDestroyable
+	public class Login extends EventDispatcher implements IDestroyable
 	{
 		private var mRoot:Sprite;
 		
@@ -102,6 +104,7 @@ package com.physwf.application.login
 			LoginController.instance.onLoginSuccess = function ():void
 			{
 				mRoot.removeChild(signInPanel);
+				signInPanel.dispose();
 				Loading.removeLightLoading(mRoot);
 				setpSelectArea();
 			};
@@ -138,6 +141,7 @@ package com.physwf.application.login
 			{
 				MySelf.loginInfo.serverInfo = selectAreaPanel.getSelectArea();
 				mRoot.removeChild(selectAreaPanel);
+				selectAreaPanel.dispose();
 				setpSelectRole();
 			};
 			LoginService.instance.getServerList();
@@ -156,10 +160,17 @@ package com.physwf.application.login
 			{
 				MySelf.loginInfo.roleInfo = selectRolePanel.getRoleSelected();
 				mRoot.removeChild(selectRolePanel);
+				selectRolePanel.dispose();
+				finish();
 			};
 			LoginService.instance.getRoles();
 		}
 		
+		private function finish():void
+		{
+			dispatchEvent(new Event("finished"));
+		}
+			
 		public function dispose():void
 		{
 			Loading.MAIN_LOADING = null;

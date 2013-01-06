@@ -11,7 +11,7 @@ package com.physwf.application.login.msg
 		public var user_ip:int;
 		public var img_id:ByteArray;
 		public var verify_code:ByteArray;
-		public var tag:*;
+		public var tad_data:ByteArray;
 		
 		public function MSG_REQ_LOGIN_103()
 		{

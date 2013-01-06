@@ -42,5 +42,13 @@ package com.physwf.application.login.view
 		{
 			return asset["txtPassword"].text;
 		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+			onSignIn = null;
+			onRegister = null;
+			onCancel = null;
+		}
 	}
 }

@@ -9,10 +9,13 @@ package com.physwf.application.login.msg
 	{
 		public var area_id:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var prof:uint;
 		public var channel:uint;
 		public var session:String;
+		public var session_data:ByteArray
 		public var tad:String;
+		public var tad_data:ByteArray
 		
 		public function MSG_REQ_CREATE_ROLE_107()
 		{
@@ -22,16 +25,30 @@ package com.physwf.application.login.msg
 		override protected function writeBody(output:IDataOutput):void
 		{
 			output.writeShort(area_id);
-			var nickData:ByteArray = new ByteArray();
-			nickData.writeUTFBytes(nick)
-			nickData.length = 16;
-			output.writeBytes(nickData)
+			if(nick_data)
+			{
+				output.writeBytes(nick_data)
+			}
+			else
+			{
+				var nickData:ByteArray = new ByteArray();
+				nickData.writeUTFBytes(nick)
+				nickData.length = 16;
+				output.writeBytes(nickData)
+			}
 			output.writeByte(prof);
 			output.writeInt(channel);
-			var sessionData:ByteArray = new ByteArray();
-			sessionData.writeUTFBytes(session)
-			sessionData.length = 16;
-			output.writeBytes(sessionData)
+			if(session_data)
+			{
+				output.writeBytes(session_data)
+			}
+			else
+			{
+				var sessionData:ByteArray = new ByteArray();
+				sessionData.writeUTFBytes(session)
+				sessionData.length = 16;
+				output.writeBytes(sessionData)
+			}
 			output.writeUnsignedInt(tad.length);
 			output.writeUTFBytes(tad);			
 		}

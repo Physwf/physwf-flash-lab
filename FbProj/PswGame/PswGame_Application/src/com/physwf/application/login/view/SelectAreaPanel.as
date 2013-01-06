@@ -4,6 +4,8 @@ package com.physwf.application.login.view
 	import com.physwf.system.vo.ServerInfo;
 	
 	import flash.events.MouseEvent;
+	
+	import flashx.textLayout.elements.OverflowPolicy;
 
 	public class SelectAreaPanel extends PanelBase
 	{
@@ -13,6 +15,8 @@ package com.physwf.application.login.view
 		public function SelectAreaPanel(assetName:String)
 		{
 			super(assetName);
+			asset.x = 500;
+			asset.y = 250;
 			for(var i:int=0;i<3;++i)
 			{
 				asset["mcArea"+i].mouseChildren = false;
@@ -22,7 +26,7 @@ package com.physwf.application.login.view
 		
 		public function setAreas(areas:Vector.<ServerInfo>):void
 		{
-			for(var i:int=0;i<3;++i)
+			for(var i:int=0;i<areas.length;++i)
 			{
 				asset["mcArea"+i]["txtArea"].text = areas[i].area_id+":"+areas[i].ip;
 			}
@@ -44,6 +48,12 @@ package com.physwf.application.login.view
 					onAreaSelected();
 					break;
 			}
+		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+			onAreaSelected = null;
 		}
 	}
 }

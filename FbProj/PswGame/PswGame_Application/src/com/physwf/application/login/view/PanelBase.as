@@ -26,7 +26,8 @@ package com.physwf.application.login.view
 		
 		public function dispose():void
 		{
-			removeChildAt(0);
+			removeChild(asset);
+			asset = null;
 			removeEventListener(MouseEvent.CLICK,onClick);
 		}
 	}

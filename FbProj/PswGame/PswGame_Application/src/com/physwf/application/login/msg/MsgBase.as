@@ -8,7 +8,7 @@ package com.physwf.application.login.msg
 	public class MsgBase implements IExternalizable
 	{
 		public static const HEAD_LENGTH:int = 18;
-		
+		public static var UID:uint;
 		private var length:uint;
 		public var msgid:uint;
 		public var uid:uint;
@@ -18,6 +18,7 @@ package com.physwf.application.login.msg
 		public function MsgBase(mid:uint)
 		{
 			msgid = mid;
+			uid = UID;
 		}
 		
 		public function writeExternal(output:IDataOutput):void

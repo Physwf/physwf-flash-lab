@@ -51,6 +51,7 @@ package com.physwf.application.login.controller
 				case MessageEvent.MSG_SUCCESS_+103:
 				{
 					MySelf.loginInfo.session = MSG_RES_LOGIN_103(msg).session;
+					MsgBase.UID = msg.uid;
 					onLoginSuccess();
 					break;
 				}

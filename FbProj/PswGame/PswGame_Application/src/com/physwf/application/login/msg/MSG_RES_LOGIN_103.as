@@ -6,7 +6,7 @@ package com.physwf.application.login.msg
 	public class MSG_RES_LOGIN_103 extends MsgBase
 	{
 		public var login_result:int;
-		public var session:String;
+		public var session:ByteArray;
 		public var has_role:Boolean;
 		
 		public var img_id:ByteArray;
@@ -24,7 +24,8 @@ package com.physwf.application.login.msg
 			
 			if(login_result==0)
 			{
-				session = input.readUTFBytes(16);
+				session = new ByteArray();
+				input.readBytes(session,0,16);
 				has_role = (input.readUnsignedInt() > 0);
 			}
 			else if(login_result<6)

@@ -15,7 +15,13 @@ package
 		{
 			
 		}
-
+		
+		public function set info(v:PluginInfo):void
+		{
+			mInfo = v;
+		}
+		
+		
 		public function execute(root:Sprite):void
 		{
 			mStartup = new Startup();

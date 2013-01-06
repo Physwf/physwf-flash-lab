@@ -9,6 +9,7 @@ package com.physwf.application.login.msg
 	{
 		public var role_tm:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var prof:uint;
 		
 		public function role_info_t()
@@ -25,10 +26,17 @@ package com.physwf.application.login.msg
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeInt(role_tm);
-			var nickData:ByteArray = new ByteArray();
-			nickData.writeUTFBytes(nick)
-			nickData.length = 16;
-			output.writeBytes(nickData)
+			if(nick_data)
+			{
+				output.writeBytes(nick_data)
+			}
+			else
+			{
+				var nickData:ByteArray = new ByteArray();
+				nickData.writeUTFBytes(nick)
+				nickData.length = 16;
+				output.writeBytes(nickData)
+			}
 			output.writeByte(prof);			
 		}
 	}

@@ -36,13 +36,25 @@ package com.physwf.application.login.view
 				case "mcRole1":
 				case "mcRole2":
 					roleSelectedID = uint(e.target.name.charAt(6));
+					onRoleSelected();
 					break;
 			}
 		}
 		
 		public function setRoles(roles:Vector.<RoleInfo>):void
 		{
-			
+			for(var i:int =0;i<roles.length;++i)
+			{
+				asset["mcRole"+i]["txtNick"].text = roles[i].nick;
+				asset["mcRole"+i]["txtSex"].text = roles[i].prof;
+				asset["mcRole"+i]["txtBirthDay"].text = roles[i].createTime;
+			}
+		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+			onRoleSelected = null;
 		}
 	}
 }

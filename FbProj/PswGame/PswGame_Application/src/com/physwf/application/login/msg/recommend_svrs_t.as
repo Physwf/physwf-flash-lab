@@ -9,6 +9,7 @@ package com.physwf.application.login.msg
 	{
 		public var online_id:uint;
 		public var online_ip:String;
+		public var online_ip_data:ByteArray
 		public var online_port:uint;
 		public var user_num:uint;
 		public var friend_num:uint;
@@ -31,10 +32,17 @@ package com.physwf.application.login.msg
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeShort(online_id);
-			var online_ipData:ByteArray = new ByteArray();
-			online_ipData.writeUTFBytes(online_ip)
-			online_ipData.length = 16;
-			output.writeBytes(online_ipData)
+			if(online_ip_data)
+			{
+				output.writeBytes(online_ip_data)
+			}
+			else
+			{
+				var online_ipData:ByteArray = new ByteArray();
+				online_ipData.writeUTFBytes(online_ip)
+				online_ipData.length = 16;
+				output.writeBytes(online_ipData)
+			}
 			output.writeShort(online_port);
 			output.writeInt(user_num);
 			output.writeByte(friend_num);

@@ -138,6 +138,11 @@ package com.physwf.application.login.rpc
 			rawSocket.flush();
 		}
 		
+		public static function close():void
+		{
+			if(rawSocket.connected) return;
+			rawSocket.close();
+		}
 		public static function addEventListener(type:String,listener:Function,useCapture:Boolean=false,priority:int=0,useWeakReference:Boolean=false):void
 		{
 			sHelpEventDispatcher.addEventListener(type,listener,useCapture,priority,useWeakReference);

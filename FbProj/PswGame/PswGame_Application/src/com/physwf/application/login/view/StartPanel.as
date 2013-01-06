@@ -23,5 +23,11 @@ package com.physwf.application.login.view
 			}
 		}
 		
+		override public function dispose():void
+		{
+			super.dispose();
+			onStartClick = null;
+		}
+		
 	}
 }

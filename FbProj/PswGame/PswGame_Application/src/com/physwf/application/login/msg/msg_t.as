@@ -9,6 +9,7 @@ package com.physwf.application.login.msg
 	{
 		public var msg_len:uint;
 		public var msg:String;
+		public var msg_data:ByteArray
 		
 		public function msg_t()
 		{

@@ -1,8 +1,10 @@
 package com.physwf.application.login.msg
 {
+	import com.physwf.application.interfaces.IDestroyable;
+	
 	import flash.utils.Dictionary;
 
-	public class MessageManager
+	public class MessageManager implements IDestroyable
 	{
 		private var mMsgDic:Dictionary;
 		
@@ -33,6 +35,11 @@ package com.physwf.application.login.msg
 		public function getMSG(mid:uint):Class
 		{
 			return mMsgDic[mid] as Class;
+		}
+		
+		public function dispose():void
+		{
+			mMsgDic = null;
 		}
 	}
 }
