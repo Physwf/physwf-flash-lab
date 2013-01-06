@@ -114,7 +114,7 @@ package com.physwf.application
 				if(pluginInfo.type=="exe")
 				{
 					var plugin:IPlugin = loader.content as IPlugin;
-					plugin.execute(application.root);
+					plugin.info = pluginInfo;
 					loader.unload();
 					application.registerPlugin(pluginInfo,plugin);
 					plugin.dispatchEvent(new PluginEvent(PluginEvent.PLUGIN_INSTALLED,pluginInfo));

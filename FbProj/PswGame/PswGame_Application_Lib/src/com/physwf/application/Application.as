@@ -29,7 +29,8 @@ package com.physwf.application
 		private var mDriver:Driver;
 		private var mRoot:Sprite;
 		
-		private var mPlugins:Dictionary;
+		private var mPluginQueue:Vector.<IPlugin>;
+		private var mCurPlugin:IPlugin;
 		
 		[Embed(source="assets/system.swf",symbol="McApplicationLoading")]
 		private var LoadingBar:Class;
@@ -42,7 +43,7 @@ package com.physwf.application
 			mSandBox = new SandBox();
 			mDriver = new Driver(mSandBox);
 			mRoot = root;
-			mPlugins = new Dictionary();
+			mPluginQueue = new <IPlugin>[];
 			
 			mLoadingBar = new LoadingBar() as DisplayObject;
 			mLoadingBar.x = root.stage.stageWidth * .5;
@@ -82,21 +83,29 @@ package com.physwf.application
 		
 		public function registerPlugin(key:PluginInfo,plugin:IPlugin):void
 		{
-			plugin.addEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
-			mPlugins[key] = plugin;
+			mPluginQueue.push(plugin);
+			checkForExecute();
 		}
 		
 		private function onPluginFinished(e:PluginEvent):void
 		{
 			var pluginInfo:PluginInfo = e.pluginInfo;
-			var plugin:IPlugin = mPlugins[e.pluginInfo] as IPlugin;
-			if(!plugin) throw "该插件并未安装！";
-			plugin.dispose();
-			delete mPlugins[pluginInfo];
+			mCurPlugin.removeEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
+			mCurPlugin.dispose();
+			mCurPlugin = null;
 			
-			if(pluginInfo.domain.useSub)
+			uninstall(pluginInfo);
+			
+			checkForExecute();
+		}
+		
+		private function checkForExecute():void
+		{
+			if(!mCurPlugin && mPluginQueue.length>0)
 			{
-				mSandBox.destroySubDomain(pluginInfo.domain.name);
+				mCurPlugin = mPluginQueue.shift();
+				mCurPlugin.addEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
+				mCurPlugin.execute(mRoot);
 			}
 		}
 		
@@ -148,10 +157,6 @@ package com.physwf.application
 		 */		
 		public function uninstall(pluginInfo:PluginInfo):void
 		{
-			var index:int = mPlugins.indexOf(pluginInfo);
-			if(index<0) throw "该插件并未安装！";
-			mPlugins.splice(index,1);
-			
 			if(pluginInfo.domain.useSub)
 			{
 				mSandBox.destroySubDomain(pluginInfo.domain.name);

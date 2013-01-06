@@ -8,7 +8,7 @@ package com.physwf.application.plugin
 	public interface IPlugin extends IDestroyable,IEventDispatcher
 	{
 //		function get info():PluginInfo;
-		
+		function set info(v:PluginInfo):void
 		function execute(root:Sprite):void;
 		/**
 		 * 销毁方法应该释放该插件对外部资源的引用 
