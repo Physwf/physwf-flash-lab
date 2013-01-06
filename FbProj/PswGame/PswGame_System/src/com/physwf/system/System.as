@@ -1,6 +1,7 @@
 package com.physwf.system
 {
 	import com.physwf.components.rpc.RPCConnectioin;
+	import com.physwf.components.rpc.msg.MessageManager;
 	import com.physwf.system.entity.MapSystem;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MyEvent;
@@ -17,6 +18,9 @@ package com.physwf.system
 		public static function initialize():void
 		{
 			RPCConnectioin.online = new RPCConnectioin();
+			RPCConnectioin.online.initialze();
+			MessageManager.instance.initialize();
+			MessageManager.instance.registerMessage();
 			_myself = new MySelf();
 			_map = new MapSystem();
 			

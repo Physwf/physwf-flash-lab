@@ -12,9 +12,11 @@ package com.physwf.system.vo
 		public var host:String;
 		public var port:uint;
 		
-		public var session:String="";
+		public var session:ByteArray;
 		
 		public var tad:String;
+		public var tad_data:ByteArray;
+		
 		/**
 		 *所登录的服务器信息 
 		 */		
@@ -26,6 +28,8 @@ package com.physwf.system.vo
 		
 		public function LoginInfo()
 		{
+			tad_data = new ByteArray();
+			tad_data.length = 128;
 		}
 	}
 }

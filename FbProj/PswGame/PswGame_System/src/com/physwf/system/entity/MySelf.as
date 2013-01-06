@@ -54,8 +54,8 @@ package com.physwf.system.entity
 			var msg:MSG_REQ_LOGIN_1001 = new MSG_REQ_LOGIN_1001();
 			msg.from_game = loginInfo.which_game;
 			msg.to_game = 0;
-			msg.sess = loginInfo.session;
-			msg.tad = loginInfo.tad;
+			msg.sess_data = loginInfo.session;
+			msg.tad_data = loginInfo.tad_data;
 			msg.role_tm = loginInfo.roleInfo.createTime;
 			RPCConnectioin.online.call(msg);
 		}
@@ -137,8 +137,8 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+1030://进入地图
 					var msg1030:MSG_RES_ENTER_MAP_1030 = MSG_RES_ENTER_MAP_1030(msg);
-					petInfo.id = msg1030.user.pet_follow.petid;
-					petInfo.type = msg1030.user.pet_follow.pettype;
+					petInfo.id = msg1030.user.pet_follow.pet_id;
+					petInfo.type = msg1030.user.pet_follow.pet_type;
 					petInfo.nick = msg1030.user.pet_follow.nick;
 					petInfo.level = msg1030.user.pet_follow.level;
 					petInfo.hp = msg1030.user.pet_follow.hp;
