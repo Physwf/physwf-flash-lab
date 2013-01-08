@@ -7,8 +7,10 @@ package com.physwf.application
 	import com.physwf.application.plugin.PluginInfo;
 	
 	import flash.display.DisplayObject;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 
@@ -35,7 +37,15 @@ package com.physwf.application
 		[Embed(source="assets/system.swf",symbol="McApplicationLoading")]
 		private var LoadingBar:Class;
 		
+		[Embed(source="assets/system.swf",symbol="BtnSystem")]
+		private var SystemBtn:Class;
+		
+		[Embed(source="assets/system.swf",symbol="McApplicationPower")]
+		private var McApplicationPower:Class;
+		
 		private var mLoadingBar:DisplayObject;
+		private var mBtnSystem:SimpleButton;
+		private var mPowerPanel:Sprite;
 		
 		public function Application(root:Sprite)
 		{
@@ -50,7 +60,43 @@ package com.physwf.application
 			mLoadingBar.y = root.stage.stageHeight * .5;
 			root.addChild(mLoadingBar);
 			
+			mBtnSystem = new SystemBtn() as SimpleButton;
+			mBtnSystem.y = mBtnSystem.height * .5;
+			mBtnSystem.x = root.stage.stageWidth - mBtnSystem.width * .5;
+			mBtnSystem.name = "btnSystem";
+			root.stage.addChild(mBtnSystem);
+			mBtnSystem.addEventListener(MouseEvent.CLICK,onClick);
+			
+			mPowerPanel = new McApplicationPower() as Sprite;
+			mPowerPanel.x = root.stage.stageWidth * .5;
+			mPowerPanel.y = root.stage.stageHeight * .5;
+			mPowerPanel.addEventListener(MouseEvent.CLICK,onClick);
+			
 			application = this;
+		}
+		
+		private function onClick(e:MouseEvent):void
+		{
+			switch(e.target.name)
+			{
+				case "btnSystem":
+					if(mRoot.contains(mPowerPanel)) return;
+					mRoot.addChild(mPowerPanel);
+					break;
+				case "btnRestart":
+					mRoot.removeChild(mPowerPanel);
+//					restart();
+					break;
+				case "btnStop":
+					mRoot.removeChild(mPowerPanel);
+//					exit();
+					break;
+				case "btnOff":
+					break;
+				case "btnCancel":
+					mRoot.removeChild(mPowerPanel);
+					break;
+			}
 		}
 		
 		public function startup():void
