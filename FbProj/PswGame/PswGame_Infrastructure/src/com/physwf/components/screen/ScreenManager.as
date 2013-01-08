@@ -1,21 +1,36 @@
 package com.physwf.components.screen
 {
-	import com.physwf.components.screen.layer.ILayer;
+	import flash.display.Sprite;
 
 	public class ScreenManager
 	{
-//		private static var _layerList:Vector.<ILayer>;
+		public static var main:ScreenManager;
 		
-		private var _mapLayer:ILayer;//地图层,最底层
-		private var _functioinLayer:ILayer;//功能层,功能UI
-		private var _effectLayer:ILayer;//特效层
-		private var _notifyLayer:ILayer;//通知，提示层，最上层
+		private var mRoot:Sprite;
 		
-		public function ScreenManager()
+		public function ScreenManager(root:Sprite=null)
 		{
-			
+			root ||= new Sprite();;
+			mRoot = root; 
 		}
 		
+		public function addLayerToTop(layer:Sprite):Sprite
+		{
+			if(!layer) layer = new Sprite();
+			mRoot.addChild(layer);
+			return layer;
+		}
 		
+		public function addLayerToBottom(layer:Sprite):Sprite
+		{
+			if(!layer) layer = new Sprite();
+			mRoot.addChildAt(layer,0);
+			return layer;
+		}
+		
+		public function set frameRate(v:uint):void
+		{
+			mRoot.stage.frameRate = v;
+		}
 	}
 }

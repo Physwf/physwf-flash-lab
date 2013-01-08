@@ -31,6 +31,7 @@ package com.physwf.components.rpc
 		{
 			rawSocket = new Socket();
 			buffer = new ByteArray();
+			helpBuffer = new ByteArray();
 			msgQueue = new <MsgBase>[];
 			
 			rawSocket.addEventListener(Event.CONNECT,onConnected);
@@ -42,13 +43,13 @@ package com.physwf.components.rpc
 		
 		private function onConnected(e:Event):void
 		{
-			trace("login:socket_connected!");
+			trace("online:socket_connected!");
 			mConnectedCallBack();
 		}
 		
 		private function onClosed(e:Event):void
 		{
-			trace("login:socket_closed!");
+			trace("online:socket_closed!");
 		}
 		
 		private function onSocketData(e:ProgressEvent):void
@@ -112,10 +113,10 @@ package com.physwf.components.rpc
 			switch(e.type)
 			{
 				case IOErrorEvent.IO_ERROR:
-					trace("login:socket_ioError");
+					trace("online:socket_ioError");
 					break;
 				case SecurityErrorEvent.SECURITY_ERROR:
-					trace("login:socket_securityError");
+					trace("online:socket_securityError");
 					break;
 			}
 		}

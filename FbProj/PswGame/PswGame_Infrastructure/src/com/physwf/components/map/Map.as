@@ -19,7 +19,15 @@ package com.physwf.components.map
 		public function Map()
 		{
 			mBottom = new Sprite();
+			addChild(mBottom);
 			mAstar = new BiHeapAStar();
+		}
+		
+		public function fillBottom(v:DisplayObject):void
+		{
+			mMapW = v.width;
+			mMapH = v.height;
+			mBottom.addChild(v);
 		}
 		
 		public function get bottom():Sprite
