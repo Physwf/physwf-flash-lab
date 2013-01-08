@@ -31,7 +31,7 @@
       <libraryPathEntry kind="3" linkType="2" path="/PswGame_Application_Lib/bin/PswGame_Application_Lib.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="2" path="/PswGame_System/bin/PswGame_System.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/As3Lib/bin/As3Lib.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/PswGame_Infrastructure/bin/PswGame_Infrastructure.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="2" path="/PswGame_Infrastructure/bin/PswGame_Infrastructure.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

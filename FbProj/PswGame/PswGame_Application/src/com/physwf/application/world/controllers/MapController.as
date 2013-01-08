@@ -1,6 +1,6 @@
 package com.physwf.application.world.controllers
 {
-	import com.physwf.components.map.Map;
+	import com.physwf.components.map.MapView;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MapSystem;
 	import com.physwf.system.entity.MySelf;

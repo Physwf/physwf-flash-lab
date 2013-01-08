@@ -1,9 +1,9 @@
 package com.physwf.application.world
 {
 	import com.physwf.application.login.rpc.MessageEvent;
-	import com.physwf.application.world.manager.MapManager;
+	import com.physwf.application.world.manager.Map;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.map.Map;
+	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.system.System;
@@ -15,19 +15,18 @@ package com.physwf.application.world
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
-	public class World extends Sprite
+	public class World
 	{
 		private const gameTimer:Timer = new Timer(33);
 		
-		private var mapManager:MapManager;
+		private var mapManager:Map;
 		
 		
 		public function World()
 		{
 			super();
-			mapManager = new MapManager();
-			ScreenManager.main.addLayerToBottom(this);
-			mapManager.attachLayer(this);
+			mapManager = new Map();
+			mapManager.attachLayer(ScreenManager.main.world);
 			mapManager.load();
 		}
 		

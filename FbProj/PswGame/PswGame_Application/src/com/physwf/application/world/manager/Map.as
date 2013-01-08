@@ -2,7 +2,7 @@ package com.physwf.application.world.manager
 {
 	import com.physwf.application.world.controllers.MapController;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.map.Map;
+	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
 	
 	import flash.display.Loader;
@@ -11,18 +11,17 @@ package com.physwf.application.world.manager
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 
-	public class MapManager implements IUpdatable
+	public class Map implements IUpdatable
 	{
-		private var mMap:Map;
+		private var mMap:MapView;
 		private var mCamera:Camera;
 		
 		private var mController:MapController;
-		
 		private var helpTarget:Sprite;
 		
-		public function MapManager()
+		public function Map()
 		{
-			mMap = new Map();
+			mMap = new MapView();
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
 			helpTarget = new Sprite();
 			mCamera.target = helpTarget;
