@@ -11,6 +11,7 @@ package com.physwf.system.entity
 	import com.physwf.system.vo.UserInfo;
 	
 	import flash.events.EventDispatcher;
+	import flash.utils.ByteArray;
 
 	public class MySelf extends EventDispatcher
 	{
@@ -53,9 +54,11 @@ package com.physwf.system.entity
 		{
 			var msg:MSG_REQ_LOGIN_1001 = new MSG_REQ_LOGIN_1001();
 			msg.from_game = loginInfo.which_game;
-			msg.to_game = 0;
+			msg.to_game = loginInfo.which_game;
 			msg.sess_data = loginInfo.session;
-			msg.tad_data = loginInfo.tad_data;
+			var tempTad:ByteArray = new ByteArray();
+			tempTad.length = 64;
+			msg.tad_data = tempTad;
 			msg.role_tm = loginInfo.roleInfo.createTime;
 			RPCConnectioin.online.call(msg);
 		}

@@ -3,6 +3,8 @@
 	<name>PswGame_System</name>
 	<comment></comment>
 	<projects>
+		<project>PswGame_Infrastructure</project>
+		<project>PswGame_Protocol</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
