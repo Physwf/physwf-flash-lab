@@ -8,7 +8,7 @@ package com.physwf.components.map
 	import flash.display.Sprite;
 	import flash.geom.Point;
 
-	public class Map extends Sprite
+	public class MapView extends Sprite
 	{
 		private var mBottom:Sprite;
 		private var mLandform:DisplayObject;
@@ -16,7 +16,7 @@ package com.physwf.components.map
 		private var mMapW:Number;
 		private var mMapH:Number;
 		
-		public function Map()
+		public function MapView()
 		{
 			mBottom = new Sprite();
 			addChild(mBottom);

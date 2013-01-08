@@ -39,10 +39,12 @@
     <classEntry path="com.physwf.infras.utils.ByteUtils"/>
     <classEntry path="com.physwf.infras.utils.AlgebraUtils"/>
     <classEntry path="com.physwf.components.rpc.RPCConnectioin"/>
-    <classEntry path="com.physwf.components.map.Map"/>
+    <classEntry path="com.physwf.components.map.MapView"/>
     <classEntry path="com.physwf.components.map.camera.Camera"/>
-    <classEntry path="com.physwf.components.charactor.Charactor"/>
+    <classEntry path="com.physwf.components.charactor.CharactorAnimation"/>
     <classEntry path="com.physwf.components.charactor.WearLayer"/>
+    <classEntry path="com.physwf.components.charactor.SpectialLayer"/>
+    <classEntry path="com.physwf.components.screen.Layer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

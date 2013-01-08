@@ -9,6 +9,11 @@ package com.physwf.components.bitmap.display {
 		public function BitmapPalyer() 
 		{
 		}
+		
+		public function nextFrame():void
+		{
+			
+		}
 
 	} // end class
 } // end package

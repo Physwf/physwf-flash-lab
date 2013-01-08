@@ -6,26 +6,43 @@ package com.physwf.components.screen
 	{
 		public static var main:ScreenManager;
 		
+		private var mWorld:Layer;
+		private var mUi:Layer;
+		private var mEffect:Layer;
+		private var mTip:Layer;
+		
 		private var mRoot:Sprite;
 		
 		public function ScreenManager(root:Sprite=null)
 		{
-			root ||= new Sprite();;
-			mRoot = root; 
+			root ||= new Sprite();
+			mWorld = new Layer(root);
+			mUi = new Layer(root);
+			mEffect = new Layer(root);
+			mWorld = new Layer(root);
+			mTip = new Layer(root);
+			
+			mRoot = root;
 		}
 		
-		public function addLayerToTop(layer:Sprite):Sprite
+		public function get world():Layer
 		{
-			if(!layer) layer = new Sprite();
-			mRoot.addChild(layer);
-			return layer;
+			return mWorld;
 		}
 		
-		public function addLayerToBottom(layer:Sprite):Sprite
+		public function get ui():Layer
 		{
-			if(!layer) layer = new Sprite();
-			mRoot.addChildAt(layer,0);
-			return layer;
+			return mUi;
+		}
+		
+		public function get effect():Layer
+		{
+			return mEffect;
+		}
+		
+		public function get tip():Layer
+		{
+			return mTip;
 		}
 		
 		public function set frameRate(v:uint):void

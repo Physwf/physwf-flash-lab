@@ -1,6 +1,6 @@
 package com.physwf.components.map.camera
 {
-	import com.physwf.components.map.Map;
+	import com.physwf.components.map.MapView;
 	
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
@@ -8,7 +8,7 @@ package com.physwf.components.map.camera
 	public class Camera
 	{
 		private var mViewprot:Rectangle;
-		private var mMap:Map;
+		private var mMap:MapView;
 		private var mTarget:DisplayObject;
 		private var sHelpW:Number;
 		private var sHelpH:Number;
@@ -22,7 +22,7 @@ package com.physwf.components.map.camera
 			mTrackEnabled = true;
 		}
 		
-		public function initialize(map:Map):void
+		public function initialize(map:MapView):void
 		{
 			mMap = map;
 		}
