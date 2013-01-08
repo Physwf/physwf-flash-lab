@@ -7,9 +7,10 @@ package
 	
 	public class stru_pet_t implements IExternalizable
 	{
-		public var petid:uint;
-		public var pettype:uint;
+		public var pet_id:uint;
+		public var pet_type:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var level:uint;
 		public var exp:uint;
 		public var hp:uint;
@@ -46,8 +47,8 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			petid = input.readUnsignedInt();
-			pettype = input.readUnsignedInt();
+			pet_id = input.readUnsignedInt();
+			pet_type = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
 			level = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
@@ -82,12 +83,19 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(petid);
-			output.writeInt(pettype);
-			var nickData:ByteArray = new ByteArray();
-			nickData.writeUTFBytes(nick)
-			nickData.length = 16;
-			output.writeBytes(nickData)
+			output.writeInt(pet_id);
+			output.writeInt(pet_type);
+			if(nick_data)
+			{
+				output.writeBytes(nick_data)
+			}
+			else
+			{
+				var nickData:ByteArray = new ByteArray();
+				nickData.writeUTFBytes(nick)
+				nickData.length = 16;
+				output.writeBytes(nickData)
+			}
 			output.writeShort(level);
 			output.writeInt(exp);
 			output.writeInt(hp);

@@ -8,6 +8,7 @@ package
 	final public class MSG_RES_LOGIN_1001 extends MsgBase
 	{
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var prof:uint;
 		public var level:uint;
 		public var exp:uint;

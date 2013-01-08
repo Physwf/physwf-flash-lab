@@ -9,6 +9,7 @@ package
 	{
 		public var tskid:uint;
 		public var buff:String;
+		public var buff_data:ByteArray
 		
 		public function task_idbuff_t()
 		{

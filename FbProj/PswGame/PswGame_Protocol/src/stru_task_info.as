@@ -10,6 +10,7 @@ package
 		public var tskid:uint;
 		public var flag:uint;
 		public var buff:String;
+		public var buff_data:ByteArray
 		
 		public function stru_task_info()
 		{
@@ -26,10 +27,17 @@ package
 		{
 			output.writeInt(tskid);
 			output.writeInt(flag);
-			var buffData:ByteArray = new ByteArray();
-			buffData.writeUTFBytes(buff)
-			buffData.length = 32;
-			output.writeBytes(buffData)			
+			if(buff_data)
+			{
+				output.writeBytes(buff_data)
+			}
+			else
+			{
+				var buffData:ByteArray = new ByteArray();
+				buffData.writeUTFBytes(buff)
+				buffData.length = 32;
+				output.writeBytes(buffData)
+			}			
 		}
 	}
 }

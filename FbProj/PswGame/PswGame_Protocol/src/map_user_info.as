@@ -11,6 +11,7 @@ package
 		public var role_tm:uint;
 		public var model:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var mapid:uint;
 		public var map_x:uint;
 		public var map_y:uint;
@@ -47,10 +48,17 @@ package
 			output.writeInt(userid);
 			output.writeInt(role_tm);
 			output.writeInt(model);
-			var nickData:ByteArray = new ByteArray();
-			nickData.writeUTFBytes(nick)
-			nickData.length = 16;
-			output.writeBytes(nickData)
+			if(nick_data)
+			{
+				output.writeBytes(nick_data)
+			}
+			else
+			{
+				var nickData:ByteArray = new ByteArray();
+				nickData.writeUTFBytes(nick)
+				nickData.length = 16;
+				output.writeBytes(nickData)
+			}
 			output.writeInt(mapid);
 			output.writeInt(map_x);
 			output.writeInt(map_y);

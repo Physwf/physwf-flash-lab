@@ -10,7 +10,9 @@ package
 		public var from_game:uint;
 		public var to_game:uint;
 		public var sess:String;
+		public var sess_data:ByteArray
 		public var tad:String;
+		public var tad_data:ByteArray
 		public var role_tm:uint;
 		
 		public function MSG_REQ_LOGIN_1001()
@@ -22,14 +24,28 @@ package
 		{
 			output.writeInt(from_game);
 			output.writeInt(to_game);
-			var sessData:ByteArray = new ByteArray();
-			sessData.writeUTFBytes(sess)
-			sessData.length = 16;
-			output.writeBytes(sessData)
-			var tadData:ByteArray = new ByteArray();
-			tadData.writeUTFBytes(tad)
-			tadData.length = 64;
-			output.writeBytes(tadData)
+			if(sess_data)
+			{
+				output.writeBytes(sess_data)
+			}
+			else
+			{
+				var sessData:ByteArray = new ByteArray();
+				sessData.writeUTFBytes(sess)
+				sessData.length = 16;
+				output.writeBytes(sessData)
+			}
+			if(tad_data)
+			{
+				output.writeBytes(tad_data)
+			}
+			else
+			{
+				var tadData:ByteArray = new ByteArray();
+				tadData.writeUTFBytes(tad)
+				tadData.length = 64;
+				output.writeBytes(tadData)
+			}
 			output.writeInt(role_tm);			
 		}
 	}

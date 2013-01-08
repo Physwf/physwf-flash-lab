@@ -9,6 +9,7 @@ package
 	{
 		public var user:uid_role_t;
 		public var nick:String;
+		public var nick_data:ByteArray
 		
 		public function MSG_RES_ADD_FRIEND_1004(mid:uint)
 		{

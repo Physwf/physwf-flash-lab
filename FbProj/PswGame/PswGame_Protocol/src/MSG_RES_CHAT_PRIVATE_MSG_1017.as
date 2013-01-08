@@ -10,8 +10,10 @@ package
 		public var msg_time:uint;
 		public var sender:uid_role_t;
 		public var sender_nick:String;
+		public var sender_nick_data:ByteArray
 		public var receiver:uid_role_t;
 		public var msg_content:String;
+		public var msg_content_data:ByteArray
 		
 		public function MSG_RES_CHAT_PRIVATE_MSG_1017(mid:uint)
 		{

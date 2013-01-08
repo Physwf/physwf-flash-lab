@@ -9,6 +9,7 @@ package
 	{
 		public var receiver:uid_role_t;
 		public var msg_content:String;
+		public var msg_content_data:ByteArray
 		
 		public function MSG_REQ_CHAT_PRIVATE_MSG_1017()
 		{

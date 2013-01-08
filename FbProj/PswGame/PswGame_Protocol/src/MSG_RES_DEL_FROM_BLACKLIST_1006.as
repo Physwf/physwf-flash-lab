@@ -9,6 +9,7 @@ package
 	{
 		public var user:uid_role_t;
 		public var unblacked_user_nick:String;
+		public var unblacked_user_nick_data:ByteArray
 		
 		public function MSG_RES_DEL_FROM_BLACKLIST_1006(mid:uint)
 		{

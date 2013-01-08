@@ -10,6 +10,7 @@ package
 		public var userid:uint;
 		public var role_tm:uint;
 		public var nick:String;
+		public var nick_data:ByteArray
 		
 		public function MSG_RES_GET_USER_INFO_1015(mid:uint)
 		{

@@ -9,6 +9,7 @@ package
 	{
 		public var user:uid_role_t;
 		public var nick:String;
+		public var nick_data:ByteArray
 		public var level:uint;
 		public var exp:uint;
 		public var base_attr:player_base_attr_t;
