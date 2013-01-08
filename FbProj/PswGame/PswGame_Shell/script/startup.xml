@@ -20,4 +20,10 @@
 	<item name="login" type="exe" url="plugins/LoginPlugin.swf">
 		<domain level="1" useSub="1" name="login"/>
 	</item>
+	<item name="startup" type="exe" url="plugins/StartupPlugin.swf">
+		<domain level="1" useSub="1" name="startup"/>
+	</item>
+	<item name="world" type="exe" url="plugins/WorldPlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
 </startup>
