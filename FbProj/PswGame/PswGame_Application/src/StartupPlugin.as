@@ -1,10 +1,12 @@
 package
 {
 	import com.physwf.application.plugin.IPlugin;
+	import com.physwf.application.plugin.PluginEvent;
 	import com.physwf.application.plugin.PluginInfo;
 	import com.physwf.application.startup.Startup;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	public class StartupPlugin extends Sprite implements IPlugin
 	{
@@ -25,7 +27,13 @@ package
 		public function execute(root:Sprite):void
 		{
 			mStartup = new Startup();
-			mStartup.initialize();
+			mStartup.initialize(root);
+			mStartup.addEventListener("finished",onPluginFinished);
+		}
+		
+		private function onPluginFinished(e:Event):void
+		{
+			dispatchEvent(new PluginEvent(PluginEvent.PLUGIN_FINISHED,mInfo));
 		}
 		
 		public function dispose():void

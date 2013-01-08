@@ -3,6 +3,7 @@
 	<name>PswGame_Application</name>
 	<comment></comment>
 	<projects>
+		<project>PswGame_System</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,6 +1,6 @@
-package com.physwf.application.game.layer
+package com.physwf.application.world.manager
 {
-	import com.physwf.application.game.controllers.MapController;
+	import com.physwf.application.world.controllers.MapController;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.Map;
 	import com.physwf.components.map.camera.Camera;
@@ -11,17 +11,21 @@ package com.physwf.application.game.layer
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 
-	public class MapLayer implements IUpdatable
+	public class MapManager implements IUpdatable
 	{
 		private var mMap:Map;
 		private var mCamera:Camera;
 		
 		private var mController:MapController;
 		
-		public function MapLayer()
+		private var helpTarget:Sprite;
+		
+		public function MapManager()
 		{
 			mMap = new Map();
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
+			helpTarget = new Sprite();
+			mCamera.target = helpTarget;
 			mCamera.initialize(mMap);
 			mController = new MapController();
 		}
@@ -34,11 +38,9 @@ package com.physwf.application.game.layer
 				Event.COMPLETE,
 				function (e:Event):void 
 				{
-					mMap.mapWidth = loader.content.width;
-					mMap.mapHeight = loader.content.height;
-					mMap.bottom.addChild(loader.content);
+					mMap.fillBottom(loader.content);
 				});
-			loader.load(new URLRequest("resouce/map/"+id+".png"));
+			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
 		}
 		
 		public function attachLayer(game:Sprite):void
@@ -53,6 +55,7 @@ package com.physwf.application.game.layer
 		
 		public function update():void
 		{
+			helpTarget.x +=5;
 			mCamera.update();
 		}
 	}
