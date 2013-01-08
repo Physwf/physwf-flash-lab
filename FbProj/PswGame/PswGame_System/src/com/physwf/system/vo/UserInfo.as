@@ -110,6 +110,10 @@ package com.physwf.system.vo
 		 *暴击闪避 
 		 */		
 		public var multiavoid:uint;
+		/**
+		 * 装备信息 
+		 */		
+		public static var equips:Vector.<EquipInfo> = new <EquipInfo>[];
 		
 		public function UserInfo()
 		{

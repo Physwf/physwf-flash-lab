@@ -6,12 +6,10 @@
     <classEntry path="com.physwf.system.vo.PetInfo"/>
     <classEntry path="com.physwf.system.vo.MapInfo"/>
     <classEntry path="com.physwf.system.events.MapEvent"/>
+    <classEntry path="com.physwf.system.controllers.MySelfController"/>
     <classEntry path="com.physwf.system.vo.ServerInfo"/>
     <classEntry path="com.physwf.system.vo.RoleInfo"/>
     <classEntry path="com.physwf.system.entity.SocialSystem"/>
-    <classEntry path="com.physwf.system.System"/>
-    <classEntry path="com.physwf.system.events.MyEvent"/>
-    <classEntry path="com.physwf.system.vo.EquipInfo"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

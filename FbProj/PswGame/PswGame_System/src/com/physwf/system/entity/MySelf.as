@@ -27,10 +27,6 @@ package com.physwf.system.entity
 		 * 宠物信息 
 		 */		
 		public static var petInfo:PetInfo = new PetInfo();
-		/**
-		 * 装备信息 
-		 */		
-		public static var equips:Vector.<EquipInfo> = new <EquipInfo>[];
 		
 		public function MySelf()
 		{
