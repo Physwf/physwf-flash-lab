@@ -3,6 +3,14 @@ package com.physwf.system.vo
 	public class UserInfo
 	{
 		/**
+		 * 用户id 
+		 */		
+		public var uid:uint;
+		/**
+		 * 创建时间
+		 */		
+		public var createTime:uint;
+		/**
 		 *昵称 
 		 */		
 		public var nick:String;
@@ -30,6 +38,14 @@ package com.physwf.system.vo
 		 *当前所在地图 的y坐标
 		 */		
 		public var map_y:uint;
+		/**
+		 * 将要移动到的目标点 
+		 */		
+		public var target_x:uint;
+		/**
+		 * 将要移动到的目标点 
+		 */		
+		public var target_y:uint;
 		/**
 		 *裸模id 
 		 */		
@@ -113,7 +129,7 @@ package com.physwf.system.vo
 		/**
 		 * 装备信息 
 		 */		
-		public static var equips:Vector.<EquipInfo> = new <EquipInfo>[];
+		public var equips:Vector.<EquipInfo> = new <EquipInfo>[];
 		
 		public function UserInfo()
 		{

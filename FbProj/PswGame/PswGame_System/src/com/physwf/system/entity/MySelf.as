@@ -40,7 +40,7 @@ package com.physwf.system.entity
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1030,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1031,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);//移动
 		}
 		/**
 		 * 登陆 
@@ -147,7 +147,7 @@ package com.physwf.system.entity
 					{
 						var equipInfo:EquipInfo = new EquipInfo();
 						equipInfo.id = equipList[i].equip_id;
-						equips.push(equipInfo);
+						userInfo.equips.push(equipInfo);
 					}
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
 					break;
