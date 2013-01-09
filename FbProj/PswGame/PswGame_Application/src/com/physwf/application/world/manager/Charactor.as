@@ -26,6 +26,8 @@ package com.physwf.application.world.manager
 		
 		private var target_x:uint;
 		private var target_y:uint;
+		private var speed:uint = 5;
+		private var rad:Number;// 速度的方向
 		
 		public function Charactor()
 		{
@@ -51,6 +53,7 @@ package com.physwf.application.world.manager
 				path = astar.getPath();
 				target_x = tx;
 				target_y = ty;
+				rad = Math.atan2(path[0].y -view.y,path[0].x -view.x);
 			}
 		}
 		
@@ -78,9 +81,26 @@ package com.physwf.application.world.manager
 		{
 			if(path)
 			{
-				
+				var curX:Number = view.x;
+				var curY:Number = view.y;
+				var node:Node = path[0];
+				var speedX:Number = speed * Math.cos(rad);
+				var speedY:Number = speed * Math.sin(rad);
+				if(curX+speedX > node.x * 10 && curY+speedY > node.y * 10)
+				{
+					path.shift();
+					if(path.length == 0) 
+					{
+						path = null;
+					}
+					rad = Math.atan2(node.y -curY,node.x - curX);
+				}
+				view.x += speedX;
+				view.y += speedY;
 			}
 			view.update();
 		}
+		
+		public function get userId():uint { return userInfo.uid; }
 	}
 }

@@ -14,6 +14,8 @@ package com.physwf.application.world.controllers
 		
 		private var mapModel:MapSystem;
 		private var mapView:MapView;
+		public var targetX:Number;
+		public var targetY:Number;
 		
 		public function MapController()
 		{
@@ -29,6 +31,8 @@ package com.physwf.application.world.controllers
 		private function onMapClick(e:MouseEvent):void
 		{
 			System.myself.move(mapView.mouseX,mapView.mouseY,0);
+			targetX = mapView.mouseX;
+			targetY = mapView.mouseY;
 		}
 		
 		public function getMapID():uint

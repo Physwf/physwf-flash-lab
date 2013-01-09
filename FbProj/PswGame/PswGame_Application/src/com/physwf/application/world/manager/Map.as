@@ -73,6 +73,13 @@ package com.physwf.application.world.manager
 					break;
 				case MapEvent.MAP_USER_MOVE:
 					// to do 根据userInfo找到相应的character，然后设置该character到指定点
+					for(var i:int=0;i<mCharactors.length;++i)
+					{
+						if(mCharactors[i].userId == e.userInfo.uid)
+						{
+							mCharactors[i].goto(e.userInfo.target_x,e.userInfo.target_y);
+						}
+					}
 					break;
 			}
 		}
@@ -82,7 +89,7 @@ package com.physwf.application.world.manager
 			switch(e.type)
 			{
 				case MyEvent.ENTER_MAP_SUCCESS:
-					
+					Charactor.self.goto(mController.targetX,mController.targetY);
 					break;
 			}
 		}
@@ -126,6 +133,10 @@ package com.physwf.application.world.manager
 		
 		public function update():void
 		{
+			for(var i:int=0;i<mCharactors.length;++i)
+			{
+				mCharactors[i].update();
+			}
 			mCamera.update();
 		}
 	}
