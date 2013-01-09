@@ -20,6 +20,9 @@ package com.physwf.components.charactor
 			addChild(mNude);
 			addChild(mWearLayer);
 			addChild(mSpecialLayer);
+			graphics.beginFill(0xFF0000,1);
+			graphics.drawCircle(0,0,10);
+			graphics.endFill();
 		}
 		
 		public function update():void

@@ -44,7 +44,7 @@ package com.physwf.components.map.wayfinding.astar
 			_startNode.h = _heuristic(_startNode);
 			_startNode.f = _startNode.g + _startNode.h;
 			
-			_openList = new MinHeap(100);
+			_openList = new MinHeap(10000);
 			_closedList = new Vector.<Node>();
 			
 			return search();

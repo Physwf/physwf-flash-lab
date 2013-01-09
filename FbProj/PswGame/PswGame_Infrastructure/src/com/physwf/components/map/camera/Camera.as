@@ -54,28 +54,28 @@ package com.physwf.components.map.camera
 			var tx:Number,ty:Number;
 			if(!mTrackEnabled) return;
 			//计算x方向的滚动			
-			if(mTarget.x <= sHelpW)
+			if(mTarget.x <= sHelpW)// 目标靠近左边界
 			{
 				tx = 0;
 			}
-			else if((mMap.mapWidth - mTarget.x) <= sHelpW)
+			else if((mMap.mapWidth - mTarget.x) <= sHelpW) //目标靠近右边界
 			{
-				tx = mMap.mapWidth - sHelpW;
+				tx = mMap.mapWidth - mViewprot.width;
 			}
-			else
+			else// 其他情况
 			{
 				tx = mTarget.x - sHelpW;
 			}
 			//计算y方向的滚动
-			if(mTarget.y <= sHelpH)
+			if(mTarget.y <= sHelpH)//目标靠近上边界
 			{
 				ty = 0;
 			}
-			else if((mMap.mapHeight - mTarget.y) <= sHelpH)
+			else if((mMap.mapHeight - mTarget.y) <= sHelpH)//目标靠近下边界
 			{
-				ty = mMap.mapHeight - sHelpH;
+				ty = mMap.mapHeight - mViewprot.height;
 			}
-			else
+			else//其他情况
 			{
 				ty = mTarget.y - sHelpH;
 			}
