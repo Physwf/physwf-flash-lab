@@ -33,6 +33,8 @@ package com.physwf.application.startup
 		private function onLoginSuccess(e:MyEvent):void
 		{
 			System.myself.removeEventListener(MyEvent.LOGIN_SUCCESS,onLoginSuccess);
+			dispatchEvent(new Event("finished"));
+			return;
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onEnterMapSuccess);
 			System.myself.enterMap(
 				MySelf.userInfo.map_id,
