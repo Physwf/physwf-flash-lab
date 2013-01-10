@@ -60,7 +60,7 @@ package com.physwf.components.map.wayfinding.astar
 		
 		public function toString():String
 		{
-			return String(int(_f));
+			return String("["+x+","+y+"]");
 		}
 		
 	}

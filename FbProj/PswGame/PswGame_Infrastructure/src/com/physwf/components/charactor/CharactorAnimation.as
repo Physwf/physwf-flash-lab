@@ -24,6 +24,15 @@ package com.physwf.components.charactor
 			graphics.drawCircle(0,0,10);
 			graphics.endFill();
 		}
+		/**
+		 * 角色的朝向 
+		 * @param v
+		 * 
+		 */		
+		public function set direction(v:uint):void
+		{
+			
+		}
 		
 		public function update():void
 		{
