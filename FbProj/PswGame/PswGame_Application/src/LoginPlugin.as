@@ -40,5 +40,9 @@ package
 			mLogin = null;
 			mInfo = null;
 		}
+		
+		public function update():void
+		{
+		}
 	}
 }

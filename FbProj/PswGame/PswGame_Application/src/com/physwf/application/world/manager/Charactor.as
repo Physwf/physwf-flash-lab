@@ -26,8 +26,9 @@ package com.physwf.application.world.manager
 		
 		private var target_x:uint;
 		private var target_y:uint;
-		private var speed:uint = 5;
+		private var speed:uint = 3;
 		private var rad:Number;// 速度的方向
+		private var node:Node;
 		
 		public function Charactor()
 		{
@@ -42,18 +43,24 @@ package com.physwf.application.world.manager
 			view.y = userInfo.map_y;
 			controller = new CharactorController();
 			controller.initialize(view,userInfo);
-			
-			astar = new BiHeapAStar();
 		}
 		
 		public function goto(tx:uint,ty:uint):void
 		{
-			if(astar.tryFindPath(view.x,view.y,tx,tx))
+			var sx:uint = view.x / 10;
+			var sy:uint = view.y / 10;
+			var ex:uint = tx / 10;
+			var ey:uint = ty / 10;
+			trace(sx,sy,"goto")
+			if(astar.tryFindPath(sx,sy,ex,ey))
 			{
 				path = astar.getPath();
+				path.shift();
+				node = path.shift();
 				target_x = tx;
 				target_y = ty;
-				rad = Math.atan2(path[0].y -view.y,path[0].x -view.x);
+				rad = Math.atan2(node.y -sy,node.x -sx);
+				trace(node.y ,sy,node.x ,sx,rad,"rad")
 			}
 		}
 		
@@ -81,19 +88,26 @@ package com.physwf.application.world.manager
 		{
 			if(path)
 			{
+				trace(path)
 				var curX:Number = view.x;
 				var curY:Number = view.y;
-				var node:Node = path[0];
 				var speedX:Number = speed * Math.cos(rad);
 				var speedY:Number = speed * Math.sin(rad);
-				if(curX+speedX > node.x * 10 && curY+speedY > node.y * 10)
+//				if(curX+speedX >= node.x * 10 && curY+speedY >= node.y * 10)// 要用绝对值
+				var offsetX:Number = (node.x * 10 - curX);
+				var offsetY:Number = (node.y * 10 - curY);
+				var step:Number = speedX*speedX+speedY*speedY;
+				var offset:Number = offsetX*offsetX+offsetY*offsetY;
+//				trace(step,offset)
+				if(9 >= offset)// 要用绝对值
 				{
-					path.shift();
+					node = path.shift();
+					trace(path.length)
 					if(path.length == 0) 
 					{
 						path = null;
 					}
-					rad = Math.atan2(node.y -curY,node.x - curX);
+					rad = Math.atan2(node.y -curY/10,node.x - curX/10);
 				}
 				view.x += speedX;
 				view.y += speedY;

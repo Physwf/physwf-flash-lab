@@ -28,5 +28,10 @@ package
 		public function dispose():void
 		{
 		}
+		
+		public function update():void
+		{
+			world.update();
+		}
 	}
 }

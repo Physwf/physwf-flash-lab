@@ -7,6 +7,7 @@ package com.physwf.application.world
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
+	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
@@ -17,6 +18,7 @@ package com.physwf.application.world
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
+	import flash.utils.getTimer;
 	
 	public class World
 	{
@@ -29,6 +31,8 @@ package com.physwf.application.world
 		{
 			super();
 			map = new Map();
+			map.initialize();
+			Charactor.astar = new BiHeapAStar();
 			map.attachLayer(ScreenManager.main.world);
 			map.load();
 		}
@@ -39,20 +43,17 @@ package com.physwf.application.world
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onEnterMapSuccess);
 			System.myself.enterMap(MySelf.userInfo.map_id,MySelf.userInfo.map_x,MySelf.userInfo.map_y);
 			
-			ScreenManager.main.frameRate = 3;
-			gameTimer.addEventListener(TimerEvent.TIMER,onTimer);
-			gameTimer.start();
+			ScreenManager.main.frameRate = 30;
 		}
 		
 		private function onEnterMapSuccess(e:MyEvent):void
 		{
-			
+			System.map.getMapUserList();
 		}
 		
-		public function onTimer(e:TimerEvent):void
+		public function update():void
 		{
 			map.update();
-			e.updateAfterEvent();
 		}
 	}
 }

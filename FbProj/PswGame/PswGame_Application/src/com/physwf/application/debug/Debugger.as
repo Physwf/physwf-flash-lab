@@ -20,10 +20,17 @@ package com.physwf.application.debug
 		
 		public function execute(root:Sprite):void
 		{
+			
 		}
 		
 		public function dispose():void
 		{
+			
+		}
+		
+		public function update():void
+		{
+			
 		}
 	}
 }

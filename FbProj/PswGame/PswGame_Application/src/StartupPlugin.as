@@ -42,5 +42,8 @@ package
 			mInfo = null;
 		}
 		
+		public function update():void
+		{
+		}
 	}
 }

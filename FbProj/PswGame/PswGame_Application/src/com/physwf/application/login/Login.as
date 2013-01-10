@@ -5,12 +5,14 @@ package com.physwf.application.login
 	import com.physwf.application.login.cache.OnlineInfo;
 	import com.physwf.application.login.controller.LoginController;
 	import com.physwf.application.login.rpc.MessageEvent;
+	import com.physwf.application.login.rpc.RPCClient;
 	import com.physwf.application.login.services.LoginService;
 	import com.physwf.application.login.view.Loading;
 	import com.physwf.application.login.view.SelectAreaPanel;
 	import com.physwf.application.login.view.SelectRolePanel;
 	import com.physwf.application.login.view.SignInPanel;
 	import com.physwf.application.login.view.StartPanel;
+	import com.physwf.components.rpc.RPCConnectioin;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.LoginInfo;
 	
@@ -169,6 +171,7 @@ package com.physwf.application.login
 		private function finish():void
 		{
 			dispatchEvent(new Event("finished"));
+			RPCClient.close();
 		}
 			
 		public function dispose():void

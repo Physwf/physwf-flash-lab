@@ -50,6 +50,7 @@ package com.physwf.application.world.manager
 			System.map.addEventListener(MapEvent.MAP_USER_LIST_SUCCESS,onMapEvent);
 			System.map.addEventListener(MapEvent.MAP_USER_MOVE,onMapEvent);
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
+			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
 		}
 		
 		private function onMapEvent(e:MapEvent):void
@@ -64,7 +65,7 @@ package com.physwf.application.world.manager
 					break;
 				case MapEvent.MAP_USER_LIST_SUCCESS:
 					var mapUserList:Vector.<UserInfo> = System.map.mapUserList;
-					for(var i:int=0;mapUserList.length;i++)
+					for(var i:int=0;i<mapUserList.length;i++)
 					{
 						var chara:Charactor = new Charactor();
 						chara.initialize(mapUserList[i]);
@@ -73,11 +74,11 @@ package com.physwf.application.world.manager
 					break;
 				case MapEvent.MAP_USER_MOVE:
 					// to do 根据userInfo找到相应的character，然后设置该character到指定点
-					for(var i:int=0;i<mCharactors.length;++i)
+					for(var j:int=0;j<mCharactors.length;++j)
 					{
-						if(mCharactors[i].userId == e.userInfo.uid)
+						if(mCharactors[j].userId == e.userInfo.uid)
 						{
-							mCharactors[i].goto(e.userInfo.target_x,e.userInfo.target_y);
+							mCharactors[j].goto(e.userInfo.target_x,e.userInfo.target_y);
 						}
 					}
 					break;
@@ -89,6 +90,8 @@ package com.physwf.application.world.manager
 			switch(e.type)
 			{
 				case MyEvent.ENTER_MAP_SUCCESS:
+					break;
+				case MyEvent.SELF_MOVE_ALLOWED:
 					Charactor.self.goto(mController.targetX,mController.targetY);
 					break;
 			}
