@@ -10,12 +10,13 @@ package com.physwf.application.debug.map
 		{
 		}
 		
-		public function enableAstarDebug():void
+		public function toggleAstarDebug():void
 		{
 			if(!mGridLayer)
 			{
 				mGridLayer = new GridLayer();
 			}
+			mGridLayer.initialize(ScreenManager.main.world);
 			ScreenManager.main.world.addLayerToTop(mGridLayer);
 		}
 	}

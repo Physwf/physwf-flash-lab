@@ -1,4 +1,4 @@
-package com.physwf.application.debug.map
+package test
 {
 	import com.physwf.components.map.data.GridTypeMapData;
 	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
@@ -14,21 +14,22 @@ package com.physwf.application.debug.map
 	import flash.geom.Rectangle;
 	import flash.utils.getTimer;
 	
-	public class GridLayer extends Sprite
+	
+	public class AStarTest 
 	{
+//		private var astar:IAstar = new BiHeapAStar();
 		private var astar:IAstar ;
 		private var gridSize:int = 10;
-		private var bm:Bitmap
-		
-		public function GridLayer()
+		private var bm:Bitmap 
+		public function AStarTest()
 		{
 			super();
 		}
 		
 		public function initialize(doc:Sprite):void
 		{
-			var w:int = doc.width;
-			var h:int = doc.height;
+			var w:int = doc.stage.stageWidth;
+			var h:int = doc.stage.stageHeight;
 			var bmd:BitmapData = new BitmapData(w,h,true,0xFF000000);
 			
 			var gridBmd:BitmapData 
@@ -42,14 +43,14 @@ package com.physwf.application.debug.map
 					bmd.copyPixels(gridBmd,gridBmd.rect,new Point(x*10,y*10));
 				}
 			}
-			bm = addChild(new Bitmap(bmd)) as Bitmap;
+			bm = doc.addChild(new Bitmap(bmd)) as Bitmap;
 			var mapData:GridTypeMapData = new GridTypeMapData();
 			astar = new BiHeapAStar();
-			//			astar = new QuickSortAstar();
-			mapData.initialize(bm,new Rectangle(0,0,w,h),gridSize);
-			//			astar.initialze(bm,new GridTypeConfig());
+//			astar = new QuickSortAstar();
+			mapData.initialize(bm,new Rectangle(0,0,w,h),gridSize,0);
+//			astar.initialze(bm,new GridTypeConfig());
 			astar.mapData = mapData;
-			addEventListener(MouseEvent.CLICK,onClick);
+			doc.addEventListener(MouseEvent.CLICK,onClick);
 		}
 		
 		private var startPoint:Point;
@@ -86,5 +87,6 @@ package com.physwf.application.debug.map
 			}
 			startPoint = null;
 		}
+		
 	}
 }

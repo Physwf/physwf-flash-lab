@@ -36,10 +36,11 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="DebugPlugin.as"/>
     <application path="EnvironmentDLL.as"/>
     <application path="LoginPlugin.as"/>
-    <application path="WorldPlugin.as"/>
     <application path="StartupPlugin.as"/>
+    <application path="WorldPlugin.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

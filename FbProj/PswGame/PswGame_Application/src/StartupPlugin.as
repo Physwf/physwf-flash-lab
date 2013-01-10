@@ -23,6 +23,10 @@ package
 			mInfo = v;
 		}
 		
+		public function get info():PluginInfo
+		{
+			return mInfo;
+		}
 		
 		public function execute(root:Sprite):void
 		{

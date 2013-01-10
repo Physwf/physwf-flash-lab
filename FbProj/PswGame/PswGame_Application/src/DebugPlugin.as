@@ -1,19 +1,21 @@
 package
 {
+	import com.physwf.application.debug.Debugger;
 	import com.physwf.application.plugin.IPlugin;
 	import com.physwf.application.plugin.PluginInfo;
-	import com.physwf.application.world.World;
+	import com.physwf.components.interfaces.IUpdatable;
 	
 	import flash.display.Sprite;
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	
-	public class WorldPlugin extends Sprite implements IPlugin
+	public class DebugPlugin extends EventDispatcher implements IPlugin, IUpdatable
 	{
-		private var world:World;
 		private var mInfo:PluginInfo;
+		private var debuger:Debugger;
 		
-		public function WorldPlugin()
+		public function DebugPlugin()
 		{
-			super();
 		}
 		
 		public function set info(v:PluginInfo):void
@@ -28,8 +30,7 @@ package
 		
 		public function execute(root:Sprite):void
 		{
-			world = new World();
-			world.initialize();
+			debuger = new Debugger();
 		}
 		
 		public function dispose():void
@@ -38,7 +39,6 @@ package
 		
 		public function update():void
 		{
-			world.update();
 		}
 	}
 }
