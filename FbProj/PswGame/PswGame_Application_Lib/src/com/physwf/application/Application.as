@@ -33,6 +33,7 @@ package com.physwf.application
 		
 		private var mPluginQueue:Vector.<IPlugin>;
 		private var mCurPlugin:IPlugin;
+		private var mPluginsInRun:Vector.<IPlugin>;
 		
 		[Embed(source="assets/system.swf",symbol="McApplicationLoading")]
 		private var LoadingBar:Class;
@@ -54,6 +55,7 @@ package com.physwf.application
 			mDriver = new Driver(mSandBox);
 			mRoot = root;
 			mPluginQueue = new <IPlugin>[];
+			mPluginsInRun = new <IPlugin>[];
 			
 			mLoadingBar = new LoadingBar() as DisplayObject;
 			mLoadingBar.x = root.stage.stageWidth * .5;
@@ -71,6 +73,8 @@ package com.physwf.application
 			mPowerPanel.x = root.stage.stageWidth * .5;
 			mPowerPanel.y = root.stage.stageHeight * .5;
 			mPowerPanel.addEventListener(MouseEvent.CLICK,onClick);
+			
+			mRoot.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			
 			application = this;
 			
@@ -102,7 +106,11 @@ package com.physwf.application
 		
 		private function onEnterFrame(e:Event):void
 		{
-			mCurPlugin.update();
+			for(var i:int=0;i<mPluginsInRun.length;++i)
+			{
+				if(mPluginsInRun)
+					mPluginsInRun[i].update();
+			}
 		}
 		
 		public function startup():void
@@ -142,9 +150,11 @@ package com.physwf.application
 		private function onPluginFinished(e:PluginEvent):void
 		{
 			var pluginInfo:PluginInfo = e.pluginInfo;
-			mCurPlugin.removeEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
-			mCurPlugin.dispose();
-			mCurPlugin = null;
+			
+			var index:uint = pluginInfo.thread;
+			mPluginsInRun[index].removeEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
+			mPluginsInRun[index].dispose();
+			mPluginsInRun.splice(index,1);
 			
 			uninstall(pluginInfo);
 			
@@ -153,12 +163,13 @@ package com.physwf.application
 		
 		private function checkForExecute():void
 		{
-			if(!mCurPlugin && mPluginQueue.length>0)
+			for(var i:int=0;i<mPluginQueue.length;++i)
 			{
-				mCurPlugin = mPluginQueue.shift();
-				mCurPlugin.addEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
-				mCurPlugin.execute(mRoot);
-				mRoot.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+				var lastThread:int = mPluginsInRun.length - 1;
+				if(lastThread<mPluginQueue[0].info.thread)
+				{
+					mPluginsInRun.push(mPluginQueue.shift());
+				}
 			}
 		}
 		

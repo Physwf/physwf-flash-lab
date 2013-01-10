@@ -7,7 +7,7 @@ package com.physwf.application.plugin
 
 	public interface IPlugin extends IDestroyable,IEventDispatcher
 	{
-//		function get info():PluginInfo;
+		function get info():PluginInfo;
 		function set info(v:PluginInfo):void
 		function execute(root:Sprite):void;
 		/**

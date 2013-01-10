@@ -25,7 +25,7 @@ package com.physwf.application.parser
 			{
 				domainRaw = comands[i].domain[0];
 				var domain:DomainInfo = new DomainInfo( int(domainRaw.@level) ,domainRaw.@useSub=="1", domainRaw.@name);
-				ret[i]  = new PluginInfo(comands[i].@name,comands[i].@type,comands[i].@url,domain);
+				ret[i]  = new PluginInfo(comands[i].@name,comands[i].@type,comands[i].@thread,comands[i].@url,domain);
 			}
 			return ret;
 		}

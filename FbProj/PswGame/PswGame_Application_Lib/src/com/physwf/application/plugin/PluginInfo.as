@@ -6,11 +6,13 @@ package com.physwf.application.plugin
 		public var type:String;
 		public var url:String;
 		public var domain:DomainInfo;
+		public var thread:uint;
 		
-		public function PluginInfo($name:String,$type:String,$url:String,$domain:DomainInfo):void
+		public function PluginInfo($name:String,$type:String,$thread:String,$url:String,$domain:DomainInfo):void
 		{
 			name = $name;
 			type = $type;
+			thread = uint($thread);
 			url = $url;
 			domain = $domain;
 		}
