@@ -73,6 +73,7 @@ package com.physwf.application
 			mPowerPanel.addEventListener(MouseEvent.CLICK,onClick);
 			
 			application = this;
+			
 		}
 		
 		private function onClick(e:MouseEvent):void
@@ -97,6 +98,11 @@ package com.physwf.application
 					mRoot.removeChild(mPowerPanel);
 					break;
 			}
+		}
+		
+		private function onEnterFrame(e:Event):void
+		{
+			mCurPlugin.update();
 		}
 		
 		public function startup():void
@@ -152,6 +158,7 @@ package com.physwf.application
 				mCurPlugin = mPluginQueue.shift();
 				mCurPlugin.addEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
 				mCurPlugin.execute(mRoot);
+				mRoot.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			}
 		}
 		
