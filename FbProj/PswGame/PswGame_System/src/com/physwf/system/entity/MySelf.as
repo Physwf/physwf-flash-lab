@@ -154,6 +154,7 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1031://离开地图
 					break;
 				case MessageEvent.MSG_SUCCESS_+1036://移动
+					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 					break;
 			}
 		}
