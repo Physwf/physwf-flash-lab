@@ -12,15 +12,16 @@ package com.physwf.components.bitmap.data
 	public class BigKey
 	{
 		public var endian:int = BitmapDataPackageLoader.BIG_KEY_ENDIAN;
+		public var directions:Vector.<String> = new <String>[];
 		public var smallKeys:Array = [];
 		
 		public function readKey(input:IDataInput):void
 		{
-//			endian = input.readShort();
+			input.readShort();
+			var directionsLen:uint = input.readShort();
+			directions = Vector.<String>(input.readUTFBytes(directionsLen).split(","));
 			var len:int = input.readShort();
-			smallKeys = [];
 			var tempByte:ByteArray;
-			
 			for(var i:int =0;i<len;++i)
 			{
 				var size:int = input.readShort();
@@ -28,12 +29,17 @@ package com.physwf.components.bitmap.data
 				input.readBytes(tempByte,0,size);
 				smallKeys[i]= tempByte;
 			}
-//			smallKeys = input.readObject();
 		}
 		
 		public function writeKey(output:IDataOutput):void
 		{
 			output.writeShort(endian);
+			var directionisData:ByteArray = new ByteArray();
+			directionisData.writeUTFBytes(directions.join());
+			var directionLen:uint = directionisData.length;
+			output.writeShort(directionLen);
+			output.writeBytes(directionisData);
+			
 			output.writeShort(smallKeys.length);
 			for(var i:int =0;i<smallKeys.length;++i)
 			{
@@ -41,7 +47,6 @@ package com.physwf.components.bitmap.data
 				output.writeShort(size);
 				output.writeBytes(smallKeys[i]);
 			}
-//			output.writeObject(smallKeys);
 		}
 	}
 }

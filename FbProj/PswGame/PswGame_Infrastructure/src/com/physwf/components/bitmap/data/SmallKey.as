@@ -2,7 +2,9 @@ package com.physwf.components.bitmap.data
 {
 	import com.physwf.components.bitmap.net.BitmapDataPackageLoader;
 	
+	import flash.display.FrameLabel;
 	import flash.sampler.getSize;
+	import flash.utils.ByteArray;
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 
@@ -10,12 +12,8 @@ package com.physwf.components.bitmap.data
 	{
 		public var endian:int = BitmapDataPackageLoader.SMALL_KEY_ENDIAN;
 		
-		public var nameLen:int;
-		public var symbolNames:String;
-		
-		public var directionNameLen:int;
-		public var directionName:String
-		
+		public var frameNamesLen:uint;
+		public var frameNames:Vector.<String> = new <String>[];
 		public var totalFrames:int;
 		
 		public var offsetX:int;
@@ -33,14 +31,10 @@ package com.physwf.components.bitmap.data
 		
 		public function readKey(input:IDataInput):void
 		{
-			
-			nameLen = input.readShort();
-			symbolNames = input.readUTFBytes(nameLen);
-			
-			directionNameLen = input.readShort();
-			directionName = input.readUTFBytes(directionNameLen);
-			
 			totalFrames = input.readShort();
+			
+			frameNamesLen = input.readShort();
+			frameNames = Vector.<String>(input.readUTFBytes(frameNamesLen).split(","));
 			
 			offsetX = input.readShort();
 			offsetY = input.readShort();
@@ -48,49 +42,47 @@ package com.physwf.components.bitmap.data
 			keyFrameLength = input.readShort();
 			
 			keyFrameRects = [];
-			for(var i:int =0;i<keyFrameLength;i+=2)
+			for(var i:int =0;i<keyFrameLength;i++)
 			{
-				keyFrameRects[i] = input.readShort();
-				keyFrameRects[i+1] = input.readShort();
+				keyFrameRects[2*i] = input.readShort();
+				keyFrameRects[2*i+1] = input.readShort();
 			}
 			frames = [];
-			for(i=0;input.bytesAvailable;i+=3)
+			for(i=0;input.bytesAvailable;i++)
 			{
-				frames[i] = input.readShort();
-				frames[i+1] = input.readShort();
-				frames[i+2] = input.readShort();
+				frames[3*i] = input.readShort();
+				frames[3*i+1] = input.readShort();
+				frames[3*i+2] = input.readShort();
 			}
 		}
 		
 		public function writeKey(output:IDataOutput):void
 		{
 			output.writeShort(endian);
-			
-			nameLen = getSize(symbolNames);
-			output.writeShort(nameLen);
-			output.writeUTF(symbolNames);
-			
-			directionNameLen = getSize(directionName);
-			output.writeShort(directionNameLen);
-			output.writeUTF(directionName);
-			
 			output.writeShort(totalFrames);
+			
+			var frameNamesData:ByteArray = new ByteArray();
+			frameNamesData.writeUTFBytes(frameNames.join(","));
+			output.writeShort(frameNamesData.length);
+			output.writeBytes(frameNamesData);
 			
 			output.writeShort(offsetX);
 			output.writeShort(offsetY);
 			
 			output.writeShort(keyFrameLength);
-			for(var i:int =0;i<keyFrameLength;i+=2)
+			for(var i:int =0;i<keyFrameLength;i++)
 			{
-				output.writeShort(keyFrameRects[i]);
-				output.writeShort(keyFrameRects[i+1]);
+				output.writeShort(keyFrameRects[2*i]);
+				output.writeShort(keyFrameRects[2*i+1]);
+				trace(keyFrameRects[2*i]);
+				trace(keyFrameRects[2*i]+i);
 			}
 			
 			for(i=0;i<frames.length;i+=3)
 			{
-				output.writeShort(frames[i]);
-				output.writeShort(frames[i+1]);
-				output.writeShort(frames[i+2]);
+				output.writeShort(frames[3*i]);
+				output.writeShort(frames[3*i+1]);
+				output.writeShort(frames[3*i+2]);
 			}
 			
 		}

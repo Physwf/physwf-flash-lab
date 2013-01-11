@@ -1,20 +1,25 @@
 package com.physwf.components.bitmap.net {
 	import com.physwf.components.bitmap.data.BigKey;
+	import com.physwf.components.bitmap.data.BitmapDataPackage;
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
+	import flash.net.URLStream;
+	import flash.utils.ByteArray;
 
-	public class SkeletonLoader 
+	public class SkeletonLoader extends EventDispatcher
 	{
 		public static const POSTFIX_SWF:String = ".swf";
 		public static const KEYNAME:String = "key";
 
 		public var bitmapDataPackageLoaders:Vector.<BitmapDataPackageLoader>;
 		
-		private var _directionList:Array;
-		private var _resourceList:Array;
-		private var _mirroringList:Array;
-		private var _offsetList:Array;
+//		private var _directionList:Array;
+//		private var _resourceList:Array;
+//		private var _mirroringList:Array;
+//		private var _offsetList:Array;
 		
 		private var _url:String;
 		private var _urlRequest:URLRequest;
@@ -40,25 +45,13 @@ package com.physwf.components.bitmap.net {
 		 * @param isBigKeyMode
 		 * 
 		 */		
-		public function SkeletonLoader(directionList:Array,resourceList:Array,mirroringList:Array,offsetList:Array,url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true) 
+		public function SkeletonLoader(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true) 
 		{
-			init(directionList,resourceList,mirroringList,offsetList,url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
+			init(url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
 		}
 		
-		private function init(directionList:Array,resourceList:Array,mirroringList:Array,offsetList:Array,url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):void
+		private function init(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):void
 		{
-			if(!directionList || !directionList.length)
-			{
-				throw "direction列表不能为空";
-			}
-			if(!resourceList || !resourceList.length)
-			{
-				throw "resourceList列表不能为空";
-			}
-			_directionList = directionList.concat();
-			_resourceList = resourceList?resourceList.concat():new Array(directionList.length);
-			_mirroringList = mirroringList?mirroringList.concat():new Array(directionList.length);
-			_offsetList = offsetList?offsetList.concat():new Array(directionList.length);
 			
 			_url = url;
 			_keyName = keyName;
@@ -68,19 +61,15 @@ package com.physwf.components.bitmap.net {
 			_isDynamicMode = isDynamicMode;
 			_isBigKeyMode = isBigKeyMode;
 			
-			if(directionList.length != resourceList.length || directionList.length != mirroringList.length || directionList.length != offsetList.length)
-			{
-				throw "参数不匹配";
-			}
 		}
 		
-		public static function getSameSkeletonLoader(directionList:Array,resourceList:Array,mirroringList:Array,offsetList:Array,url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):SkeletonLoader
+		public static function getSameSkeletonLoader(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):SkeletonLoader
 		{
-			var tag:String = directionList + resourceList +mirroringList + url;
+			var tag:String =  url;
 			var sLoader:SkeletonLoader = SkeletonLoaderPool.getLoader(tag);
 			if(!sLoader)
 			{
-				sLoader = new SkeletonLoader(directionList,resourceList,mirroringList,offsetList,url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
+				sLoader = new SkeletonLoader(url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
 				SkeletonLoaderPool.addLoader(tag,sLoader);
 			}
 			return sLoader;
@@ -94,6 +83,20 @@ package com.physwf.components.bitmap.net {
 		 */		
 		public function getAction(direction:String,label:String):Vector.<BitmapFrame>
 		{
+			if(_bigKey.directions.indexOf(direction)>-1)
+			{
+				for(var i:int=0;i<bitmapDataPackageLoaders.length;++i)
+				{
+					if(bitmapDataPackageLoaders[i].name == direction)
+					{
+						if(bitmapDataPackageLoaders[i].getLoadStatus(label) == BitmapDataPackageLoader.LOAD_STATUS_NO)
+						{
+							bitmapDataPackageLoaders[i].loadFrame(label);
+						}
+						return bitmapDataPackageLoaders[i].bitmapDataPackage.bitmapFrames;
+					}
+				}
+			}
 			return null;
 		}
 		/**
@@ -108,19 +111,32 @@ package com.physwf.components.bitmap.net {
 			return null;
 		}
 		
-		public function load(request:URLRequest=null):void
+		public function load():void
 		{
-			if(request)
+			var request:URLRequest = new URLRequest(_url+"/"+_keyName+_postfix);
+			var urlStream:URLStream = new URLStream();
+			urlStream.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
-				_urlRequest = request;
-				_url = request.url;
-			}
-			else
+				var bigKeyData:ByteArray = new ByteArray();
+				urlStream.readBytes(bigKeyData,0,urlStream.bytesAvailable);
+				_bigKey = new BigKey();
+				bigKeyData.position = 0;
+				_bigKey.readKey(bigKeyData);
+				loadSmallKeys();
+				dispatchEvent(new Event(Event.COMPLETE));
+			});
+			urlStream.load(request);
+		}
+		
+		private function loadSmallKeys():void
+		{
+			bitmapDataPackageLoaders = new Vector.<BitmapDataPackageLoader>;
+			for(var i:int = 0;i<_bigKey.directions.length;++i)
 			{
-				_urlRequest = new URLRequest(_url);
+				var bLoader:BitmapDataPackageLoader = new BitmapDataPackageLoader(_url,_bigKey.directions[i]);
+				bitmapDataPackageLoaders.push(bLoader);
+				bLoader.loadSmallKey();
 			}
-			
-			
 		}
 	} // end class
 } // end package

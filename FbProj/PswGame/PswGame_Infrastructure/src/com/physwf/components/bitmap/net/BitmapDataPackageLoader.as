@@ -5,17 +5,17 @@ package com.physwf.components.bitmap.net
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.display.BitmapKeyFrame;
 	import com.physwf.components.interfaces.IDisposible;
-	import com.physwf.components.pswloader.LoadingItem;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
-	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.net.URLStream;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
 
-	public class BitmapDataPackageLoader extends LoadingItem implements IDisposible
+	public class BitmapDataPackageLoader extends URLStream implements IDisposible
 	{
 		public static const SMALL_KEY_ENDIAN:int=1;
 		public static const BIG_KEY_ENDIAN:int=2;
@@ -23,15 +23,24 @@ package com.physwf.components.bitmap.net
 		public static const PACKAGE_ENDIAN_SPRITE:int = 4;
 		public static const PACKAGE_ENDIAN_ELVES:int = 5;
 		
+		public static const LOAD_STATUS_NO:uint = 0;
+		public static const LOAD_STATUS_LOADING:uint = 1;
+		public static const LOAD_STATUS_YES:uint = 2;
+		
 		public var bitmapDataPackage:BitmapDataPackage;
 		
 		private var _url:String;
 		private var _endian:int;
 		private var _smallKey:SmallKey;
+		private var _name:String;
 		
-		public function BitmapDataPackageLoader(url:String,type:String) 
+		private var _loadStatus:Dictionary;
+		
+		public function BitmapDataPackageLoader(url:String,name:String) 
 		{
-			super(url,type);
+			_url = url;
+			_name = name;
+			_loadStatus = new Dictionary();
 		}
 		
 		override public function load(request:URLRequest):void
@@ -40,10 +49,29 @@ package com.physwf.components.bitmap.net
 			super.load(request);
 		}
 		
+		public function loadSmallKey():void
+		{
+			load(new URLRequest(_url+"/"+_name+"/"+"key.swf"))
+		}
+		
+		public function loadFrame(name:String):void
+		{
+			if(_smallKey.frameNames.indexOf(name)>-1)
+			{
+				_loadStatus[name] = LOAD_STATUS_LOADING;
+				addEventListener(Event.COMPLETE,function setStatus(e:Event):void
+				{
+					_loadStatus[name] = LOAD_STATUS_YES;
+				},false,Number.NEGATIVE_INFINITY,true);
+				load(new URLRequest(_url+"/"+_name+"/"+name+".swf"))
+			}
+		}
+		
 		private function onComplete(e:Event):void
 		{
 			removeEventListener(Event.COMPLETE,onComplete);
-			var data:ByteArray = ByteArray(e.target.data);
+			var data:ByteArray = new ByteArray();
+			readBytes(data,0,bytesAvailable);
 			_endian = data.readShort();
 			
 			switch(_endian)
@@ -53,12 +81,9 @@ package com.physwf.components.bitmap.net
 					_smallKey.readKey(data);
 					initPackage();
 					break;
-//				case BIG_KEY_ENDIAN:
-//					var bigKey:BigKey = new BigKey();
-//					bigKey.readKey(data);
-//					break;
 				case PACKAGE_ENDIAN_JACK:
 					bitmapDataPackage.readExternal(data);
+					_loadStatus[name] = true;
 					break;
 			}
 		}
@@ -76,15 +101,15 @@ package com.physwf.components.bitmap.net
 			var frame:BitmapFrame;
 			var keyFrame:BitmapKeyFrame;
 			
-			for(var i:int =0;i<_smallKey.keyFrameLength;++i)
+			for(var i:int =0;i<_smallKey.keyFrameLength;i+=1)
 			{
 				keyFrame = new BitmapKeyFrame();
 				keyFrame.rect = new Rectangle(0,0,_smallKey.keyFrameRects[2*i],_smallKey.keyFrameRects[2*i+1]);
-				keyFrame.bitmapData = new BitmapData(keyFrame.rect.width,keyFrame.rect.height,true,0);
+				keyFrame.bitmapData = new BitmapData(keyFrame.rect.width,keyFrame.rect.height,true,0xFFFF0000);
 				bitmapDataPackage.bitmapKeyFrames[i] = keyFrame;
 			}
 			
-			for(i =0;i<numFrame;++i)
+			for(i =0;i<numFrame;i++)
 			{
 				frame = new BitmapFrame();
 				frame.frame = i;
@@ -93,7 +118,14 @@ package com.physwf.components.bitmap.net
 				bitmapDataPackage.bitmapFrames[i] = frame;
 			}
 			
+			for(i =0;i<_smallKey.frameNames.length;i+=1)
+			{
+				_loadStatus[_smallKey.frameNames[i]] = LOAD_STATUS_NO;
+			}
 		}
+		
+		public function get name():String { return _name; }
+		public function getLoadStatus(name:String):uint { return _loadStatus[name]; }
 		
 		public function destroy():void
 		{

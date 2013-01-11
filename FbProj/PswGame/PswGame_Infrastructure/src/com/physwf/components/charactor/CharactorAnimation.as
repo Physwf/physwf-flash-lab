@@ -1,15 +1,20 @@
 package com.physwf.components.charactor
 {
+	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.display.BitmapPalyer;
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.view.IAnimation;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	
-	public class CharactorAnimation extends Sprite implements IUpdatable
+	public class CharactorAnimation extends Sprite implements IAnimation,IUpdatable
 	{
 		private var mNude:BitmapPalyer;
 		private var mWearLayer:WearLayer;
 		private var mSpecialLayer:SpectialLayer;
+		
+		private var mNudeBmdt:Vector.<Vector.<BitmapFrame>>;
 		
 		public function CharactorAnimation()
 		{
@@ -31,7 +36,8 @@ package com.physwf.components.charactor
 		 */		
 		public function set direction(v:uint):void
 		{
-			
+			mNude.bitmapFrames = mNudeBmdt[v];
+			mWearLayer.direction = v;
 		}
 		
 		public function update():void
@@ -41,7 +47,7 @@ package com.physwf.components.charactor
 			mNude.nextFrame();
 		}
 		
-		public function get specialLayer():Sprite
+		public function get specialLayer():SpectialLayer
 		{
 			return mSpecialLayer;
 		}

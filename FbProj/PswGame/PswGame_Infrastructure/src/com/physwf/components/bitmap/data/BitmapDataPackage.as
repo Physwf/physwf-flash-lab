@@ -16,7 +16,11 @@ package com.physwf.components.bitmap.data {
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
-
+	/**
+	 * 每一个位图数据包包含一组关键帧数据和一组普通帧数据，每一个普通帧都指向关键中包中的某一个位置（通过frame属性） 
+	 * @author joe
+	 * 
+	 */
 	public class BitmapDataPackage implements IExternalizable
 	{
 
@@ -34,9 +38,7 @@ package com.physwf.components.bitmap.data {
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var len:int = input.readShort();
-			name = input.readUTFBytes(len);
-			
+			var len:int ;
 			var i:int=0;
 			var bmdBytes:ByteArray ;
 			while(input.bytesAvailable)
@@ -44,15 +46,15 @@ package com.physwf.components.bitmap.data {
 				len = input.readShort();
 				bmdBytes = new ByteArray();
 				input.readBytes(bmdBytes,0,len);
+				bmdBytes.inflate();
 				bitmapKeyFrames[i].bitmapData.setPixels(bitmapKeyFrames[i].rect,bmdBytes);
+				i++;
 			}
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeShort(endian);
-			output.writeShort(getSize(name));
-			output.writeUTF(name);
 			
 			switch(endian)
 			{
