@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="425" height="256" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.physwf.components.bitmap.display.BitmapPalyer;
+			import com.physwf.components.bitmap.net.SkeletonLoader;
+			
+			import flash.utils.setTimeout;
+			private var sLoader:SkeletonLoader;
+			
+			private function init():void
+			{
+				sLoader = SkeletonLoader.getSameSkeletonLoader("C:/Users/joe/Desktop/bone");
+				sLoader.addEventListener(Event.COMPLETE,onComplete);
+				sLoader.load();
+			}
+			
+			private function onComplete(e:Event):void
+			{
+				setTimeout(function ():void 
+				{
+					var player:BitmapPalyer = new BitmapPalyer();
+					player.bitmapFrames = sLoader.getAction("left","大招");
+					stage.addChild(player);
+					player.nextFrame();
+				} ,1000);
+				
+			}
+		]]>
+	</fx:Script>
+</s:WindowedApplication>

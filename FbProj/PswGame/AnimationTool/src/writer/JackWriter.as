@@ -29,14 +29,18 @@ package writer
 			for(var i:int = 0;i<skeletonStruct.mcList.length;++i)
 			{
 				var mcName:String = skeletonStruct.mcList[i].name;
-				var smallKey:SmallKey = new SmallKey();
+				bigKey.directions.push(mcName);
+				
+				var smallKey:SmallKey = new SmallKey();//每个mc对应一个smallKey
+				smallKey.totalFrames = skeletonStruct.mcList[i].totalFrames;
+				smallKey.offsetX = skeletonStruct.mcList[i].offsetX;
+				smallKey.offsetY = skeletonStruct.mcList[i].offsetY;
+				
 				//packge
 				for(var j:int =0;j<skeletonStruct.mcList[i].packageList.length;++j)
 				{
 					var frameName:String = skeletonStruct.mcList[i].packageList[j].name;
-					smallKey.symbolNames = skeletonStruct.symbolNames;
-					smallKey.directionName = skeletonStruct.mcList[i].name;
-					smallKey.totalFrames = skeletonStruct.mcList[i].totalFrames;
+					smallKey.frameNames.push(frameName);
 					
 					var rectArr:Array = [];
 					var frames:Array = [];
@@ -68,13 +72,11 @@ package writer
 					_fileStream.open(tempFile,FileMode.WRITE);
 					_fileStream.writeBytes(bytes);
 					_fileStream.close();
-					
-
 				}
 				// write small key
 				bytes = new ByteArray();
 				smallKey.writeKey(bytes);
-				bigKey.smallKeys.push(bytes);
+//				bigKey.smallKeys.push(bytes);
 				tempFile = File.desktopDirectory.resolvePath(skeletonName+"/"+mcName+"/"+SkeletonLoader.KEYNAME+SkeletonLoader.POSTFIX_SWF);
 				_fileStream.open(tempFile,FileMode.WRITE);
 				_fileStream.writeBytes(bytes);

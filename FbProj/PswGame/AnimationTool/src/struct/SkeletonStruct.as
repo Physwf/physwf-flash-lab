@@ -1,5 +1,10 @@
 package struct
 {
+	/**
+	 * 每个skeleton包含若干个mc，通常每个mc代表某一方向的动画 
+	 * @author joe
+	 * 
+	 */	
 	public class SkeletonStruct
 	{
 		public var name:String
