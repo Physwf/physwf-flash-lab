@@ -163,12 +163,19 @@ package com.physwf.application
 		
 		private function checkForExecute():void
 		{
-			for(var i:int=0;i<mPluginQueue.length;++i)
+			while(mPluginQueue.length)
 			{
 				var lastThread:int = mPluginsInRun.length - 1;
 				if(lastThread<mPluginQueue[0].info.thread)
 				{
-					mPluginsInRun.push(mPluginQueue.shift());
+					var plugin:IPlugin = mPluginQueue.shift();
+					mPluginsInRun.push(plugin);
+					plugin.addEventListener(PluginEvent.PLUGIN_FINISHED,onPluginFinished);
+					plugin.execute(root);
+				}
+				else
+				{
+					break;
 				}
 			}
 		}
