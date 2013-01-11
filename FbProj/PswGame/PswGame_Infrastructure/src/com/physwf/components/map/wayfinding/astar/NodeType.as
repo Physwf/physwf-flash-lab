@@ -2,10 +2,10 @@ package com.physwf.components.map.wayfinding.astar
 {
 	public class NodeType
 	{
-		public static const TYPE_LAND:uint = 0xFF804000;//brown
-		public static const TYPE_WATER:uint = 0xFF0066CC;// blue
-		public static const TYPE_ICE:uint = 0xFFE7E7E7;// silver
-		public static const TYPE_GRASS:uint = 0xFF00C400;//green
+		public static const TYPE_LAND:uint = 0x77804000;//brown
+		public static const TYPE_WATER:uint = 0x770066CC;// blue
+		public static const TYPE_ICE:uint = 0x77E7E7E7;// silver
+		public static const TYPE_GRASS:uint = 0x7700C400;//green
 		
 		public static const COST_LAND:Number = 1;
 		public static const COST_WATER:Number = 2;
