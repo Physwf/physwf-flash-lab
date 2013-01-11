@@ -41,8 +41,7 @@ package com.physwf.application.world.manager
 			mCamera.target = Charactor.self.view;
 			mCamera.initialize(mMapView);
 			
-			mController = new MapController();
-			mController.initialize(mMapView);
+			
 		}
 		
 		public function initialize():void
@@ -51,6 +50,9 @@ package com.physwf.application.world.manager
 			System.map.addEventListener(MapEvent.MAP_USER_MOVE,onMapEvent);
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
 			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
+			
+			mController = new MapController();
+			mController.initialize(mMapView);
 		}
 		
 		private function onMapEvent(e:MapEvent):void

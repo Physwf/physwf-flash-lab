@@ -14,23 +14,14 @@ package com.physwf.application.debug
 	{
 		private var mapDebug:MapDebuger;
 		
-		public function Debugger(target:IEventDispatcher=null)
-		{
-			super(target);
-		}
-		
-		public function set info(v:PluginInfo):void
-		{
-		}
-		
-		public function execute(root:Sprite):void
+		public function Debugger(root:Sprite)
 		{
 			root.stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 		}
 		
 		private function onKeyDown(e:KeyboardEvent):void
 		{
-			switch(e.charCode)
+			switch(e.keyCode)
 			{
 				case Keyboard.M:
 					if(!mapDebug)mapDebug = new MapDebuger();

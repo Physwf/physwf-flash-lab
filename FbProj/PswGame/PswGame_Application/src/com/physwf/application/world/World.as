@@ -31,9 +31,9 @@ package com.physwf.application.world
 		{
 			super();
 			map = new Map();
+			map.attachLayer(ScreenManager.main.world);
 			map.initialize();
 			Charactor.astar = new BiHeapAStar();
-			map.attachLayer(ScreenManager.main.world);
 			map.load();
 		}
 		

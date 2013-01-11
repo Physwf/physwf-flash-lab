@@ -47,19 +47,18 @@ package com.physwf.application.world.manager
 		
 		public function goto(tx:uint,ty:uint):void
 		{
-			var sx:uint = view.x / 10;
-			var sy:uint = view.y / 10;
+			var sx:uint = Math.floor(view.x / 10);
+			var sy:uint = Math.floor(view.y / 10);
 			var ex:uint = tx / 10;
 			var ey:uint = ty / 10;
 			trace(sx,sy,"goto")
 			if(astar.tryFindPath(sx,sy,ex,ey))
 			{
 				path = astar.getPath();
-				path.shift();
 				node = path.shift();
 				target_x = tx;
 				target_y = ty;
-				rad = Math.atan2(node.y -sy,node.x -sx);
+				rad = Math.atan2(node.y -view.y / 10,node.x -view.x / 10);
 				trace(node.y ,sy,node.x ,sx,rad,"rad")
 			}
 		}
@@ -88,29 +87,32 @@ package com.physwf.application.world.manager
 		{
 			if(path)
 			{
-				trace(path)
+//				trace(path)
 				var curX:Number = view.x;
 				var curY:Number = view.y;
 				var speedX:Number = speed * Math.cos(rad);
 				var speedY:Number = speed * Math.sin(rad);
-//				if(curX+speedX >= node.x * 10 && curY+speedY >= node.y * 10)// 要用绝对值
 				var offsetX:Number = (node.x * 10 - curX);
 				var offsetY:Number = (node.y * 10 - curY);
 				var step:Number = speedX*speedX+speedY*speedY;
 				var offset:Number = offsetX*offsetX+offsetY*offsetY;
-//				trace(step,offset)
+//				trace(curX,curY,node.x,node.y)
+//				trace(step,offset,offsetX,offsetY)
+				view.x += speedX;
+				view.y += speedY;
 				if(9 >= offset)// 要用绝对值
 				{
 					node = path.shift();
-					trace(path.length)
+//					trace(path.length)
 					if(path.length == 0) 
 					{
 						path = null;
+//						view.x = node.x * 10;
+//						view.y = node.y * 10;
 					}
 					rad = Math.atan2(node.y -curY/10,node.x - curX/10);
 				}
-				view.x += speedX;
-				view.y += speedY;
+				
 			}
 			view.update();
 		}

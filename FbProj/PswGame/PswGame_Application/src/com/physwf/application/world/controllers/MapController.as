@@ -25,7 +25,7 @@ package com.physwf.application.world.controllers
 		public function initialize(view:MapView):void
 		{
 			mapView = view;
-			mapView.addEventListener(MouseEvent.CLICK,onMapClick);
+			mapView.stage.addEventListener(MouseEvent.CLICK,onMapClick);
 		}
 		
 		private function onMapClick(e:MouseEvent):void

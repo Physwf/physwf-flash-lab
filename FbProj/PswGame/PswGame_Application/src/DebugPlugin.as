@@ -6,10 +6,8 @@ package
 	import com.physwf.components.interfaces.IUpdatable;
 	
 	import flash.display.Sprite;
-	import flash.events.EventDispatcher;
-	import flash.events.IEventDispatcher;
 	
-	public class DebugPlugin extends EventDispatcher implements IPlugin, IUpdatable
+	public class DebugPlugin extends Sprite implements IPlugin, IUpdatable
 	{
 		private var mInfo:PluginInfo;
 		private var debuger:Debugger;
@@ -30,7 +28,7 @@ package
 		
 		public function execute(root:Sprite):void
 		{
-			debuger = new Debugger();
+			debuger = new Debugger(root);
 		}
 		
 		public function dispose():void
