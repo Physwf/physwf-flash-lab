@@ -60,7 +60,8 @@ package parser
 			for(var i:int =0;i<length;++i)
 			{
 				var rect:Rectangle = mc.getBounds(mc);
-				var bmd:BitmapData = new BitmapData(rect.width,mc.height,true,0);
+				rect = new Rectangle(rect.x,rect.y,Math.floor(rect.width),Math.floor(rect.height));
+				var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 				var keyFrame:BitmapKeyFrame = new BitmapKeyFrame();
 				var frame:BitmapFrame = new BitmapFrame();
 				keyFrame.x = rect.x;

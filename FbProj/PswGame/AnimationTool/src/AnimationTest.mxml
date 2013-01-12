@@ -13,23 +13,35 @@
 			
 			import flash.utils.setTimeout;
 			private var sLoader:SkeletonLoader;
-			
+			private var sp:Sprite;
 			private function init():void
 			{
-				sLoader = SkeletonLoader.getSameSkeletonLoader("C:/Users/joe/Desktop/bone");
+				sLoader = SkeletonLoader.getSameSkeletonLoader("C:/Users/Physwf/Desktop/bone");
 				sLoader.addEventListener(Event.COMPLETE,onComplete);
+				addEventListener(MouseEvent.CLICK,onClick);
 				sLoader.load();
+			}
+			
+			private function onClick(e:MouseEvent):void
+			{
+				var player:BitmapPalyer = new BitmapPalyer();
+				player.bitmapFrames = sLoader.getAction("left","攻击");
+				
+				sp = new Sprite();
+				sp.addChild(player);
+				sp.x = 100;
+				sp.y = 100;
+				stage.addChild(sp);
+				
+				addEventListener(Event.ENTER_FRAME,function(e:Event):void {
+					player.nextFrame();
+				});
+				
 			}
 			
 			private function onComplete(e:Event):void
 			{
-				setTimeout(function ():void 
-				{
-					var player:BitmapPalyer = new BitmapPalyer();
-					player.bitmapFrames = sLoader.getAction("left","大招");
-					stage.addChild(player);
-					player.nextFrame();
-				} ,1000);
+				
 				
 			}
 		]]>

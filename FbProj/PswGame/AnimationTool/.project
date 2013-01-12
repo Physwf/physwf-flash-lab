@@ -3,6 +3,7 @@
 	<name>AnimationTool</name>
 	<comment></comment>
 	<projects>
+		<project>PswGame_Infrastructure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

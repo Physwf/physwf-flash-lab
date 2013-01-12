@@ -35,19 +35,26 @@ package writer
 				smallKey.totalFrames = skeletonStruct.mcList[i].totalFrames;
 				smallKey.offsetX = skeletonStruct.mcList[i].offsetX;
 				smallKey.offsetY = skeletonStruct.mcList[i].offsetY;
+				smallKey.frameCount = [];
+				smallKey.keyFrameCount = [];
 				
+				var rectArr:Array = [];
+				var frames:Array = [];
 				//packge
 				for(var j:int =0;j<skeletonStruct.mcList[i].packageList.length;++j)
 				{
 					var frameName:String = skeletonStruct.mcList[i].packageList[j].name;
 					smallKey.frameNames.push(frameName);
-					
-					var rectArr:Array = [];
-					var frames:Array = [];
+					smallKey.frameCount.push(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length);
+					smallKey.keyFrameCount.push(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length);
+					trace(skeletonStruct.mcList[i].packageList[j].name);
 					//key frames
 					for(var k:int =0;k<skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length;++k)
 					{
-						rectArr.push(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.width,
+						rectArr.push(
+							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.width,
+							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.height);
+						trace(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.width,
 							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.height);
 					}
 					//frams
@@ -55,16 +62,17 @@ package writer
 					{
 						// to do 计算出index的值
 						var index:int = skeletonStruct.mcList[i].packageList[j].bitmapFrames[k].index;
+						skeletonStruct.mcList[i].packageList[j].bitmapFrames[k].frame = k;
+						trace(k);
 						// index --;
 						frames.push(
 							index,
 							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].x,
 							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].y);
+//						trace(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].x,
+//							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].y);
 					}
 					
-					smallKey.keyFrameLength = rectArr.length;
-					smallKey.keyFrameRects = rectArr;
-					smallKey.frames = frames;
 					// write package
 					var bytes:ByteArray = new ByteArray();
 					skeletonStruct.mcList[i].packageList[j].writeExternal(bytes);
@@ -74,6 +82,9 @@ package writer
 					_fileStream.close();
 				}
 				// write small key
+				smallKey.keyFrameLength = rectArr.length/2;
+				smallKey.keyFrameRects = rectArr;
+				smallKey.frames = frames;
 				bytes = new ByteArray();
 				smallKey.writeKey(bytes);
 //				bigKey.smallKeys.push(bytes);
