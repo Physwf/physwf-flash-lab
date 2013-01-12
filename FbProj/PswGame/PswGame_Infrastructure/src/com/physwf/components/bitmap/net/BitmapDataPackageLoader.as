@@ -29,6 +29,8 @@ package com.physwf.components.bitmap.net
 		
 		public var bitmapDataPackage:BitmapDataPackage;
 		
+		public var packages:Vector.<BitmapDataPackage>;
+		
 		private var _url:String;
 		private var _endian:int;
 		private var _smallKey:SmallKey;
@@ -56,6 +58,7 @@ package com.physwf.components.bitmap.net
 		
 		public function loadFrame(name:String):void
 		{
+			trace(name);
 			if(_smallKey.frameNames.indexOf(name)>-1)
 			{
 				_loadStatus[name] = LOAD_STATUS_LOADING;
@@ -79,15 +82,42 @@ package com.physwf.components.bitmap.net
 				case SMALL_KEY_ENDIAN:
 					_smallKey = new SmallKey();
 					_smallKey.readKey(data);
-					initPackage();
+					initPackages();
 					break;
 				case PACKAGE_ENDIAN_JACK:
-					bitmapDataPackage.readExternal(data);
-					_loadStatus[name] = true;
+//					bitmapDataPackage.readExternal(data);
+					var nameLen:uint = data.readShort();
+					var name:String = data.readUTFBytes(nameLen);
+					getPackage(name).readExternal(data);;
 					break;
 			}
 		}
 		
+		private function initPackages():void
+		{
+			packages = new <BitmapDataPackage>[];
+			for(var i:int=0;i<_smallKey.frameNames.length;++i)
+			{
+				var pack:BitmapDataPackage = new BitmapDataPackage();
+				var numFrame:int = _smallKey.frames.length / 3;
+				pack.name = _smallKey.frameNames[i];
+				pack.bitmapKeyFrames = new Vector.<BitmapKeyFrame>(_smallKey.keyFrameCount[i],true);
+				pack.bitmapFrames = new Vector.<BitmapFrame>(_smallKey.frameCount[i],true);
+				var count:uint = _smallKey.keyFrameCount[i];
+				for(var j:int=0;j<count;++j)
+				{
+					pack.bitmapKeyFrames[j] = new BitmapKeyFrame();
+				}
+				count = _smallKey.frameCount[i];
+				for(j=0;j<count;++j)
+				{
+					pack.bitmapFrames[j] = new BitmapFrame();
+					pack.bitmapFrames[j].index = j;
+					pack.bitmapFrames[j].keyFrame = pack.bitmapKeyFrames[0];
+				}
+				packages.push(pack);
+			}
+		}
 		/**
 		 * 
 		 * 初始化bitmapPackage，为进一步的位图数据填充做准备
@@ -95,6 +125,7 @@ package com.physwf.components.bitmap.net
 		private function initPackage():void
 		{
 			bitmapDataPackage = new BitmapDataPackage();
+			bitmapDataPackage.name = _name;
 			var numFrame:int = _smallKey.frames.length / 3;
 			bitmapDataPackage.bitmapFrames = new Vector.<BitmapFrame>(numFrame,true);
 			bitmapDataPackage.bitmapKeyFrames = new Vector.<BitmapKeyFrame>(_smallKey.keyFrameLength,true);
@@ -126,7 +157,15 @@ package com.physwf.components.bitmap.net
 		
 		public function get name():String { return _name; }
 		public function getLoadStatus(name:String):uint { return _loadStatus[name]; }
-		
+		public function getPackage(name:String):BitmapDataPackage
+		{
+			for(var i:int=0;i<packages.length;++i)
+			{
+				if(packages[i].name == name)
+					return packages[i];
+			}
+			return null;
+		}
 		public function destroy():void
 		{
 			

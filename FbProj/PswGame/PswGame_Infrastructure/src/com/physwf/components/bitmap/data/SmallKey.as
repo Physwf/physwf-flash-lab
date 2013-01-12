@@ -16,6 +16,9 @@ package com.physwf.components.bitmap.data
 		public var frameNames:Vector.<String> = new <String>[];
 		public var totalFrames:int;
 		
+		public var keyFrameCount:Array;
+		public var frameCount:Array;
+		
 		public var offsetX:int;
 		public var offsetY:int;
 		
@@ -39,13 +42,29 @@ package com.physwf.components.bitmap.data
 			offsetX = input.readShort();
 			offsetY = input.readShort();
 			
+			var keyCountLen:uint = input.readShort();
+			keyFrameCount = [];
+			for(var i:int=0;i<keyCountLen;++i)
+			{
+				keyFrameCount.push(input.readShort());
+			}
+			
+			var frameCountLen:uint = input.readShort();
+			frameCount = [];
+			for(i=0;i<frameCountLen;++i)
+			{
+				frameCount.push(input.readShort());
+			}
+			
 			keyFrameLength = input.readShort();
 			
 			keyFrameRects = [];
-			for(var i:int =0;i<keyFrameLength;i++)
+			for(i=0;i<keyFrameLength;i++)
 			{
 				keyFrameRects[2*i] = input.readShort();
 				keyFrameRects[2*i+1] = input.readShort();
+//				trace(keyFrameRects[2*i]);
+//				trace(keyFrameRects[2*i]+i);
 			}
 			frames = [];
 			for(i=0;input.bytesAvailable;i++)
@@ -69,16 +88,28 @@ package com.physwf.components.bitmap.data
 			output.writeShort(offsetX);
 			output.writeShort(offsetY);
 			
+			output.writeShort(keyFrameCount.length);
+			for(var i:int=0;i<keyFrameCount.length;++i)
+			{
+				output.writeShort(keyFrameCount[i]);
+			}
+			
+			output.writeShort(frameCount.length);
+			for(i=0;i<frameCount.length;++i)
+			{
+				output.writeShort(frameCount[i]);
+			}
+			
+			
 			output.writeShort(keyFrameLength);
-			for(var i:int =0;i<keyFrameLength;i++)
+			for(i=0;i<keyFrameLength;i++)
 			{
 				output.writeShort(keyFrameRects[2*i]);
 				output.writeShort(keyFrameRects[2*i+1]);
-				trace(keyFrameRects[2*i]);
-				trace(keyFrameRects[2*i]+i);
+				trace(keyFrameRects[2*i],keyFrameRects[2*i+1]);
 			}
 			
-			for(i=0;i<frames.length;i+=3)
+			for(i=0;i<frames.length/3;i++)
 			{
 				output.writeShort(frames[3*i]);
 				output.writeShort(frames[3*i+1]);

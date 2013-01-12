@@ -16,11 +16,13 @@ package com.physwf.components.bitmap.display {
 		{
 			if(currentFrame<0 || currentFrame>=bitmapFrames.length) currentFrame = 0;
 			var keyFrame:BitmapKeyFrame = bitmapFrames[currentFrame].keyFrame;
+			x=keyFrame.x;
+			y=keyFrame.y;
 			if(bitmapData != keyFrame.bitmapData)
 			{
 				bitmapData = keyFrame.bitmapData;
-				x=keyFrame.x;
-				y=keyFrame.y;
+//				x=keyFrame.x;
+//				y=keyFrame.y;
 			}
 			currentFrame ++;
 		}

@@ -19,6 +19,7 @@ package com.physwf.components.bitmap.display
 
 		public function BitmapKeyFrame() 
 		{
+			_bitmapData = new BitmapData(1,1,true,0);
 		}
 
 		public function set bitmapData(v:BitmapData):void 

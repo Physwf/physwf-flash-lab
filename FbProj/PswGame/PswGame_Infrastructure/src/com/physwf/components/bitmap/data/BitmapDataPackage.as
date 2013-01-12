@@ -30,7 +30,9 @@ package com.physwf.components.bitmap.data {
 		public var bitmapKeyFrames:Vector.<BitmapKeyFrame>;
 		public var bitmapFrames:Vector.<BitmapFrame>;
 
-
+//		public var keyFrameRects:Array;
+		public var frames:Array;
+		
 		public function BitmapDataPackage() 
 		{
 			
@@ -39,16 +41,33 @@ package com.physwf.components.bitmap.data {
 		public function readExternal(input:IDataInput):void
 		{
 			var len:int ;
-			var i:int=0;
 			var bmdBytes:ByteArray ;
-			while(input.bytesAvailable)
+			var rect:Rectangle;
+			
+			var keyLen:uint = input.readShort();
+			for(var i:int=0;i<keyLen;++i)
 			{
+				bitmapKeyFrames[i].x = input.readShort();
+				bitmapKeyFrames[i].y = input.readShort();
+				rect = new Rectangle();
+				rect.width = input.readShort();
+				rect.height = input.readShort();
 				len = input.readShort();
 				bmdBytes = new ByteArray();
 				input.readBytes(bmdBytes,0,len);
 				bmdBytes.inflate();
-				bitmapKeyFrames[i].bitmapData.setPixels(bitmapKeyFrames[i].rect,bmdBytes);
-				i++;
+				var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0x0FFFF0000);
+				bmd.setPixels(rect,bmdBytes);
+				trace(rect);
+				bitmapKeyFrames[i].bitmapData = bmd;
+			}
+			var frameLen:uint = input.readShort();
+			
+			for(i = 0;i<frameLen;++i)
+			{
+				var frame:uint = input.readShort();
+				bitmapFrames[i].keyFrame = bitmapKeyFrames[frame];
+				trace(frame);
 			}
 		}
 		
@@ -72,13 +91,30 @@ package com.physwf.components.bitmap.data {
 		
 		private function writeJack(output:IDataOutput):void
 		{
+//			trace(name)
+			var nameData:ByteArray = new ByteArray();
+			nameData.writeUTFBytes(name);
+			output.writeShort(nameData.length);
+			output.writeBytes(nameData);
+			
+			output.writeShort(bitmapKeyFrames.length);
 			for(var i:int=0;i<bitmapKeyFrames.length;++i)
 			{
 				var bmd:BitmapData = bitmapKeyFrames[i].bitmapData;
-				var bytes:ByteArray = bmd.getPixels(bmd.rect);
+				var rect:Rectangle = new Rectangle(bmd.rect.x,bmd.rect.y,bmd.rect.width,bmd.rect.height);
+				output.writeShort(bitmapKeyFrames[i].x);
+				output.writeShort(bitmapKeyFrames[i].y);
+				var bytes:ByteArray = bmd.getPixels(rect);
 				bytes.deflate();
+				output.writeShort(rect.width);
+				output.writeShort(rect.height);
 				output.writeShort(bytes.length);
 				output.writeBytes(bytes);
+			}
+			output.writeShort(bitmapFrames.length);
+			for(i=0;i<bitmapFrames.length;++i)
+			{
+				output.writeShort(bitmapFrames[i].frame);
 			}
 		}
 		

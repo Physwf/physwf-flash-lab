@@ -93,7 +93,7 @@ package com.physwf.components.bitmap.net {
 						{
 							bitmapDataPackageLoaders[i].loadFrame(label);
 						}
-						return bitmapDataPackageLoaders[i].bitmapDataPackage.bitmapFrames;
+						return bitmapDataPackageLoaders[i].getPackage(label).bitmapFrames;
 					}
 				}
 			}
