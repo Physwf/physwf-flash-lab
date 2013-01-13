@@ -25,16 +25,16 @@
 			private function onClick(e:MouseEvent):void
 			{
 				var player:BitmapPalyer = new BitmapPalyer();
-				player.bitmapFrames = sLoader.getAction("left","攻击");
+				player.bitmapFrames = sLoader.getAction("left","奸笑");
 				
 				sp = new Sprite();
 				sp.addChild(player);
 				sp.x = 100;
 				sp.y = 100;
 				stage.addChild(sp);
-				
 				addEventListener(Event.ENTER_FRAME,function(e:Event):void {
 					player.nextFrame();
+					trace(player.currentFrame)
 				});
 				
 			}

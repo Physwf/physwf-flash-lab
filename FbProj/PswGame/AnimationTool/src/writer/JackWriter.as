@@ -47,14 +47,11 @@ package writer
 					smallKey.frameNames.push(frameName);
 					smallKey.frameCount.push(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length);
 					smallKey.keyFrameCount.push(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length);
-					trace(skeletonStruct.mcList[i].packageList[j].name);
 					//key frames
 					for(var k:int =0;k<skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames.length;++k)
 					{
 						rectArr.push(
 							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.width,
-							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.height);
-						trace(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.width,
 							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[k].rect.height);
 					}
 					//frams
@@ -63,16 +60,8 @@ package writer
 						// to do 计算出index的值
 						var index:int = skeletonStruct.mcList[i].packageList[j].bitmapFrames[k].index;
 						skeletonStruct.mcList[i].packageList[j].bitmapFrames[k].frame = k;
-						trace(k);
 						// index --;
-						frames.push(
-							index,
-							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].x,
-							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].y);
-//						trace(skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].x,
-//							skeletonStruct.mcList[i].packageList[j].bitmapKeyFrames[index].y);
 					}
-					
 					// write package
 					var bytes:ByteArray = new ByteArray();
 					skeletonStruct.mcList[i].packageList[j].writeExternal(bytes);
@@ -83,8 +72,6 @@ package writer
 				}
 				// write small key
 				smallKey.keyFrameLength = rectArr.length/2;
-				smallKey.keyFrameRects = rectArr;
-				smallKey.frames = frames;
 				bytes = new ByteArray();
 				smallKey.writeKey(bytes);
 //				bigKey.smallKeys.push(bytes);

@@ -54,20 +54,22 @@ package parser
 		private static function parseFrameToPackage(label:FrameLabel,mc:MovieClip,length:int):BitmapDataPackage
 		{
 			var packageStruct:BitmapDataPackage = new BitmapDataPackage();
-			packageStruct.name = label.name;
+			packageStruct.name = trim(label.name);
 			packageStruct.bitmapFrames = new Vector.<BitmapFrame>(length,true);
 			packageStruct.bitmapKeyFrames = new Vector.<BitmapKeyFrame>();
 			for(var i:int =0;i<length;++i)
 			{
+				mc.gotoAndStop(label.frame+i);
 				var rect:Rectangle = mc.getBounds(mc);
-				rect = new Rectangle(rect.x,rect.y,Math.floor(rect.width),Math.floor(rect.height));
+				var rx:int = rect.x >= 0 ?Math.ceil(rect.x):Math.floor(rect.x); 
+				var ry:int = rect.y >= 0 ?Math.ceil(rect.y):Math.floor(rect.y); 
+				rect = new Rectangle(rx,ry,Math.ceil(rect.width),Math.ceil(rect.height));
 				var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 				var keyFrame:BitmapKeyFrame = new BitmapKeyFrame();
 				var frame:BitmapFrame = new BitmapFrame();
 				keyFrame.x = rect.x;
 				keyFrame.y = rect.y;
 				keyFrame.rect = rect;
-				mc.gotoAndStop(label.frame+i);
 				frame.index = mc.currentFrame-label.frame;
 				bmd.draw(mc,new Matrix(1,0,0,1,-rect.x,-rect.y),null,null,null,true);
 				keyFrame.bitmapData = bmd;
@@ -75,6 +77,20 @@ package parser
 				packageStruct.bitmapFrames[i] = frame;
 			}
 			return packageStruct;
+		}
+		
+		private static function trim(str:String):String
+		{
+			while(str.charAt(0) == " ")
+			{
+				str = str.slice(1);
+			}
+			
+			while(str.charAt(str.length-1) == " ")
+			{
+				str = str.slice(0,str.length-1);
+			}	
+			return str;
 		}
 	}
 }
