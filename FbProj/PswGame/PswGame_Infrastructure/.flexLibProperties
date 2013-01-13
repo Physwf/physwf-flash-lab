@@ -46,6 +46,7 @@
     <classEntry path="com.physwf.components.charactor.SpectialLayer"/>
     <classEntry path="com.physwf.components.screen.Layer"/>
     <classEntry path="com.physwf.components.charactor.enum.ISODirection"/>
+    <classEntry path="com.physwf.components.utils.StringUtils"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

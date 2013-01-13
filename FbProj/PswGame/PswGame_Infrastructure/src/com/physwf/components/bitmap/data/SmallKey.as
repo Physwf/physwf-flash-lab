@@ -24,9 +24,9 @@ package com.physwf.components.bitmap.data
 		
 		public var keyFrameLength:int;
 		
-		public var keyFrameRects:Array;//[w1,h1,w2,h2,...]
-		
-		public var frames:Array;//[index1,x1,y1,index2,x2,y2...	]
+//		public var keyFrameRects:Array;//[w1,h1,w2,h2,...]
+//		
+//		public var frames:Array;//[index1,x1,y1,index2,x2,y2...	]
 		
 		public function SmallKey()
 		{
@@ -56,23 +56,23 @@ package com.physwf.components.bitmap.data
 				frameCount.push(input.readShort());
 			}
 			
-			keyFrameLength = input.readShort();
-			
-			keyFrameRects = [];
-			for(i=0;i<keyFrameLength;i++)
-			{
-				keyFrameRects[2*i] = input.readShort();
-				keyFrameRects[2*i+1] = input.readShort();
-//				trace(keyFrameRects[2*i]);
-//				trace(keyFrameRects[2*i]+i);
-			}
-			frames = [];
-			for(i=0;input.bytesAvailable;i++)
-			{
-				frames[3*i] = input.readShort();
-				frames[3*i+1] = input.readShort();
-				frames[3*i+2] = input.readShort();
-			}
+//			keyFrameLength = input.readShort();
+//			
+////			keyFrameRects = [];
+////			for(i=0;i<keyFrameLength;i++)
+////			{
+////				keyFrameRects[2*i] = input.readShort();
+////				keyFrameRects[2*i+1] = input.readShort();
+//////				trace(keyFrameRects[2*i]);
+//////				trace(keyFrameRects[2*i]+i);
+////			}
+////			frames = [];
+////			for(i=0;input.bytesAvailable;i++)
+////			{
+////				frames[3*i] = input.readShort();
+////				frames[3*i+1] = input.readShort();
+////				frames[3*i+2] = input.readShort();
+////			}
 		}
 		
 		public function writeKey(output:IDataOutput):void
@@ -100,21 +100,21 @@ package com.physwf.components.bitmap.data
 				output.writeShort(frameCount[i]);
 			}
 			
-			
-			output.writeShort(keyFrameLength);
-			for(i=0;i<keyFrameLength;i++)
-			{
-				output.writeShort(keyFrameRects[2*i]);
-				output.writeShort(keyFrameRects[2*i+1]);
-				trace(keyFrameRects[2*i],keyFrameRects[2*i+1]);
-			}
-			
-			for(i=0;i<frames.length/3;i++)
-			{
-				output.writeShort(frames[3*i]);
-				output.writeShort(frames[3*i+1]);
-				output.writeShort(frames[3*i+2]);
-			}
+//			
+//			output.writeShort(keyFrameLength);
+//			for(i=0;i<keyFrameLength;i++)
+//			{
+//				output.writeShort(keyFrameRects[2*i]);
+//				output.writeShort(keyFrameRects[2*i+1]);
+//				trace(keyFrameRects[2*i],keyFrameRects[2*i+1]);
+//			}
+//			
+//			for(i=0;i<frames.length/3;i++)
+//			{
+//				output.writeShort(frames[3*i]);
+//				output.writeShort(frames[3*i+1]);
+//				output.writeShort(frames[3*i+2]);
+//			}
 			
 		}
 	}

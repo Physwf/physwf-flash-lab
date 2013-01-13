@@ -27,7 +27,6 @@ package com.physwf.components.bitmap.net
 		public static const LOAD_STATUS_LOADING:uint = 1;
 		public static const LOAD_STATUS_YES:uint = 2;
 		
-		public var bitmapDataPackage:BitmapDataPackage;
 		
 		public var packages:Vector.<BitmapDataPackage>;
 		
@@ -58,7 +57,6 @@ package com.physwf.components.bitmap.net
 		
 		public function loadFrame(name:String):void
 		{
-			trace(name);
 			if(_smallKey.frameNames.indexOf(name)>-1)
 			{
 				_loadStatus[name] = LOAD_STATUS_LOADING;
@@ -85,7 +83,6 @@ package com.physwf.components.bitmap.net
 					initPackages();
 					break;
 				case PACKAGE_ENDIAN_JACK:
-//					bitmapDataPackage.readExternal(data);
 					var nameLen:uint = data.readShort();
 					var name:String = data.readUTFBytes(nameLen);
 					getPackage(name).readExternal(data);;
@@ -99,7 +96,6 @@ package com.physwf.components.bitmap.net
 			for(var i:int=0;i<_smallKey.frameNames.length;++i)
 			{
 				var pack:BitmapDataPackage = new BitmapDataPackage();
-				var numFrame:int = _smallKey.frames.length / 3;
 				pack.name = _smallKey.frameNames[i];
 				pack.bitmapKeyFrames = new Vector.<BitmapKeyFrame>(_smallKey.keyFrameCount[i],true);
 				pack.bitmapFrames = new Vector.<BitmapFrame>(_smallKey.frameCount[i],true);
@@ -116,42 +112,6 @@ package com.physwf.components.bitmap.net
 					pack.bitmapFrames[j].keyFrame = pack.bitmapKeyFrames[0];
 				}
 				packages.push(pack);
-			}
-		}
-		/**
-		 * 
-		 * 初始化bitmapPackage，为进一步的位图数据填充做准备
-		 */		
-		private function initPackage():void
-		{
-			bitmapDataPackage = new BitmapDataPackage();
-			bitmapDataPackage.name = _name;
-			var numFrame:int = _smallKey.frames.length / 3;
-			bitmapDataPackage.bitmapFrames = new Vector.<BitmapFrame>(numFrame,true);
-			bitmapDataPackage.bitmapKeyFrames = new Vector.<BitmapKeyFrame>(_smallKey.keyFrameLength,true);
-			var frame:BitmapFrame;
-			var keyFrame:BitmapKeyFrame;
-			
-			for(var i:int =0;i<_smallKey.keyFrameLength;i+=1)
-			{
-				keyFrame = new BitmapKeyFrame();
-				keyFrame.rect = new Rectangle(0,0,_smallKey.keyFrameRects[2*i],_smallKey.keyFrameRects[2*i+1]);
-				keyFrame.bitmapData = new BitmapData(keyFrame.rect.width,keyFrame.rect.height,true,0xFFFF0000);
-				bitmapDataPackage.bitmapKeyFrames[i] = keyFrame;
-			}
-			
-			for(i =0;i<numFrame;i++)
-			{
-				frame = new BitmapFrame();
-				frame.frame = i;
-				frame.index = _smallKey.frames[3*i];
-				frame.keyFrame = bitmapDataPackage.bitmapKeyFrames[frame.index]
-				bitmapDataPackage.bitmapFrames[i] = frame;
-			}
-			
-			for(i =0;i<_smallKey.frameNames.length;i+=1)
-			{
-				_loadStatus[_smallKey.frameNames[i]] = LOAD_STATUS_NO;
 			}
 		}
 		
