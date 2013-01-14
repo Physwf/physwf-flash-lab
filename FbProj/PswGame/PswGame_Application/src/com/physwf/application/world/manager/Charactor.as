@@ -2,6 +2,10 @@ package com.physwf.application.world.manager
 {
 	import com.physwf.application.world.controllers.CharactorController;
 	import com.physwf.components.charactor.CharactorAnimation;
+	import com.physwf.components.charactor.enum.CharacterAction;
+	import com.physwf.components.charactor.enum.ISODirection;
+	import com.physwf.components.charactor.factory.BoyFactory;
+	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
@@ -18,6 +22,7 @@ package com.physwf.application.world.manager
 		public static var self:Charactor;
 		
 		public var view:CharactorAnimation;
+		private var mFactory:ICharacterFactory;
 		private var controller:CharactorController;
 		private var userInfo:UserInfo;
 		
@@ -26,7 +31,7 @@ package com.physwf.application.world.manager
 		
 		private var target_x:uint;
 		private var target_y:uint;
-		private var speed:uint = 3;
+		private var speed:uint = 5;
 		private var rad:Number;// 速度的方向
 		private var node:Node;
 		
@@ -37,8 +42,9 @@ package com.physwf.application.world.manager
 		public function initialize(userInfo:UserInfo):void
 		{
 			this.userInfo = userInfo;
-			
+			mFactory = new BoyFactory();//后期需要选择
 			view = new CharactorAnimation();
+			view.skeleton = mFactory.getNude();
 			view.x = userInfo.map_x;
 			view.y = userInfo.map_y;
 			controller = new CharactorController();
@@ -59,13 +65,15 @@ package com.physwf.application.world.manager
 				target_x = tx;
 				target_y = ty;
 				rad = Math.atan2(node.y -view.y / 10,node.x -view.x / 10);
+				view.direction = ISODirection.radianToDirect(rad);
+				run();
 				trace(node.y ,sy,node.x ,sx,rad,"rad")
 			}
 		}
 		
 		public function stand():void
 		{
-			//切换动画状态
+			view.status = CharacterAction.ACTION_STAND;
 		}
 		
 		public function walk():void
@@ -75,12 +83,12 @@ package com.physwf.application.world.manager
 		
 		public function run():void
 		{
-			//切换动画状态
+			view.status = CharacterAction.ACTION_RUN;
 		}
 		
 		public function attack():void
 		{
-			//切换动画状态
+			view.status = CharacterAction.ACTION_ATTACK;
 		}
 		
 		public function update():void
@@ -100,7 +108,7 @@ package com.physwf.application.world.manager
 //				trace(step,offset,offsetX,offsetY)
 				view.x += speedX;
 				view.y += speedY;
-				if(9 >= offset)// 要用绝对值
+				if(25 >= offset)// 要用绝对值
 				{
 					node = path.shift();
 //					trace(path.length)
@@ -109,8 +117,10 @@ package com.physwf.application.world.manager
 						path = null;
 //						view.x = node.x * 10;
 //						view.y = node.y * 10;
+						attack();
 					}
 					rad = Math.atan2(node.y -curY/10,node.x - curX/10);
+					view.direction = ISODirection.radianToDirect(rad);
 				}
 				
 			}

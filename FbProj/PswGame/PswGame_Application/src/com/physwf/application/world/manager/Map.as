@@ -33,6 +33,8 @@ package com.physwf.application.world.manager
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
 			
 			Charactor.self = new Charactor();
+			MySelf.userInfo.map_x = 626;
+			MySelf.userInfo.map_y = 566;
 			Charactor.self.initialize(MySelf.userInfo);
 			
 			mCharactors = new <Charactor>[];
