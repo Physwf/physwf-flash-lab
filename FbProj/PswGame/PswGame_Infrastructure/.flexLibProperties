@@ -47,6 +47,10 @@
     <classEntry path="com.physwf.components.screen.Layer"/>
     <classEntry path="com.physwf.components.charactor.enum.ISODirection"/>
     <classEntry path="com.physwf.components.utils.StringUtils"/>
+    <classEntry path="com.physwf.components.charactor.factory.ICharacterFactory"/>
+    <classEntry path="com.physwf.components.charactor.factory.BoyFactory"/>
+    <classEntry path="com.physwf.components.charactor.Wear"/>
+    <classEntry path="com.physwf.components.charactor.enum.CharacterAction"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

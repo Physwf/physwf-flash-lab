@@ -2,10 +2,12 @@ package com.physwf.components.bitmap.display {
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
 
 	public class BitmapPalyer extends Bitmap {
 
-		public var bitmapFrames:Vector.<BitmapFrame>;
+		private var mBitmapFrames:Vector.<BitmapFrame>;
+		private var mTotalFrames:int;
 		public var currentFrame:int;
 		
 		public function BitmapPalyer() 
@@ -14,17 +16,38 @@ package com.physwf.components.bitmap.display {
 		
 		public function nextFrame():void
 		{
-			if(currentFrame<0 || currentFrame>=bitmapFrames.length) currentFrame = 0;
-			var keyFrame:BitmapKeyFrame = bitmapFrames[currentFrame].keyFrame;
-			x=keyFrame.x;
-			y=keyFrame.y;
+			if(!mBitmapFrames) return;
+			if(currentFrame<0 || currentFrame>=mTotalFrames) currentFrame = 0;
+			var keyFrame:BitmapKeyFrame = mBitmapFrames[currentFrame].keyFrame;
 			if(bitmapData != keyFrame.bitmapData)
 			{
 				bitmapData = keyFrame.bitmapData;
-//				x=keyFrame.x;
-//				y=keyFrame.y;
+				x=keyFrame.x;
+				y=keyFrame.y;
 			}
 			currentFrame ++;
+			
+			if(currentFrame == mTotalFrames)
+			{
+				dispatchEvent(new Event("complete"));
+			}
+		}
+		
+		public function set bitmapFrames(frames:Vector.<BitmapFrame>):void
+		{
+			mBitmapFrames = frames;
+			mTotalFrames = mBitmapFrames.length;
+			dispatchEvent(new Event("frame_changed"));
+		}
+		
+		public function get bitmapFrames():Vector.<BitmapFrame>
+		{
+			return mBitmapFrames;
+		}
+		
+		public function get totalFrames():int
+		{
+			return mTotalFrames;
 		}
 
 	} // end class

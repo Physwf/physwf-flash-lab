@@ -64,7 +64,7 @@ package com.physwf.components.bitmap.net
 				{
 					_loadStatus[name] = LOAD_STATUS_YES;
 				},false,Number.NEGATIVE_INFINITY,true);
-				load(new URLRequest(_url+"/"+_name+"/"+name+".swf"))
+				load(new URLRequest(_url+"/"+_name+"/"+name+".swf"));
 			}
 		}
 		

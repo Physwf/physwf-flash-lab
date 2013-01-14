@@ -1,6 +1,6 @@
 package com.physwf.components.interfaces {
 
-	public interface IUpdatable {
+	public interface IUpdatable{
 
 		function update():void;
 

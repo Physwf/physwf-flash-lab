@@ -75,25 +75,38 @@ package com.physwf.components.bitmap.net {
 			return sLoader;
 		}
 		/**
-		 * 获取指定方向，指定名称的动作 
+		 * 通过角色方向标示和动作标示获取动作序列
 		 * @param direction 动作的方向
-		 * @param label 动作的名称
+		 * @param action 动作的名称
 		 * @return 
 		 * 
 		 */		
-		public function getAction(direction:String,label:String):Vector.<BitmapFrame>
+		public function getCharacterAction(direction:uint,action:uint):Vector.<BitmapFrame>
 		{
-			if(_bigKey.directions.indexOf(direction)>-1)
+			var directLabel:String = "d"+direction;
+			var actionLabel:String = "a"+action;
+			return getAction(directLabel,actionLabel);
+		}
+		/**
+		 * 通过原件名和动作名来获取动作帧序列
+		 * @param directLabel
+		 * @param actionLabel
+		 * @return 
+		 * 
+		 */		
+		public function getAction(directLabel:String,actionLabel:String):Vector.<BitmapFrame>
+		{
+			if(_bigKey.directions.indexOf(directLabel)>-1)
 			{
 				for(var i:int=0;i<bitmapDataPackageLoaders.length;++i)
 				{
-					if(bitmapDataPackageLoaders[i].name == direction)
+					if(bitmapDataPackageLoaders[i].name == directLabel)
 					{
-						if(bitmapDataPackageLoaders[i].getLoadStatus(label) == BitmapDataPackageLoader.LOAD_STATUS_NO)
+						if(bitmapDataPackageLoaders[i].getLoadStatus(actionLabel) == BitmapDataPackageLoader.LOAD_STATUS_NO)
 						{
-							bitmapDataPackageLoaders[i].loadFrame(label);
+							bitmapDataPackageLoaders[i].loadFrame(actionLabel);
 						}
-						return bitmapDataPackageLoaders[i].getPackage(label).bitmapFrames;
+						return bitmapDataPackageLoaders[i].getPackage(actionLabel).bitmapFrames;
 					}
 				}
 			}
