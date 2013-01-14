@@ -22,6 +22,13 @@ package com.physwf.system.entity
 		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1032,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1033,onMessage);
+		}
+		/**
+		 * 需要在获取完毕地图上玩家列表完成之后执行玩家活动的监听 
+		 * 
+		 */		
+		private function addUserListener():void
+		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1034,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);
@@ -54,6 +61,7 @@ package com.physwf.system.entity
 						//to do 装备 宠物
 						mapUserList.push(userInfo);
 					}
+					addUserListener();//添加玩家活动的监听
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_LIST_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1033://获取地图上某个玩家的详细信息
@@ -80,6 +88,7 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1037://玩家移动
 					var msg1037:MSG_RES_NOTI_USER_MOVE_1037 = e.message as MSG_RES_NOTI_USER_MOVE_1037;
 					userInfo = getUserInfoById(msg1037.uid,false);
+					if(!userInfo) return;
 					userInfo.target_x = msg1037.x;
 					userInfo.target_y = msg1037.y;
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_MOVE,userInfo));
