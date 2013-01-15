@@ -17,30 +17,28 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/spark.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/sparkskins.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/rpc.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/videoPlayer.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/datavisualization.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp_air.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/videoPlayer.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/spark_dmv.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flash-integration.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_dmv.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flash-integration.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_flashflexkit.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="2" path="/PswGame_Application_Lib/bin/PswGame_Application_Lib.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="2" path="/PswGame_System/bin/PswGame_System.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/As3Lib/bin/As3Lib.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="2" path="/PswGame_Infrastructure/bin/PswGame_Infrastructure.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="2" path="/PswGame_Shell_Lib/bin/PswGame_Shell_Lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="2" path="/PswGame_Engine/bin/PswGame_Engine.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
     <application path="StartupPlugin.as"/>
-    <application path="WorldPlugin.as"/>
-    <application path="LoginPlugin.as"/>
-    <application path="EnvironmentDLL.as"/>
     <application path="DebugPlugin.as"/>
+    <application path="LoginPlugin.as"/>
+    <application path="WorldPlugin.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

@@ -1,9 +1,9 @@
 package
 {
 	import com.physwf.application.login.Login;
-	import com.physwf.application.plugin.IPlugin;
-	import com.physwf.application.plugin.PluginEvent;
-	import com.physwf.application.plugin.PluginInfo;
+	import com.physwf.shell.plugin.IPlugin;
+	import com.physwf.shell.plugin.PluginEvent;
+	import com.physwf.shell.plugin.PluginInfo;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

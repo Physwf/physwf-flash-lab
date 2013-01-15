@@ -1,8 +1,8 @@
 package
 {
-	import com.physwf.application.plugin.IPlugin;
-	import com.physwf.application.plugin.PluginInfo;
 	import com.physwf.application.world.World;
+	import com.physwf.shell.plugin.IPlugin;
+	import com.physwf.shell.plugin.PluginInfo;
 	
 	import flash.display.Sprite;
 	

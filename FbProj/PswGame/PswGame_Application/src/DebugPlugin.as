@@ -1,9 +1,9 @@
 package
 {
 	import com.physwf.application.debug.Debugger;
-	import com.physwf.application.plugin.IPlugin;
-	import com.physwf.application.plugin.PluginInfo;
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.shell.plugin.IPlugin;
+	import com.physwf.shell.plugin.PluginInfo;
 	
 	import flash.display.Sprite;
 	
