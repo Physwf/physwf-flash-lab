@@ -6,13 +6,16 @@
     <classEntry path="com.physwf.application.plugin.PluginEvent"/>
     <classEntry path="com.physwf.application.plugin.DomainInfo"/>
     <classEntry path="com.physwf.application.Driver"/>
-    <classEntry path="com.physwf.application.Application"/>
-    <classEntry path="com.physwf.application.SandBox"/>
-    <classEntry path="com.physwf.application.events.ScriptEvent"/>
-    <classEntry path="com.physwf.application.parser.CustomParser"/>
     <classEntry path="com.physwf.application.parser.XMLParser"/>
     <classEntry path="com.physwf.application.parser.IParser"/>
     <classEntry path="com.physwf.application.events.DriverEvent"/>
+    <classEntry path="com.physwf.engine.world.manager.Map"/>
+    <classEntry path="com.physwf.engine.world.manager.Charactor"/>
+    <classEntry path="com.physwf.engine.Engine"/>
+    <classEntry path="com.physwf.engine.world.controllers.MapController"/>
+    <classEntry path="com.physwf.engine.world.World"/>
+    <classEntry path="com.physwf.engine.world.events.WorldEvent"/>
+    <classEntry path="com.physwf.engine.world.controllers.CharactorController"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
