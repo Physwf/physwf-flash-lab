@@ -16,6 +16,7 @@ package
 	import test.SinWaveTest;
 	import test.SparrowTest;
 	import test.TexturePlane2DTest;
+	import test.TranditionGlowFilter;
 
 	[SWF(width="512",height="512",color="#0000000")]
 	public class MolehillLab extends Sprite
@@ -33,7 +34,8 @@ package
 //			var sp:Sprite = new EnviorementTeapotTextureTest();
 //			var sp:Sprite = new MixPasses();
 //			var sp:Sprite = new Test03_MixPasses();
-			var sp:Sprite = new SinWaveTest();
+//			var sp:Sprite = new SinWaveTest();
+			var sp:Sprite = new TranditionGlowFilter();
 			addChild(sp);
 			stage.color = 0
 		}
