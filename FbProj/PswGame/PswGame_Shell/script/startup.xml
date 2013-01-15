@@ -14,16 +14,22 @@
 	<item name="protocol" type="dll" url="dlls/protocol.swf">
 		<domain level="1" useSub="0"/>
 	</item>
-	<item name="system" type="dll" url="dlls/system.swf">
+	<item name="system" type="dll"  url="dlls/system.swf">
 		<domain level="1" useSub="0"/>
 	</item>
-	<item name="login" type="exe" url="plugins/LoginPlugin.swf">
+	<item name="engine" type="dll"  url="dlls/engine.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="login" type="exe" thread="0" url="plugins/LoginPlugin.swf">
 		<domain level="1" useSub="1" name="login"/>
 	</item>
-	<item name="startup" type="exe" url="plugins/StartupPlugin.swf">
+	<item name="startup" type="exe" thread="0" url="plugins/StartupPlugin.swf">
 		<domain level="1" useSub="1" name="startup"/>
 	</item>
-	<item name="world" type="exe" url="plugins/WorldPlugin.swf">
+	<item name="world" type="exe" thread="0" url="plugins/WorldPlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="debug" type="exe" thread="1" url="plugins/DebugPlugin.swf">
 		<domain level="1" useSub="0"/>
 	</item>
 </startup>
