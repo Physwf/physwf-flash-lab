@@ -48,10 +48,10 @@ package com.physwf.components.charactor
 			{
 				mNudeBmdt[i] = new Vector.<Vector.<BitmapFrame>>(NUM_ACTIONS,true);
 			}
-//			
-//			graphics.beginFill(0xFF0000,1);
-//			graphics.drawCircle(0,0,10);
-//			graphics.endFill();
+			
+			graphics.beginFill(0xFF0000,1);
+			graphics.drawCircle(0,0,2);
+			graphics.endFill();
 		}
 		
 		public function initialize():void
@@ -76,21 +76,21 @@ package com.physwf.components.charactor
 			if(v==3)
 			{
 				v = 1;
-				mNude.scaleX = -1;
+				scaleX = -1;
 			}
 			else if(v==4)
 			{
 				v = 0;
-				mNude.scaleX = -1;
+				scaleX = -1;
 			}
 			else if(v==5)
 			{
 				v = 7;
-				mNude.scaleX = -1;
+				scaleX = -1;
 			}
 			else
 			{
-				mNude.scaleX = 1;
+				scaleX = 1;
 			}
 			mDirect = v;
 			mWearLayer.direction = v;

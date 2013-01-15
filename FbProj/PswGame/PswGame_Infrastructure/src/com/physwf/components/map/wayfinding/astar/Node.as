@@ -15,7 +15,7 @@ package com.physwf.components.map.wayfinding.astar
 		public var g:Number=0;
 		public var h:Number=0;
 		
-		public var walkable:Boolean = true;
+		public var walkable:Boolean = false;
 		public var costMultiply:Number;
 		
 		public var parent:Node;
@@ -51,6 +51,7 @@ package com.physwf.components.map.wayfinding.astar
 			if(_type == v) return;
 			_type = v;
 			costMultiply = NodeType.typeToCost(_type);
+			if(_type != 0) walkable = true;
 		}
 		
 		public function get type():uint

@@ -39,6 +39,7 @@ package com.physwf.components.map.camera
 		
 		public function moveTo(x:Number, y:Number):void
 		{
+			if(mViewprot.x == x && mViewprot.y == y) return;
 			mViewprot.x = x;
 			mViewprot.y = y;
 			mMap.scrollRect = mViewprot;

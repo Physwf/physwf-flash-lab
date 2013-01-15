@@ -20,7 +20,7 @@ package com.physwf.components.map.wayfinding.astar
 		private var _startNode:Node;
 		private var _endNode:Node;
 		
-		private var _heuristic:Function = manhattan;
+		private var _heuristic:Function = diagonal;
 		
 		private var _straightCost:Number = 1.0;
 		private var _diagCost:Number = Math.SQRT2;
@@ -44,7 +44,7 @@ package com.physwf.components.map.wayfinding.astar
 			_startNode.h = _heuristic(_startNode);
 			_startNode.f = _startNode.g + _startNode.h;
 			
-			_openList = new MinHeap(10000);
+			_openList = new MinHeap(100000);
 			_closedList = new Vector.<Node>();
 			
 			return search();

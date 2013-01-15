@@ -42,7 +42,7 @@ package com.physwf.components.map.data
 					_nodeList[x][y] = new Node(x,y);
 					var _x:uint = x * gridSize - gridSize * .5;
 					var _y:uint = y * gridSize - gridSize * .5;
-					_nodeList[x][y].type = bmd.getPixel32(_x,_y) & 0xFFFFFFFF;
+					_nodeList[x][y].type = bmd.getPixel(_x,_y);
 				}
 			}
 		}
