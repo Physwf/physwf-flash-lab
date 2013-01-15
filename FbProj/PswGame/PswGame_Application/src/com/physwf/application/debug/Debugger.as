@@ -18,9 +18,10 @@ package com.physwf.application.debug
 		
 		private function onKeyDown(e:KeyboardEvent):void
 		{
-			switch(e.keyCode)
+			switch(e.keyCode )
 			{
 				case Keyboard.M:
+					if(!e.ctrlKey) return;
 					if(!mapDebug)mapDebug = new MapDebuger();
 					mapDebug.toggleAstarDebug();
 					break;

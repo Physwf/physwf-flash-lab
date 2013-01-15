@@ -8,6 +8,7 @@ package com.physwf.application.debug.map
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -25,19 +26,20 @@ package com.physwf.application.debug.map
 			super();
 		}
 		
-		public function initialize(doc:Sprite):void
+		public function initialize(doc:DisplayObject):void
 		{
 			var w:int = doc.width;
 			var h:int = doc.height;
-			var bmd:BitmapData = new BitmapData(w,h,true,0xFF000000);
-			
+			var bmd:BitmapData = new BitmapData(w,h,true,0);
+			bmd.draw(doc);
 			var gridBmd:BitmapData 
 			var colors:Array = [NodeType.TYPE_LAND,NodeType.TYPE_WATER,NodeType.TYPE_ICE,NodeType.TYPE_GRASS];
 			for(var x:int=0;x<w/gridSize;++x)
 			{
 				for(var y:int=0;y<h/gridSize;++y)
 				{
-					var color:uint = colors[int(4 * Math.random())]
+					var pixel:uint = bmd.getPixel(x*10,y*10);
+					var color:uint = pixel!=0?0xF0000000:0x0000FF00;
 					gridBmd = new BitmapData(10,10,true,color);
 					bmd.copyPixels(gridBmd,gridBmd.rect,new Point(x*10,y*10));
 				}
