@@ -39,9 +39,11 @@
 					var project:XML = projects[i];
 					var box:CheckBox = new CheckBox();
 					box.label = project.@name;
-					box.y = 20;
-					box.x = lastBtnLeft+i*30;
-					lastBtnLeft += box.label.length*6;
+					var row:uint = Math.floor(i / 2);
+					var collum:uint = i % 2;
+					box.y = 20 + row * 30;
+					box.x = 50 + collum * 200;
+//					lastBtnLeft += box.label.length*6;
 					checkBoxes.push(box);
 					addElement(box);
 				}

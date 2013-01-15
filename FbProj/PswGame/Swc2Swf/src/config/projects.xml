@@ -15,4 +15,9 @@
 		binPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/bin/PswGame_Protocol.swc" 
 		output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/dlls/protocol.swf"
 	/>
+	<project 
+		name="PswGame_Engine" 
+		binPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Engine/bin/PswGame_Engine.swc" 
+		output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/dlls/engine.swf"
+	/>
 </projects>
