@@ -1,6 +1,6 @@
 package
 {
-	import com.physwf.application.world.World;
+	import com.physwf.engine.world.World;
 	import com.physwf.shell.plugin.IPlugin;
 	import com.physwf.shell.plugin.PluginInfo;
 	
