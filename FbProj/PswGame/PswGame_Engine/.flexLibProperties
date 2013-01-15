@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="login.Login"/>
+    <classEntry path="com.physwf.application.interfaces.IDestroyable"/>
+    <classEntry path="com.physwf.application.plugin.PluginEvent"/>
+    <classEntry path="com.physwf.application.plugin.DomainInfo"/>
+    <classEntry path="com.physwf.application.Driver"/>
+    <classEntry path="com.physwf.application.parser.XMLParser"/>
+    <classEntry path="com.physwf.application.parser.IParser"/>
+    <classEntry path="com.physwf.application.events.DriverEvent"/>
+    <classEntry path="com.physwf.engine.world.manager.Map"/>
+    <classEntry path="com.physwf.engine.world.manager.Charactor"/>
+    <classEntry path="com.physwf.engine.Engine"/>
+    <classEntry path="com.physwf.engine.world.controllers.MapController"/>
+    <classEntry path="com.physwf.engine.world.World"/>
+    <classEntry path="com.physwf.engine.world.events.WorldEvent"/>
+    <classEntry path="com.physwf.engine.world.controllers.CharactorController"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
