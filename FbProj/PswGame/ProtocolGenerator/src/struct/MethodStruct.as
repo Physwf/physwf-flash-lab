@@ -78,7 +78,7 @@ package struct
 				"\t\t\tfor(var i:int=0;i<"+size+";++i)\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody}\n" +
-				"\t\t\t\t"+name+".push(item)\n" +
+				"\t\t\t\t"+name+".push("+name+"_item)\n" +
 				"\t\t\t}\n";
 			return forLoop.replace("{loopBody}",loopBody);
 		}
@@ -89,26 +89,26 @@ package struct
 			switch(type)
 			{
 				case FieldStruct.TYPE_UINT8:
-					itemDecl =   "var item:unit = input.readUnsignedByte();";
+					itemDecl =   "var "+name+"_item:unit = input.readUnsignedByte();";
 					break;
 				case FieldStruct.TYPE_UINT16:
-					itemDecl =   "var item:unit = input.readUnsignedShort();";
+					itemDecl =   "var "+name+"_item:unit = input.readUnsignedShort();";
 					break;
 				case FieldStruct.TYPE_UINT32:
-					itemDecl =   "var item:unit = input.readUnsignedInt();";
+					itemDecl =   "var "+name+"_item:unit = input.readUnsignedInt();";
 					break;
 				case FieldStruct.TYPE_INT8:
-					itemDecl =   "var item:int = input.readUnsignedInt();";
+					itemDecl =   "var "+name+"_item:int = input.readUnsignedInt();";
 					break;
 				case FieldStruct.TYPE_INT16:
-					itemDecl =   "var item:int = input.readUnsignedInt();";
+					itemDecl =   "var "+name+"_item:int = input.readUnsignedInt();";
 					break;
 				case FieldStruct.TYPE_INT32:
-					itemDecl =   "var item:int = input.readUnsignedInt();";
+					itemDecl =   "var "+name+"_item:int = input.readUnsignedInt();";
 				default:
-					itemDecl =   "var item:"+type+" = new "+type+"()";
+					itemDecl =   "var "+name+"_item:"+type+" = new "+type+"()";
 			}
-			return itemDecl + "\n\t\t\t\titem.readExternal(input);";
+			return itemDecl + "\n\t\t\t\t"+name+"_item.readExternal(input);";
 		}
 		
 		private function getVarlistReadBody():String
@@ -127,7 +127,7 @@ package struct
 				"\t\t\tfor(var i:int=0;i<"+name+"Len;++i)\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
-				"\t\t\t\t"+name+".push(item);\n" +
+				"\t\t\t\t"+name+".push("+name+"_item);\n" +
 				"\t\t\t}";
 			return 	readLen +
 					forLoop.replace("{loopBody}",loopBody);

@@ -8,9 +8,9 @@
  		/>
  		<server name="Online" 
  				packageName="" 
- 				extendsName = "msg.MsgBase"
+ 				extendsName = "com.physwf.components.rpc.msg.MsgBase"
  				url="http://10.1.1.5/su/proto/download.php?project=ultraman_online" 
  				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/"
- 				msgManagerPath = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Infrastructure/src/com/physwf/components/rpc/msg/MessageManager.as"
+ 				msgManagerPath = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/com/physwf/components/rpc/msg/MessageManager.as"
  		/>
  </project>
