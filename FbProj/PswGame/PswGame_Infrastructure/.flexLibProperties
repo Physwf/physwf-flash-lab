@@ -54,6 +54,7 @@
     <classEntry path="com.physwf.components.ui.controls.Button"/>
     <classEntry path="com.physwf.components.map.wayfinding.astar.PathUtils"/>
     <classEntry path="com.physwf.components.map.wayfinding.astar.Line"/>
+    <classEntry path="com.physwf.components.bitmap.events.PackageEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -2,6 +2,7 @@ package com.physwf.components.bitmap.net {
 	import com.physwf.components.bitmap.data.BigKey;
 	import com.physwf.components.bitmap.data.BitmapDataPackage;
 	import com.physwf.components.bitmap.display.BitmapFrame;
+	import com.physwf.components.bitmap.events.PackageEvent;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -13,16 +14,12 @@ package com.physwf.components.bitmap.net {
 	{
 		public static const POSTFIX_SWF:String = ".swf";
 		public static const KEYNAME:String = "key";
-
+		public static const LABEL_DIRECT_PREFIX:String = "d";//方向标签前缀
+		public static const LABEL_ACTION_PREFIX:String = "a";//动作标签前缀
+		
 		public var bitmapDataPackageLoaders:Vector.<BitmapDataPackageLoader>;
 		
-//		private var _directionList:Array;
-//		private var _resourceList:Array;
-//		private var _mirroringList:Array;
-//		private var _offsetList:Array;
-		
 		private var _url:String;
-		private var _urlRequest:URLRequest;
 		private var _keyName:String;
 		private var _postfix:String;
 		
@@ -30,6 +27,10 @@ package com.physwf.components.bitmap.net {
 		private var _isDynamicMode:Boolean;
 		private var _isBigKeyMode:Boolean;
 		
+		private var _isNude:Boolean = false; //是否是裸模
+		private var _loaded:Boolean = false;
+		
+		private var _numInited:uint = 0;//当前已经初始化完毕的packageLoader个数
 		private var _bigKey:BigKey;
 		/**
 		 * 
@@ -83,8 +84,8 @@ package com.physwf.components.bitmap.net {
 		 */		
 		public function getCharacterAction(direction:uint,action:uint):Vector.<BitmapFrame>
 		{
-			var directLabel:String = "d"+direction;
-			var actionLabel:String = "a"+action;
+			var directLabel:String = LABEL_DIRECT_PREFIX + direction;
+			var actionLabel:String = LABEL_ACTION_PREFIX + action;
 			return getAction(directLabel,actionLabel);
 		}
 		/**
@@ -124,6 +125,13 @@ package com.physwf.components.bitmap.net {
 			return null;
 		}
 		
+		public function loadNude():void
+		{
+			if(_loaded) dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_ALL_INITED));
+			_isNude = true;
+			load();
+		}
+		
 		public function load():void
 		{
 			var request:URLRequest = new URLRequest(_url+"/"+_keyName+_postfix);
@@ -149,6 +157,27 @@ package com.physwf.components.bitmap.net {
 				var bLoader:BitmapDataPackageLoader = new BitmapDataPackageLoader(_url,_bigKey.directions[i]);
 				bitmapDataPackageLoaders.push(bLoader);
 				bLoader.loadSmallKey();
+				bLoader.addEventListener(PackageEvent.PACKAGE_INITED,onPackageEvent);
+			}
+		}
+		
+		private function onPackageEvent(e:PackageEvent):void
+		{
+			var bLoader:BitmapDataPackageLoader = e.target as BitmapDataPackageLoader;
+			bLoader.removeEventListener(PackageEvent.PACKAGE_INITED,onPackageEvent);
+			_numInited++;
+			trace(bLoader.name,e.type,_numInited);
+			if(_numInited == _bigKey.directions.length)
+			{
+				_loaded = true;
+				dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_ALL_INITED));
+			}
+			if(!_isNude) return;
+			var labels:Vector.<String> = bLoader.getFrameNames();
+			for(var i:int=0;i<labels.length;++i)
+			{
+				trace(bLoader.name,labels[i],"start")
+				bLoader.loadFrame(labels[i]);
 			}
 		}
 	} // end class

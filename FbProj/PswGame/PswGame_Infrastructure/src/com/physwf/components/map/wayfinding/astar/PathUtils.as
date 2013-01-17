@@ -12,7 +12,7 @@ package com.physwf.components.map.wayfinding.astar
 		 * @return 弧度
 		 * 
 		 */		
-		public static function calAverDirec(path:Vector.<Node>,numNode:uint=15):Number
+		public static function calAverDirec(path:Vector.<Node>,numNode:uint=5):Number
 		{
 			var start:Node = path[0];
 			var angle:Number =0;
@@ -24,7 +24,7 @@ package com.physwf.components.map.wayfinding.astar
 			return angle/(numNode-1);
 		}
 		
-		public static function calAverDirec2(pathLine:Vector.<Line>,numNode:uint=10):Number
+		public static function calAverDirec2(pathLine:Vector.<Line>,numNode:uint=15):Number
 		{
 			var start:Line = pathLine[0];
 			var angle:Number =0;

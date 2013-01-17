@@ -2,6 +2,7 @@ package com.physwf.components.charactor
 {
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.events.PackageEvent;
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
@@ -62,8 +63,8 @@ package com.physwf.components.charactor
 		public function set skeleton(v:SkeletonLoader):void
 		{
 			mSkeleton = v;
-			mSkeleton.load();
-//			mSkeleton.addEventListener(Event.COMPLETE,function(e:Event):void { action = CharacterAction.ACTION_ATTACK});
+			mSkeleton.loadNude();
+			mSkeleton.addEventListener(PackageEvent.PACKAGE_ALL_INITED,function(e:Event):void { action = CharacterAction.ACTION_ATTACK});
 		}
 		
 		/**
@@ -92,6 +93,7 @@ package com.physwf.components.charactor
 			{
 				scaleX = 1;
 			}
+			if(mDirect == v) return;
 			mDirect = v;
 			mWearLayer.direction = v;
 			mDirty = true;

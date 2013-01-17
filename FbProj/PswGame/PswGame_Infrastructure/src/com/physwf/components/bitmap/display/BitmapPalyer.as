@@ -26,7 +26,7 @@ package com.physwf.components.bitmap.display {
 				y=keyFrame.y;
 			}
 			currentFrame ++;
-			
+//			trace(currentFrame,name)
 			if(currentFrame == mTotalFrames)
 			{
 				currentFrame = 0;

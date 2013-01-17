@@ -4,6 +4,7 @@ package com.physwf.components.map
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Node;
 	
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
@@ -29,6 +30,16 @@ package com.physwf.components.map
 			mMapW = v.width;
 			mMapH = v.height;
 			mBottom.addChild(v);
+		}
+		/**
+		 * 
+		 * 后面要考虑大对象集中销毁的性能影响，将其在时间上分散开来销毁
+		 */
+		public function clearBottom():void
+		{
+			if(mBottom.numChildren == 0) return;
+			var content:Bitmap = mBottom.removeChildAt(0) as Bitmap;
+			if(content) content.bitmapData.dispose();
 		}
 		
 		public function addSwapElement(element:DisplayObject):DisplayObject

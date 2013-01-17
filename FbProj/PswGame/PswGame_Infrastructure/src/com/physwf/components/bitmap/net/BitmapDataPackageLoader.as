@@ -4,18 +4,21 @@ package com.physwf.components.bitmap.net
 	import com.physwf.components.bitmap.data.SmallKey;
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.display.BitmapKeyFrame;
+	import com.physwf.components.bitmap.events.PackageEvent;
 	import com.physwf.components.interfaces.IDisposible;
 	
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
 
-	public class BitmapDataPackageLoader extends URLStream implements IDisposible
+	public class BitmapDataPackageLoader extends EventDispatcher implements IDisposible
 	{
 		public static const SMALL_KEY_ENDIAN:int=1;
 		public static const BIG_KEY_ENDIAN:int=2;
@@ -44,35 +47,34 @@ package com.physwf.components.bitmap.net
 			_loadStatus = new Dictionary();
 		}
 		
-		override public function load(request:URLRequest):void
-		{
-			addEventListener(Event.COMPLETE,onComplete);
-			super.load(request);
-		}
-		
 		public function loadSmallKey():void
 		{
-			load(new URLRequest(_url+"/"+_name+"/"+"key.swf"))
+			var smallLoader:URLStream = new URLStream();
+			smallLoader.addEventListener(Event.COMPLETE,onComplete);
+			smallLoader.load(new URLRequest(_url+"/"+_name+"/"+"key.swf"))
 		}
 		
 		public function loadFrame(name:String):void
 		{
+			var frameLoader:URLStream = new URLStream();
 			if(_smallKey.frameNames.indexOf(name)>-1)
 			{
 				_loadStatus[name] = LOAD_STATUS_LOADING;
-				addEventListener(Event.COMPLETE,function setStatus(e:Event):void
-				{
-					_loadStatus[name] = LOAD_STATUS_YES;
-				},false,Number.NEGATIVE_INFINITY,true);
-				load(new URLRequest(_url+"/"+_name+"/"+name+".swf"));
+				frameLoader.addEventListener(Event.COMPLETE,onComplete);
+//				frameLoader.addEventListener(Event.COMPLETE,function setStatus(e:Event):void
+//				{
+//					_loadStatus[name] = LOAD_STATUS_YES;
+//				},false,Number.NEGATIVE_INFINITY,true);
+				frameLoader.load(new URLRequest(_url+"/"+_name+"/"+name+".swf"));
 			}
 		}
 		
 		private function onComplete(e:Event):void
 		{
-			removeEventListener(Event.COMPLETE,onComplete);
+			var loader:URLStream = e.target as URLStream;
+			loader.removeEventListener(Event.COMPLETE,onComplete);
 			var data:ByteArray = new ByteArray();
-			readBytes(data,0,bytesAvailable);
+			loader.readBytes(data,0,loader.bytesAvailable);
 			_endian = data.readShort();
 			
 			switch(_endian)
@@ -85,7 +87,9 @@ package com.physwf.components.bitmap.net
 				case PACKAGE_ENDIAN_JACK:
 					var nameLen:uint = data.readShort();
 					var name:String = data.readUTFBytes(nameLen);
-					getPackage(name).readExternal(data);;
+					getPackage(name).readExternal(data);
+					_loadStatus[name] = LOAD_STATUS_YES;
+					trace(name,_name);
 					break;
 			}
 		}
@@ -113,6 +117,7 @@ package com.physwf.components.bitmap.net
 				}
 				packages.push(pack);
 			}
+			dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_INITED));
 		}
 		
 		public function get name():String { return _name; }
@@ -126,6 +131,12 @@ package com.physwf.components.bitmap.net
 			}
 			return null;
 		}
+		
+		public function getFrameNames():Vector.<String>
+		{
+			return _smallKey.frameNames;
+		}
+		
 		public function destroy():void
 		{
 			
