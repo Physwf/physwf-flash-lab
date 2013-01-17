@@ -20,9 +20,9 @@ package
 			task_flag_list= new Vector.<task_flag_t>();
 			for(var i:int=0;i<task_flag_listLen;++i)
 			{
-				var item:task_flag_t = new task_flag_t()
-				item.readExternal(input);;
-				task_flag_list.push(item);
+				var task_flag_list_item:task_flag_t = new task_flag_t()
+				task_flag_list_item.readExternal(input);;
+				task_flag_list.push(task_flag_list_item);
 			}			
 		}
 	}

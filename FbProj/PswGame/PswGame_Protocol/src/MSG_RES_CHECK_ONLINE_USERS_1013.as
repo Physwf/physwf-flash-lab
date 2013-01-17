@@ -20,9 +20,9 @@ package
 			online_list= new Vector.<uid_role_t>();
 			for(var i:int=0;i<online_listLen;++i)
 			{
-				var item:uid_role_t = new uid_role_t()
-				item.readExternal(input);;
-				online_list.push(item);
+				var online_list_item:uid_role_t = new uid_role_t()
+				online_list_item.readExternal(input);;
+				online_list.push(online_list_item);
 			}			
 		}
 	}

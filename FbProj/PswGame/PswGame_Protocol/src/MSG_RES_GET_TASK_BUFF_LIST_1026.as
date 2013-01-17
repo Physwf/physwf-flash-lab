@@ -20,9 +20,9 @@ package
 			task_buff_list= new Vector.<task_idbuff_t>();
 			for(var i:int=0;i<task_buff_listLen;++i)
 			{
-				var item:task_idbuff_t = new task_idbuff_t()
-				item.readExternal(input);;
-				task_buff_list.push(item);
+				var task_buff_list_item:task_idbuff_t = new task_idbuff_t()
+				task_buff_list_item.readExternal(input);;
+				task_buff_list.push(task_buff_list_item);
 			}			
 		}
 	}

@@ -5,10 +5,19 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class stru_equip_t implements IExternalizable
+	public class xml_equip_item_t implements IExternalizable
 	{
-		public var instance_id:uint;
-		public var equip_id:uint;
+		public var item_id:uint;
+		public var category:uint;
+		public var sell_price:uint;
+		public var buy_price:uint;
+		public var max_num:uint;
+		public var trade_flag:uint;
+		public var discard_flag:uint;
+		public var accumulate:uint;
+		public var equip_pos:uint;
+		public var duration_time:uint;
+		public var end_time:uint;
 		public var strength:uint;
 		public var magic:uint;
 		public var physical:uint;
@@ -33,16 +42,24 @@ package
 		public var fire_atk:uint;
 		public var fire_def:uint;
 		public var durability:uint;
-		public var position:uint;
 		
-		public function stru_equip_t()
+		public function xml_equip_item_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			instance_id = input.readUnsignedInt();
-			equip_id = input.readUnsignedInt();
+			item_id = input.readUnsignedInt();
+			category = input.readUnsignedInt();
+			sell_price = input.readUnsignedInt();
+			buy_price = input.readUnsignedInt();
+			max_num = input.readUnsignedInt();
+			trade_flag = input.readUnsignedInt();
+			discard_flag = input.readUnsignedInt();
+			accumulate = input.readUnsignedInt();
+			equip_pos = input.readUnsignedInt();
+			duration_time = input.readUnsignedInt();
+			end_time = input.readUnsignedInt();
 			strength = input.readUnsignedInt();
 			magic = input.readUnsignedShort();
 			physical = input.readUnsignedShort();
@@ -66,14 +83,22 @@ package
 			wind_def = input.readUnsignedShort();
 			fire_atk = input.readUnsignedShort();
 			fire_def = input.readUnsignedShort();
-			durability = input.readUnsignedShort();
-			position = input.readUnsignedShort();			
+			durability = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(instance_id);
-			output.writeInt(equip_id);
+			output.writeInt(item_id);
+			output.writeInt(category);
+			output.writeInt(sell_price);
+			output.writeInt(buy_price);
+			output.writeInt(max_num);
+			output.writeInt(trade_flag);
+			output.writeInt(discard_flag);
+			output.writeInt(accumulate);
+			output.writeInt(equip_pos);
+			output.writeInt(duration_time);
+			output.writeInt(end_time);
 			output.writeInt(strength);
 			output.writeShort(magic);
 			output.writeShort(physical);
@@ -97,8 +122,7 @@ package
 			output.writeShort(wind_def);
 			output.writeShort(fire_atk);
 			output.writeShort(fire_def);
-			output.writeShort(durability);
-			output.writeShort(position);			
+			output.writeShort(durability);			
 		}
 	}
 }

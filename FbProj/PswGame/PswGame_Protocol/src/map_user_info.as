@@ -36,9 +36,9 @@ package
 			equips= new Vector.<stru_equip_simple_t>();
 			for(var i:int=0;i<16;++i)
 			{
-				var item:stru_equip_simple_t = new stru_equip_simple_t()
-				item.readExternal(input);
-				equips.push(item)
+				var equips_item:stru_equip_simple_t = new stru_equip_simple_t()
+				equips_item.readExternal(input);
+				equips.push(equips_item)
 			}
 			
 		}

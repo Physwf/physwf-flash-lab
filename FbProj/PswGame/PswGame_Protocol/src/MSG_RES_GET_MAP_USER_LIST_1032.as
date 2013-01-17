@@ -20,9 +20,9 @@ package
 			user_infos= new Vector.<map_user_info>();
 			for(var i:int=0;i<user_infosLen;++i)
 			{
-				var item:map_user_info = new map_user_info()
-				item.readExternal(input);;
-				user_infos.push(item);
+				var user_infos_item:map_user_info = new map_user_info()
+				user_infos_item.readExternal(input);;
+				user_infos.push(user_infos_item);
 			}			
 		}
 	}

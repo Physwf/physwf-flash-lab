@@ -20,9 +20,9 @@ package
 			user_list= new Vector.<uid_role_t>();
 			for(var i:int=0;i<user_listLen;++i)
 			{
-				var item:uid_role_t = new uid_role_t()
-				item.readExternal(input);;
-				user_list.push(item);
+				var user_list_item:uid_role_t = new uid_role_t()
+				user_list_item.readExternal(input);;
+				user_list.push(user_list_item);
 			}			
 		}
 	}

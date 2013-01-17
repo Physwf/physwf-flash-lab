@@ -20,9 +20,9 @@ package
 			union_list= new Vector.<uid_role_t>();
 			for(var i:int=0;i<union_listLen;++i)
 			{
-				var item:uid_role_t = new uid_role_t()
-				item.readExternal(input);;
-				union_list.push(item);
+				var union_list_item:uid_role_t = new uid_role_t()
+				union_list_item.readExternal(input);;
+				union_list.push(union_list_item);
 			}			
 		}
 	}

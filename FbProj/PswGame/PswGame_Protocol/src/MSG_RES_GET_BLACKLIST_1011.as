@@ -20,9 +20,9 @@ package
 			blacklist= new Vector.<uid_role_t>();
 			for(var i:int=0;i<blacklistLen;++i)
 			{
-				var item:uid_role_t = new uid_role_t()
-				item.readExternal(input);;
-				blacklist.push(item);
+				var blacklist_item:uid_role_t = new uid_role_t()
+				blacklist_item.readExternal(input);;
+				blacklist.push(blacklist_item);
 			}			
 		}
 	}

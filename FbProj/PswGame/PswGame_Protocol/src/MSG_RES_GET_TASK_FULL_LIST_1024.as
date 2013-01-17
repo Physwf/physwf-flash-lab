@@ -20,9 +20,9 @@ package
 			task_full_list= new Vector.<task_full_t>();
 			for(var i:int=0;i<task_full_listLen;++i)
 			{
-				var item:task_full_t = new task_full_t()
-				item.readExternal(input);;
-				task_full_list.push(item);
+				var task_full_list_item:task_full_t = new task_full_t()
+				task_full_list_item.readExternal(input);;
+				task_full_list.push(task_full_list_item);
 			}			
 		}
 	}

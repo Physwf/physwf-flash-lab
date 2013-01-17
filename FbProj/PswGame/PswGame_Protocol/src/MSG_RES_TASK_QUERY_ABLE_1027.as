@@ -20,9 +20,9 @@ package
 			task_able_list= new Vector.<task_able_t>();
 			for(var i:int=0;i<task_able_listLen;++i)
 			{
-				var item:task_able_t = new task_able_t()
-				item.readExternal(input);;
-				task_able_list.push(item);
+				var task_able_list_item:task_able_t = new task_able_t()
+				task_able_list_item.readExternal(input);;
+				task_able_list.push(task_able_list_item);
 			}			
 		}
 	}

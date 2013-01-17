@@ -19,7 +19,7 @@ package com.physwf.components.rpc.msg
 		
 		public function registerMessage():void
 		{
-			regMsg(1000,MSG_RES_GET_ONLINE_VERSION_1000);
+			regMsg(1000,MSG_RES_LOGIN_AND_ENTER_MAP_1000);
 			regMsg(1001,MSG_RES_LOGIN_1001);
 			regMsg(1002,MSG_RES_NOTIFY_KICK_USER_OFFLINE_1002);
 			regMsg(1003,MSG_RES_DEL_FRIEND_1003);
@@ -53,6 +53,12 @@ package com.physwf.components.rpc.msg
 			regMsg(1035,MSG_RES_NOTI_LEAVE_MAP_1035);
 			regMsg(1036,MSG_RES_MAP_PLAYER_MOVE_1036);
 			regMsg(1037,MSG_RES_NOTI_USER_MOVE_1037);
+			regMsg(1040,MSG_RES_BATTLE_ATTACK_1040);
+			regMsg(1041,MSG_RES_NOTI_ATTACK_RESULT_1041);
+			regMsg(1050,MSG_RES_GET_BAG_1050);
+			regMsg(5000,MSG_RESGATEWAY_REPORT_TO_MAPSERV_5000);
+			regMsg(5001,MSG_RESGATEWAY_DEL_USER_5001);
+			regMsg(5002,MSG_RESGATEWAY_CLOSE_CONN_5002);
 		}
 		
 		private function regMsg(mid:uint,MSG:Class):void
