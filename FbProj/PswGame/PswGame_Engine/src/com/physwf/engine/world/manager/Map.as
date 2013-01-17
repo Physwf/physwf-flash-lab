@@ -1,11 +1,11 @@
 package com.physwf.engine.world.manager
 {
-	import com.physwf.engine.Engine;
-	import com.physwf.engine.world.controllers.MapController;
-	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
+	import com.physwf.engine.Engine;
+	import com.physwf.engine.world.controllers.MapController;
+	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MapEvent;
@@ -50,6 +50,8 @@ package com.physwf.engine.world.manager
 		public function initialize():void
 		{
 			System.map.addEventListener(MapEvent.MAP_USER_LIST_SUCCESS,onMapEvent);
+			System.map.addEventListener(MapEvent.MAP_USER_ENTER_MAP,onMapEvent);
+			System.map.addEventListener(MapEvent.MAP_USER_LEAVE_MAP,onMapEvent);
 			System.map.addEventListener(MapEvent.MAP_USER_MOVE,onMapEvent);
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
 			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
@@ -60,11 +62,16 @@ package com.physwf.engine.world.manager
 		
 		private function onMapEvent(e:MapEvent):void
 		{
+			var chara:Charactor;
 			switch(e.type)
 			{
 				case MapEvent.MAP_USER_ENTER_MAP:
+					chara = new Charactor();
+					chara.initialize(e.userInfo);
+					addCharactor(chara);
 					break;
 				case MapEvent.MAP_USER_LEAVE_MAP:
+					delCharactor(e.userInfo);
 					break;
 				case MapEvent.MAP_USER_LIST_DETAIL_SUCCESS:
 					break;
@@ -72,7 +79,7 @@ package com.physwf.engine.world.manager
 					var mapUserList:Vector.<UserInfo> = System.map.mapUserList;
 					for(var i:int=0;i<mapUserList.length;i++)
 					{
-						var chara:Charactor = new Charactor();
+						chara = new Charactor();
 						chara.initialize(mapUserList[i]);
 						addCharactor(chara);
 					}
@@ -127,6 +134,18 @@ package com.physwf.engine.world.manager
 		{
 			mCharactors.push(chara);
 			mMapView.addSwapElement(chara.view);
+		}
+		
+		public function delCharactor(info:UserInfo):void
+		{
+			for(var i:int=0;i<mCharactors.length;++i)
+			{
+				if(mCharactors[i].userId == info.uid)
+				{
+					mMapView.removeSwapElement(mCharactors[i].view);
+					mCharactors.splice(i,1);
+				}
+			}
 		}
 		
 		public function attachLayer(layer:Sprite):void

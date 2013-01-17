@@ -16,6 +16,7 @@
     <classEntry path="com.physwf.engine.world.World"/>
     <classEntry path="com.physwf.engine.world.events.WorldEvent"/>
     <classEntry path="com.physwf.engine.world.controllers.CharactorController"/>
+    <classEntry path="com.physwf.engine.world.manager.NPC"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

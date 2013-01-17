@@ -1,21 +1,19 @@
 package com.physwf.engine.world.manager
 {
-	import com.physwf.engine.world.controllers.CharactorController;
 	import com.physwf.components.charactor.CharactorAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.charactor.factory.BoyFactory;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
+	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.Node;
-	import com.physwf.system.entity.MySelf;
+	import com.physwf.components.map.wayfinding.astar.PathUtils;
+	import com.physwf.engine.world.controllers.CharactorController;
 	import com.physwf.system.vo.UserInfo;
 	
-	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
-	import flash.geom.Point;
 
 	public class Charactor extends EventDispatcher implements IUpdatable
 	{
@@ -25,15 +23,19 @@ package com.physwf.engine.world.manager
 		private var mFactory:ICharacterFactory;
 		private var controller:CharactorController;
 		private var userInfo:UserInfo;
+		private var uid:uint;
 		
 		public static var astar:IAstar;
-		private var path:Vector.<Node>;
+//		private var path:Vector.<Node>;
+		private var pathLine:Vector.<Line>;
 		
 		private var target_x:uint;
 		private var target_y:uint;
-		private var speed:uint = 5;
+		private var speed:uint = 6;
 		private var rad:Number;// 速度的方向
-		private var node:Node;
+		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
+//		private var node:Node;
+		private var line:Line;
 		
 		public function Charactor()
 		{
@@ -42,6 +44,7 @@ package com.physwf.engine.world.manager
 		public function initialize(userInfo:UserInfo):void
 		{
 			this.userInfo = userInfo;
+			uid = userInfo.uid;
 			mFactory = new BoyFactory();//后期需要选择
 			view = new CharactorAnimation();
 			view.skeleton = mFactory.getNude();
@@ -60,14 +63,12 @@ package com.physwf.engine.world.manager
 			trace(sx,sy,"goto")
 			if(astar.tryFindPath(sx,sy,ex,ey))
 			{
-				path = astar.getPath();
-				node = path.shift();
-				target_x = tx;
-				target_y = ty;
-				rad = Math.atan2(node.y -view.y / 10,node.x -view.x / 10);
-				view.direction = ISODirection.radianToDirect(rad);
+				pathLine = astar.getPathLine();
+				
+				line = pathLine.shift();
+				avrgRad = PathUtils.calAverDirec2(pathLine);
+				view.direction = ISODirection.radianToDirect(avrgRad);
 				run();
-				trace(node.y ,sy,node.x ,sx,rad,"rad")
 			}
 		}
 		
@@ -93,48 +94,40 @@ package com.physwf.engine.world.manager
 		
 		public function update():void
 		{
-			if(path)
+			if(pathLine)
 			{
-//				trace(path)
 				var curX:Number = view.x;
 				var curY:Number = view.y;
-				var speedX:Number = speed * Math.cos(rad);
-				var speedY:Number = speed * Math.sin(rad);
-				var offsetX:Number = (node.x * 10 - curX);
-				var offsetY:Number = (node.y * 10 - curY);
-				var step:Number = speedX*speedX+speedY*speedY;
-				var offset:Number = offsetX*offsetX+offsetY*offsetY;
-//				trace(curX,curY,node.x,node.y)
-//				trace(step,offset,offsetX,offsetY)
 				
-				if(25 >= offset)// 要用绝对值
+				var nxtX:Number,nxtY:Number;
+				var remainSpeed:Number;
+				// 如果速度大小超过了当前线段长度，则提取下一个线段，并将该线段的起始点减去之前剩下的速度量
+				if(speed>line.length)
 				{
-					node = path.shift();
-					if(path.length == 0) 
+					remainSpeed = speed - line.length;
+					line = pathLine.shift();
+					line.subLen(remainSpeed);
+					if(pathLine.length>10)
 					{
-						path = null;
-						view.x = node.x * 10;
-						view.y = node.y * 10;
+						avrgRad = PathUtils.calAverDirec2(pathLine);
+						view.direction = ISODirection.radianToDirect(avrgRad);
+					}
+					else if(pathLine.length == 0)
+					{
 						attack();
+						pathLine = null;
 					}
-					else
-					{
-						view.x += speedX;
-						view.y += speedY;
-					}
-					rad = Math.atan2(node.y -curY/10,node.x - curX/10);
-					view.direction = ISODirection.radianToDirect(rad);
 				}
 				else
 				{
-					view.x += speedX;
-					view.y += speedY;
+					line.subLen(speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
 				}
-				
+				view.x = line.sx;
+				view.y = line.sy;
 			}
 			view.update();
 		}
 		
-		public function get userId():uint { return userInfo.uid; }
+		public function get userId():uint { return uid; }
 	}
 }
