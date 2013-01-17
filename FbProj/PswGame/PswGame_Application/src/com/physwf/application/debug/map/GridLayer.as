@@ -39,7 +39,7 @@ package com.physwf.application.debug.map
 				for(var y:int=0;y<h/gridSize;++y)
 				{
 					var pixel:uint = bmd.getPixel(x*10,y*10);
-					var color:uint = pixel!=0?0xF0000000:0x0000FF00;
+					var color:uint = pixel!=0?0x70000000:0x0000FF00;
 					gridBmd = new BitmapData(10,10,true,color);
 					bmd.copyPixels(gridBmd,gridBmd.rect,new Point(x*10,y*10));
 				}
@@ -48,7 +48,7 @@ package com.physwf.application.debug.map
 			var mapData:GridTypeMapData = new GridTypeMapData();
 			astar = new BiHeapAStar();
 			//			astar = new QuickSortAstar();
-			mapData.initialize(bm,new Rectangle(0,0,w,h),gridSize);
+			mapData.initialize(bm,new Rectangle(0,0,w,h));
 			//			astar.initialze(bm,new GridTypeConfig());
 			astar.mapData = mapData;
 			addEventListener(MouseEvent.CLICK,onClick);

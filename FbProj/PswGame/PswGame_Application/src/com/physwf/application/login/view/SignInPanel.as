@@ -16,7 +16,7 @@ package com.physwf.application.login.view
 			asset.x = 500;
 			asset.y = 250;
 			TextField(asset["txtPassword"]).displayAsPassword = true;
-			asset["txtUID"].text = "50079";
+			asset["txtUID"].text = "50829";
 			asset["txtPassword"].text = "142857";
 		}
 		
