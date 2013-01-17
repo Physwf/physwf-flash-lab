@@ -83,6 +83,7 @@ package com.physwf.system.entity
 		public function enterMap(mapid:uint,x:uint,y:uint):void
 		{
 			var msg:MSG_REQ_ENTER_MAP_1030 = new MSG_REQ_ENTER_MAP_1030();
+			msg.role_tm = userInfo.createTime;
 			msg.map_id = mapid;
 			msg.map_x = x;
 			msg.map_y = y;
@@ -104,6 +105,7 @@ package com.physwf.system.entity
 			switch(e.type)
 			{
 				case MessageEvent.MSG_SUCCESS_+1001://登录成功
+					userInfo.createTime = loginInfo.roleInfo.createTime;
 					var msg1001:MSG_RES_LOGIN_1001 = msg as MSG_RES_LOGIN_1001;
 					userInfo.level = msg1001.level;
 					userInfo.exp = msg1001.exp;
