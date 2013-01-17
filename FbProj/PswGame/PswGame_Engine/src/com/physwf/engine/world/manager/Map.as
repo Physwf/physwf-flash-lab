@@ -5,7 +5,6 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.map.camera.Camera;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.world.controllers.MapController;
-	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MapEvent;
@@ -18,9 +17,15 @@ package com.physwf.engine.world.manager
 	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
 
 	public class Map extends EventDispatcher implements IUpdatable
 	{
+		/**
+		 * 地图的应用程序域用来存放属于该地图的应用，如客户端npc，npc脚本，地图脚本等 
+		 */		
+		private var mAppDomain:ApplicationDomain;
+		
 		private var mMapView:MapView;
 		private var mCamera:Camera;
 		
@@ -111,12 +116,13 @@ package com.physwf.engine.world.manager
 		
 		public function load():void
 		{
-			var id:uint = mController.getMapID();
+			var id:uint = MySelf.userInfo.map_id;
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(
 				Event.COMPLETE,
 				function (e:Event):void 
 				{
+					mMapView.clearBottom();
 					mMapView.fillBottom(loader.content);
 				});
 			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
@@ -128,6 +134,30 @@ package com.physwf.engine.world.manager
 				Charactor.astar.analyze(mMapView.landform);
 			});
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
+		}
+		/**
+		 * 加载客户端的npc配置，根据npc配置信息，它将创建npc显示
+		 * 
+		 */		
+		public function loadClientNPC():void
+		{
+			
+		}
+		/**
+		 *加载npc脚本，npc脚本主要用来实现NPC同用户的状态或者用户的操作进行交互逻辑
+		 * 
+		 */		
+		public function loadNPCScript():void
+		{
+			
+		}
+		/**
+		 * 加载地图脚本，地图脚本用来根据玩家当前状态（如任务状态）来改变地图显示（如隐藏其他玩家，控制环境等）
+		 * 这些都是客户端状态，与服务端无关 
+		 */		
+		public function loadMapScript():void
+		{
+			
 		}
 		
 		public function addCharactor(chara:Charactor):void
@@ -167,6 +197,7 @@ package com.physwf.engine.world.manager
 			mCamera.update();
 		}
 		
+		public function set domain(value:ApplicationDomain):void { mAppDomain = value; }
 		public function get view():MapView { return mMapView; }
 		public function get camera():Camera { return mCamera; }
 	}
