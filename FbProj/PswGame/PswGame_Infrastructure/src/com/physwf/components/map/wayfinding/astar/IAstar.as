@@ -29,6 +29,12 @@ package com.physwf.components.map.wayfinding.astar {
 		 */		
 		function getPath():Vector.<Node>;
 		/**
+		 *  在 寻路成功之后 通过该方法可以获得该路径的线段列表
+		 * @return 
+		 * 
+		 */		
+		function getPathLine():Vector.<Line>;		
+		/**
 		 *设置地图数据 
 		 * @param data
 		 * 

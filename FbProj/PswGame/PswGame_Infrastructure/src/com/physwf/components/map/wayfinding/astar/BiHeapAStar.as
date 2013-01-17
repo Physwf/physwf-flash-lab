@@ -4,6 +4,7 @@ package com.physwf.components.map.wayfinding.astar
 	import com.physwf.components.map.data.GridTypeMapData;
 	
 	import flash.display.DisplayObject;
+	import flash.utils.getTimer;
 
 	/**
 	 * 二叉堆寻路 
@@ -16,6 +17,7 @@ package com.physwf.components.map.wayfinding.astar
 		private var _openList:MinHeap;
 		private var _closedList:Vector.<Node>;
 		private var _path:Vector.<Node>;
+		private var _pathLine:Vector.<Line>;
 		
 		private var _startNode:Node;
 		private var _endNode:Node;
@@ -32,7 +34,7 @@ package com.physwf.components.map.wayfinding.astar
 		
 		public function analyze(landform:DisplayObject):void
 		{
-			_mapData.initialize(landform,landform.getRect(landform),10);
+			_mapData.initialize(landform,landform.getRect(landform));
 		}
 		
 		public function tryFindPath(sx:int, sy:int, ex:int, ey:int):Boolean
@@ -52,10 +54,9 @@ package com.physwf.components.map.wayfinding.astar
 		
 		private function search():Boolean
 		{
-//			_openList.Enqueue(_startNode);
-//			var minCostNode:Node = _openList.Dequeue() as Node;
+			trace(getTimer())
 			var minCostNode:Node = _startNode;
-			
+			if(!_endNode.walkable) return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
 			while(minCostNode != _endNode)
 			{
 				var neerNode:Node;
@@ -106,17 +107,23 @@ package com.physwf.components.map.wayfinding.astar
 				minCostNode = _openList.Dequeue() as Node;
 			}//end while
 			buildPath();
+			trace(getTimer())
 			return true;
 		}
 		
 		private function buildPath():void
 		{
 			_path = new Vector.<Node>();
+			_pathLine = new Vector.<Line>();
+			
 			var node:Node = _endNode;
+			var line:Line;
 			while(node != _startNode)
 			{
+				line = new Line(node.parent,node);
+				_pathLine.unshift(line);
 				node = node.parent;
-				_path.unshift(node);
+//				_path.unshift(node);
 			}
 		}
 		
@@ -144,6 +151,11 @@ package com.physwf.components.map.wayfinding.astar
 		public function getPath():Vector.<Node>
 		{
 			return _path;
+		}
+		
+		public function getPathLine():Vector.<Line>
+		{
+			return _pathLine;
 		}
 		
 		public function set mapData(data:GridTypeMapData):void

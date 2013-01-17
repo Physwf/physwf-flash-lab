@@ -13,6 +13,8 @@ package com.physwf.components.map.data
 	 */	
 	public class GridTypeMapData
 	{
+		public static const GRID_SIZE:uint = 10;
+		
 		private var _startNode:Node;
 		private var _endNode:Node;
 		
@@ -26,12 +28,12 @@ package com.physwf.components.map.data
 			
 		}
 		
-		public function initialize(landform:DisplayObject, rect:Rectangle, gridSize:uint):void
+		public function initialize(landform:DisplayObject, rect:Rectangle):void
 		{
 			var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 			bmd.draw(landform);
-			_numNodeX = Math.round(rect.width / gridSize);
-			_numNodeY = Math.round(rect.height / gridSize);
+			_numNodeX = Math.round(rect.width / GRID_SIZE);
+			_numNodeY = Math.round(rect.height / GRID_SIZE);
 			
 			_nodeList = new Vector.<Vector.<Node>>(_numNodeX);
 			for(var x:uint=0;x<_numNodeX;++x)
@@ -40,8 +42,8 @@ package com.physwf.components.map.data
 				for(var y:uint =0;y<_numNodeY;++y)
 				{
 					_nodeList[x][y] = new Node(x,y);
-					var _x:uint = x * gridSize - gridSize * .5;
-					var _y:uint = y * gridSize - gridSize * .5;
+					var _x:uint = x * GRID_SIZE - GRID_SIZE * .5;
+					var _y:uint = y * GRID_SIZE - GRID_SIZE * .5;
 					_nodeList[x][y].type = bmd.getPixel(_x,_y);
 				}
 			}

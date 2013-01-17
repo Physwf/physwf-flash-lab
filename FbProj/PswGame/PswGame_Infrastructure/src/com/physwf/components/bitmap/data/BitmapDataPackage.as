@@ -58,7 +58,6 @@ package com.physwf.components.bitmap.data {
 				bmdBytes.inflate();
 				var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0x0FFFF0000);
 				bmd.setPixels(rect,bmdBytes);
-				trace(rect);
 				bitmapKeyFrames[i].bitmapData = bmd;
 			}
 			var frameLen:uint = input.readShort();
@@ -67,7 +66,6 @@ package com.physwf.components.bitmap.data {
 			{
 				var frame:uint = input.readShort();
 				bitmapFrames[i].keyFrame = bitmapKeyFrames[frame];
-				trace(frame);
 			}
 		}
 		

@@ -33,7 +33,7 @@ package com.physwf.components.map.wayfinding.astar
 		
 		public function analyze(landform:DisplayObject):void
 		{
-			_mapData.initialize(landform,landform.getRect(landform),10);
+			_mapData.initialize(landform,landform.getRect(landform));
 		}
 		
 		public function tryFindPath(sx:int, sy:int, ex:int, ey:int):Boolean
@@ -163,6 +163,11 @@ package com.physwf.components.map.wayfinding.astar
 		public function getPath():Vector.<Node>
 		{
 			return _path;
+		}
+		
+		public function getPathLine():Vector.<Line>
+		{
+			return null;
 		}
 		
 		public function set mapData(data:GridTypeMapData):void

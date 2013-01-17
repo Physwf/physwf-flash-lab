@@ -51,6 +51,9 @@
     <classEntry path="com.physwf.components.charactor.factory.BoyFactory"/>
     <classEntry path="com.physwf.components.charactor.Wear"/>
     <classEntry path="com.physwf.components.charactor.enum.CharacterAction"/>
+    <classEntry path="com.physwf.components.ui.controls.Button"/>
+    <classEntry path="com.physwf.components.map.wayfinding.astar.PathUtils"/>
+    <classEntry path="com.physwf.components.map.wayfinding.astar.Line"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
