@@ -23,8 +23,14 @@ package com.physwf.components.map.wayfinding.astar
 			}
 			return angle/(numNode-1);
 		}
-		
-		public static function calAverDirec2(pathLine:Vector.<Line>,numNode:uint=15):Number
+		/**
+		 * 计算路径的平均方向 
+		 * @param pathLine 路径线段
+		 * @param numNode 线段取样个数，经测试去2为最合适，超过此值会导致在弧度大的地方人物发生旋转
+		 * @return 
+		 * 
+		 */		
+		public static function calAverDirec2(pathLine:Vector.<Line>,numNode:uint=2):Number
 		{
 			var start:Line = pathLine[0];
 			var angle:Number =0;
