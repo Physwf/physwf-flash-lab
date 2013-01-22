@@ -17,6 +17,10 @@ package com.physwf.components.bitmap.net {
 		public static const LABEL_DIRECT_PREFIX:String = "d";//方向标签前缀
 		public static const LABEL_ACTION_PREFIX:String = "a";//动作标签前缀
 		
+		public static const LOAD_FLAG_NO:uint = 0;
+		public static const LOAD_FLAG_LOADING:uint = 1;
+		public static const LOAD_FLAG_YES:uint = 3;
+		
 		public var bitmapDataPackageLoaders:Vector.<BitmapDataPackageLoader>;
 		
 		private var _url:String;
@@ -29,6 +33,7 @@ package com.physwf.components.bitmap.net {
 		
 		private var _isNude:Boolean = false; //是否是裸模
 		private var _loaded:Boolean = false;
+		private var _loadFlag:uint = LOAD_FLAG_NO;
 		
 		private var _numInited:uint = 0;//当前已经初始化完毕的packageLoader个数
 		private var _bigKey:BigKey;
@@ -127,13 +132,29 @@ package com.physwf.components.bitmap.net {
 		
 		public function loadNude():void
 		{
-			if(_loaded) dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_ALL_INITED));
+
 			_isNude = true;
 			load();
 		}
 		
 		public function load():void
 		{
+			//判断加载状态
+			if(_loadFlag == LOAD_FLAG_YES)
+			{
+				dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_ALL_INITED));
+				return;
+			}
+			else if(_loadFlag == LOAD_FLAG_LOADING)
+			{
+				return;
+			}
+			else
+			{
+				_loadFlag = LOAD_FLAG_LOADING;
+			}
+			
+			
 			var request:URLRequest = new URLRequest(_url+"/"+_keyName+_postfix);
 			var urlStream:URLStream = new URLStream();
 			urlStream.addEventListener(Event.COMPLETE,function(e:Event):void
@@ -166,17 +187,15 @@ package com.physwf.components.bitmap.net {
 			var bLoader:BitmapDataPackageLoader = e.target as BitmapDataPackageLoader;
 			bLoader.removeEventListener(PackageEvent.PACKAGE_INITED,onPackageEvent);
 			_numInited++;
-			trace(bLoader.name,e.type,_numInited);
 			if(_numInited == _bigKey.directions.length)
 			{
-				_loaded = true;
+				_loadFlag = LOAD_FLAG_YES;
 				dispatchEvent(new PackageEvent(PackageEvent.PACKAGE_ALL_INITED));
 			}
 			if(!_isNude) return;
 			var labels:Vector.<String> = bLoader.getFrameNames();
 			for(var i:int=0;i<labels.length;++i)
 			{
-				trace(bLoader.name,labels[i],"start")
 				bLoader.loadFrame(labels[i]);
 			}
 		}
