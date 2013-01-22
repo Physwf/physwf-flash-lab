@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			private const Nw:uint = 64;
+			private const Nh:uint = 64;
+			
+			private var numTiles:uint = Nw * Math.ceil(Nh/2) + (Nw+1) * Math.floor(Nh/2);
+			
+			private var mapDataFile:File;
+			
+			[Embed(source="/assets/1.png")]
+			private var TileBmd:Class;
+			
+			private function init():void
+			{
+				addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void { writeData()});
+			}
+			
+			private function writeData():void
+			{
+				var tileBmd:Bitmap = new TileBmd() as Bitmap;
+				mapDataFile = File.desktopDirectory.resolvePath("10.map");
+				var fs:FileStream = new FileStream();
+				fs.open(mapDataFile,FileMode.WRITE);
+				fs.writeShort(1);
+				var bytes:ByteArray = tileBmd.bitmapData.getPixels(tileBmd.bitmapData.rect);
+				fs.writeShort(bytes.length);
+				fs.writeBytes(bytes);
+				fs.writeShort(numTiles);
+				var count:int=0;
+				for(var y:int=0;y<Nh;++y)
+				{
+					var numX:uint = (y%2==0)?Nw:Nw+1;
+					for(var x:int=0;x<numX;++x)
+					{
+						fs.writeShort(x);
+						fs.writeShort(y);
+						fs.writeShort(0);
+						count++;
+					}
+				}
+				trace(count,numTiles);
+				fs.close();
+			}
+		]]>
+	</fx:Script>
+</s:WindowedApplication>
