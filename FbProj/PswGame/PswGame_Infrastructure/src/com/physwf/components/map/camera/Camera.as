@@ -13,6 +13,8 @@ package com.physwf.components.map.camera
 		private var sHelpW:Number;
 		private var sHelpH:Number;
 		private var mTrackEnabled:Boolean;
+		private var mSpeed:Number = 4.0;//摄像机的移动速度
+		private var mDirectRad:Number=0;//摄像机的移动方向，弧度单位
 		
 		public function Camera(viewport:Rectangle)
 		{
@@ -80,7 +82,11 @@ package com.physwf.components.map.camera
 			{
 				ty = mTarget.y - sHelpH;
 			}
-			//
+			//后面考虑将摄像机跟随设计具有自己的固定速度
+//			mDirectRad = Math.atan2(ty-300,tx-500);
+//			tx += mSpeed * Math.cos(mDirectRad);
+//			ty += mSpeed * Math.sin(mDirectRad);
+			
 			moveTo(tx,ty);
 		}
 		
