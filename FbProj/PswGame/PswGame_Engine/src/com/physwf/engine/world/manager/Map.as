@@ -3,8 +3,11 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
+	import com.physwf.components.map.tile.TileGround;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.world.World;
 	import com.physwf.engine.world.controllers.MapController;
+	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MapEvent;
@@ -126,12 +129,21 @@ package com.physwf.engine.world.manager
 					mMapView.fillBottom(loader.content);
 				});
 			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
+//			var ground:TileGround = new TileGround();
+//			ground.addEventListener(Event.COMPLETE ,function (e:Event):void
+//			{
+//				mMapView.clearBottom();
+//				mMapView.fillBottom(ground);
+//			});
+//			ground.load(new URLRequest("resource/map/"+id+"/ground.map"));
+			
 			var landformLoader:Loader = new Loader();
 			landformLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,
 			function ():void
 			{
 				mMapView.landform = landformLoader.content;
 				Charactor.astar.analyze(mMapView.landform);
+				dispatchEvent(new WorldEvent(WorldEvent.WORLD_READY));
 			});
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
 		}

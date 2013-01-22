@@ -3,6 +3,7 @@ package com.physwf.engine.world
 	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.engine.world.manager.Charactor;
 	import com.physwf.engine.world.manager.Map;
 	import com.physwf.shell.Application;
@@ -10,6 +11,7 @@ package com.physwf.engine.world
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MyEvent;
 	
+	import flash.events.Event;
 	import flash.utils.Timer;
 	
 	public class World
@@ -56,7 +58,13 @@ package com.physwf.engine.world
 		private function onEnterMapSuccess(e:MyEvent):void
 		{
 			map.domain = Application.application.sandBox.curMapDomain;
+			//必须在这个事件之后才能请求地图上的玩家列表,否则玩家的寻路数据为空
+			map.addEventListener(WorldEvent.WORLD_READY,onWorldReady);
 			map.load();
+		}
+		
+		private function onWorldReady(e:Event):void
+		{
 			System.map.getMapUserList();
 		}
 		
