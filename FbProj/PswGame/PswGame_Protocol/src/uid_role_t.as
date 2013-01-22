@@ -22,8 +22,8 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(user_id);
-			output.writeInt(role_tm);			
+			output.writeUnsignedInt(user_id);
+			output.writeUnsignedInt(role_tm);			
 		}
 	}
 }

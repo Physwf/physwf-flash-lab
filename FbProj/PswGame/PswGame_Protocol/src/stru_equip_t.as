@@ -11,11 +11,9 @@ package
 		public var equip_id:uint;
 		public var strength:uint;
 		public var magic:uint;
-		public var physical:uint;
-		public var genius:uint;
-		public var agility:uint;
-		public var hp:uint;
-		public var mp:uint;
+		public var physique:uint;
+		public var spell:uint;
+		public var mind:uint;
 		public var atk:uint;
 		public var def:uint;
 		public var magic_atk:uint;
@@ -43,19 +41,17 @@ package
 		{
 			instance_id = input.readUnsignedInt();
 			equip_id = input.readUnsignedInt();
-			strength = input.readUnsignedInt();
+			strength = input.readUnsignedShort();
 			magic = input.readUnsignedShort();
-			physical = input.readUnsignedShort();
-			genius = input.readUnsignedShort();
-			agility = input.readUnsignedShort();
-			hp = input.readUnsignedInt();
-			mp = input.readUnsignedInt();
+			physique = input.readUnsignedShort();
+			spell = input.readUnsignedShort();
+			mind = input.readUnsignedShort();
 			atk = input.readUnsignedInt();
 			def = input.readUnsignedInt();
 			magic_atk = input.readUnsignedInt();
 			magic_def = input.readUnsignedInt();
 			crit_atk = input.readUnsignedShort();
-			crit_def = input.readUnsignedInt();
+			crit_def = input.readUnsignedShort();
 			hit = input.readUnsignedShort();
 			dodge = input.readUnsignedShort();
 			earth_atk = input.readUnsignedShort();
@@ -72,21 +68,19 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(instance_id);
-			output.writeInt(equip_id);
-			output.writeInt(strength);
+			output.writeUnsignedInt(instance_id);
+			output.writeUnsignedInt(equip_id);
+			output.writeShort(strength);
 			output.writeShort(magic);
-			output.writeShort(physical);
-			output.writeShort(genius);
-			output.writeShort(agility);
-			output.writeInt(hp);
-			output.writeInt(mp);
-			output.writeInt(atk);
-			output.writeInt(def);
-			output.writeInt(magic_atk);
-			output.writeInt(magic_def);
+			output.writeShort(physique);
+			output.writeShort(spell);
+			output.writeShort(mind);
+			output.writeUnsignedInt(atk);
+			output.writeUnsignedInt(def);
+			output.writeUnsignedInt(magic_atk);
+			output.writeUnsignedInt(magic_def);
 			output.writeShort(crit_atk);
-			output.writeInt(crit_def);
+			output.writeShort(crit_def);
 			output.writeShort(hit);
 			output.writeShort(dodge);
 			output.writeShort(earth_atk);

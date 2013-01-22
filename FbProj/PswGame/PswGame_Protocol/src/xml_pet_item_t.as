@@ -5,20 +5,16 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class stru_pet_t implements IExternalizable
+	public class xml_pet_item_t implements IExternalizable
 	{
-		public var instance_id:uint;
-		public var pet_id:uint;
-		public var nick:String;
-		public var nick_data:ByteArray
+		public var id:uint;
 		public var level:uint;
-		public var exp:uint;
-		public var hp:uint;
-		public var mp:uint;
-		public var happiness:uint;
-		public var life:uint;
-		public var sex:uint;
-		public var character:uint;
+		public var uselv:uint;
+		public var lifetime:uint;
+		public var type:uint;
+		public var breed:uint;
+		public var move_speed:uint;
+		public var atk_speed:uint;
 		public var strength:uint;
 		public var magic:uint;
 		public var physique:uint;
@@ -38,23 +34,20 @@ package
 		public var hit:uint;
 		public var dodge:uint;
 		
-		public function stru_pet_t()
+		public function xml_pet_item_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			instance_id = input.readUnsignedInt();
-			pet_id = input.readUnsignedInt();
-			nick = input.readUTFBytes(16);
+			id = input.readUnsignedInt();
 			level = input.readUnsignedShort();
-			exp = input.readUnsignedInt();
-			hp = input.readUnsignedInt();
-			mp = input.readUnsignedInt();
-			happiness = input.readUnsignedShort();
-			life = input.readUnsignedShort();
-			sex = input.readUnsignedByte();
-			character = input.readUnsignedByte();
+			uselv = input.readUnsignedShort();
+			lifetime = input.readUnsignedInt();
+			type = input.readUnsignedShort();
+			breed = input.readUnsignedShort();
+			move_speed = input.readUnsignedShort();
+			atk_speed = input.readUnsignedShort();
 			strength = input.readUnsignedShort();
 			magic = input.readUnsignedShort();
 			physique = input.readUnsignedShort();
@@ -77,27 +70,14 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(instance_id);
-			output.writeUnsignedInt(pet_id);
-			if(nick_data)
-			{
-				output.writeBytes(nick_data)
-			}
-			else
-			{
-				var nickData:ByteArray = new ByteArray();
-				nickData.writeUTFBytes(nick)
-				nickData.length = 16;
-				output.writeBytes(nickData)
-			}
+			output.writeUnsignedInt(id);
 			output.writeShort(level);
-			output.writeUnsignedInt(exp);
-			output.writeUnsignedInt(hp);
-			output.writeUnsignedInt(mp);
-			output.writeShort(happiness);
-			output.writeShort(life);
-			output.writeByte(sex);
-			output.writeByte(character);
+			output.writeShort(uselv);
+			output.writeUnsignedInt(lifetime);
+			output.writeShort(type);
+			output.writeShort(breed);
+			output.writeShort(move_speed);
+			output.writeShort(atk_speed);
 			output.writeShort(strength);
 			output.writeShort(magic);
 			output.writeShort(physique);

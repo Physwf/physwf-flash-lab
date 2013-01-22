@@ -22,8 +22,8 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeInt(from_game);
-			output.writeInt(to_game);
+			output.writeUnsignedInt(from_game);
+			output.writeUnsignedInt(to_game);
 			if(sess_data)
 			{
 				output.writeBytes(sess_data)
@@ -46,7 +46,7 @@ package
 				tadData.length = 64;
 				output.writeBytes(tadData)
 			}
-			output.writeInt(role_tm);			
+			output.writeUnsignedInt(role_tm);			
 		}
 	}
 }

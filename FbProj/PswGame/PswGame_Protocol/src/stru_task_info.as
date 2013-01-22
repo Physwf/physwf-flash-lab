@@ -25,8 +25,8 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(tskid);
-			output.writeInt(flag);
+			output.writeUnsignedInt(tskid);
+			output.writeUnsignedInt(flag);
 			if(buff_data)
 			{
 				output.writeBytes(buff_data)

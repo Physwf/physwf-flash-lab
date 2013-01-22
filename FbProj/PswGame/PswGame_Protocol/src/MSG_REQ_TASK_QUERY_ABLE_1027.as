@@ -17,7 +17,7 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeInt(query_type);
+			output.writeUnsignedInt(query_type);
 			output.writeUnsignedInt(tskid_list.length);
 			for(var i:int=0;i<tskid_list.length;++i)
 			{

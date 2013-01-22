@@ -25,7 +25,7 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(role_tm);
+			output.writeUnsignedInt(role_tm);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)

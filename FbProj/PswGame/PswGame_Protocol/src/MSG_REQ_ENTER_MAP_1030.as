@@ -19,10 +19,10 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeInt(role_tm);
-			output.writeInt(map_id);
-			output.writeInt(map_x);
-			output.writeInt(map_y);			
+			output.writeUnsignedInt(role_tm);
+			output.writeUnsignedInt(map_id);
+			output.writeUnsignedInt(map_x);
+			output.writeUnsignedInt(map_y);			
 		}
 	}
 }

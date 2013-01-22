@@ -21,12 +21,12 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeInt(src_id);
-			output.writeInt(pet_id);
-			output.writeInt(src_type);
-			output.writeInt(obj_id);
-			output.writeInt(obj_type);
-			output.writeInt(skill_id);			
+			output.writeUnsignedInt(src_id);
+			output.writeUnsignedInt(pet_id);
+			output.writeUnsignedInt(src_type);
+			output.writeUnsignedInt(obj_id);
+			output.writeUnsignedInt(obj_type);
+			output.writeUnsignedInt(skill_id);			
 		}
 	}
 }

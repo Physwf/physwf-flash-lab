@@ -45,9 +45,9 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(userid);
-			output.writeInt(role_tm);
-			output.writeInt(model);
+			output.writeUnsignedInt(userid);
+			output.writeUnsignedInt(role_tm);
+			output.writeUnsignedInt(model);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)
@@ -59,9 +59,9 @@ package
 				nickData.length = 16;
 				output.writeBytes(nickData)
 			}
-			output.writeInt(mapid);
-			output.writeInt(map_x);
-			output.writeInt(map_y);
+			output.writeUnsignedInt(mapid);
+			output.writeUnsignedInt(map_x);
+			output.writeUnsignedInt(map_y);
 			pet_follow.writeExternal(output)
 			for(var i:int=0;i<16;++i)
 			{

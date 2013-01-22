@@ -26,10 +26,10 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(pet_no);
-			output.writeInt(pet_id);
-			output.writeInt(pet_level);
-			output.writeInt(pet_star);			
+			output.writeUnsignedInt(pet_no);
+			output.writeUnsignedInt(pet_id);
+			output.writeUnsignedInt(pet_level);
+			output.writeUnsignedInt(pet_star);			
 		}
 	}
 }

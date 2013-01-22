@@ -20,7 +20,7 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(skill_id);			
+			output.writeUnsignedInt(skill_id);			
 		}
 	}
 }

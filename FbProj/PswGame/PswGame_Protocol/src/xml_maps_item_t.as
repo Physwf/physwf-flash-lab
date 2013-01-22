@@ -20,7 +20,7 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(MapId);			
+			output.writeUnsignedInt(MapId);			
 		}
 	}
 }

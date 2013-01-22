@@ -40,17 +40,17 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(item_id);
+			output.writeUnsignedInt(item_id);
 			output.writeByte(category);
-			output.writeInt(sell_price);
-			output.writeInt(buy_price);
-			output.writeInt(max_num);
-			output.writeInt(trade_flag);
-			output.writeInt(discard_flag);
-			output.writeInt(accumulate);
-			output.writeInt(duration_time);
-			output.writeInt(function_id);
-			output.writeInt(function_value);			
+			output.writeUnsignedInt(sell_price);
+			output.writeUnsignedInt(buy_price);
+			output.writeUnsignedInt(max_num);
+			output.writeUnsignedInt(trade_flag);
+			output.writeUnsignedInt(discard_flag);
+			output.writeUnsignedInt(accumulate);
+			output.writeUnsignedInt(duration_time);
+			output.writeUnsignedInt(function_id);
+			output.writeUnsignedInt(function_value);			
 		}
 	}
 }

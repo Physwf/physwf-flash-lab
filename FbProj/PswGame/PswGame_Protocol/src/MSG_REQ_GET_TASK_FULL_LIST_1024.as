@@ -17,8 +17,8 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeInt(begin_tskid);
-			output.writeInt(end_tskid);			
+			output.writeUnsignedInt(begin_tskid);
+			output.writeUnsignedInt(end_tskid);			
 		}
 	}
 }
