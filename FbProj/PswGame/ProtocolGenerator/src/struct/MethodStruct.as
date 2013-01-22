@@ -159,7 +159,7 @@ package struct
 				case FieldStruct.TYPE_UINT16:
 					return "output.writeShort("+name+");";
 				case FieldStruct.TYPE_UINT32:
-					return "output.writeInt("+name+");";
+					return "output.writeUnsignedInt("+name+");";
 				case FieldStruct.TYPE_INT8:
 					return "output.writeByte("+name+");";
 				case FieldStruct.TYPE_INT16:
