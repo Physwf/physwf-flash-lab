@@ -114,23 +114,19 @@ package com.physwf.system.entity
 					userInfo.map_y = msg1001.map_y;
 					userInfo.resource_id = msg1001.resource_id;
 					userInfo.strength = msg1001.strength;
-					userInfo.intelligence = msg1001.intelligence;
-					userInfo.physical = msg1001.physical;
+					userInfo.mind = msg1001.mind;
+					userInfo.physical = msg1001.physique;
 					userInfo.magic = msg1001.magic;
-					userInfo.speed = msg1001.speed;
 					userInfo.additions = msg1001.additions;
 					userInfo.hp = msg1001.hp;
 					userInfo.mp = msg1001.mp;
 					userInfo.energy = msg1001.energy;
 					userInfo.hp_max = msg1001.hp_max;
 					userInfo.attack = msg1001.level;
-					userInfo.mattack = msg1001.mattack;
-					userInfo.defense = msg1001.defense;
-					userInfo.mdefence = msg1001.mdefense;
+					userInfo.defense = msg1001.def;
+					userInfo.mdefence = msg1001.magic_def;
 					userInfo.hit = msg1001.hit;
-					userInfo.avoid = msg1001.avoid;
-					userInfo.multiattack = msg1001.multi_attack;
-					userInfo.multiavoid = msg1001.multi_avoid;
+					userInfo.dodge = msg1001.dodge;
 					dispatchEvent(new MyEvent(MyEvent.LOGIN_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1002://被踢下线
@@ -138,8 +134,8 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+1030://进入地图
 					var msg1030:MSG_RES_ENTER_MAP_1030 = MSG_RES_ENTER_MAP_1030(msg);
-					petInfo.id = msg1030.user.pet_follow.pet_id;
-					petInfo.type = msg1030.user.pet_follow.pet_type;
+					petInfo.id = msg1030.user.pet_follow.instance_id;
+					petInfo.type = msg1030.user.pet_follow.pet_id;
 					petInfo.nick = msg1030.user.pet_follow.nick;
 					petInfo.level = msg1030.user.pet_follow.level;
 					petInfo.hp = msg1030.user.pet_follow.hp;

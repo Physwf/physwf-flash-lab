@@ -55,21 +55,21 @@ package com.physwf.system.vo
 		 */		
 		public var strength:uint;
 		/**
-		 *灵气 
-		 */		
-		public var intelligence:uint;
-		/**
-		 *体力 
-		 */		
-		public var physical:uint;
-		/**
-		 *魔力 
+		 *属性点灵力
 		 */		
 		public var magic:uint;
 		/**
-		 *灵巧 
+		 *属性点体力
 		 */		
-		public var speed:uint;
+		public var physical:uint;
+		/**
+		 *属性点魔力 
+		 */		
+		public var spell:uint;
+		/**
+		 *属性点心智 
+		 */		
+		public var mind:uint;
 		/**
 		 *额外点数 
 		 */		
@@ -99,17 +99,25 @@ package com.physwf.system.vo
 		 */		
 		public var attack:uint;
 		/**
-		 *魔法攻击 
-		 */		
-		public var mattack:uint;
-		/**
 		 *物理防御 
 		 */		
 		public var defense:uint;
 		/**
+		 *魔法攻击 
+		 */		
+		public var mattack:uint;
+		/**
 		 *魔法防御 
 		 */		
 		public var mdefence:uint;
+		/**
+		 *增加会心攻击 
+		 */		
+		public var critAtk:uint;
+		/**
+		 *增加会心闪避 
+		 */		
+		public var critDef:uint;
 		/**
 		 *命中 
 		 */		
@@ -117,15 +125,27 @@ package com.physwf.system.vo
 		/**
 		 *闪避 
 		 */		
-		public var avoid:uint;
+		public var dodge:uint;
 		/**
-		 *暴击 
-		 */		
-		public var multiattack:uint;
+		 *地属性攻击 
+		 */
+		public var earthAtk:uint;
+		public var earthDef:uint;
 		/**
-		 *暴击闪避 
+		 *水属性攻击 
 		 */		
-		public var multiavoid:uint;
+		public var waterAtk:uint;
+		public var waterDef:uint;
+		/**
+		 *风属性攻击 
+		 */		
+		public var windAtk:uint;
+		public var windDef:uint;
+		/**
+		 *火属性攻击 
+		 */		
+		public var fireAtk:uint;
+		public var fireDef:uint;
 		/**
 		 * 装备信息 
 		 */		
