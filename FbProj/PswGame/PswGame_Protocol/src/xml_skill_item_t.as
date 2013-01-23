@@ -15,12 +15,12 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			skill_id = input.readUnsignedInt();			
+			skill_id = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(skill_id);			
+			output.writeShort(skill_id);			
 		}
 	}
 }

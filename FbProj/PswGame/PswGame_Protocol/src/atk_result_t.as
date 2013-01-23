@@ -9,7 +9,6 @@ package
 	{
 		public var src_id:uint;
 		public var pet_id:uint;
-		public var src_type:uint;
 		public var obj_id:uint;
 		public var obj_type:uint;
 		public var skill_id:uint;
@@ -24,9 +23,8 @@ package
 		{
 			src_id = input.readUnsignedInt();
 			pet_id = input.readUnsignedInt();
-			src_type = input.readUnsignedInt();
 			obj_id = input.readUnsignedInt();
-			obj_type = input.readUnsignedInt();
+			obj_type = input.readUnsignedByte();
 			skill_id = input.readUnsignedInt();
 			hp_hurt = input.readUnsignedInt();
 			is_dead = input.readUnsignedByte();			
@@ -36,9 +34,8 @@ package
 		{
 			output.writeUnsignedInt(src_id);
 			output.writeUnsignedInt(pet_id);
-			output.writeUnsignedInt(src_type);
 			output.writeUnsignedInt(obj_id);
-			output.writeUnsignedInt(obj_type);
+			output.writeByte(obj_type);
 			output.writeUnsignedInt(skill_id);
 			output.writeUnsignedInt(hp_hurt);
 			output.writeByte(is_dead);			

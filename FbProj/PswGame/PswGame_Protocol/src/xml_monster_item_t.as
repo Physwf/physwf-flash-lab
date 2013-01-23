@@ -17,14 +17,14 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			monster_id = input.readUnsignedInt();
+			monster_id = input.readUnsignedShort();
 			atk = input.readUnsignedInt();
 			def = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(monster_id);
+			output.writeShort(monster_id);
 			output.writeUnsignedInt(atk);
 			output.writeUnsignedInt(def);			
 		}
