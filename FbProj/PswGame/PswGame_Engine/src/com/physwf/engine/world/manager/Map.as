@@ -35,6 +35,7 @@ package com.physwf.engine.world.manager
 		private var mController:MapController;
 		
 		private var mCharactors:Vector.<Charactor>;
+		private var mMonsters
 		
 		public function Map()
 		{
