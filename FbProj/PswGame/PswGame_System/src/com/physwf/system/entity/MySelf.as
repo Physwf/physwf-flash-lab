@@ -144,7 +144,7 @@ package com.physwf.system.entity
 					for(var i:int=0;i<equipList.length;++i)
 					{
 						var equipInfo:EquipInfo = new EquipInfo();
-						equipInfo.id = equipList[i].equip_id;
+						equipInfo.itemID = equipList[i].equip_id;
 						userInfo.equips.push(equipInfo);
 					}
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
