@@ -37,6 +37,8 @@ package com.physwf.components.bitmap.net {
 		
 		private var _numInited:uint = 0;//当前已经初始化完毕的packageLoader个数
 		private var _bigKey:BigKey;
+		
+		public function get loadFlag():uint { return _loadFlag; }
 		/**
 		 * 
 		 * @param directionList

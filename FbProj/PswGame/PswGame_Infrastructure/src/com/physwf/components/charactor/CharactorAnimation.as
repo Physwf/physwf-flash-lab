@@ -4,6 +4,7 @@ package com.physwf.components.charactor
 	import com.physwf.components.bitmap.display.BitmapPalyer;
 	import com.physwf.components.bitmap.events.PackageEvent;
 	import com.physwf.components.bitmap.net.SkeletonLoader;
+	import com.physwf.components.charactor.enum.AnimationSystem;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.interfaces.IUpdatable;
@@ -16,6 +17,10 @@ package com.physwf.components.charactor
 	public class CharactorAnimation extends Sprite implements IAnimation
 	{
 		public static const NUM_ACTIONS:uint = 5;
+		/**
+		 *动画资源的系统，其值为AnimationSystem枚举值之一,默认为0，即AOTM系统
+		 */		
+		private var mSystem:uint;
 		
 		private var mNude:BitmapPalyer;
 		private var mSkeleton:SkeletonLoader;
@@ -26,15 +31,17 @@ package com.physwf.components.charactor
 		 *					  direction|act|frames 
 		 */		
 		private var mNudeBmdt:Vector.<Vector.<Vector.<BitmapFrame>>>;
-		
+		/*骨架是否加载*/
+		private var isSkeletonReady:Boolean = false;
 		private var mDirect:uint;
 		private var mAction:uint;
 		private var mStatus:uint;
 		private var mDirty:Boolean;
 		private var mActionDirty:Boolean;
 		
-		public function CharactorAnimation()
+		public function CharactorAnimation(system:uint = 0)
 		{
+			mSystem = system;
 			mNude = new BitmapPalyer();
 			mWearLayer = new WearLayer();
 			mSpecialLayer = new SpectialLayer();
@@ -64,7 +71,14 @@ package com.physwf.components.charactor
 		{
 			mSkeleton = v;
 			mSkeleton.loadNude();
-			mSkeleton.addEventListener(PackageEvent.PACKAGE_ALL_INITED,function(e:Event):void { action = CharacterAction.ACTION_ATTACK});
+			
+			mSkeleton.addEventListener(PackageEvent.PACKAGE_ALL_INITED,
+				function(e:Event):void 
+				{ 
+					isSkeletonReady = (mSkeleton.loadFlag == SkeletonLoader.LOAD_FLAG_YES);
+					action = CharacterAction.ACTION_ATTACK;
+					direction = ISODirection.LEFT;
+				});
 		}
 		
 		/**
@@ -74,25 +88,51 @@ package com.physwf.components.charactor
 		 */		
 		public function set direction(v:uint):void
 		{
-			if(v==3)
+			if(mSystem == AnimationSystem.AOTM)
 			{
-				v = 1;
-				scaleX = -1;
+				if(v == ISODirection.LEFT_DOWN)
+				{
+					v = ISODirection.RIGHT_DOWN;
+					scaleX = -1;
+				}
+				else if(v == ISODirection.LEFT)
+				{
+					v = ISODirection.RIGHT;
+					scaleX = -1;
+				}
+				else if(v == ISODirection.LEFT_UP)
+				{
+					v = ISODirection.RIGHT_UP;
+					scaleX = -1;
+				}
+				else
+				{
+					scaleX = 1;
+				}
 			}
-			else if(v==4)
+			else if(mSystem == AnimationSystem.MOLE)
 			{
-				v = 0;
-				scaleX = -1;
+				if(v == ISODirection.RIGHT_DOWN)
+				{
+					v = ISODirection.LEFT_DOWN;
+					scaleX = -1;
+				}
+				else if(v == ISODirection.RIGHT)
+				{
+					v = ISODirection.LEFT;
+					scaleX = -1;
+				}
+				else if(v == ISODirection.RIGHT_UP)
+				{
+					v = ISODirection.LEFT_UP;
+					scaleX = -1;
+				}
+				else
+				{
+					scaleX = 1;
+				}
 			}
-			else if(v==5)
-			{
-				v = 7;
-				scaleX = -1;
-			}
-			else
-			{
-				scaleX = 1;
-			}
+
 			if(mDirect == v) return;
 			mDirect = v;
 			mWearLayer.direction = v;
@@ -135,14 +175,17 @@ package com.physwf.components.charactor
 		
 		public function update():void
 		{
-			if(mDirty)
+			if(isSkeletonReady) 
 			{
-				refresh();
-				mDirty = false;
+				if(mDirty)
+				{
+					refresh();
+					mDirty = false;
+				}
+				mSpecialLayer.update();
+				//mWearLayer.update();
+				mNude.nextFrame();
 			}
-			mSpecialLayer.update();
-//			mWearLayer.update();
-			mNude.nextFrame();
 		}
 		
 		public function get specialLayer():SpectialLayer
