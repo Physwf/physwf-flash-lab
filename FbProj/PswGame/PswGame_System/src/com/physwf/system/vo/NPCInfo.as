@@ -6,7 +6,7 @@ package com.physwf.system.vo
 		public var name:String;
 		public var resID:uint;
 		public var type:uint;//功能
-		public var mapX:uint;
-		public var mapY:uint;
+		public var map_x:uint;
+		public var map_y:uint;
 	}
 }
