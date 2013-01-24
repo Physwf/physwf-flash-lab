@@ -4,7 +4,7 @@ package com.physwf.engine.world
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.world.events.WorldEvent;
-	import com.physwf.engine.world.manager.Charactor;
+	import com.physwf.engine.world.manager.Character;
 	import com.physwf.engine.world.manager.Map;
 	import com.physwf.shell.Application;
 	import com.physwf.system.System;
@@ -27,7 +27,7 @@ package com.physwf.engine.world
 			map = new Map();
 			map.attachLayer(ScreenManager.main.world);
 			map.initialize();
-			Charactor.astar = new BiHeapAStar();
+			Character.astar = new BiHeapAStar();
 			
 			Engine.world = this;
 		}
@@ -65,9 +65,16 @@ package com.physwf.engine.world
 		
 		private function onWorldReady(e:Event):void
 		{
+			map.removeEventListener(WorldEvent.WORLD_READY,onWorldReady);
+			map.addEventListener(WorldEvent.USERS_READY,onUsersReady);
 			System.map.getMapUserList();
 		}
 		
+		private function onUsersReady(e:Event):void
+		{
+			System.npc.getMonsterList();
+		}
+			
 		public function update():void
 		{
 			map.update();

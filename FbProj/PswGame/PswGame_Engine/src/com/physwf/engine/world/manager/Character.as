@@ -3,30 +3,20 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.CharactorAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
-	import com.physwf.components.charactor.factory.BoyFactory;
-	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Line;
-	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.world.controllers.CharactorController;
-	import com.physwf.system.vo.UserInfo;
 	
 	import flash.events.EventDispatcher;
 
-	public class Charactor extends EventDispatcher implements IUpdatable
+	public class Character extends EventDispatcher implements IUpdatable
 	{
-		public static var self:Charactor;
+		public static var self:Character;
 		
 		public var view:CharactorAnimation;
-		private var mFactory:ICharacterFactory;
-		private var controller:CharactorController;
-		private var userInfo:UserInfo;
-		private var uid:uint;
 		
 		public static var astar:IAstar;
-//		private var path:Vector.<Node>;
 		private var pathLine:Vector.<Line>;
 		
 		private var target_x:uint;
@@ -34,24 +24,10 @@ package com.physwf.engine.world.manager
 		private var speed:uint = 6;
 		private var rad:Number;// 速度的方向
 		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
-//		private var node:Node;
 		private var line:Line;
 		
-		public function Charactor()
+		public function Character()
 		{
-		}
-		
-		public function initialize(userInfo:UserInfo):void
-		{
-			this.userInfo = userInfo;
-			uid = userInfo.uid;
-			mFactory = new BoyFactory();//后期需要选择
-			view = new CharactorAnimation();
-			view.skeleton = mFactory.getNude();
-			view.x = userInfo.map_x;
-			view.y = userInfo.map_y;
-			controller = new CharactorController();
-			controller.initialize(view,userInfo);
 		}
 		
 		public function goto(tx:uint,ty:uint):void
@@ -128,6 +104,5 @@ package com.physwf.engine.world.manager
 			view.update();
 		}
 		
-		public function get userId():uint { return uid; }
 	}
 }

@@ -1,6 +1,6 @@
 package com.physwf.engine.world.manager
 {
-	public class NPC extends Charactor
+	public class NPC extends Character
 	{
 		public var nid:uint;
 		public var name:String;

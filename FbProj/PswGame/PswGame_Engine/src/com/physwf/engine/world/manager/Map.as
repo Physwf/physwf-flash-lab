@@ -12,6 +12,8 @@ package com.physwf.engine.world.manager
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MapEvent;
 	import com.physwf.system.events.MyEvent;
+	import com.physwf.system.events.NPCEvent;
+	import com.physwf.system.vo.MonsterInfo;
 	import com.physwf.system.vo.UserInfo;
 	
 	import flash.display.Loader;
@@ -34,23 +36,25 @@ package com.physwf.engine.world.manager
 		
 		private var mController:MapController;
 		
-		private var mCharactors:Vector.<Charactor>;
-		private var mMonsters
+		private var mCharactors:Vector.<Player>;
+		private var mMonsters:Vector.<Monster>;
 		
 		public function Map()
 		{
 			mMapView = new MapView();
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
 			
-			Charactor.self = new Charactor();
+			Player.self = new Player();
 			MySelf.userInfo.map_x = 626;
 			MySelf.userInfo.map_y = 566;
-			Charactor.self.initialize(MySelf.userInfo);
+			Player.self.initialize(MySelf.userInfo);
 			
-			mCharactors = new <Charactor>[];
-			addCharactor(Charactor.self);
+			mCharactors = new <Player>[];
+			addPlayer(Player.self);
 			
-			mCamera.target = Charactor.self.view;
+			mMonsters = new <Monster>[];
+			
+			mCamera.target = Player.self.view;
 			mCamera.initialize(mMapView);
 			
 			Engine.map = this;
@@ -62,6 +66,9 @@ package com.physwf.engine.world.manager
 			System.map.addEventListener(MapEvent.MAP_USER_ENTER_MAP,onMapEvent);
 			System.map.addEventListener(MapEvent.MAP_USER_LEAVE_MAP,onMapEvent);
 			System.map.addEventListener(MapEvent.MAP_USER_MOVE,onMapEvent);
+			
+			System.npc.addEventListener(NPCEvent.NPC_LIST,onNPCEvent);
+			
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
 			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
 			
@@ -71,13 +78,13 @@ package com.physwf.engine.world.manager
 		
 		private function onMapEvent(e:MapEvent):void
 		{
-			var chara:Charactor;
+			var chara:Player;
 			switch(e.type)
 			{
 				case MapEvent.MAP_USER_ENTER_MAP:
-					chara = new Charactor();
+					chara = new Player();
 					chara.initialize(e.userInfo);
-					addCharactor(chara);
+					addPlayer(chara);
 					break;
 				case MapEvent.MAP_USER_LEAVE_MAP:
 					delCharactor(e.userInfo);
@@ -88,13 +95,14 @@ package com.physwf.engine.world.manager
 					var mapUserList:Vector.<UserInfo> = System.map.mapUserList;
 					for(var i:int=0;i<mapUserList.length;i++)
 					{
-						chara = new Charactor();
+						chara = new Player();
 						chara.initialize(mapUserList[i]);
-						addCharactor(chara);
+						addPlayer(chara);
 					}
+					dispatchEvent(new WorldEvent(WorldEvent.USERS_READY));
 					break;
 				case MapEvent.MAP_USER_MOVE:
-					// to do 根据userInfo找到相应的character，然后设置该character到指定点
+					// to do 根据userInfo找到相应的Player，然后设置该Player到指定点
 					for(var j:int=0;j<mCharactors.length;++j)
 					{
 						if(mCharactors[j].userId == e.userInfo.uid)
@@ -102,6 +110,25 @@ package com.physwf.engine.world.manager
 							mCharactors[j].goto(e.userInfo.target_x,e.userInfo.target_y);
 						}
 					}
+					break;
+				
+			}
+		}
+		
+		private function onNPCEvent(e:NPCEvent):void
+		{
+			switch(e.type)
+			{
+				case NPCEvent.NPC_LIST:
+					var monList:Vector.<MonsterInfo> = System.npc.svrNpcList;
+					var mon:Monster;
+					for(var i:int=0;i<monList.length;++i)
+					{
+						mon = new Monster();
+						mon.initialize(monList[i]);
+						addMonster(mon);
+					}
+					dispatchEvent(new WorldEvent(WorldEvent.MONS_READY));
 					break;
 			}
 		}
@@ -113,7 +140,7 @@ package com.physwf.engine.world.manager
 				case MyEvent.ENTER_MAP_SUCCESS:
 					break;
 				case MyEvent.SELF_MOVE_ALLOWED:
-					Charactor.self.goto(mController.targetX,mController.targetY);
+					Player.self.goto(mController.targetX,mController.targetY);
 					break;
 			}
 		}
@@ -143,7 +170,7 @@ package com.physwf.engine.world.manager
 			function ():void
 			{
 				mMapView.landform = landformLoader.content;
-				Charactor.astar.analyze(mMapView.landform);
+				Character.astar.analyze(mMapView.landform);
 				dispatchEvent(new WorldEvent(WorldEvent.WORLD_READY));
 			});
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
@@ -173,7 +200,7 @@ package com.physwf.engine.world.manager
 			
 		}
 		
-		public function addCharactor(chara:Charactor):void
+		public function addPlayer(chara:Player):void
 		{
 			mCharactors.push(chara);
 			mMapView.addSwapElement(chara.view);
@@ -187,6 +214,24 @@ package com.physwf.engine.world.manager
 				{
 					mMapView.removeSwapElement(mCharactors[i].view);
 					mCharactors.splice(i,1);
+				}
+			}
+		}
+		
+		public function addMonster(mon:Monster):void
+		{
+			mMonsters.push(mon);
+			mMapView.addSwapElement(mon.view);
+		}
+		
+		public function delMonster(info:MonsterInfo):void
+		{
+			for(var i:int=0;i<mMonsters.length;++i)
+			{
+				if(mMonsters[i].instanId == info.instanceID)
+				{
+					mMapView.removeSwapElement(mMonsters[i].view);
+					mMonsters.splice(i,1);
 				}
 			}
 		}
@@ -206,6 +251,10 @@ package com.physwf.engine.world.manager
 			for(var i:int=0;i<mCharactors.length;++i)
 			{
 				mCharactors[i].update();
+			}
+			for(i=0;i<mMonsters.length;++i)
+			{
+				mMonsters[i].update();
 			}
 			mCamera.update();
 		}
