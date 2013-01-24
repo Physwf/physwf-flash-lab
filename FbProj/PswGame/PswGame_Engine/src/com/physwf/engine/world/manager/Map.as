@@ -68,6 +68,7 @@ package com.physwf.engine.world.manager
 			System.map.addEventListener(MapEvent.MAP_USER_MOVE,onMapEvent);
 			
 			System.npc.addEventListener(NPCEvent.NPC_LIST,onNPCEvent);
+			System.npc.addEventListener(NPCEvent.NPC_REFRESH,onNPCEvent);
 			
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
 			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
@@ -129,6 +130,10 @@ package com.physwf.engine.world.manager
 						addMonster(mon);
 					}
 					dispatchEvent(new WorldEvent(WorldEvent.MONS_READY));
+					break;
+				case NPCEvent.NPC_REFRESH:
+					var info:MonsterInfo = e.info;
+					refreshMonster(info);
 					break;
 			}
 		}
@@ -224,14 +229,23 @@ package com.physwf.engine.world.manager
 			mMapView.addSwapElement(mon.view);
 		}
 		
-		public function delMonster(info:MonsterInfo):void
+		public function refreshMonster(info:MonsterInfo):void
 		{
 			for(var i:int=0;i<mMonsters.length;++i)
 			{
 				if(mMonsters[i].instanId == info.instanceID)
 				{
-					mMapView.removeSwapElement(mMonsters[i].view);
-					mMonsters.splice(i,1);
+					if(info.hp == 0)
+					{
+						mMapView.removeSwapElement(mMonsters[i].view);
+						mMonsters.splice(i,1);
+					}
+					else
+					{
+						mMonsters[i].view.x = info.map_x;
+						mMonsters[i].view.y = info.map_y;
+						//后面还要增加怪物血量的显示更新
+					}
 				}
 			}
 		}
