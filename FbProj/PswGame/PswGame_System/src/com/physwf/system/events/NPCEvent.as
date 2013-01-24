@@ -8,6 +8,7 @@ package com.physwf.system.events
 	public class NPCEvent extends Event
 	{
 		public static const NPC_LIST:String = "n_l";
+		public static const NPC_REFRESH:String = "n_r";
 		
 		private var mInfo:MonsterInfo;
 		

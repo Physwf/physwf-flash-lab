@@ -24,6 +24,7 @@ package com.physwf.system.entity
 		public function initialize():void
 		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1038,onNpcMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1039,onNpcMessage);
 		}
 		
 		public function getMonsterList():void
@@ -51,7 +52,38 @@ package com.physwf.system.entity
 					}
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_LIST,null));
 					break;
+				case MessageEvent.MSG_SUCCESS_+1039:
+					if(!svrNpcList) return;
+					var msg1039:MSG_RES_NOTI_MAP_MONSTERS_1039 = e.message as MSG_RES_NOTI_MAP_MONSTERS_1039;
+					var info:map_monster_t = msg1039.monsters;
+					var remove:Boolean = (info.hp == 0);
+					var mInfo:MonsterInfo = getMonsInfoById(info.instance_id,remove);
+					if(!remove)
+					{
+						mInfo.hp = info.hp;
+						mInfo.mp = info.mp;
+						mInfo.map_x = info.map_x;
+						mInfo.map_y = info.map_y;
+					}
+					dispatchEvent(new NPCEvent(NPCEvent.NPC_REFRESH,mInfo));
+					break;
 			}
+		}
+		
+		private function getMonsInfoById(instanId:uint,remove:Boolean):MonsterInfo
+		{
+			var mInfo:MonsterInfo
+			for(var i:int=0;i<svrNpcList.length;++i)
+			{
+				if(svrNpcList[i].instanceID == instanId)
+				{
+					mInfo = svrNpcList[i];
+					if(remove)
+						svrNpcList.splice(i,1);
+					break;
+				}
+			}
+			return mInfo;
 		}
 	} // end class
 } // end package
