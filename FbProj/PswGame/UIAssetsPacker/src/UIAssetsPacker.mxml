@@ -1,41 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					   xmlns:s="library://ns.adobe.com/flex/spark" 
-					   xmlns:mx="library://ns.adobe.com/flex/mx" initialize="init()">
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="403" height="286" initialize="init()">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import algorithm.objects.Angle;
 			import algorithm.objects.Configuration;
 			import algorithm.objects.Line;
 			
+			import flash.utils.clearInterval;
+			import flash.utils.setInterval;
 			import flash.utils.setTimeout;
 			
+			import reader.IReader;
+			import reader.SWFReader;
+			
 			import struct.ItemStruct;
-			private const numRects:int = 10;
-			private const minW:uint = 10;
-			private const minH:uint = 10;
+			private const numRects:int = 20;
+			private const minW:uint = 30;
+			private const minH:uint = 30;
 			private const interval:uint = 100;
 			
 			private var images:Vector.<BitmapData>;
 			private var items:Vector.<ItemStruct>;
 			
 			private var configuration:Configuration;
-			private var conW:uint = 500;
-			private var conH:uint = 500;
+			private var conW:uint = 300;
+			private var conH:uint = 300;
 			private var area:uint;
+			
+			private var _reader:IReader;
 			
 			private function init():void
 			{
-				randomizeRects();
+				btnOpenSwfFile.addEventListener(MouseEvent.CLICK,onSelectSWFFile);
+
+			}
+			
+			private var file:File;
+			private function onSelectSWFFile(e:Event):void
+			{
+				_reader = new SWFReader();
+				file = new File();
+				file.addEventListener(Event.SELECT,function(e:Event):void
+				{
+					_reader.readFile(file.url);
+					_reader.addEventListener(Event.COMPLETE,onReaderReady);
+				});
+				file.browse([new FileFilter("Flash Movie","*.swf")]);
+			}
+			
+			private function onReaderReady(e:Event):void
+			{
+//				randomizeRects();
+				images = _reader.data;
 				//初始化格局
 				configuration = new Configuration();
-				configuration.addAngle(new Point());
-//				conW = conH = Math.sqrt(area);
-				configuration.addBoarder(new Line(0,conH,conW));
+//				configuration.addAngle(new Point());
+				configuration.addAgl(new Angle(new Point,0));
+				//				conW = conH = Math.sqrt(area);
+				configuration.addBoarder(new Line(0,conH,conW,new Point()));
 				items = new Vector.<ItemStruct>();
-				pack();
+				pack2();
 			}
 			
 			private function randomizeRects():void
@@ -50,6 +80,89 @@
 					images.push(rect);
 					area += rect.rect.width * rect.rect.height;
 				}
+			}
+			
+			private function pack2():void
+			{
+				var seq:uint=0;
+				while(images.length > 0)
+				{
+					configuration.sortAgl();
+					var curAngle:Angle = configuration.shiftAgl();
+					if(curAngle == null) 
+					{
+						break;
+					}
+					
+					var boarder:Line = configuration.getNearestBoarder(curAngle.pos);
+					var minDist:Number = Number.MAX_VALUE;
+					
+					if(boarder)
+					{
+						var tempImage:BitmapData = null;
+						for(var i:int=0;i<images.length;++i)
+						{
+							var r:Rectangle = new Rectangle();
+							r.x= curAngle.pos.x;
+							r.y= curAngle.pos.y;
+							r.width = images[i].width;
+							r.height = images[i].height;
+							
+							
+							if(r.right<=boarder.pos)
+							{
+								var dist:Number = boarder.pos - r.right;
+								if(minDist>dist)
+								{
+									tempImage = images[i];
+									minDist = dist;
+								}
+							}
+						}
+						
+						if(tempImage)
+						{
+							var item:ItemStruct = new ItemStruct(curAngle.pos,tempImage);
+							configuration.addHoldedAgl(curAngle);
+							var txt:TextField = new TextField();
+							txt.text = ""+seq++;
+							var b:BitmapData = new BitmapData(txt.width,txt.height,true,0);
+							b.draw(txt);
+							tempImage.copyPixels(b,b.rect,new Point(),null,null,true);
+							items.push(item);
+							
+//							configuration.addAngle(new Point(item.position.x+item.obj.width,item.position.y));
+							configuration.addAgl(new Angle(new Point(item.position.x+item.obj.width,item.position.y),item.obj.height));
+							var a:Point = new Point(item.position.x,item.position.y+item.obj.height);
+//							configuration.addAngle(a);
+							configuration.addAgl(new Angle(new Point(item.position.x,item.position.y+item.obj.height),item.obj.height));
+							configuration.addBoarder(new Line(item.position.y,item.position.y+item.obj.height,item.position.x,null));
+							var index:int = images.indexOf(tempImage);
+							images.splice(index,1);
+						}
+					}
+				}
+				
+				trace("开始拼图！");
+				
+				var canvas:BitmapData = new BitmapData(conW,conH,true,0x3F000000);
+				
+				var id:uint = setInterval(function ():void
+				{
+					canvas.copyPixels(items[0].obj,items[0].obj.rect,items[0].position,null,null,true);
+					items.splice(0,1);
+					if(items.length==0)
+					{
+						clearInterval(id);
+					}
+				},2000);
+				//				for(i=0;i<items.length;++i)
+				//				{
+				//					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
+				//					trace(items[i].position)
+				//				}
+				stage.addChild(new Bitmap(canvas));
+				trace("看看呢");
 			}
 			
 			private function pack():void
@@ -99,11 +212,11 @@
 							b.draw(txt);
 							tempImage.copyPixels(b,b.rect,new Point(),null,null,true);
 							items.push(item);
+							
 							configuration.addAngle(new Point(item.position.x+item.obj.width,item.position.y));
-							trace(item.position.x+item.obj.width,item.position.y,"new point");
-							trace(item.position.x,item.position.y+item.obj.height,"new point");
-							configuration.addAngle(new Point(item.position.x,item.position.y+item.obj.height));
-							configuration.addBoarder(new Line(item.position.y,item.position.y+item.obj.height,item.position.x));
+							var a:Point = new Point(item.position.x,item.position.y+item.obj.height);
+							configuration.addAngle(a);
+							configuration.addBoarder(new Line(item.position.y,item.position.y+item.obj.height,item.position.x,a));
 							var index:int = images.indexOf(tempImage);
 							images.splice(index,1);
 						}
@@ -114,25 +227,25 @@
 				
 				var canvas:BitmapData = new BitmapData(conW,conH,true,0x3F000000);
 				
-				for(i=0;i<items.length;++i)
+				var id:uint = setInterval(function ():void
 				{
-					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
-					trace(items[i].position)
-				}
-				
-				setTimeout(
-					function():void 
+					if(items.length==0)
 					{
-						stage.addChild(new Bitmap(canvas));
-						trace("看看呢");
-					},3000);
+						clearInterval(id);
+					}
+					canvas.copyPixels(items[0].obj,items[0].obj.rect,items[0].position,null,null,true);
+					items.splice(0,1);
+					
+				},2000);
+//				for(i=0;i<items.length;++i)
+//				{
+//					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
+//					trace(items[i].position)
+//				}
+				stage.addChild(new Bitmap(canvas));
+				trace("看看呢");
 			}
-			
-			private function sortConfiguration():void
-			{
-				
-			}
-			
 		]]>
 	</fx:Script>
+	<s:Button x="299" y="230" label="打开SWF文件" id="btnOpenSwfFile"/>
 </s:WindowedApplication>

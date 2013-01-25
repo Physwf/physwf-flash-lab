@@ -11,12 +11,14 @@ package algorithm.objects
 		public var bottom:Number;
 		public var top:Number;
 		public var pos:Number; //x方向坐标
+		public var anglePtr:Point;//对应的angle
 		
-		public function Line(b:Number,t:Number,p:Number)
+		public function Line(b:Number,t:Number,p:Number,aP:Point)
 		{
 			bottom = b;
 			top = t;
 			pos = p;
+			anglePtr = aP;
 		}
 	}
 }

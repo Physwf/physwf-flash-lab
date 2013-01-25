@@ -7,11 +7,15 @@ package algorithm.objects
 	public class Configuration
 	{
 		private var angles:Vector.<Point>;
+		private var agls:Vector.<Angle>;
+		private var aglsHolded:Vector.<Angle>;
 		private var boarders:Vector.<Line>;
 		
 		public function Configuration()
 		{
 			angles = new Vector.<Point>();
+			agls = new Vector.<Angle>();
+			aglsHolded = new Vector.<Angle>();
 			boarders = new Vector.<Line>();
 		}
 		/**
@@ -44,6 +48,32 @@ package algorithm.objects
 		public function addAngle(angle:Point):void
 		{
 			angles.push(angle);
+			
+		}
+		
+		public function addHoldedAgl(agl:Angle):void
+		{
+			aglsHolded.push(agl);
+		}
+		
+		public function addAgl(agl:Angle):void
+		{
+			
+			for(var i:int=0;i<aglsHolded.length;++i)
+			{
+				if(agl.pos.x == aglsHolded[i].boarder.pos)
+				{
+					if(agl.pos.y >= aglsHolded[i].boarder.bottom && agl.pos.y <= aglsHolded[i].boarder.top)
+					{
+						trace(agls.length,"agls.lenght,ret")
+						return;
+					}
+				}
+			}
+			
+			agls.push(agl);
+			trace(agls.length,"agls.lenght")
+			
 		}
 		
 		public function addBoarder(boader:Line):void
@@ -81,9 +111,45 @@ package algorithm.objects
 			});
 		}
 		
+		public function sortAgl():void
+		{
+			agls.sort(function(e1:Angle,e2:Angle):Number
+			{
+				var A:Point,B:Point;
+				A = e1.pos;
+				B = e2.pos;
+				if(A.y < B.y)
+				{
+					return -1;
+				}
+				else if(A.y > B.y)
+				{
+					return 1;
+				}
+				else
+				{
+					if(A.x < B.x)
+					{
+						return -1;
+					}
+					else
+					{
+						return 1;
+					}
+					return 0;
+				}
+			});
+		}
+		
+		public function shiftAgl():Angle
+		{
+			return agls.shift();
+		}
+		
 		public function popAngle():Point
 		{
 			return angles.shift();
 		}
+		
 	}
 }
