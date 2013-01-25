@@ -18,12 +18,12 @@
 			private const minH:uint = 10;
 			private const interval:uint = 100;
 			
-			private var rects:Vector.<BitmapData>;
+			private var images:Vector.<BitmapData>;
 			private var items:Vector.<ItemStruct>;
 			
 			private var configuration:Configuration;
-			private var conW:uint;
-			private var conH:uint;
+			private var conW:uint = 500;
+			private var conH:uint = 500;
 			private var area:uint;
 			
 			private function init():void
@@ -32,7 +32,7 @@
 				//初始化格局
 				configuration = new Configuration();
 				configuration.addAngle(new Point());
-				conW = conH = Math.sqrt(area);
+//				conW = conH = Math.sqrt(area);
 				configuration.addBoarder(new Line(0,conH,conW));
 				items = new Vector.<ItemStruct>();
 				pack();
@@ -40,21 +40,22 @@
 			
 			private function randomizeRects():void
 			{
-				rects = new Vector.<BitmapData>();
+				images = new Vector.<BitmapData>();
 				for(var i:int=0;i<numRects;++i)
 				{
 					var randH:Number = Math.random() * interval;
 					var rect:BitmapData = new BitmapData( minW + randH+Math.random() * interval,
-														minH + randH,false,
-														0xFFFFFFFF * Math.random());
-					rects.push(rect);
+														minH + randH,true,
+														0x6F000000 + 0xFFFFFF * Math.random());
+					images.push(rect);
 					area += rect.rect.width * rect.rect.height;
 				}
 			}
 			
 			private function pack():void
 			{
-				while(rects.length > 0)
+				var seq:uint=0;
+				while(images.length > 0)
 				{
 					configuration.sort();
 					var curAngle:Point = configuration.popAngle();
@@ -62,44 +63,67 @@
 					{
 						break;
 					}
-					for(var i:int=0;i<rects.length;++i)
+					
+					var boarder:Line = configuration.getNearestBoarder(curAngle);
+					var minDist:Number = Number.MAX_VALUE;
+					
+					if(boarder)
 					{
-						var r:Rectangle = new Rectangle();
-						r.x= curAngle.x;
-						r.y= curAngle.y;
-						r.width = rects[i].width;
-						r.height = rects[i].height;
-						var line:Line = configuration.getNearestBoarder(r);
-						if(line == null)
+						var tempImage:BitmapData = null;
+						for(var i:int=0;i<images.length;++i)
 						{
-							continue;
+							var r:Rectangle = new Rectangle();
+							r.x= curAngle.x;
+							r.y= curAngle.y;
+							r.width = images[i].width;
+							r.height = images[i].height;
+							
+							
+							if(r.right<=boarder.pos)
+							{
+								var dist:Number = boarder.pos - r.right;
+								if(minDist>dist)
+								{
+									tempImage = images[i];
+									minDist = dist;
+								}
+							}
 						}
-						else
+						
+						if(tempImage)
 						{
-							var item:ItemStruct = new ItemStruct(curAngle,rects[i]);
+							var item:ItemStruct = new ItemStruct(curAngle,tempImage);
+							var txt:TextField = new TextField();
+							txt.text = ""+seq++;
+							var b:BitmapData = new BitmapData(txt.width,txt.height,true,0);
+							b.draw(txt);
+							tempImage.copyPixels(b,b.rect,new Point(),null,null,true);
 							items.push(item);
 							configuration.addAngle(new Point(item.position.x+item.obj.width,item.position.y));
+							trace(item.position.x+item.obj.width,item.position.y,"new point");
+							trace(item.position.x,item.position.y+item.obj.height,"new point");
 							configuration.addAngle(new Point(item.position.x,item.position.y+item.obj.height));
 							configuration.addBoarder(new Line(item.position.y,item.position.y+item.obj.height,item.position.x));
-							rects.splice(i,1);
+							var index:int = images.indexOf(tempImage);
+							images.splice(index,1);
 						}
 					}
 				}
 				
 				trace("开始拼图！");
 				
-				var canvas:BitmapData = new BitmapData(conW,conH,true,0);
+				var canvas:BitmapData = new BitmapData(conW,conH,true,0x3F000000);
 				
 				for(i=0;i<items.length;++i)
 				{
-					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position);
+					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
 					trace(items[i].position)
 				}
 				
 				setTimeout(
 					function():void 
 					{
-						stage.addChild(new Bitmap(canvas))
+						stage.addChild(new Bitmap(canvas));
 						trace("看看呢");
 					},3000);
 			}

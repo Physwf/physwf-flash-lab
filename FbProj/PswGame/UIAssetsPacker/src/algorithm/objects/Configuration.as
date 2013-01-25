@@ -1,39 +1,40 @@
 package algorithm.objects
 {
+	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	public class Configuration
 	{
 		private var angles:Vector.<Point>;
-		private var boaders:Vector.<Line>;
+		private var boarders:Vector.<Line>;
 		
 		public function Configuration()
 		{
 			angles = new Vector.<Point>();
-			boaders = new Vector.<Line>();
+			boarders = new Vector.<Line>();
 		}
 		/**
 		 * 获取同rect右边界距离最近的边界，如果返回为空，则说明没有合适的矩形存在 
 		 * @param rect
 		 * @return 
 		 */		
-		public function getNearestBoarder(rect:Rectangle):Line
+		public function getNearestBoarder(angle:Point):Line
 		{
 			var ret:Line;
 			var minDist:Number = Number.MAX_VALUE;
-			for(var i:int=0;i<boaders.length;++i)
+			for(var j:int=0;j<boarders.length;++j)
 			{
-				if(rect.y >= boaders[i].bottom && rect.y <= boaders[i].top)//该矩形底边同边界相交
+				if(angle.y>=boarders[j].bottom && angle.y<=boarders[j].top)
 				{
-					if(rect.x + rect.width > boaders[i].pos)
+					if(boarders[j].pos>angle.x)
 					{
-						continue;
-					}
-					else
-					{
-						minDist = (boaders[i].pos - (rect.x + rect.width));
-						ret = boaders[i];
+						var dist:Number = boarders[j].pos - angle.x;
+						if(dist<minDist)
+						{
+							ret = boarders[j];
+							minDist = dist;
+						}
 					}
 				}
 			}
@@ -47,7 +48,10 @@ package algorithm.objects
 		
 		public function addBoarder(boader:Line):void
 		{
-			boaders.push(boader);
+			if(boader.pos>0) 
+			{
+				boarders.push(boader);
+			}
 		}
 		
 		public function sort():void
@@ -56,10 +60,6 @@ package algorithm.objects
 			{
 				if(A.y < B.y)
 				{
-					if(A.x < B.x)
-					{
-						return 1;
-					}
 					return -1;
 				}
 				else if(A.y > B.y)
@@ -68,6 +68,14 @@ package algorithm.objects
 				}
 				else
 				{
+					if(A.x < B.x)
+					{
+						return -1;
+					}
+					else
+					{
+						return 1;
+					}
 					return 0;
 				}
 			});
