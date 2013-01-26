@@ -1,23 +1,23 @@
 package reader
 {
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
-	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.filesystem.File;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
-
-	public class SWFReader extends EventDispatcher implements IReader
+	
+	public class ImageReader extends EventDispatcher implements IReader 
 	{
 		private var files:Vector.<File>;
 		private var mData:Vector.<BitmapData>;
 		private var mNumComplete:uint = 0;
 		
-		public function SWFReader()
+		public function ImageReader()
 		{
 			files = new Vector.<File>();
 			mData = new Vector.<BitmapData>();
@@ -46,26 +46,24 @@ package reader
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onBytesLoaded);
 			var lc:LoaderContext = new LoaderContext(false,ApplicationDomain.currentDomain,null);
 			lc.allowCodeImport = true;
-			loader.loadBytes(data,lc);
+			loader.loadBytes(data);
 		}
 		
 		private function onBytesLoaded(e:Event):void
 		{
 			var lInfo:LoaderInfo = e.target as LoaderInfo;
-			var swf:MovieClip = lInfo.content as MovieClip;
-			for(var i:int=0;i<swf.numChildren;++i)
-			{
-				var mc:MovieClip = swf.getChildAt(i) as MovieClip;
-				var bmd:BitmapData = new BitmapData(mc.width,mc.height,true,0);
-				bmd.draw(mc);
-				data.push(bmd);
-			}
-			mNumComplete++;
+			var image:DisplayObject = lInfo.content as DisplayObject;
+			var bmd:BitmapData = new BitmapData(image.width,image.height,true,0);
+			bmd.draw(image);
+			mData.push(bmd);
 			if(mNumComplete == files.length)
 				dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
-		public function get data():Vector.<BitmapData> { return mData; }
+		public function get data():Vector.<BitmapData>
+		{
+			return mData;
+		}
 		
 		public function clear():void
 		{

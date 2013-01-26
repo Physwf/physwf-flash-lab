@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="403" height="286" initialize="init()">
+					   width="375" height="136" initialize="init()">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
@@ -17,7 +17,11 @@
 			import flash.utils.setTimeout;
 			
 			import reader.IReader;
+			import reader.ImageReader;
 			import reader.SWFReader;
+			
+			import spark.components.Image;
+			import spark.components.Window;
 			
 			import struct.ItemStruct;
 			private const numRects:int = 20;
@@ -38,7 +42,8 @@
 			private function init():void
 			{
 				btnOpenSwfFile.addEventListener(MouseEvent.CLICK,onSelectSWFFile);
-
+				btnOpenSwfDir.addEventListener(MouseEvent.CLICK,onSwfDirSelected);
+				btnOpenImageDir.addEventListener(MouseEvent.CLICK,onSwfDirSelected);
 			}
 			
 			private var file:File;
@@ -52,6 +57,33 @@
 					_reader.addEventListener(Event.COMPLETE,onReaderReady);
 				});
 				file.browse([new FileFilter("Flash Movie","*.swf")]);
+			}
+			
+			private function onSwfDirSelected(e:Event):void
+			{
+				_reader = new SWFReader();
+				file = new File();
+				file.addEventListener(Event.SELECT,function(e:Event):void
+				{
+					var paths:Vector.<String> = Vector.<String>(file.getDirectoryListing())
+					_reader.readDir(paths);
+					_reader.addEventListener(Event.COMPLETE,onReaderReady);
+				});
+				file.browseForOpenMultiple("选择",[new FileFilter("Flash Movie","*.swf")]);
+			}
+			
+			
+			private function onImageDirSelected(e:Event):void
+			{
+				_reader = new ImageReader();
+				file = new File();
+				file.addEventListener(Event.SELECT,function(e:Event):void
+				{
+					var paths:Vector.<String> = Vector.<String>(file.getDirectoryListing())
+					_reader.readDir(paths);
+					_reader.addEventListener(Event.COMPLETE,onReaderReady);
+				});
+				file.browseForOpenMultiple("选择",[new FileFilter("Image","*.png;*.tga;*.jpg;*.jpeg")]);
 			}
 			
 			private function onReaderReady(e:Event):void
@@ -161,7 +193,22 @@
 				//					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
 				//					trace(items[i].position)
 				//				}
-				stage.addChild(new Bitmap(canvas));
+				var windowOptions:NativeWindowInitOptions = new NativeWindowInitOptions();
+				windowOptions.maximizable = false;
+				windowOptions.systemChrome = NativeWindowSystemChrome.ALTERNATE;
+				windowOptions.type = NativeWindowType.NORMAL;
+				var window:NativeWindow = new NativeWindow(windowOptions);
+				window.width = conW;
+				window.height = conW;
+				var image:Image = new Image();
+//				image.source = 
+				window.stage.align = StageAlign.TOP_LEFT;
+				window.stage.scaleMode = StageScaleMode.NO_SCALE;
+				window.stage.addChild(new Bitmap(canvas));
+				window.activate();
+				//				stage.addChild();
+				trace("看看呢");
+//				stage.addChild(new Bitmap(canvas));
 				trace("看看呢");
 			}
 			
@@ -242,10 +289,12 @@
 //					canvas.copyPixels(items[i].obj,items[i].obj.rect,items[i].position,null,null,true);
 //					trace(items[i].position)
 //				}
-				stage.addChild(new Bitmap(canvas));
-				trace("看看呢");
+				
+				
 			}
 		]]>
 	</fx:Script>
-	<s:Button x="299" y="230" label="打开SWF文件" id="btnOpenSwfFile"/>
+	<s:Button x="28" y="47" label="打开SWF文件" id="btnOpenSwfFile"/>
+	<s:Button x="142" y="47" label="打开SWF目录" id="btnOpenSwfDir"/>
+	<s:Button x="255" y="48" width="95" label="打开图片目录" id="btnOpenImageDir"/>
 </s:WindowedApplication>
