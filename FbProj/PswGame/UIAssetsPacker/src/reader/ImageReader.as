@@ -31,11 +31,13 @@ package reader
 			file.load();
 		}
 		
-		public function readDir(paths:Vector.<String>):void
+		public function readDir(paths:Vector.<File>):void
 		{
 			for(var i:int=0;i<paths.length;++i)
 			{
-				readFile(paths[i]);
+				if(paths[i].name == "Thumbs.db") continue;
+				readFile(paths[i].url);
+				
 			}
 		}
 		
@@ -56,6 +58,7 @@ package reader
 			var bmd:BitmapData = new BitmapData(image.width,image.height,true,0);
 			bmd.draw(image);
 			mData.push(bmd);
+			mNumComplete++;
 			if(mNumComplete == files.length)
 				dispatchEvent(new Event(Event.COMPLETE));
 		}

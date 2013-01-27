@@ -63,14 +63,20 @@ package algorithm.objects
 			{
 				if(agl.pos.x == aglsHolded[i].boarder.pos)
 				{
-					if(agl.pos.y >= aglsHolded[i].boarder.bottom && agl.pos.y <= aglsHolded[i].boarder.top)
+					if(agl.pos.y > aglsHolded[i].boarder.bottom && agl.pos.y < aglsHolded[i].boarder.top)
 					{
 						trace(agls.length,"agls.lenght,ret")
 						return;
 					}
 				}
 			}
-			
+			for(i=0;i<agls.length;++i)//防止重复
+			{
+				if(agl.pos.x == agls[i].pos.x && agl.pos.y == agls[i].pos.y)
+				{
+					return;
+				}
+			}
 			agls.push(agl);
 			trace(agls.length,"agls.lenght")
 			

@@ -31,11 +31,11 @@ package reader
 			file.load();
 		}
 		
-		public function readDir(paths:Vector.<String>):void
+		public function readDir(paths:Vector.<File>):void
 		{
 			for(var i:int=0;i<paths.length;++i)
 			{
-				readFile(paths[i]);
+				readFile(paths[i].url);
 			}
 		}
 		
