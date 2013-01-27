@@ -12,6 +12,8 @@
 			import algorithm.objects.Configuration;
 			import algorithm.objects.Line;
 			
+			import com.magi.image.codec.TgaDecoder;
+			
 			import flash.utils.clearInterval;
 			import flash.utils.setInterval;
 			import flash.utils.setTimeout;
@@ -207,6 +209,7 @@
 				window.stage.scaleMode = StageScaleMode.NO_SCALE;
 				window.stage.addChild(new Bitmap(canvas));
 				window.activate();
+				window.x = 400;
 				//				stage.addChild();
 				trace("看看呢");
 //				stage.addChild(new Bitmap(canvas));
