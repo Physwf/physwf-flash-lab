@@ -89,13 +89,13 @@ package struct
 			switch(type)
 			{
 				case FieldStruct.TYPE_UINT8:
-					itemDecl =   "var "+name+"_item:unit = input.readUnsignedByte();";
+					itemDecl =   "var "+name+"_item:uint = input.readUnsignedByte();";
 					break;
 				case FieldStruct.TYPE_UINT16:
-					itemDecl =   "var "+name+"_item:unit = input.readUnsignedShort();";
+					itemDecl =   "var "+name+"_item:uint = input.readUnsignedShort();";
 					break;
 				case FieldStruct.TYPE_UINT32:
-					itemDecl =   "var "+name+"_item:unit = input.readUnsignedInt();";
+					itemDecl =   "var "+name+"_item:uint = input.readUnsignedInt();";
 					break;
 				case FieldStruct.TYPE_INT8:
 					itemDecl =   "var "+name+"_item:int = input.readUnsignedInt();";
@@ -105,10 +105,13 @@ package struct
 					break;
 				case FieldStruct.TYPE_INT32:
 					itemDecl =   "var "+name+"_item:int = input.readUnsignedInt();";
+					break;
 				default:
-					itemDecl =   "var "+name+"_item:"+type+" = new "+type+"()";
+					itemDecl =   "var "+name+"_item:"+type+" = new "+type+"()"
+								+ "\n\t\t\t\t"+name+"_item.readExternal(input);";
+					break;
 			}
-			return itemDecl + "\n\t\t\t\t"+name+"_item.readExternal(input);";
+			return itemDecl;
 		}
 		
 		private function getVarlistReadBody():String
