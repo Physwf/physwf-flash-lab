@@ -55,6 +55,22 @@
     <classEntry path="com.physwf.components.map.wayfinding.astar.PathUtils"/>
     <classEntry path="com.physwf.components.map.wayfinding.astar.Line"/>
     <classEntry path="com.physwf.components.bitmap.events.PackageEvent"/>
+    <classEntry path="com.physwf.components.map.tile.TileStruct"/>
+    <classEntry path="com.physwf.components.map.tile.TileGround"/>
+    <classEntry path="com.physwf.components.map.tile.Tile"/>
+    <classEntry path="com.physwf.components.ui.layout.Window"/>
+    <classEntry path="com.physwf.components.ui.assets.PanelAssets"/>
+    <classEntry path="com.physwf.components.ui.layout.Panel"/>
+    <classEntry path="com.physwf.components.ui.assets.WindowAssets"/>
+    <classEntry path="com.physwf.components.ui.assets.ButtonAssets"/>
+    <classEntry path="com.physwf.components.charactor.factory.MonsterFactory"/>
+    <classEntry path="com.physwf.components.charactor.enum.AnimationSystem"/>
+    <classEntry path="com.physwf.components.ui.SpriteLoader"/>
+    <classEntry path="com.physwf.components.ui.factory.ButtonFactory"/>
+    <classEntry path="com.physwf.components.ui.config.ButtonConfig"/>
+    <classEntry path="com.physwf.components.ui.layout.IPopup"/>
+    <classEntry path="com.physwf.components.ui.config.PanelConfig"/>
+    <classEntry path="com.physwf.components.ui.factory.PanelFactory"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

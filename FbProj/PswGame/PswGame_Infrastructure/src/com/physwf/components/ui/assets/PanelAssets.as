@@ -4,19 +4,12 @@ package com.physwf.components.ui.assets
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Rectangle;
 
 	public class PanelAssets implements IDisposible
 	{
-		public var leftTop:BitmapData;
-		public var top:BitmapData;
-		public var rightTop:BitmapData;
-		public var right:BitmapData;
-		public var rightDown:BitmapData;
-		public var down:BitmapData;
-		public var leftDown:BitmapData;
-		public var left:BitmapData;
-		
-		public var midle:BitmapData;
+		public var asset:BitmapData;
+		public var scale9Grid:Rectangle;
 		
 		public function PanelAssets()
 		{
@@ -24,14 +17,6 @@ package com.physwf.components.ui.assets
 		
 		public function destroy():void
 		{
-			leftTop && leftTop.dispose();
-			top &&　top.dispose();
-			rightTop　&& rightTop.dispose();
-			right　&& right.dispose();
-			rightDown　&& rightDown.dispose();
-			down　&& down.dispose();
-			leftDown　&& leftDown.dispose();
-			left　&& left.dispose();
 		}
 	}
 }
