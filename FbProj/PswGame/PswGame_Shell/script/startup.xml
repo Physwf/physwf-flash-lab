@@ -30,7 +30,13 @@
 	<item name="world" type="exe" thread="0" url="plugins/WorldPlugin.swf">
 		<domain level="1" useSub="0"/>
 	</item>
-	<item name="debug" type="exe" thread="1" url="plugins/DebugPlugin.swf">
+	<item name="frame" type="exe" thread="1" url="plugins/FramePlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="bag" type="exe" thread="2" url="plugins/BagPlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="debug" type="exe" thread="3" url="plugins/DebugPlugin.swf">
 		<domain level="1" useSub="0"/>
 	</item>
 </startup>
