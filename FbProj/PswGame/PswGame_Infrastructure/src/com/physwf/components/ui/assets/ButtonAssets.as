@@ -13,6 +13,7 @@ package com.physwf.components.ui.assets
 		
 		public function ButtonAssets()
 		{
+			upState = overState = downState = hitState = new BitmapData(10,10,true,0xFFFF0000);
 		}
 		
 		public function destroy():void

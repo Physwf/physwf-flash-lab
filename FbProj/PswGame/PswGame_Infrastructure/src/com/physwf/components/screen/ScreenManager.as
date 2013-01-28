@@ -7,7 +7,7 @@ package com.physwf.components.screen
 		public static var main:ScreenManager;
 		
 		private var mWorld:Layer;
-		private var mUi:Layer;
+		private var mFrame:Layer;
 		private var mEffect:Layer;
 		private var mTip:Layer;
 		
@@ -17,11 +17,13 @@ package com.physwf.components.screen
 		{
 			root ||= new Sprite();
 			mWorld = new Layer(root);
-			mUi = new Layer(root);
+			mWorld.name = "world";
+			mFrame = new Layer(root);
+			mFrame.name = "frame";
 			mEffect = new Layer(root);
-			mWorld = new Layer(root);
+			mEffect.name = "effect";
 			mTip = new Layer(root);
-			
+			mTip.name = "tip";
 			mRoot = root;
 		}
 		
@@ -30,9 +32,9 @@ package com.physwf.components.screen
 			return mWorld;
 		}
 		
-		public function get ui():Layer
+		public function get frame():Layer
 		{
-			return mUi;
+			return mFrame;
 		}
 		
 		public function get effect():Layer
