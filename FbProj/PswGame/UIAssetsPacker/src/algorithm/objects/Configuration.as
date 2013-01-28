@@ -6,6 +6,10 @@ package algorithm.objects
 
 	public class Configuration
 	{
+		public var conW:uint = 300;
+		public var conH:uint = 300;
+		private var area:uint;
+		
 		private var angles:Vector.<Point>;
 		private var agls:Vector.<Angle>;
 		private var aglsHolded:Vector.<Angle>;

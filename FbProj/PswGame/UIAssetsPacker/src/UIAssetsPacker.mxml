@@ -8,24 +8,20 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import algorithm.Greedy;
 			import algorithm.objects.Angle;
 			import algorithm.objects.Configuration;
 			import algorithm.objects.Line;
-			
-			import com.magi.image.codec.TgaDecoder;
-			
-			import flash.utils.clearInterval;
-			import flash.utils.setInterval;
-			import flash.utils.setTimeout;
 			
 			import reader.IReader;
 			import reader.ImageReader;
 			import reader.SWFReader;
 			
 			import spark.components.Image;
-			import spark.components.Window;
 			
 			import struct.ItemStruct;
+			
+			import writer.SpriteWriter;
 			private const numRects:int = 20;
 			private const minW:uint = 30;
 			private const minH:uint = 30;
@@ -35,8 +31,6 @@
 			private var items:Vector.<ItemStruct>;
 			
 			private var configuration:Configuration;
-			private var conW:uint = 300;
-			private var conH:uint = 300;
 			private var area:uint;
 			
 			private var _reader:IReader;
@@ -95,12 +89,18 @@
 				images = _reader.data;
 				//初始化格局
 				configuration = new Configuration();
-//				configuration.addAngle(new Point());
 				configuration.addAgl(new Angle(new Point,0));
-				//				conW = conH = Math.sqrt(area);
-				configuration.addBoarder(new Line(0,conH,conW,new Point()));
+				configuration.addBoarder(new Line(0,configuration.conH,configuration.conW,new Point()));
 				items = new Vector.<ItemStruct>();
-				pack2();
+				var gready:Greedy = new Greedy(configuration);
+				gready.addEventListener("done",onDone);
+				gready.pack(images,items);
+			}
+			
+			private function onDone(e:Event):void
+			{
+				var sWriter:SpriteWriter = new SpriteWriter();
+				sWriter.write(items,configuration.conW,configuration.conH);
 			}
 			
 			private function randomizeRects():void
@@ -180,7 +180,7 @@
 				
 				trace("开始拼图！");
 				
-				var canvas:BitmapData = new BitmapData(conW,conH,true,0x3F000000);
+				var canvas:BitmapData = new BitmapData(configuration.conW,configuration.conH,true,0x3F000000);
 				
 				var id:uint = setInterval(function ():void
 				{
@@ -201,8 +201,8 @@
 				windowOptions.systemChrome = NativeWindowSystemChrome.ALTERNATE;
 				windowOptions.type = NativeWindowType.NORMAL;
 				var window:NativeWindow = new NativeWindow(windowOptions);
-				window.width = conW;
-				window.height = conW;
+				window.width = configuration.conW;
+				window.height = configuration.conW;
 				var image:Image = new Image();
 //				image.source = 
 				window.stage.align = StageAlign.TOP_LEFT;
@@ -210,10 +210,6 @@
 				window.stage.addChild(new Bitmap(canvas));
 				window.activate();
 				window.x = 400;
-				//				stage.addChild();
-				trace("看看呢");
-//				stage.addChild(new Bitmap(canvas));
-				trace("看看呢");
 			}
 			
 		]]>
