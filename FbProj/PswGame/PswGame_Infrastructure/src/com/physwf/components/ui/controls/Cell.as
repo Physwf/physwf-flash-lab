@@ -7,6 +7,7 @@ package com.physwf.components.ui.controls
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	public class Cell extends Sprite implements IUpdatable,IDisposible
 	{
@@ -15,7 +16,7 @@ package com.physwf.components.ui.controls
 		public static const STATE_DOWN:uint = 2;
 		
 		private var bg:Bitmap;
-		private var  content:Bitmap;
+		private var content:Bitmap;
 		private var state:Bitmap;
 		
 		private var assets:CellAssets;
@@ -34,6 +35,50 @@ package com.physwf.components.ui.controls
 			
 			state = new Bitmap();
 			addChild(state);
+			configListeners();
+		}
+		
+		private function configListeners():void
+		{
+			addEventListener(MouseEvent.MOUSE_OVER,onMouseEvent,false,Number.POSITIVE_INFINITY,false);
+			addEventListener(MouseEvent.MOUSE_OUT,onMouseEvent,false,Number.POSITIVE_INFINITY,false);
+			
+			addEventListener(MouseEvent.MOUSE_DOWN,onMouseEvent,false,Number.POSITIVE_INFINITY,false);
+			addEventListener(MouseEvent.MOUSE_UP,onMouseEvent,false,Number.POSITIVE_INFINITY,false);
+		}
+		
+		private function onMouseEvent(e:MouseEvent):void
+		{
+			switch(e.type)
+			{
+				case MouseEvent.MOUSE_OVER:
+					mState = STATE_OVER;
+					break;
+				case MouseEvent.MOUSE_OUT:
+					mState = STATE_UP;
+					break;
+				case MouseEvent.MOUSE_DOWN:
+					mState = STATE_DOWN;
+					break;
+				case MouseEvent.MOUSE_UP:
+					mState = STATE_OVER;
+					break;
+			}
+		}
+		
+		public function set contentData(data:BitmapData):void
+		{
+			if(content.bitmapData)
+			{
+				content.bitmapData.dispose();
+			}
+			content.bitmapData = data;
+			content.width = content.height = assets.size;
+		}
+		
+		public function get contentData():BitmapData
+		{
+			return content.bitmapData;
 		}
 		
 		public function update():void

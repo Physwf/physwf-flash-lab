@@ -7,14 +7,16 @@ package com.physwf.components.ui.config
 		public var over:uint;
 		public var up:uint;
 		public var down:uint;
+		public var size:uint;
 		
-		public function CellConfig($url:String,$bg:uint,$over:uint,$up:uint,$down:uint)
+		public function CellConfig($url:String,$bg:uint,$over:uint,$up:uint,$down:uint,$size:uint)
 		{
 			url = $url;
 			bg = $bg;
 			over = $over;
 			up = $up;
 			down = $down;
+			size = $size;
 		}
 	}
 }

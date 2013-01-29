@@ -27,6 +27,7 @@ package com.physwf.components.ui.factory
 			else
 			{
 				asset = new CellAssets();
+				asset.size = config.size;
 				assets[config] = asset;
 				var sLoader:SpriteLoader = SpriteLoader.getSameSpriteLoader(config.url);
 				function onComplete(e:Event):void
