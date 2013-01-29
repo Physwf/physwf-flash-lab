@@ -8,7 +8,7 @@ package
 	public class atk_result_t implements IExternalizable
 	{
 		public var src_id:uint;
-		public var pet_id:uint;
+		public var src_type:uint;
 		public var obj_id:uint;
 		public var obj_type:uint;
 		public var skill_id:uint;
@@ -22,10 +22,10 @@ package
 		public function readExternal(input:IDataInput):void
 		{
 			src_id = input.readUnsignedInt();
-			pet_id = input.readUnsignedInt();
+			src_type = input.readUnsignedShort();
 			obj_id = input.readUnsignedInt();
-			obj_type = input.readUnsignedByte();
-			skill_id = input.readUnsignedInt();
+			obj_type = input.readUnsignedShort();
+			skill_id = input.readUnsignedShort();
 			hp_hurt = input.readUnsignedInt();
 			is_dead = input.readUnsignedByte();			
 		}
@@ -33,10 +33,10 @@ package
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(src_id);
-			output.writeUnsignedInt(pet_id);
+			output.writeShort(src_type);
 			output.writeUnsignedInt(obj_id);
-			output.writeByte(obj_type);
-			output.writeUnsignedInt(skill_id);
+			output.writeShort(obj_type);
+			output.writeShort(skill_id);
 			output.writeUnsignedInt(hp_hurt);
 			output.writeByte(is_dead);			
 		}

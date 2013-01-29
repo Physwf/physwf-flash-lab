@@ -5,19 +5,20 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_LOGIN_1001 extends MsgBase
+	final public class MSG_RES_FINISH_TASK_1112 extends MsgBase
 	{
-		public var user:stru_user_t;
+		public var tskid:uint;
+		public var optional_pos:uint;
 		
-		public function MSG_RES_LOGIN_1001(mid:uint)
+		public function MSG_RES_FINISH_TASK_1112(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			user= new stru_user_t();
-			user.readExternal(input)			
+			tskid = input.readUnsignedInt();
+			optional_pos = input.readUnsignedInt();			
 		}
 	}
 }

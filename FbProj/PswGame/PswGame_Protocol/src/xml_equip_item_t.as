@@ -7,7 +7,7 @@ package
 	
 	public class xml_equip_item_t implements IExternalizable
 	{
-		public var item_id:uint;
+		public var equip_id:uint;
 		public var category:uint;
 		public var quality:uint;
 		public var user_lv:uint;
@@ -29,8 +29,9 @@ package
 		public var def:uint;
 		public var magic_atk:uint;
 		public var magic_def:uint;
-		public var crit_atk:uint;
-		public var crit_def:uint;
+		public var crit:uint;
+		public var crit_damage:uint;
+		public var crit_tenacity:uint;
 		public var hit:uint;
 		public var dodge:uint;
 		public var earth_atk:uint;
@@ -49,7 +50,7 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			item_id = input.readUnsignedInt();
+			equip_id = input.readUnsignedInt();
 			category = input.readUnsignedShort();
 			quality = input.readUnsignedShort();
 			user_lv = input.readUnsignedShort();
@@ -67,12 +68,13 @@ package
 			physique = input.readUnsignedShort();
 			spell = input.readUnsignedShort();
 			mind = input.readUnsignedShort();
-			atk = input.readUnsignedInt();
-			def = input.readUnsignedInt();
-			magic_atk = input.readUnsignedInt();
-			magic_def = input.readUnsignedInt();
-			crit_atk = input.readUnsignedShort();
-			crit_def = input.readUnsignedShort();
+			atk = input.readUnsignedShort();
+			def = input.readUnsignedShort();
+			magic_atk = input.readUnsignedShort();
+			magic_def = input.readUnsignedShort();
+			crit = input.readUnsignedByte();
+			crit_damage = input.readUnsignedByte();
+			crit_tenacity = input.readUnsignedByte();
 			hit = input.readUnsignedShort();
 			dodge = input.readUnsignedShort();
 			earth_atk = input.readUnsignedShort();
@@ -88,7 +90,7 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(item_id);
+			output.writeUnsignedInt(equip_id);
 			output.writeShort(category);
 			output.writeShort(quality);
 			output.writeShort(user_lv);
@@ -106,12 +108,13 @@ package
 			output.writeShort(physique);
 			output.writeShort(spell);
 			output.writeShort(mind);
-			output.writeUnsignedInt(atk);
-			output.writeUnsignedInt(def);
-			output.writeUnsignedInt(magic_atk);
-			output.writeUnsignedInt(magic_def);
-			output.writeShort(crit_atk);
-			output.writeShort(crit_def);
+			output.writeShort(atk);
+			output.writeShort(def);
+			output.writeShort(magic_atk);
+			output.writeShort(magic_def);
+			output.writeByte(crit);
+			output.writeByte(crit_damage);
+			output.writeByte(crit_tenacity);
 			output.writeShort(hit);
 			output.writeShort(dodge);
 			output.writeShort(earth_atk);

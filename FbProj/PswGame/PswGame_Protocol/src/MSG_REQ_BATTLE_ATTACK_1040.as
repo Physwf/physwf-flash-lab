@@ -21,8 +21,8 @@ package
 		{
 			output.writeUnsignedInt(pet_id);
 			output.writeUnsignedInt(obj_id);
-			output.writeByte(obj_type);
-			output.writeUnsignedInt(skill_id);			
+			output.writeShort(obj_type);
+			output.writeShort(skill_id);			
 		}
 	}
 }

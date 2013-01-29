@@ -16,7 +16,7 @@ package
 		public var map_x:uint;
 		public var map_y:uint;
 		public var pet_follow:stru_pet_simple_t;
-		public var equips:Vector.<stru_equip_simple_t>;
+		public var equips:Vector.<uint>;
 		
 		public function map_user_info()
 		{
@@ -33,11 +33,10 @@ package
 			map_y = input.readUnsignedInt();
 			pet_follow= new stru_pet_simple_t();
 			pet_follow.readExternal(input)
-			equips= new Vector.<stru_equip_simple_t>();
+			equips= new Vector.<uint>();
 			for(var i:int=0;i<16;++i)
 			{
-				var equips_item:stru_equip_simple_t = new stru_equip_simple_t()
-				equips_item.readExternal(input);
+				var equips_item:uint = input.readUnsignedInt();
 				equips.push(equips_item)
 			}
 			
@@ -65,7 +64,7 @@ package
 			pet_follow.writeExternal(output)
 			for(var i:int=0;i<16;++i)
 			{
-				equips[i].writeExternal(output)
+				output.writeUnsignedInt(equips[i])
 			}
 			
 		}
