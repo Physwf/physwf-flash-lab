@@ -3,7 +3,9 @@ package com.physwf.system.entity
 	import com.physwf.components.rpc.RPCConnectioin;
 	import com.physwf.components.rpc.events.MessageEvent;
 	import com.physwf.components.rpc.msg.MsgBase;
+	import com.physwf.system.System;
 	import com.physwf.system.events.MyEvent;
+	import com.physwf.system.vo.BagItemInfo;
 	import com.physwf.system.vo.EquipInfo;
 	import com.physwf.system.vo.LoginInfo;
 	import com.physwf.system.vo.MapInfo;
@@ -41,6 +43,8 @@ package com.physwf.system.entity
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1030,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1031,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);//移动
+			
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1091,onMessage);//换装
 		}
 		/**
 		 * 登陆 
@@ -98,6 +102,12 @@ package com.physwf.system.entity
 			RPCConnectioin.online.call(new MSG_REQ_LEAVE_MAP_1031());
 		}
 		
+		public function changeEquips():void
+		{
+			var msg:MSG_REQ_CHANGE_EQUIPS_1091 = new MSG_REQ_CHANGE_EQUIPS_1091();
+			msg
+		}
+		
 		private function onMessage(e:MessageEvent):void
 		{
 			var msg:MsgBase = e.message;
@@ -107,26 +117,19 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1001://登录成功
 					userInfo.createTime = loginInfo.roleInfo.createTime;
 					var msg1001:MSG_RES_LOGIN_1001 = msg as MSG_RES_LOGIN_1001;
-					userInfo.level = msg1001.level;
-					userInfo.exp = msg1001.exp;
-					userInfo.map_id = msg1001.map_id;
-					userInfo.map_x = msg1001.map_x;
-					userInfo.map_y = msg1001.map_y;
-					userInfo.resource_id = msg1001.resource_id;
-					userInfo.strength = msg1001.strength;
-					userInfo.mind = msg1001.mind;
-					userInfo.physical = msg1001.physique;
-					userInfo.magic = msg1001.magic;
-					userInfo.additions = msg1001.additions;
-					userInfo.hp = msg1001.hp;
-					userInfo.mp = msg1001.mp;
-					userInfo.energy = msg1001.energy;
-					userInfo.hp_max = msg1001.hp_max;
-					userInfo.attack = msg1001.level;
-					userInfo.defense = msg1001.def;
-					userInfo.mdefence = msg1001.magic_def;
-					userInfo.hit = msg1001.hit;
-					userInfo.dodge = msg1001.dodge;
+					userInfo.level = msg1001.user.level;
+					userInfo.exp = msg1001.user.exp;
+					userInfo.map_id = msg1001.user.map_id;
+					userInfo.map_x = msg1001.user.map_x;
+					userInfo.map_y = msg1001.user.map_y;
+					userInfo.resource_id = msg1001.user.sex;
+					userInfo.strength = msg1001.user.strength;
+					userInfo.physical = msg1001.user.physique;
+					userInfo.hp = msg1001.user.hp;
+					userInfo.mp = msg1001.user.mp;
+					userInfo.energy = msg1001.user.energy;
+					userInfo.hp_max = msg1001.user.hp_max;
+					userInfo.attack = msg1001.user.level;
 					dispatchEvent(new MyEvent(MyEvent.LOGIN_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1002://被踢下线
@@ -140,11 +143,12 @@ package com.physwf.system.entity
 					petInfo.level = msg1030.user.pet_follow.level;
 					petInfo.hp = msg1030.user.pet_follow.hp;
 					petInfo.mp = msg1030.user.pet_follow.mp;
-					var equipList:Vector.<stru_equip_simple_t> = msg1030.user.equips;
+					var equipList:Vector.<uint> = msg1030.user.equips;
+					var bagItems:Vector.<BagItemInfo> = System.bag.bagItems;
 					for(var i:int=0;i<equipList.length;++i)
 					{
 						var equipInfo:EquipInfo = new EquipInfo();
-						equipInfo.itemID = equipList[i].equip_id;
+						equipInfo.itemID = equipList[i];
 						userInfo.equips.push(equipInfo);
 					}
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
@@ -153,6 +157,9 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+1036://移动
 					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1091://换装
+					dispatchEvent(new MyEvent(MyEvent.CHANGE_EQUIPS));
 					break;
 			}
 		}

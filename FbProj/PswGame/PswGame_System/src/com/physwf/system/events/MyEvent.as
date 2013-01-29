@@ -8,7 +8,7 @@ package com.physwf.system.events
 		public static const KICKED_OFF:String = "k_o";
 		public static const ENTER_MAP_SUCCESS:String = "e_m_s";
 		public static const SELF_MOVE_ALLOWED:String = "s_m_a";
-		
+		public static const CHANGE_EQUIPS:String = "c_e";
 		public function MyEvent(type:String)
 		{
 			super(type, false, false);
