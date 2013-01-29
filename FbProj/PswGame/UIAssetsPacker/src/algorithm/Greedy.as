@@ -60,7 +60,7 @@ package algorithm
 						if(r.right<=boarder.pos)
 						{
 							var dist:Number = boarder.pos - r.right;
-							if(minDist>dist)
+							if(minDist>dist && dist>0)
 							{
 								tempImage = images[i];
 								minDist = dist;
