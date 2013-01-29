@@ -10,6 +10,7 @@ package com.physwf.engine.world
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.MyEvent;
+	import com.physwf.system.events.NPCEvent;
 	
 	import flash.events.Event;
 	import flash.utils.Timer;
@@ -70,11 +71,18 @@ package com.physwf.engine.world
 			System.map.getMapUserList();
 		}
 		
-		private function onUsersReady(e:Event):void
+		private function onUsersReady(e:WorldEvent):void
 		{
+			System.npc.addEventListener(NPCEvent.NPC_LIST,onMonstersReady);
 			System.npc.getMonsterList();
 		}
 			
+		private function onMonstersReady(e:NPCEvent):void
+		{
+			System.npc.removeEventListener(NPCEvent.NPC_LIST,onMonstersReady);
+			System.bag.getBagItems();
+		}
+		
 		public function update():void
 		{
 			map.update();
