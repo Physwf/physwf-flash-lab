@@ -3,7 +3,9 @@ package com.physwf.application.startup
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.shell.interfaces.IDestroyable;
 	import com.physwf.system.System;
+	import com.physwf.system.entity.BagSystem;
 	import com.physwf.system.entity.MySelf;
+	import com.physwf.system.events.BagEvent;
 	import com.physwf.system.events.MyEvent;
 	
 	import flash.display.Sprite;
@@ -35,16 +37,18 @@ package com.physwf.application.startup
 			System.myself.removeEventListener(MyEvent.LOGIN_SUCCESS,onLoginSuccess);
 			dispatchEvent(new Event("finished"));
 			return;
-			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onEnterMapSuccess);
-			System.myself.enterMap(
-				MySelf.userInfo.map_id,
-				MySelf.userInfo.map_x,
-				MySelf.userInfo.map_y);
+			System.bag.addEventListener(BagEvent.BAG_ITEM_LIST,onBagListSuccess);
+			System.bag.getBagItems();
+		}
+		
+		private function onBagListSuccess(e:BagEvent):void
+		{
+			System.bag.removeEventListener(BagEvent.BAG_ITEM_LIST,onBagListSuccess);
+			
 		}
 		
 		private function onEnterMapSuccess(e:MyEvent):void
 		{
-			dispatchEvent(new Event("finished"));
 		}
 		
 		public function dispose():void
