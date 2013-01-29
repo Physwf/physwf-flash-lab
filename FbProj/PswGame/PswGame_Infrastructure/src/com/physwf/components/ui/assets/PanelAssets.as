@@ -10,6 +10,7 @@ package com.physwf.components.ui.assets
 	{
 		public var asset:BitmapData;
 		public var scale9Grid:Rectangle;
+		public var isDirty:Boolean = false;
 		
 		public function PanelAssets()
 		{

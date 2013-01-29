@@ -1,46 +1,48 @@
 package com.physwf.components.ui.factory
 {
 	import com.physwf.components.ui.SpriteLoader;
-	import com.physwf.components.ui.assets.PanelAssets;
-	import com.physwf.components.ui.config.PanelConfig;
-	import com.physwf.components.ui.layout.Panel;
+	import com.physwf.components.ui.assets.BarAssets;
+	import com.physwf.components.ui.config.BarConfig;
+	import com.physwf.components.ui.layout.HBar;
 	
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 
-	public class PanelFactory
+	public class BarFactory
 	{
 		private var assets:Dictionary;
 		
-		public function PanelFactory()
+		public function BarFactory()
 		{
 			assets = new Dictionary();
 		}
 		
-		public function createPanel(config:PanelConfig):Panel
+		public function createHBar(config:BarConfig):HBar
 		{
-			var asset:PanelAssets;
+			var asset:BarAssets;
 			if(assets[config])
 			{
-				asset = assets[config] as PanelAssets;
+				asset = assets[config] as BarAssets;
 			}
 			else
 			{
-				asset = new PanelAssets();
+				asset = new BarAssets();
 				assets[config] = asset;
 				var sLoader:SpriteLoader = SpriteLoader.getSameSpriteLoader(config.url);
 				function onComplete(e:Event):void
 				{
 					sLoader.removeEventListener(Event.COMPLETE,onComplete);
-					asset.asset = sLoader.getAsset(config.assetsID);
-					asset.scale9Grid = config.scale9Grid;
-					asset.isDirty = true;
+					var count:uint = config.assets.length;
+					for(var i:int=0;i<count;++i)
+					{
+						asset.parts.push(sLoader.getAsset(config.assets[i]));
+						asset.isAssetsDirty = true;
+					}
 				};
 				sLoader.addEventListener(Event.COMPLETE,onComplete);
 				sLoader.load();
 			}
-			
-			return new Panel(asset);
+			return new HBar(asset);
 		}
 	}
 }

@@ -23,9 +23,12 @@ package com.physwf.components.ui.layout
 		private var mMiddle:Bitmap;
 		
 		private var assets:PanelAssets;
-		private var scale9:Rectangle;
 		
 		private var isShow:Boolean = false;
+		
+		private var mWidth:Number;
+		private var mHeight:Number;
+		private var isSizeDirty:Boolean = false;
 		
 		public function Panel(assets:PanelAssets)
 		{
@@ -77,11 +80,40 @@ package com.physwf.components.ui.layout
 		
 		public function update():void
 		{
-			if(scale9 != assets.scale9Grid)
+			if(assets.isDirty)
 			{
-				scale9 = assets.scale9Grid;
 				setScale();
+				assets.isDirty = false;
+				setSize();
 			}
+			
+			if(isSizeDirty)
+			{
+				setSize();
+				isSizeDirty = false;
+			}
+		}
+		
+		override public function set width(value:Number):void
+		{
+			mWidth = value;
+			isSizeDirty = true;
+		}
+		
+		override public function get width():Number
+		{
+			return mWidth;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			mHeight = value;
+			isSizeDirty = true;
+		}
+		
+		override public function get height():Number
+		{
+			return mHeight;
 		}
 		
 		private function setScale():void
@@ -110,13 +142,16 @@ package com.physwf.components.ui.layout
 			bmd.copyPixels(assets.asset,top,new Point());
 			mTop.bitmapData = bmd;
 			
+			
 			bmd = new BitmapData(rightTop.width,rightTop.height,true,0);
 			bmd.copyPixels(assets.asset,rightTop,new Point());
 			mRightTop.bitmapData = bmd;
 			
+			
 			bmd = new BitmapData(right.width,right.height,true,0);
 			bmd.copyPixels(assets.asset,right,new Point());
 			mRight.bitmapData = bmd;
+			
 			
 			bmd = new BitmapData(rightDown.width,rightDown.height,true,0);
 			bmd.copyPixels(assets.asset,rightDown,new Point());
@@ -129,10 +164,51 @@ package com.physwf.components.ui.layout
 			bmd = new BitmapData(leftDown.width,leftDown.height,true,0);
 			bmd.copyPixels(assets.asset,leftDown,new Point());
 			mLeftDown.bitmapData = bmd;
-			
+				
 			bmd = new BitmapData(left.width,left.height,true,0);
 			bmd.copyPixels(assets.asset,left,new Point());
 			mLeft.bitmapData = bmd;
+			
+			bmd = new BitmapData(s9g.width,s9g.height,true,0);
+			bmd.copyPixels(assets.asset,s9g,new Point());
+			mMiddle.bitmapData = bmd;
+			
+		}
+		
+		private function setSize():void
+		{
+			mTop.x = mLeftTop.width;
+			mTop.width = mWidth - mLeftTop.width - mRightTop.width;
+			mTop.height = mLeftTop.height;
+			
+			mRightTop.x = mTop.x+mTop.width;
+			
+			mRight.x = mRightTop.x;
+			mRight.y = mRightTop.height;
+			mRight.height = mHeight - mRightTop.height - mRightDown.height;
+			mRight.width = mRightTop.width;
+				
+			mRightDown.x = mRight.x;
+			mRightDown.y = mRight.y + mRight.height;
+			
+			mDown.x = mTop.x;
+			mDown.y = mRightDown.y;
+			mDown.width = mTop.width;
+			mDown.height = mLeftDown.height;
+			
+			mLeftDown.x = mLeftTop.x;
+			mLeftDown.y = mDown.y;
+			
+			mLeft.x = mLeftTop.x;
+			mLeft.y = mTop.height;
+			mLeft.height = mRight.height;
+			mLeft.width = mLeftTop.width;
+			
+			mMiddle.x = mLeftTop.width;
+			mMiddle.y = mLeftTop.height;
+			
+			mMiddle.width = mTop.width;
+			mMiddle.height = mRight.height;
 		}
 	}
 }
