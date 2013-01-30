@@ -7,9 +7,10 @@ package
 	
 	final public class MSG_REQ_BATTLE_ATTACK_1040 extends MsgBase
 	{
-		public var pet_id:uint;
-		public var obj_id:uint;
+		public var src_pet_id:uint;
 		public var obj_type:uint;
+		public var obj_id:uint;
+		public var obj_pet_id:uint;
 		public var skill_id:uint;
 		
 		public function MSG_REQ_BATTLE_ATTACK_1040()
@@ -19,9 +20,10 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(pet_id);
+			output.writeUnsignedInt(src_pet_id);
+			output.writeByte(obj_type);
 			output.writeUnsignedInt(obj_id);
-			output.writeShort(obj_type);
+			output.writeUnsignedInt(obj_pet_id);
 			output.writeShort(skill_id);			
 		}
 	}

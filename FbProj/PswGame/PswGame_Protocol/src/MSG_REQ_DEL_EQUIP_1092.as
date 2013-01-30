@@ -9,7 +9,6 @@ package
 	{
 		public var grid:uint;
 		public var instance_id:uint;
-		public var equip_id:uint;
 		
 		public function MSG_REQ_DEL_EQUIP_1092()
 		{
@@ -19,8 +18,7 @@ package
 		override protected function writeBody(output:IDataOutput):void
 		{
 			output.writeShort(grid);
-			output.writeUnsignedInt(instance_id);
-			output.writeUnsignedInt(equip_id);			
+			output.writeUnsignedInt(instance_id);			
 		}
 	}
 }

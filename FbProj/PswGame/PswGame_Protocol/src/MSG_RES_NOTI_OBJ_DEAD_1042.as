@@ -5,20 +5,20 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_EQUIP_1092 extends MsgBase
+	final public class MSG_RES_NOTI_OBJ_DEAD_1042 extends MsgBase
 	{
-		public var grid:uint;
-		public var instance_id:uint;
+		public var obj_type:uint;
+		public var obj_id:uint;
 		
-		public function MSG_RES_DEL_EQUIP_1092(mid:uint)
+		public function MSG_RES_NOTI_OBJ_DEAD_1042(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			grid = input.readUnsignedInt();
-			instance_id = input.readUnsignedInt();			
+			obj_type = input.readUnsignedByte();
+			obj_id = input.readUnsignedInt();			
 		}
 	}
 }

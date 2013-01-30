@@ -17,13 +17,13 @@ package
 		public function readExternal(input:IDataInput):void
 		{
 			instance_id = input.readUnsignedInt();
-			equip_id = input.readUnsignedInt();			
+			equip_id = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(instance_id);
-			output.writeUnsignedInt(equip_id);			
+			output.writeShort(equip_id);			
 		}
 	}
 }

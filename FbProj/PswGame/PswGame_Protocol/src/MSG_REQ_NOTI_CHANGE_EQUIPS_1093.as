@@ -5,21 +5,16 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_CHANGE_EQUIPS_1091 extends MsgBase
+	final public class MSG_REQ_NOTI_CHANGE_EQUIPS_1093 extends MsgBase
 	{
-		public var equips:Vector.<uint>;
 		
-		public function MSG_REQ_CHANGE_EQUIPS_1091()
+		public function MSG_REQ_NOTI_CHANGE_EQUIPS_1093()
 		{
-			super(1091)
+			super(1093)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			for(var i:int=0;i<16;++i)
-			{
-				output.writeUnsignedInt(equips[i])
-			}
 			
 		}
 	}

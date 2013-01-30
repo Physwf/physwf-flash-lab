@@ -5,12 +5,12 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_CHANGE_EQUIPS_1091 extends MsgBase
+	final public class MSG_RES_NOTI_CHANGE_EQUIPS_1093 extends MsgBase
 	{
 		public var uid:uint;
 		public var equips:Vector.<stru_equip_simple_t>;
 		
-		public function MSG_RES_CHANGE_EQUIPS_1091(mid:uint)
+		public function MSG_RES_NOTI_CHANGE_EQUIPS_1093(mid:uint)
 		{
 			super(mid);
 		}
