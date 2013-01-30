@@ -48,7 +48,6 @@ package com.physwf.system.entity
 			var msg:MSG_REQ_DEL_EQUIP_1092 = new MSG_REQ_DEL_EQUIP_1092();
 			var equip:EquipInfo = bInfo.item as EquipInfo;
 			msg.grid = bInfo.girdTag;
-			msg.equip_id = equip.itemID;
 			msg.instance_id = equip.instanceID;
 			RPCConnectioin.online.call(msg);
 		}
