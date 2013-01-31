@@ -1,6 +1,6 @@
 package com.physwf.engine.world.manager
 {
-	import com.physwf.components.charactor.CharactorAnimation;
+	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.AnimationSystem;
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
@@ -23,12 +23,14 @@ package com.physwf.engine.world.manager
 			mInfo = info;
 			mInstanceId = info.id;
 			// 
-			view = new CharactorAnimation(AnimationSystem.MOLE);
+			view = new CharacterAnimation(AnimationSystem.MOLE);
 			mFactory = new MonsterFactory();
 			view.skeleton = mFactory.getWear(1);
 //			view.direction = ISODirection.LEFT;
 			view.x = info.map_x;
 			view.y = info.map_y;
+			
+			Character.managers[view] = this;
 		}
 		
 		public function get instanId():uint { return mInstanceId; }

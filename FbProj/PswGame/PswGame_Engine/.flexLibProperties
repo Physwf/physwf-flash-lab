@@ -10,13 +10,28 @@
     <classEntry path="com.physwf.application.parser.IParser"/>
     <classEntry path="com.physwf.application.events.DriverEvent"/>
     <classEntry path="com.physwf.engine.world.manager.Map"/>
-    <classEntry path="com.physwf.engine.world.manager.Charactor"/>
+    <classEntry path="com.physwf.engine.world.manager.Character"/>
     <classEntry path="com.physwf.engine.Engine"/>
     <classEntry path="com.physwf.engine.world.controllers.MapController"/>
     <classEntry path="com.physwf.engine.world.World"/>
     <classEntry path="com.physwf.engine.world.events.WorldEvent"/>
     <classEntry path="com.physwf.engine.world.controllers.CharactorController"/>
     <classEntry path="com.physwf.engine.world.manager.NPC"/>
+    <classEntry path="com.physwf.engine.world.manager.Monster"/>
+    <classEntry path="com.physwf.engine.world.manager.Player"/>
+    <classEntry path="com.physwf.engine.frame.Frame"/>
+    <classEntry path="com.physwf.engine.frame.manager.ToolBar"/>
+    <classEntry path="com.physwf.engine.frame.config.FrameAssets"/>
+    <classEntry path="com.physwf.engine.frame.manager.SkillBar"/>
+    <classEntry path="com.physwf.engine.bag.Bag"/>
+    <classEntry path="com.physwf.engine.bag.config.BagAssets"/>
+    <classEntry path="com.physwf.engine.bag.view.BagView"/>
+    <classEntry path="com.physwf.engine.bag.controller.BagController"/>
+    <classEntry path="com.physwf.engine.frame.controller.SkillBarController"/>
+    <classEntry path="com.physwf.engine.frame.view.SkillBarView"/>
+    <classEntry path="com.physwf.engine.fight.manager.Challenge"/>
+    <classEntry path="com.physwf.engine.fight.controller.ChallengeController"/>
+    <classEntry path="com.physwf.engine.fight.Fight"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

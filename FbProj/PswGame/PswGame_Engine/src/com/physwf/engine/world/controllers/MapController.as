@@ -25,10 +25,10 @@ package com.physwf.engine.world.controllers
 		public function initialize(view:MapView):void
 		{
 			mapView = view;
-			mapView.addEventListener(MouseEvent.CLICK,onMapClick);
+			mapView.bottom.addEventListener(MouseEvent.CLICK,onGroundClick);
 		}
 		
-		private function onMapClick(e:MouseEvent):void
+		private function onGroundClick(e:MouseEvent):void
 		{
 			System.myself.move(mapView.mouseX,mapView.mouseY,0);
 			targetX = mapView.mouseX;

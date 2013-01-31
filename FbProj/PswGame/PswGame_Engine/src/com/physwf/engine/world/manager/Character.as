@@ -1,6 +1,6 @@
 package com.physwf.engine.world.manager
 {
-	import com.physwf.components.charactor.CharactorAnimation;
+	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.interfaces.IUpdatable;
@@ -9,12 +9,14 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
 	
 	import flash.events.EventDispatcher;
+	import flash.utils.Dictionary;
 
 	public class Character extends EventDispatcher implements IUpdatable
 	{
 		public static var self:Character;
 		
-		public var view:CharactorAnimation;
+		public var view:CharacterAnimation;
+		public static var managers:Dictionary;//从显示到manager的映射,用于在战斗系统中通过鼠标事件目标获取角色对象
 		
 		public static var astar:IAstar;
 		private var pathLine:Vector.<Line>;
@@ -66,6 +68,11 @@ package com.physwf.engine.world.manager
 		public function attack():void
 		{
 			view.status = CharacterAction.ACTION_ATTACK;
+		}
+		
+		public function die():void
+		{
+			trace("dead!");
 		}
 		
 		public function update():void

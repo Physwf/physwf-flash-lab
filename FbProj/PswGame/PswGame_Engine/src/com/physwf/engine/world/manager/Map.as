@@ -23,6 +23,9 @@ package com.physwf.engine.world.manager
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
+	import flash.utils.Dictionary;
+	
+	import mx.core.mx_internal;
 
 	public class Map extends EventDispatcher implements IUpdatable
 	{
@@ -43,6 +46,8 @@ package com.physwf.engine.world.manager
 		{
 			mMapView = new MapView();
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
+			
+			Character.managers = new Dictionary();//后面要放到地图初始化时清空，但要保留自己的数据
 			
 			Player.self = new Player();
 			MySelf.userInfo.map_x = 626;
@@ -104,13 +109,8 @@ package com.physwf.engine.world.manager
 					break;
 				case MapEvent.MAP_USER_MOVE:
 					// to do 根据userInfo找到相应的Player，然后设置该Player到指定点
-					for(var j:int=0;j<mCharactors.length;++j)
-					{
-						if(mCharactors[j].userId == e.userInfo.uid)
-						{
-							mCharactors[j].goto(e.userInfo.target_x,e.userInfo.target_y);
-						}
-					}
+					var player:Player = getPlayerByUID(e.userInfo.uid);
+					player.goto(e.userInfo.target_x,e.userInfo.target_y);
 					break;
 				
 			}
@@ -248,6 +248,38 @@ package com.physwf.engine.world.manager
 					}
 				}
 			}
+		}
+		/**
+		 * 获取玩家
+		 * @param uid
+		 * @return 
+		 */		
+		public function getPlayerByUID(uid:uint):Player
+		{
+			for(var j:int=0;j<mCharactors.length;++j)
+			{
+				if(mCharactors[j].userId == uid)
+				{
+					return mCharactors[j];
+				}
+			}
+			return null;
+		}
+		/**
+		 * 获取怪物
+		 * @param mid 实例id
+		 * @return 
+		 */		
+		public function getMonsterByMID(mid:uint):Monster
+		{
+			for(var j:int=0;j<mMonsters.length;++j)
+			{
+				if(mMonsters[j].instanId == mid)
+				{
+					return mMonsters[j];
+				}
+			}
+			return null;
 		}
 		
 		public function attachLayer(layer:Sprite):void

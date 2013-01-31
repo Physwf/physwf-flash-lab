@@ -1,6 +1,6 @@
 package com.physwf.engine.world.manager
 {
-	import com.physwf.components.charactor.CharactorAnimation;
+	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.factory.BoyFactory;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.engine.world.controllers.CharactorController;
@@ -26,13 +26,15 @@ package com.physwf.engine.world.manager
 			this.userInfo = userInfo;
 			uid = userInfo.uid;
 			mFactory = new BoyFactory();//后期需要根据用户信息进行选择
-			view = new CharactorAnimation();
+			view = new CharacterAnimation();
 			view.skeleton = mFactory.getNude();
 			view.x = userInfo.map_x;
 			view.y = userInfo.map_y;
 			// 只有self 才需要controller
 			controller = new CharactorController();
 			controller.initialize(view,userInfo);
+			
+			Character.managers[view] = this;
 		}
 		
 		public function get userId():uint { return uid; }

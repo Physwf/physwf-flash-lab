@@ -1,6 +1,7 @@
 package com.physwf.engine.frame.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.ui.SpriteLoader;
 	import com.physwf.components.ui.config.CellConfig;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.components.ui.factory.BarFactory;
@@ -8,13 +9,20 @@ package com.physwf.engine.frame.view
 	import com.physwf.components.ui.factory.FactoryManager;
 	import com.physwf.components.ui.layout.HBar;
 	import com.physwf.engine.frame.config.FrameAssets;
+	import com.physwf.engine.frame.controller.SkillBarController;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Point;
+	import flash.ui.Mouse;
+	import flash.ui.MouseCursorData;
 
 	public class SkillBarView extends Sprite implements IUpdatable
 	{
 		private var bar:HBar;
 		private var cells:Vector.<Cell>;
+		private var controller:SkillBarController;
 		
 		public function SkillBarView()
 		{
@@ -22,6 +30,8 @@ package com.physwf.engine.frame.view
 			bar = barFactroy.createHBar(FrameAssets.SKILL_BAR);
 			addChild(bar);
 			crateCells();
+			controller = new SkillBarController();
+			controller.initialize(this);
 		}
 		
 		private function crateCells():void
