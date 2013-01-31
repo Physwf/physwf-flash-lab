@@ -5,18 +5,19 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_PET_1062 extends MsgBase
+	final public class MSG_RES_SET_PET_FOLLOW_1063 extends MsgBase
 	{
-		public var instance_id:uint;
+		public var pet:stru_pet_simple_t;
 		
-		public function MSG_RES_DEL_PET_1062(mid:uint)
+		public function MSG_RES_SET_PET_FOLLOW_1063(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			instance_id = input.readUnsignedInt();			
+			pet= new stru_pet_simple_t();
+			pet.readExternal(input)			
 		}
 	}
 }

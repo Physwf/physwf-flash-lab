@@ -5,13 +5,13 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_DEL_PET_1062 extends MsgBase
+	final public class MSG_REQ_SET_PET_FOLLOW_1063 extends MsgBase
 	{
 		public var instance_id:uint;
 		
-		public function MSG_REQ_DEL_PET_1062()
+		public function MSG_REQ_SET_PET_FOLLOW_1063()
 		{
-			super(1062)
+			super(1063)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void

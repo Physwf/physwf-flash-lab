@@ -5,18 +5,17 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_DEL_PET_1062 extends MsgBase
+	final public class MSG_REQ_SET_PET_UNFOLLOW_1064 extends MsgBase
 	{
-		public var instance_id:uint;
 		
-		public function MSG_REQ_DEL_PET_1062()
+		public function MSG_REQ_SET_PET_UNFOLLOW_1064()
 		{
-			super(1062)
+			super(1064)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(instance_id);			
+			
 		}
 	}
 }

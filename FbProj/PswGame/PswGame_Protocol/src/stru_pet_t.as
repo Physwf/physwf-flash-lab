@@ -18,7 +18,7 @@ package
 		public var happiness:uint;
 		public var life:uint;
 		public var sex:uint;
-		public var character:uint;
+		public var charactor:uint;
 		public var strength:uint;
 		public var solar:uint;
 		public var physique:uint;
@@ -55,7 +55,7 @@ package
 			happiness = input.readUnsignedShort();
 			life = input.readUnsignedShort();
 			sex = input.readUnsignedByte();
-			character = input.readUnsignedByte();
+			charactor = input.readUnsignedByte();
 			strength = input.readUnsignedShort();
 			solar = input.readUnsignedShort();
 			physique = input.readUnsignedShort();
@@ -99,7 +99,7 @@ package
 			output.writeShort(happiness);
 			output.writeShort(life);
 			output.writeByte(sex);
-			output.writeByte(character);
+			output.writeByte(charactor);
 			output.writeShort(strength);
 			output.writeShort(solar);
 			output.writeShort(physique);

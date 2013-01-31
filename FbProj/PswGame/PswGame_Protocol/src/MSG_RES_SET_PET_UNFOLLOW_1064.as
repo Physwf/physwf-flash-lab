@@ -5,11 +5,11 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_PET_1062 extends MsgBase
+	final public class MSG_RES_SET_PET_UNFOLLOW_1064 extends MsgBase
 	{
 		public var instance_id:uint;
 		
-		public function MSG_RES_DEL_PET_1062(mid:uint)
+		public function MSG_RES_SET_PET_UNFOLLOW_1064(mid:uint)
 		{
 			super(mid);
 		}
