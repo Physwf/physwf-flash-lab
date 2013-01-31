@@ -25,7 +25,7 @@ package writer
 		
 		public function write(items:Vector.<ItemStruct>,canvasW:uint,canvasH:uint):void
 		{
-			var canvas:BitmapData = new BitmapData(canvasW,canvasH,true,0x3F000000);
+			var canvas:BitmapData = new BitmapData(canvasW,canvasH,true,0x00000000);
 			
 //			var id:uint = setInterval(function ():void
 //			{
