@@ -26,7 +26,7 @@ package com.physwf.components.charactor
 			mWearBmdt = new Vector.<Vector.<Vector.<BitmapFrame>>>(ISODirection.NUM_DIRECTIONS,true);
 			for(var i:int=0;i<ISODirection.NUM_DIRECTIONS;++i)
 			{
-				mWearBmdt[i] = new Vector.<Vector.<BitmapFrame>>(CharactorAnimation.NUM_ACTIONS,true);
+				mWearBmdt[i] = new Vector.<Vector.<BitmapFrame>>(CharacterAnimation.NUM_ACTIONS,true);
 			}
 			layer.addChild(mWear);
 		}

@@ -14,7 +14,7 @@ package com.physwf.components.charactor
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class CharactorAnimation extends Sprite implements IAnimation
+	public class CharacterAnimation extends Sprite implements IAnimation
 	{
 		public static const NUM_ACTIONS:uint = 5;
 		/**
@@ -39,7 +39,7 @@ package com.physwf.components.charactor
 		private var mDirty:Boolean;
 		private var mActionDirty:Boolean;
 		
-		public function CharactorAnimation(system:uint = 0)
+		public function CharacterAnimation(system:uint = 0)
 		{
 			mSystem = system;
 			mNude = new BitmapPalyer();
