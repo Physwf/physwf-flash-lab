@@ -1,18 +1,19 @@
-package com.physwf.components.charactor
+package com.physwf.components.effects
 {
+	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	
-	public class BloodBar extends Sprite
+	public class BloodBar extends Effect
 	{
 		private var shape:Shape;
 		
-		public function BloodBar()
+		public function BloodBar(layer:Sprite,target:DisplayObject)
 		{
 			drawBottom();
 			drawShape();
+			super(layer,0,target);
 		}
-		
 		
 		public function set progress(v:Number):void
 		{

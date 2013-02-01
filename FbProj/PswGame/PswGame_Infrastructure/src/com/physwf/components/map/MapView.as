@@ -12,7 +12,9 @@ package com.physwf.components.map
 	public class MapView extends Sprite
 	{
 		private var mBottom:Sprite;
+		private var mUnderEffect:Sprite;//底部特效层
 		private var mSwap:Sprite;//交换层
+		private var mUpperEffct:Sprite;//顶部特效层
 		private var mLandform:DisplayObject;
 		private var mMapW:Number;
 		private var mMapH:Number;
@@ -20,9 +22,13 @@ package com.physwf.components.map
 		public function MapView()
 		{
 			mBottom = new Sprite();
+			mUnderEffect = new Sprite();
 			mSwap = new Sprite();
+			mUpperEffct = new Sprite();
 			addChild(mBottom);
+			addChild(mUnderEffect);
 			addChild(mSwap);
+			addChild(mUpperEffct);
 		}
 		
 		public function fillBottom(v:DisplayObject):void
@@ -70,6 +76,16 @@ package com.physwf.components.map
 		public function get landform():DisplayObject
 		{
 			return mLandform;
+		}
+		
+		public function get underEffect():Sprite
+		{
+			return mUnderEffect;
+		}
+		
+		public function get upperEffect():Sprite
+		{
+			return mUpperEffct;
 		}
 		
 		public function get mapWidth():Number
