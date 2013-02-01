@@ -7,6 +7,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
+	import com.physwf.engine.world.events.CharacterEvent;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
@@ -52,6 +53,7 @@ package com.physwf.engine.world.manager
 		
 		public function stand():void
 		{
+			pathLine = null;
 			view.status = CharacterAction.ACTION_STAND;
 		}
 		
@@ -67,6 +69,7 @@ package com.physwf.engine.world.manager
 		
 		public function attack():void
 		{
+			pathLine = null;
 			view.status = CharacterAction.ACTION_ATTACK;
 		}
 		
@@ -99,6 +102,7 @@ package com.physwf.engine.world.manager
 					{
 						attack();
 						pathLine = null;
+						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
 					}
 				}
 				else

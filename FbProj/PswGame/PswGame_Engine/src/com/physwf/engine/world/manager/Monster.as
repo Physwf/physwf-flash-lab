@@ -21,7 +21,7 @@ package com.physwf.engine.world.manager
 		public function initialize(info:MonsterInfo):void
 		{
 			mInfo = info;
-			mInstanceId = info.id;
+			mInstanceId = info.instanceID;
 			// 
 			view = new CharacterAnimation(AnimationSystem.MOLE);
 			mFactory = new MonsterFactory();

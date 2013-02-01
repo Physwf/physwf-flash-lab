@@ -1,20 +1,27 @@
 package com.physwf.engine.fight.manager
 {
-	import com.physwf.components.charactor.BloodBar;
+	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.command.CmdAtkMonster;
+	import com.physwf.engine.command.CmdWalkTo;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
 	import com.physwf.engine.world.manager.Character;
+	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.FightSystem;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
 	
+	import flash.utils.getTimer;
+	
 	public class Challenge implements IUpdatable
 	{
 		public var target:Character;
+		private var targetID:uint = 0;
 		private var controller:ChallengeController;
+		private var lastAtk:uint = 0;
 		
 		public function Challenge()
 		{
@@ -71,19 +78,38 @@ package com.physwf.engine.fight.manager
 			return null;
 		}
 		
-		public function setTarget(tgt:Character):void
+		public function setTarget(tgt:Character,id:uint):void
 		{
 			target = tgt;
-			if(target)
+			targetID = id;
+			
+			var distX:uint = Math.abs(target.view.x - Player.self.view.x);
+			var distY:uint = Math.abs(target.view.y - Player.self.view.y);
+			if((distX*distX + distY * distY)>= 10000)
 			{
-				var bb:BloodBar = new BloodBar();
-				bb.x = -bb.width * .5;
-				target.view.specialLayer.addChild(bb);
+				var walkCmd:CmdWalkTo = new CmdWalkTo(Player.self);
+				walkCmd.setDest(target.view.x,target.view.y);
+				walkCmd.execute();
 			}
 		}
 		
 		public function update():void
 		{
+			if(target)
+			{
+				var distX:uint = Math.abs(target.view.x - Player.self.view.x);
+				var distY:uint = Math.abs(target.view.y - Player.self.view.y);
+				if((distX*distX + distY * distY)< 10000)
+				{
+					if(getTimer() - lastAtk > 2000)
+					{
+						var atkCmd:CmdAtkMonster = new CmdAtkMonster(Player.self);
+						atkCmd.setTarget(target,targetID);
+						atkCmd.execute();
+						lastAtk = getTimer();
+					}
+				}
+			}
 		}
 	}
 }
