@@ -116,6 +116,43 @@
 				}
 			}
 			
+			private function onPack():void
+			{
+				var frameData:BitmapData;
+				var unitX:uint = effects.width / numX;
+				var unitY:uint = effects.height / numY;
+				var pngEncoder:PNGEncoder = new PNGEncoder();
+				var n:uint;
+				var output:ByteArray = new ByteArray();
+				output.writeByte(frameNum);
+				if(effects)
+				{
+					for(var j:int=0;j<numY;++j)
+					{
+						for(var i:int=0;i<numX;++i)
+						{
+							frameData = new BitmapData(unitX,unitY,true,0);
+							frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
+							var frameByte:ByteArray = frameData.getPixels(frameData.rect);
+							frameByte.deflate();
+							output.writeShort(0);
+							output.writeShort(0);
+							output.writeShort(unitX);
+							output.writeShort(unitY);
+							output.writeShort(frameByte.length);
+							output.writeBytes(frameByte);
+							n++;
+							if(n>=frameNum) break;
+						}
+					}
+					var file:File = new File("C:/Users/Physwf/Desktop/effects/effect.swf");
+					var fs:FileStream = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeBytes(output);
+					fs.close();
+				}
+			}
+			
 			private function loadCursor():void
 			{
 				var loader:Loader = new Loader();
@@ -177,4 +214,5 @@
 	<s:Label x="117" y="38" fontSize="12" width="32" text="列："/>
 	<s:Label x="218" y="38" fontSize="12" text="帧："/>
 	<s:Button x="180" y="98" label="Cut" click="onCut()"/>
+	<s:Button x="81" y="98" label="Pack" click = "onPack()"/>
 </s:WindowedApplication>
