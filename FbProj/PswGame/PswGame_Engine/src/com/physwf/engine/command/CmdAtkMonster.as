@@ -1,6 +1,10 @@
 package com.physwf.engine.command
 {
+	import com.physwf.components.effects.Effect;
+	import com.physwf.components.effects.EffectFactory;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.Fight;
+	import com.physwf.engine.fight.effects.EffectAssets;
 	import com.physwf.engine.world.manager.Character;
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
@@ -25,6 +29,7 @@ package com.physwf.engine.command
 		override public function execute():void
 		{
 			//to do 特效
+			var effect:Effect = EffectFactory.createEffect(EffectAssets.DROP_THOUDER,Engine.map.view.upperEffect,target);
 			mChara.attack();
 			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,
 								targetID,1);
