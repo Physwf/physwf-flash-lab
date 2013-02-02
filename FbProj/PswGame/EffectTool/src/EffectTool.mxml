@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="399" height="156" color="0xFF000000" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.net.dns.AAAARecord;
+			import flash.utils.setTimeout;
+			
+			import mx.graphics.codec.PNGEncoder;
+			
+			import spark.components.Window;
+			import spark.primitives.Graphic;
+			
+			private var gridCanvas:Sprite;
+			
+			private function init():void
+			{
+				row.text = numY+"";
+				column.text = numX + "";
+				frame.text = frameNum + "";
+			}
+			private var file:File;
+			private function onOpen():void
+			{
+				file = new File();
+				file.addEventListener(Event.SELECT,onSelected);
+				file.browse([new FileFilter("Image","*.jpg;*.png")]);
+			}
+			
+			private function onSelected(e:Event):void
+			{
+				
+				function onFileLoaded(e:Event):void
+				{
+					var loader:Loader = new Loader();
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
+					loader.loadBytes(file.data);
+				};
+				file.addEventListener(Event.COMPLETE,onFileLoaded); 
+				file.load();
+				
+			}
+			private var effects:BitmapData
+			private function onComplete(e:Event):void
+			{
+				var target:LoaderInfo = e.target as LoaderInfo;
+				target.loader.removeEventListener(Event.COMPLETE,onComplete);
+				effects = new BitmapData(target.width,target.height,true,0);
+				effects.draw(target.loader.content);
+				effects.threshold(effects,effects.rect,new Point(),"<=",0xFF000000,0x00000,0x00FFFFFF,false);
+				
+				
+				gridCanvas ||= new Sprite();
+				drawGrid(effects.width,effects.height);
+				
+				var window:Window = new Window();
+				window.width = effects.width;
+				window.height = effects.height;
+				window.open();
+				window.stage.addChild(new Bitmap(effects));
+				window.stage.addChild(gridCanvas);
+				
+//				new PNGEncoder().
+			}
+			private var numX:uint = 5;
+			private var numY:uint = 4;
+			private var frameNum:uint = 16;
+			private function drawGrid(canvasW:uint,canvasH:uint):void
+			{
+				var unitX:uint = canvasW / numX;
+				var unitY:uint = canvasH / numY;
+				var grah:Graphics = gridCanvas.graphics;
+				grah.clear();
+				grah.lineStyle(1,0xFF0000);
+				for(var i:int=0;i<numX;++i)
+				{
+					grah.moveTo(i*unitX,0);
+					grah.lineTo(i*unitX,canvasH);
+				}
+				for(i=0;i<numY;++i)
+				{
+					grah.moveTo(0,i*unitY);
+					grah.lineTo(canvasW,i*unitY);
+				}
+			}
+			
+			private function onCut():void
+			{
+				var frameData:BitmapData;
+				var unitX:uint = effects.width / numX;
+				var unitY:uint = effects.height / numY;
+				var pngEncoder:PNGEncoder = new PNGEncoder();
+				var n:uint;
+				if(effects)
+				{
+					for(var j:int=0;j<numY;++j)
+					{
+						for(var i:int=0;i<numX;++i)
+						{
+							frameData = new BitmapData(unitX,unitY,true,0);
+							frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
+							var frameByte:ByteArray = pngEncoder.encode(frameData);
+							var file:File = new File("C:/Users/Physwf/Desktop/effects/"+(n)+".png");
+							var fs:FileStream = new FileStream();
+							fs.open(file,FileMode.WRITE);
+							fs.writeBytes(frameByte);
+							fs.close();
+							n++;
+						}
+					}
+				}
+			}
+			
+			private function loadCursor():void
+			{
+				var loader:Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onCursorComplete);
+				loader.load(new URLRequest("D:/SkyDrive/图片/1322811643867.jpg"));
+			}
+			
+			private function onCursorComplete(e:Event):void
+			{
+				var target:LoaderInfo = e.target as LoaderInfo;
+				target.loader.removeEventListener(Event.COMPLETE,onComplete);
+				var bitmapData:BitmapData = new BitmapData(target.width,target.height,true,0);
+				bitmapData.draw(target.loader.content);
+				for(var i:int = 0;i<bitmapData.width;++i)
+				{
+					for(var j:int = 0;j<bitmapData.height;++j)
+					{
+						var pixel:uint = bitmapData.getPixel(i,j);
+						
+						//						if( pixel == 0x484848 || pixel == 0x464646 ||pixel == 0x474747 || pixel == 0x0f0f0f || pixel == 0x101010 || pixel == 0x0e0e0e
+						//						||pixel == 0xcdcdcd || pixel == 0xcccccc || pixel == 0xcecece)
+						if(pixel<0x484900)
+						{
+							bitmapData.setPixel(i,j,0x000);
+						}
+						else
+						{
+							trace(pixel.toString(16));
+						}
+					}
+				}
+				
+				setTimeout(function ():void
+				{
+					stage.addChild(new Bitmap(bitmapData));
+				},1000);
+			}
+			
+
+			private function onRowChange():void
+			{
+				numY = uint(row.text);
+			}
+			private function onColumnChange():void
+			{
+				numX = uint(column.text);
+			}
+			private function onFrameChange():void
+			{
+				frameNum = uint(frame.text);
+			}
+		]]>
+	</fx:Script>
+	<s:Button x="276" y="98" label="Open" click="onOpen()"/>
+	<s:TextInput x="54" y="33" width="53"  id="row" change="onRowChange()"/>
+	<s:TextInput x="148" y="32" width="53"  id="column" change = "onColumnChange()"/>
+	<s:TextInput x="250" y="32" width="53"  id="frame" change="onFrameChange()"/>
+	<s:Label x="20" y="39" fontSize="12" text="行："/>
+	<s:Label x="117" y="38" fontSize="12" width="32" text="列："/>
+	<s:Label x="218" y="38" fontSize="12" text="帧："/>
+	<s:Button x="180" y="98" label="Cut" click="onCut()"/>
+</s:WindowedApplication>
