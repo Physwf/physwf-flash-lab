@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="399" height="156" color="0xFF000000" initialize="init()">
+					   width="471" height="196" color="0xFF000000" initialize="init()">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
@@ -11,18 +11,24 @@
 			import flash.net.dns.AAAARecord;
 			import flash.utils.setTimeout;
 			
+			import mx.containers.Canvas;
 			import mx.graphics.codec.PNGEncoder;
 			
 			import spark.components.Window;
 			import spark.primitives.Graphic;
 			
 			private var gridCanvas:Sprite;
+			private var regPointCanvas:Sprite;
 			
 			private function init():void
 			{
 				row.text = numY+"";
 				column.text = numX + "";
 				frame.text = frameNum + "";
+				regXSlider.value = regXRatio;
+				regYSlider.value = regYRatio;
+				regXText.text = String(regXRatio);
+				regYText.text = String(regYRatio);
 			}
 			private var file:File;
 			private function onOpen():void
@@ -56,7 +62,9 @@
 				
 				
 				gridCanvas ||= new Sprite();
+				regPointCanvas ||= new Sprite();
 				drawGrid(effects.width,effects.height);
+				drawRegPoint(effects.width,effects.height);
 				
 				var window:Window = new Window();
 				window.width = effects.width;
@@ -64,6 +72,7 @@
 				window.open();
 				window.stage.addChild(new Bitmap(effects));
 				window.stage.addChild(gridCanvas);
+				window.stage.addChild(regPointCanvas);
 				
 //				new PNGEncoder().
 			}
@@ -76,7 +85,7 @@
 				var unitY:uint = canvasH / numY;
 				var grah:Graphics = gridCanvas.graphics;
 				grah.clear();
-				grah.lineStyle(1,0xFF0000);
+				grah.lineStyle(1,0x000000);
 				for(var i:int=0;i<numX;++i)
 				{
 					grah.moveTo(i*unitX,0);
@@ -86,6 +95,28 @@
 				{
 					grah.moveTo(0,i*unitY);
 					grah.lineTo(canvasW,i*unitY);
+				}
+			}
+			private var regXRatio:Number = .5;
+			private var regYRatio:Number = .5;
+			private function drawRegPoint(canvasW:uint,canvasH:uint):void
+			{
+				var unitX:uint = canvasW / numX;
+				var unitY:uint = canvasH / numY;
+				var regX:uint = unitX * regXRatio;
+				var regY:uint = unitY * regYRatio;
+				var grah:Graphics = regPointCanvas.graphics;
+				grah.clear();
+				grah.lineStyle(.1,0xFF0000);
+				for(var i:int=0;i<numX;++i)
+				{
+					grah.moveTo(regX+i*unitX,0);
+					grah.lineTo(regX+i*unitX,canvasH);
+				}
+				for(i=0;i<numY;++i)
+				{
+					grah.moveTo(0,regY+i*unitY);
+					grah.lineTo(canvasW,regY+i*unitY);
 				}
 			}
 			
@@ -204,15 +235,74 @@
 			{
 				frameNum = uint(frame.text);
 			}
+			
+			private function onRegXChange():void
+			{
+				regXRatio = regXSlider.value;
+				regXText.text = String(regXRatio);
+				drawRegPoint(effects.width,effects.height);
+			}
+			
+			private function onRegYChange():void
+			{
+				regYRatio = regYSlider.value;
+				regYText.text = String(regYRatio);
+				drawRegPoint(effects.width,effects.height);
+			}
+			
+			private function onRegXTextChange():void
+			{
+				var value:Number = Number(regXText.text);
+				if(isNaN(value)) return;
+				if(value<0)
+				{
+					value = 0;
+					regXText.text = String(value);
+				}
+				else if(value>1) 
+				{
+					value = 1.0;
+					regXText.text = String(value);
+				}
+				regXRatio = value
+				regXSlider.value = regXRatio;
+				drawRegPoint(effects.width,effects.height);
+			}
+			
+			private function onRegYTextChange():void
+			{
+				var value:Number = Number(regYText.text);
+				if(isNaN(value)) return;
+				if(value<0)
+				{
+					value = 0;
+					regYText.text = String(value);
+					
+				}
+				else if(value>1) 
+				{
+					value = 1.0;
+					regYText.text = String(value);
+				}
+				regYRatio = value
+				regYSlider.value = regXRatio;
+				drawRegPoint(effects.width,effects.height);
+			}
 		]]>
 	</fx:Script>
-	<s:Button x="276" y="98" label="Open" click="onOpen()"/>
+	<s:Button x="293" y="132" label="Open" click="onOpen()"/>
 	<s:TextInput x="54" y="33" width="53"  id="row" change="onRowChange()"/>
 	<s:TextInput x="148" y="32" width="53"  id="column" change = "onColumnChange()"/>
 	<s:TextInput x="250" y="32" width="53"  id="frame" change="onFrameChange()"/>
 	<s:Label x="20" y="39" fontSize="12" text="行："/>
 	<s:Label x="117" y="38" fontSize="12" width="32" text="列："/>
 	<s:Label x="218" y="38" fontSize="12" text="帧："/>
-	<s:Button x="180" y="98" label="Cut" click="onCut()"/>
-	<s:Button x="81" y="98" label="Pack" click = "onPack()"/>
+	<s:Button x="197" y="132" label="Cut" click="onCut()"/>
+	<s:Button x="98" y="132" label="Pack" click = "onPack()"/>
+	<s:HSlider x="63" y="84" change="onRegXChange()" id="regXSlider" minimum="0" maximum="1.0" snapInterval="0.01"/>
+	<s:HSlider x="260" y="83" change="onRegYChange()" id="regYSlider" minimum="0" maximum="1.0" snapInterval="0.01"/>
+	<s:Label x="20" y="85" text="RegX:"/>
+	<s:Label x="222" y="84" text="RegY:"/>
+	<s:TextInput x="176" y="77" width="34" id="regXText" change="onRegXTextChange()"/>
+	<s:TextInput x="372" y="76" width="34" id="regYText" change="onRegYTextChange()"/>
 </s:WindowedApplication>
