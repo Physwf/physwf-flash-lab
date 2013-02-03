@@ -29,7 +29,7 @@ package com.physwf.engine.command
 		override public function execute():void
 		{
 			//to do 特效
-			var effect:Effect = EffectFactory.createEffect(EffectAssets.DROP_THOUDER,Engine.map.view.upperEffect,target);
+			var effect:Effect = EffectFactory.createEffect(EffectAssets.DROP_THOUDER,Engine.map.view.upperEffect,target.view);
 			mChara.attack();
 			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,
 								targetID,1);
