@@ -77,8 +77,8 @@ package com.physwf.components.effects
 			for(var i:uint=0;i<num;++i)
 			{
 				frame = new EffectFrame();
-				frame.x = stream.readUnsignedShort();
-				frame.y = stream.readUnsignedShort();
+				frame.x = stream.readShort();
+				frame.y = stream.readShort();
 				var w:uint = stream.readUnsignedShort();
 				var h:uint = stream.readUnsignedShort();
 				var len:uint = stream.readUnsignedInt();

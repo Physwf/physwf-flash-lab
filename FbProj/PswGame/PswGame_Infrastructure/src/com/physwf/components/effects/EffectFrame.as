@@ -4,8 +4,8 @@ package com.physwf.components.effects
 
 	public class EffectFrame
 	{
-		public var x:uint;
-		public var y:uint;
+		public var x:int;
+		public var y:int;
 		public var frameData:BitmapData;
 		
 		public function EffectFrame(data:BitmapData=null)
