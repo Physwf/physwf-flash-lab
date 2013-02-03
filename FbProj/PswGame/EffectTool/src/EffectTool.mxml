@@ -8,10 +8,13 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.physwf.components.effects.EffectFrame;
+			
 			import flash.net.dns.AAAARecord;
 			import flash.utils.setTimeout;
 			
 			import mx.containers.Canvas;
+			import mx.controls.Alert;
 			import mx.graphics.codec.PNGEncoder;
 			
 			import spark.components.Window;
@@ -122,66 +125,72 @@
 			
 			private function onCut():void
 			{
+				if(!effects) return;
+				Scissor.regX 
 				var frameData:BitmapData;
 				var unitX:uint = effects.width / numX;
 				var unitY:uint = effects.height / numY;
+				Scissor.regX = unitX * regXRatio;
+				Scissor.regY = unitY * regYRatio;
 				var pngEncoder:PNGEncoder = new PNGEncoder();
 				var n:uint;
-				if(effects)
+				for(var j:int=0;j<numY;++j)
 				{
-					for(var j:int=0;j<numY;++j)
+					for(var i:int=0;i<numX;++i)
 					{
-						for(var i:int=0;i<numX;++i)
-						{
-							frameData = new BitmapData(unitX,unitY,true,0);
-							frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
-							var frameByte:ByteArray = pngEncoder.encode(frameData);
-							var file:File = new File("C:/Users/Physwf/Desktop/effects/"+(n)+".png");
-							var fs:FileStream = new FileStream();
-							fs.open(file,FileMode.WRITE);
-							fs.writeBytes(frameByte);
-							fs.close();
-							n++;
-						}
+						frameData = new BitmapData(unitX,unitY,true,0);
+						frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
+						var frame:EffectFrame = Scissor.extract(frameData);
+						var frameByte:ByteArray = pngEncoder.encode(frame.frameData);
+						var file:File = new File("C:/Users/Physwf/Desktop/effects/"+(n)+".png");
+						var fs:FileStream = new FileStream();
+						fs.open(file,FileMode.WRITE);
+						fs.writeBytes(frameByte);
+						fs.close();
+						n++;
+						if(n>=frameNum) break;
 					}
 				}
+				Alert.show("Ok!!!");
 			}
 			
 			private function onPack():void
 			{
+				if(!effects) return;
 				var frameData:BitmapData;
 				var unitX:uint = effects.width / numX;
 				var unitY:uint = effects.height / numY;
+				Scissor.regX = unitX * regXRatio;
+				Scissor.regY = unitY * regYRatio;
 				var pngEncoder:PNGEncoder = new PNGEncoder();
 				var n:uint;
 				var output:ByteArray = new ByteArray();
 				output.writeByte(frameNum);
-				if(effects)
+				for(var j:int=0;j<numY;++j)
 				{
-					for(var j:int=0;j<numY;++j)
+					for(var i:int=0;i<numX;++i)
 					{
-						for(var i:int=0;i<numX;++i)
-						{
-							frameData = new BitmapData(unitX,unitY,true,0);
-							frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
-							var frameByte:ByteArray = frameData.getPixels(frameData.rect);
-							frameByte.deflate();
-							output.writeShort(0);
-							output.writeShort(0);
-							output.writeShort(unitX);
-							output.writeShort(unitY);
-							output.writeShort(frameByte.length);
-							output.writeBytes(frameByte);
-							n++;
-							if(n>=frameNum) break;
-						}
+						frameData = new BitmapData(unitX,unitY,true,0);
+						frameData.copyPixels(effects,new Rectangle(i*unitX,j*unitY,unitX,unitY),new Point(),null);
+						var frame:EffectFrame = Scissor.extract(frameData);
+						frameData = frame.frameData;
+						var frameByte:ByteArray = frameData.getPixels(frameData.rect);
+						frameByte.deflate();
+						output.writeShort(frame.x);
+						output.writeShort(frame.y);
+						output.writeShort(frameData.rect.width);
+						output.writeShort(frameData.rect.height);
+						output.writeShort(frameByte.length);
+						output.writeBytes(frameByte);
+						n++;
+						if(n>=frameNum) break;
 					}
-					var file:File = new File("C:/Users/Physwf/Desktop/effects/effect.swf");
-					var fs:FileStream = new FileStream();
-					fs.open(file,FileMode.WRITE);
-					fs.writeBytes(output);
-					fs.close();
 				}
+				var file:File = new File("C:/Users/Physwf/Desktop/effects/effect.swf");
+				var fs:FileStream = new FileStream();
+				fs.open(file,FileMode.WRITE);
+				fs.writeBytes(output);
+				fs.close();
 			}
 			
 			private function loadCursor():void
