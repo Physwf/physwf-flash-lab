@@ -5,9 +5,9 @@ package com.physwf.engine.fight.effects
 
 	public class EffectAssets
 	{
-		public static const DIR_EFFECT:String = "resource/effects";
+		public static const DIR_EFFECT:String = "resource/effects/";
 		
-		public static const DROP_THOUDER:EffectConfig = new EffectConfig(VerticalEffect,DIR_EFFECT+1,300);
+		public static const DROP_THOUDER:EffectConfig = new EffectConfig(VerticalEffect,DIR_EFFECT+1,400);
 		
 		public function EffectAssets()
 		{

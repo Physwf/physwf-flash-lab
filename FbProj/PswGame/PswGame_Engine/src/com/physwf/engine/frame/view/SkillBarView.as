@@ -29,12 +29,12 @@ package com.physwf.engine.frame.view
 			var barFactroy:BarFactory = new BarFactory();
 			bar = barFactroy.createHBar(FrameAssets.SKILL_BAR);
 			addChild(bar);
-			crateCells();
+			createCells();
 			controller = new SkillBarController();
 			controller.initialize(this);
 		}
 		
-		private function crateCells():void
+		private function createCells():void
 		{
 			var cellFactory:CellFactory = FactoryManager.cellFactroy;
 			cells = new Vector.<Cell>();

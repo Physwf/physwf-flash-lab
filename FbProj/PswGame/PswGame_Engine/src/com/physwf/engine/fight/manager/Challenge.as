@@ -25,6 +25,7 @@ package com.physwf.engine.fight.manager
 		
 		public function Challenge()
 		{
+			Engine.challenge = this;
 		}
 		
 		public function initialize():void
@@ -82,6 +83,8 @@ package com.physwf.engine.fight.manager
 		{
 			target = tgt;
 			targetID = id;
+			
+			if(!target) return;
 			
 			var distX:uint = Math.abs(target.view.x - Player.self.view.x);
 			var distY:uint = Math.abs(target.view.y - Player.self.view.y);

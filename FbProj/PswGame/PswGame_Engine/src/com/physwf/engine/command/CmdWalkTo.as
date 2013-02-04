@@ -32,7 +32,7 @@ package com.physwf.engine.command
 		{
 			mChara.addEventListener(CharacterEvent.CHARA_PATH_FINISH,onPathFinish);
 			System.myself.move(endX,endY,0);
-//			mChara.goto();
+//			mChara.goto(endX,endY);
 		}
 		
 		private function onPathFinish(e:CharacterEvent):void

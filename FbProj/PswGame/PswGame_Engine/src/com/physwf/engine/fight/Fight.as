@@ -1,5 +1,6 @@
 package com.physwf.engine.fight
 {
+	import com.physwf.components.effects.Effect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.fight.manager.Challenge;
 
@@ -19,11 +20,18 @@ package com.physwf.engine.fight
 		{
 			mChallenge = new Challenge();
 			mChallenge.initialize();
+			Effect.effects = new Vector.<Effect>();
 		}
 		
 		public function update():void
 		{
 			mChallenge.update();
+			var len:uint = Effect.effects.length;
+			for(var i:uint=0;i<len;++i)
+			{
+				Effect.effects[i].update();
+			}
+				
 		}
 	}
 }

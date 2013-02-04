@@ -1,6 +1,7 @@
 package com.physwf.engine.world.controllers
 {
 	import com.physwf.components.map.MapView;
+	import com.physwf.engine.Engine;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MapSystem;
 	import com.physwf.system.entity.MySelf;
@@ -30,6 +31,7 @@ package com.physwf.engine.world.controllers
 		
 		private function onGroundClick(e:MouseEvent):void
 		{
+			Engine.challenge.setTarget(null,0);
 			System.myself.move(mapView.mouseX,mapView.mouseY,0);
 			targetX = mapView.mouseX;
 			targetY = mapView.mouseY;
