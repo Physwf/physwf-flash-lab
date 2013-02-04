@@ -47,13 +47,12 @@ package
 						{
 							maxY = y;
 						}
-						trace(pixel.toString(16));
 					} 
 				}
 			}
 			var frame:EffectFrame = new EffectFrame();
-			frame.x = minX;
-			frame.y = minY;
+			frame.x = minX - regX;
+			frame.y = minY - regY;
 			var bmd:BitmapData = new BitmapData(maxX - minX,maxY - minY,true,0);
 			bmd.copyPixels(raw,new Rectangle(minX,minY,bmd.width,bmd.height),new Point());
 			frame.frameData = bmd;
