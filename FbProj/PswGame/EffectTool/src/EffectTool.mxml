@@ -163,10 +163,10 @@
 				Scissor.regX = unitX * regXRatio;
 				Scissor.regY = unitY * regYRatio;
 				var pngEncoder:PNGEncoder = new PNGEncoder();
-				var n:uint;
+				var n:uint=0;
 				var output:ByteArray = new ByteArray();
 				output.writeByte(frameNum);
-				for(var j:int=0;j<numY;++j)
+				flag:for(var j:int=0;j<numY;++j)
 				{
 					for(var i:int=0;i<numX;++i)
 					{
@@ -184,7 +184,10 @@
 						output.writeUnsignedInt(frameByte.length);
 						output.writeBytes(frameByte);
 						n++;
-						if(n>=frameNum) break;
+						if(n>=frameNum) 
+						{
+							break flag;
+						}
 					}
 				}
 				var file:File = new File("C:/Users/joe/Desktop/effects/effect.swf");
