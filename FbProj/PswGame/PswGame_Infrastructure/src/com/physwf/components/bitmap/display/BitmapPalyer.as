@@ -30,7 +30,7 @@ package com.physwf.components.bitmap.display {
 			if(currentFrame == mTotalFrames)
 			{
 				currentFrame = 0;
-				dispatchEvent(new Event("complete"));
+				dispatchEvent(new Event(Event.COMPLETE));
 			}
 		}
 		

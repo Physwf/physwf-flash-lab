@@ -17,8 +17,19 @@ package com.physwf.components.effects
 		
 		public function set progress(v:Number):void
 		{
-			if(v<0) v=0;
+			if(v<0) 
+			{
+				v=0;
+				mLayer.removeChild(this);
+			}
 			shape.scaleX = v;
+			
+		}
+		
+		override public function update():void
+		{
+			x = mTarget.x;
+			y = mTarget.y - mTarget.height;
 		}
 		
 		private function drawBottom():void

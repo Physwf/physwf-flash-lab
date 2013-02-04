@@ -161,6 +161,7 @@ package com.physwf.components.charactor
 					mNudeBmdt[mDirect][mAction] = mSkeleton.getCharacterAction(mDirect,mAction);
 				}
 				mNude.bitmapFrames = mNudeBmdt[mDirect][mAction];
+				mNude.addEventListener(Event.COMPLETE,onActioinComplete);
 				mActionDirty = false;
 			}
 			else
@@ -173,6 +174,12 @@ package com.physwf.components.charactor
 			}
 		}
 		
+		private function onActioinComplete(e:Event):void
+		{
+			mNude.removeEventListener(Event.COMPLETE,onActioinComplete);
+			status = CharacterAction.ACTION_STAND;
+		}
+			
 		public function update():void
 		{
 			if(isSkeletonReady) 

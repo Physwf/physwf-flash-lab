@@ -15,6 +15,8 @@ package com.physwf.components.ui.controls
 		public static const STATE_OVER:uint = 1;
 		public static const STATE_DOWN:uint = 2;
 		
+		public var data:*;//格子所对应的数据
+		
 		private var bg:Bitmap;
 		private var content:Bitmap;
 		private var state:Bitmap;
