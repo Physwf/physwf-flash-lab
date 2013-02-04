@@ -16,6 +16,7 @@ package com.physwf.components.effects
 		public static function createEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):Effect
 		{
 			var effect:Effect = new config.Definition(layer,config.life,target);
+			effect.setFrames(zeroEffects);//必须放在load之前，否则将覆盖load完成时的setFrame
 			var eLoader:EffectLoader = EffectLoader.getSameEffectLoader(config.url);
 			function onComplete(e:Event):void
 			{
@@ -24,7 +25,7 @@ package com.physwf.components.effects
 			};
 			eLoader.addEventListener(Event.COMPLETE,onComplete);
 			eLoader.load();
-			effect.setFrames(zeroEffects);
+			
 			return effect;
 		}
 	}

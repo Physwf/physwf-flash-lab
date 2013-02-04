@@ -76,7 +76,7 @@ package com.physwf.components.charactor
 				function(e:Event):void 
 				{ 
 					isSkeletonReady = (mSkeleton.loadFlag == SkeletonLoader.LOAD_FLAG_YES);
-					action = CharacterAction.ACTION_ATTACK;
+					action = CharacterAction.ACTION_STAND;
 					direction = ISODirection.LEFT;
 				});
 		}

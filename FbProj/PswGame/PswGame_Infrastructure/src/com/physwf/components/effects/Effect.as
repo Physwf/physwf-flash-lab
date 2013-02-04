@@ -11,6 +11,8 @@ package com.physwf.components.effects
 	
 	public class Effect extends Sprite implements IUpdatable, IDisposible
 	{
+		public static var effects:Vector.<Effect>;
+		
 		protected var mContent:Bitmap;
 		protected var mTarget:DisplayObject;
 		protected var mLayer:Sprite;
@@ -26,17 +28,20 @@ package com.physwf.components.effects
 			mLayer = layer;
 			mLife = life;
 			mTarget = target;
-			
+			mouseEnabled = false;
+			mouseChildren = false;
 			mContent = new Bitmap();
 			addChild(mContent);
 			mLayer.addChild(this);
 			mBornTime = getTimer();
+			effects.push(this);
 		}
 		
 		public function update():void
 		{
+			// to do 目标应该增加攻击附着点，特效将在此点播放
 			x = mTarget.x;
-			y = mTarget.y;
+			y = mTarget.y - 30;
 			//to do 
 			mCurFrame = mFrames[mCurFrameNum];
 			mContent.x = mCurFrame.x;
@@ -46,6 +51,11 @@ package com.physwf.components.effects
 			if(mCurFrameNum>=mTotalFrame)
 			{
 				mCurFrameNum = 0;
+			}
+			if(getTimer() - mBornTime > mLife)
+			{
+				mLayer.removeChild(this);
+				effects.splice(effects.indexOf(this),1);;
 			}
 		}
 		
