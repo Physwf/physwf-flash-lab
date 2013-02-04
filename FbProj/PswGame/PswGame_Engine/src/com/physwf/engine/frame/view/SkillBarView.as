@@ -10,6 +10,8 @@ package com.physwf.engine.frame.view
 	import com.physwf.components.ui.layout.HBar;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.controller.SkillBarController;
+	import com.physwf.system.System;
+	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -36,16 +38,20 @@ package com.physwf.engine.frame.view
 		
 		private function createCells():void
 		{
+			var skills:Vector.<SkillInfo> = System.skill.getSkillsInBar();
+			
 			var cellFactory:CellFactory = FactoryManager.cellFactroy;
 			cells = new Vector.<Cell>();
-			const num:uint = 8;
+			
+			const num:uint = skills.length;
 			const offsetX:uint = 62;
 			const offsetY:uint = 7;
 			const interval:uint = 3;
-			var config:CellConfig = FrameAssets.SKILL_CELL
+			var config:CellConfig = FrameAssets.SKILL_CELL;
 			for(var i:int=0;i<num;++i)
 			{
 				var cell:Cell = cellFactory.createCell(config);
+				cell.data = skills[i];
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
 				addChild(cell);

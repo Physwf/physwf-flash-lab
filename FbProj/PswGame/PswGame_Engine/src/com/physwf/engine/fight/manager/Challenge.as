@@ -13,12 +13,15 @@ package com.physwf.engine.fight.manager
 	import com.physwf.system.entity.FightSystem;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
+	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.utils.getTimer;
 	
 	public class Challenge implements IUpdatable
 	{
-		public var target:Character;
+		public var target:Character;//选中的目标
+		public var selectSill:SkillInfo;//点击技能栏选择的技能
+		
 		private var targetID:uint = 0;
 		private var controller:ChallengeController;
 		private var lastAtk:uint = 0;

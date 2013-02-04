@@ -1,8 +1,10 @@
 package com.physwf.engine.frame.controller
 {
 	import com.physwf.components.ui.controls.Cell;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.view.SkillBarView;
+	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
@@ -23,6 +25,7 @@ package com.physwf.engine.frame.controller
 			var cell:Cell = e.target as Cell;
 			if(cell)
 			{
+				Engine.challenge.selectSill = cell.data as SkillInfo;
 				Mouse.cursor = FrameAssets.CURSOR_AIM_NAME;
 			}
 		}

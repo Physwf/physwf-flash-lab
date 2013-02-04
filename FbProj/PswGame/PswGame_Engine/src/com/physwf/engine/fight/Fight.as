@@ -6,9 +6,9 @@ package com.physwf.engine.fight
 
 	public class Fight implements IUpdatable
 	{
-		public static const FIGHT_CHARA_TYPE_PLAYER:uint = 0;
-		public static const FIGHT_CHARA_TYPE_PET:uint = 1;
-		public static const FIGHT_CHARA_TYPE_NPC:uint = 2;
+		public static const FIGHT_CHARA_TYPE_PLAYER:uint = 1;
+		public static const FIGHT_CHARA_TYPE_PET:uint = 2;
+		public static const FIGHT_CHARA_TYPE_NPC:uint = 3;
 		
 		private var mChallenge:Challenge;
 		

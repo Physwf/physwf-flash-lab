@@ -70,7 +70,7 @@ package com.physwf.engine.world.manager
 		public function attack():void
 		{
 			pathLine = null;
-			view.status = CharacterAction.ACTION_ATTACK;
+			view.action = CharacterAction.ACTION_ATTACK;
 		}
 		
 		public function die():void
@@ -100,7 +100,7 @@ package com.physwf.engine.world.manager
 					}
 					else if(pathLine.length == 0)
 					{
-						attack();
+						stand();
 						pathLine = null;
 						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
 					}

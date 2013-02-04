@@ -31,8 +31,8 @@ package com.physwf.engine.command
 		override public function execute():void
 		{
 			mChara.addEventListener(CharacterEvent.CHARA_PATH_FINISH,onPathFinish);
-			System.myself.move(endX,endY,0);
-//			mChara.goto(endX,endY);
+//			System.myself.move(endX,endY,0);
+			mChara.goto(endX,endY);
 		}
 		
 		private function onPathFinish(e:CharacterEvent):void
