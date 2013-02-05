@@ -57,6 +57,7 @@ package struct
 			if(extendsName) template = template.replace("{extends}","import "+extendsName);
 			else template = template.replace("{extends}","");
 			checkInputEmpty();
+			MethodStruct.refreshIndexList();
 			for(var i:int=0;i<fieldsInput.length;++i)
 			{
 				template = template.replace("{filed}",fieldsInput[i].getDeclaration() + (i+1<fieldsInput.length?"\n\t\t{filed}":"\n\t\t"));
@@ -78,6 +79,7 @@ package struct
 			if(extendsName) template = template.replace("{extends}","import "+extendsName);
 			else template = template.replace("{extends}","");
 			checkOutputEmpty();
+			MethodStruct.refreshIndexList();
 			for(var i:int=0;i<fieldsOutput.length;++i)
 			{
 				template = template.replace("{filed}",fieldsOutput[i].getDeclaration() + (i+1<fieldsOutput.length?"\n\t\t{filed}":"\n\t\t"));

@@ -11,12 +11,21 @@ package struct
 		public var type:String;
 		public var size:int;
 		
+		private static var indexList:Vector.<String>;
+		
 		public function MethodStruct(rawData:XML)
 		{
 			name = rawData.@name;
 			mode = rawData.@mode;
 			type = rawData.@type;
 			size = int(rawData.@size);	
+			refreshIndexList();
+		}
+		
+		public static function refreshIndexList():void
+		{
+			indexList = new Vector.<String>();
+			indexList.push("i","j","k","p","q","r");
 		}
 		
 		public function getRead():String
@@ -62,8 +71,8 @@ package struct
 		
 		private function getArrayReadBody():String
 		{
-			
 			var loopBody:String;
+			var indexVar:String
 			switch(type)
 			{
 				case FieldStruct.TYPE_CAHR:
@@ -72,10 +81,11 @@ package struct
 //						"\n\t\t\tinput.readBytes("+name+"Data,0,"+size+");"
 					return readStr;
 				default:
-					loopBody =  getReadLoopBody();
+					indexVar = getIJK();
+					loopBody =  getReadLoopBody(indexVar);
 			}
 			var forLoop:String = ""+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
-				"\t\t\tfor(var i:int=0;i<"+size+";++i)\n" +
+				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody}\n" +
 				"\t\t\t\t"+name+".push("+name+"_item)\n" +
@@ -83,7 +93,7 @@ package struct
 			return forLoop.replace("{loopBody}",loopBody);
 		}
 		
-		private function getReadLoopBody():String
+		private function getReadLoopBody(indexVar:String):String
 		{
 			var itemDecl:String;
 			switch(type)
@@ -117,6 +127,7 @@ package struct
 		private function getVarlistReadBody():String
 		{
 			var loopBody:String;
+			var indexVar:String;
 			var readLen:String = "var "+name+"Len:uint =input.readUnsignedInt();\n";
 			switch(type)
 			{
@@ -124,10 +135,11 @@ package struct
 					return readLen +
 					"\t\t\t"+name + "=input.readUTFBytes("+name+"Len);";
 				default:
-					loopBody =  getReadLoopBody();
+					indexVar = getIJK();
+					loopBody =  getReadLoopBody(indexVar);
 			}
 			var forLoop:String = "\t\t\t"+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
-				"\t\t\tfor(var i:int=0;i<"+name+"Len;++i)\n" +
+				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+"Len;++"+indexVar+")\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
 				"\t\t\t\t"+name+".push("+name+"_item);\n" +
@@ -179,6 +191,7 @@ package struct
 		private function getArrayWriteBody():String
 		{
 			var loopBody:String;
+			var indexVar:String
 			switch(type)
 			{
 				case FieldStruct.TYPE_CAHR:
@@ -196,46 +209,48 @@ package struct
 							writeStr +
 						"\n\t\t\t}" ;
 				default:
-					loopBody =  getWriteLoopBody();
+					indexVar = getIJK();
+					loopBody =  getWriteLoopBody(indexVar);
 			}
 			var forLoop:String = "" +
-				"for(var i:int=0;i<"+size+";++i)\n" +
+				"for(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody}\n" +
 				"\t\t\t}\n";
 			return forLoop.replace("{loopBody}",loopBody);
 		}
 		
-		private function getWriteLoopBody():String
+		private function getWriteLoopBody(indexVar:String):String
 		{
 			var itemDecl:String;
 			switch(type)
 			{
 				case FieldStruct.TYPE_UINT8:
-					return  "output.writeUnsignedByte("+name+"[i])";
+					return  "output.writeUnsignedByte("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_UINT16:
-					return  "output.writeUnsignedShort("+name+"[i])";
+					return  "output.writeUnsignedShort("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_UINT32:
-					return  "output.writeUnsignedInt("+name+"[i])";
+					return  "output.writeUnsignedInt("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_INT8:
-					return  "output.writeByte("+name+"[i])";
+					return  "output.writeByte("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_INT16:
-					return  "output.writeShort("+name+"[i])";
+					return  "output.writeShort("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_INT32:
-					return  "output.writeInt("+name+"[i])";
+					return  "output.writeInt("+name+"["+indexVar+"])";
 				default:
-					return  name+"[i].writeExternal(output)";
+					return  name+"["+indexVar+"].writeExternal(output)";
 			}
 		}
 		
 		private function getVarlistWriteBody():String
 		{
 			var loopBody:String;
+			var indexVar:String
 			var writeLen:String = "output.writeUnsignedInt("+name+".length);\n";
 			switch(type)
 			{
@@ -243,15 +258,25 @@ package struct
 					return writeLen +
 					"\t\t\t" + "output.writeUTFBytes("+name+");";
 				default:
-					loopBody =  getWriteLoopBody();
+					indexVar = getIJK();
+					loopBody =  getWriteLoopBody(indexVar);
 			}
 			var forLoop:String = "" +
-				"\t\t\tfor(var i:int=0;i<"+name+".length;++i)\n" +
+				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+".length;++"+indexVar+")\n" +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
 				"\t\t\t}";
 			return 	writeLen +
 				forLoop.replace("{loopBody}",loopBody);
+		}
+		/**
+		 * 获取for循环索引变量名 
+		 * @return 
+		 * 
+		 */		
+		private function getIJK():String
+		{
+			return indexList.shift();
 		}
 	}
 }
