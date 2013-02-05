@@ -39,7 +39,8 @@ package com.physwf.components.rpc.msg
 			regMsg(1050,MSG_RES_GET_BAG_1050);
 			regMsg(1051,MSG_RES_DEL_ITEM_1051);
 			regMsg(1052,MSG_RES_CHANGE_GRID_1052);
-			regMsg(1053,MSG_RES_ADD_ITEM_1053);
+			regMsg(1053,MSG_RES_NOTI_ADD_ITEM_1053);
+			regMsg(1054,MSG_RES_ADD_HP_MP_1054);
 			regMsg(1060,MSG_RES_GET_PET_INFO_1060);
 			regMsg(1061,MSG_RES_GET_BAG_PETS_1061);
 			regMsg(1062,MSG_RES_DEL_PET_1062);

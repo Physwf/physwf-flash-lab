@@ -28,9 +28,9 @@ package
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(Server.length);
-			for(var i:int=0;i<Server.length;++i)
+			for(var j:int=0;j<Server.length;++j)
 			{
-				Server[i].writeExternal(output);
+				Server[j].writeExternal(output);
 			}			
 		}
 	}

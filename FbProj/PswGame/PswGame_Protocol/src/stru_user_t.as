@@ -10,7 +10,7 @@ package
 		public var nick:String;
 		public var nick_data:ByteArray
 		public var prof:uint;
-		public var sex:uint;
+		public var role_sex:uint;
 		public var level:uint;
 		public var exp:uint;
 		public var map_id:uint;
@@ -38,7 +38,7 @@ package
 		{
 			nick = input.readUTFBytes(16);
 			prof = input.readUnsignedByte();
-			sex = input.readUnsignedByte();
+			role_sex = input.readUnsignedByte();
 			level = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
 			map_id = input.readUnsignedInt();
@@ -74,7 +74,7 @@ package
 				output.writeBytes(nickData)
 			}
 			output.writeByte(prof);
-			output.writeByte(sex);
+			output.writeByte(role_sex);
 			output.writeShort(level);
 			output.writeUnsignedInt(exp);
 			output.writeUnsignedInt(map_id);

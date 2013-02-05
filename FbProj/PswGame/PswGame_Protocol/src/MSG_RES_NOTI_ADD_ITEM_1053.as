@@ -5,12 +5,12 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_GET_BAG_1050 extends MsgBase
+	final public class MSG_RES_NOTI_ADD_ITEM_1053 extends MsgBase
 	{
 		public var items:Vector.<bag_item_t>;
 		public var equips:Vector.<bag_equip_t>;
 		
-		public function MSG_RES_GET_BAG_1050(mid:uint)
+		public function MSG_RES_NOTI_ADD_ITEM_1053(mid:uint)
 		{
 			super(mid);
 		}

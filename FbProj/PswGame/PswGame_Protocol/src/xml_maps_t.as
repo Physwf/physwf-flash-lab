@@ -28,9 +28,9 @@ package
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(Map.length);
-			for(var i:int=0;i<Map.length;++i)
+			for(var j:int=0;j<Map.length;++j)
 			{
-				Map[i].writeExternal(output);
+				Map[j].writeExternal(output);
 			}			
 		}
 	}

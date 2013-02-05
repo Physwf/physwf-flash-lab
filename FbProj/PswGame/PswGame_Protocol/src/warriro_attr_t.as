@@ -7,10 +7,10 @@ package
 	
 	public class warriro_attr_t implements IExternalizable
 	{
-		public var atk:uint;
-		public var def:uint;
-		public var magic_atk:uint;
-		public var magic_def:uint;
+		public var phy_atk:uint;
+		public var solar_atk:uint;
+		public var phy_def:uint;
+		public var solar_def:uint;
 		public var crit:uint;
 		public var crit_damage:uint;
 		public var crit_tenacity:uint;
@@ -31,10 +31,10 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			atk = input.readUnsignedInt();
-			def = input.readUnsignedInt();
-			magic_atk = input.readUnsignedInt();
-			magic_def = input.readUnsignedInt();
+			phy_atk = input.readUnsignedInt();
+			solar_atk = input.readUnsignedInt();
+			phy_def = input.readUnsignedInt();
+			solar_def = input.readUnsignedInt();
 			crit = input.readUnsignedByte();
 			crit_damage = input.readUnsignedByte();
 			crit_tenacity = input.readUnsignedByte();
@@ -52,10 +52,10 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(atk);
-			output.writeUnsignedInt(def);
-			output.writeUnsignedInt(magic_atk);
-			output.writeUnsignedInt(magic_def);
+			output.writeUnsignedInt(phy_atk);
+			output.writeUnsignedInt(solar_atk);
+			output.writeUnsignedInt(phy_def);
+			output.writeUnsignedInt(solar_def);
 			output.writeByte(crit);
 			output.writeByte(crit_damage);
 			output.writeByte(crit_tenacity);

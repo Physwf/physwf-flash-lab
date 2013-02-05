@@ -62,9 +62,9 @@ package
 			output.writeUnsignedInt(map_x);
 			output.writeUnsignedInt(map_y);
 			pet_follow.writeExternal(output)
-			for(var i:int=0;i<16;++i)
+			for(var j:int=0;j<16;++j)
 			{
-				output.writeUnsignedInt(equips[i])
+				output.writeUnsignedInt(equips[j])
 			}
 			
 		}
