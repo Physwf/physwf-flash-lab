@@ -7,28 +7,29 @@ package com.physwf.components.effects
 	public class BloodBar extends Effect
 	{
 		private var shape:Shape;
+		private var mData:*;
 		
-		public function BloodBar(layer:Sprite,target:DisplayObject)
+		public function BloodBar(layer:Sprite,target:DisplayObject,data:*)
 		{
 			drawBottom();
 			drawShape();
+			mData = data;
 			super(layer,0,target);
 		}
-		
-		public function set progress(v:Number):void
-		{
-			if(v<0) 
-			{
-				v=0;
-				mLayer.removeChild(this);
-			}
-			shape.scaleX = v;
-			
-		}
-		
+
 		override public function update():void
 		{
-			x = mTarget.x;
+//			var prog:Number = mData.hp  / mData.hp_max;
+			var prog:Number = 10  / 100;
+			if(prog<0) 
+			{
+				prog=0;
+				mData = null;
+				mLayer.removeChild(this);
+			}
+			shape.scaleX = prog;
+			
+			x = mTarget.x - width * .5;
 			y = mTarget.y - mTarget.height;
 		}
 		

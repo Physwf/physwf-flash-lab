@@ -15,8 +15,9 @@ package com.physwf.components.ds.heap
 		
 		public function Enqueue(item:INumerical):void
 		{
+			_heapVec[_size] = item; 
 			var lastIndex:int = _size;//最后一个元素的索引
-			var parentIndex:int = (lastIndex-1)*.5;//最后一个元素的父亲的索引
+			var parentIndex:int = (lastIndex-1) * .5;//最后一个元素的父亲的索引
 			_size++;
 			
 			if(lastIndex==0) return;
@@ -70,6 +71,11 @@ package com.physwf.components.ds.heap
 		public function get size():int
 		{
 			return _size;
+		}
+		
+		public function toString():String
+		{
+			return _heapVec.toString();
 		}
 	}
 }
