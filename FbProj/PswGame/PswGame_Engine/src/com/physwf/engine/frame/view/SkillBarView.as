@@ -8,6 +8,7 @@ package com.physwf.engine.frame.view
 	import com.physwf.components.ui.factory.CellFactory;
 	import com.physwf.components.ui.factory.FactoryManager;
 	import com.physwf.components.ui.layout.HBar;
+	import com.physwf.components.utils.TGADecoder;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.controller.SkillBarController;
 	import com.physwf.system.System;
@@ -17,8 +18,11 @@ package com.physwf.engine.frame.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.net.URLStream;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursorData;
+	import flash.utils.ByteArray;
 
 	public class SkillBarView extends Sprite implements IUpdatable
 	{
@@ -56,7 +60,24 @@ package com.physwf.engine.frame.view
 				cell.y = offsetY;
 				addChild(cell);
 				cells.push(cell);
+				loadIcon(cell,skills[i].id);
 			}
+		}
+		
+		private function loadIcon(cell:Cell,iconID:uint):void
+		{
+			//to do 临时写的加载，后面考虑统一加载
+			var stream:URLStream = new URLStream();
+			function onComplete(e:Event):void
+			{
+				stream.removeEventListener(Event.COMPLETE,onComplete);
+				var tgaData:ByteArray = new ByteArray();
+				stream.readBytes(tgaData,0,stream.bytesAvailable);
+				var tgaDecoder:TGADecoder = new TGADecoder(tgaData);
+				cell.contentData = tgaDecoder.bitmap;
+			};
+			stream.addEventListener(Event.COMPLETE,onComplete);
+			stream.load(new URLRequest("resource/icons/skills/"+iconID+".tga"));
 		}
 		
 		public function update():void

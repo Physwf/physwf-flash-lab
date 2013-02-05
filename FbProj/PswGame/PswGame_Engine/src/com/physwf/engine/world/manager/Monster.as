@@ -34,5 +34,6 @@ package com.physwf.engine.world.manager
 		}
 		
 		public function get instanId():uint { return mInstanceId; }
+		public function get info():MonsterInfo { return mInfo; }
 	}
 }

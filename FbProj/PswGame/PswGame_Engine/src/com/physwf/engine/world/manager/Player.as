@@ -38,5 +38,6 @@ package com.physwf.engine.world.manager
 		}
 		
 		public function get userId():uint { return uid; }
+		public function get info():UserInfo { return userInfo; }
 	}
 }

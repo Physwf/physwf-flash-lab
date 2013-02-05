@@ -37,7 +37,8 @@ package com.physwf.engine.command
 		
 		private function onPathFinish(e:CharacterEvent):void
 		{
-			dispatchEvent(new Event("finished"));
+			mChara.removeEventListener(CharacterEvent.CHARA_PATH_FINISH,onPathFinish);
+			dispatchEvent(new Event(Command.FINISH));
 		}
 	}
 }

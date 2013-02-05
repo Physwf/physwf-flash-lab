@@ -11,6 +11,8 @@ package com.physwf.engine.command
 	 */
 	public class Command extends EventDispatcher implements INumerical
 	{
+		public static const FINISH:String = "finish";
+		
 		protected var mPriority:uint;
 		
 		public function Command()

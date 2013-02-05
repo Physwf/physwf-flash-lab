@@ -14,6 +14,7 @@ package com.physwf.engine.fight.controller
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursor;
@@ -43,8 +44,34 @@ package com.physwf.engine.fight.controller
 		{
 			var target:Character = Character.managers[e.target] as Character;
 			mView.setTarget(target,Monster(target).instanId);
-			Mouse.cursor = MouseCursor.ARROW;
+			Mouse.cursor = MouseCursor.AUTO;
 			return;
+		}
+		
+		public function order(cmd:Command):void
+		{
+			mCmdQueue.Enqueue(cmd);
+			if(!mCurCmd)
+			{
+				mCurCmd = mCmdQueue.Dequeue() as Command;
+				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish);
+				mCurCmd.execute();
+			}
+		}
+		
+		private function onCurCmdFinish(e:Event):void
+		{
+			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish);
+			if(mCmdQueue.size>0)
+			{
+				mCurCmd = mCmdQueue.Dequeue() as Command;
+				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish);
+				mCurCmd.execute();
+			}
+			else
+			{
+				mCurCmd = null;
+			}
 		}
 	}
 }
