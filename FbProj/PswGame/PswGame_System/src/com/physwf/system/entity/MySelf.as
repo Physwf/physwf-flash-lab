@@ -122,7 +122,7 @@ package com.physwf.system.entity
 					userInfo.map_id = msg1001.user.map_id;
 					userInfo.map_x = msg1001.user.map_x;
 					userInfo.map_y = msg1001.user.map_y;
-					userInfo.resource_id = msg1001.user.sex;
+					userInfo.resource_id = msg1001.user.role_sex;
 					userInfo.strength = msg1001.user.strength;
 					userInfo.physical = msg1001.user.physique;
 					userInfo.hp = msg1001.user.hp;

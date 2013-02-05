@@ -7,6 +7,8 @@ package com.physwf.system.entity
 	
 	public class SkillSystem extends EventDispatcher
 	{
+		public var basicSill:SkillInfo;//基础技能，当没有为角色选择攻击技能时，默认使用基础技能
+		
 		private var mSkillsInBar:Vector.<SkillInfo>;
 		
 		public function SkillSystem()
@@ -17,8 +19,10 @@ package com.physwf.system.entity
 				var skill:SkillInfo = new SkillInfo();
 				skill.id = i;
 				skill.name = "";
+				skill.range = 100 + i*10;
 				mSkillsInBar.push(skill);
 			}
+			basicSill = mSkillsInBar[0];
 		}
 		
 		public function initialize():void

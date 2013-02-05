@@ -9,17 +9,17 @@ package com.physwf.system.events
 		public static const FIGHT_RESULT:String = "f_r";
 		public static const FIGHT_DEATH:String = "f_d";
 		
-		private var mInfos:Vector.<FightInfo>;
+		private var mInfo:FightInfo;
 		
-		public function FightEvent(type:String,infos:Vector.<FightInfo>)
+		public function FightEvent(type:String,info:FightInfo)
 		{
 			super(type, false, false);
-			mInfos = infos;
+			mInfo = info;
 		}
 		
-		public function get infos():Vector.<FightInfo>
+		public function get info():FightInfo
 		{
-			return mInfos;
+			return mInfo;
 		}
 	}
 }

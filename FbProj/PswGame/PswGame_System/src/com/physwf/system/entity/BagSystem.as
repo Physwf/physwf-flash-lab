@@ -79,11 +79,11 @@ package com.physwf.system.entity
 					for(var i:int=0;i<count;++i)
 					{
 						var itemInfo:ItemInfo = new ItemInfo();
-						itemInfo.itemID = items[i].item.itemid;
-						itemInfo.count = items[i].item.itemcnt;
+						itemInfo.itemID = items[i].item_id;
+						itemInfo.count = items[i].item_cnt;
 						var bagItem:BagItemInfo = new BagItemInfo();
 						bagItem.item = itemInfo;
-						bagItem.girdTag = items[i].grid_tag;
+						bagItem.girdTag = items[i].grid;
 						bagItems.push(bagItem);
 					}
 					count = equips.length;
@@ -97,10 +97,10 @@ package com.physwf.system.entity
 						equip.physique = equips[i].equip.physique;
 						equip.spirit = equips[i].equip.spirit;
 						equip.agility = equips[i].equip.agility;
-						equip.atk = equips[i].equip.atk;
-						equip.def = equips[i].equip.def;
-						equip.magicAtk = equips[i].equip.magic_atk;
-						equip.magicDef = equips[i].equip.magic_def;
+						equip.atk = equips[i].equip.phy_atk;
+						equip.def = equips[i].equip.phy_def;
+						equip.magicAtk = equips[i].equip.solar_atk;
+						equip.magicDef = equips[i].equip.solar_def;
 						equip.crit = equips[i].equip.crit;
 						equip.critDamage = equips[i].equip.crit_damage;
 						equip.critTenacity = equips[i].equip.crit_tenacity;

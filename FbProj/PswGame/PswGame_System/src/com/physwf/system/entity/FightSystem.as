@@ -38,29 +38,21 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1040:
 					break;
 				case MessageEvent.MSG_SUCCESS_+1041:
-					var results:Vector.<atk_result_t> = MSG_RES_NOTI_ATTACK_RESULT_1041(e.message).results;
-					var count:uint = results.length;
-					var fInfos:Vector.<FightInfo> = new Vector.<FightInfo>();
-					for(var i:int=0;i<count;++i)
-					{
-						var fInfo:FightInfo = new FightInfo();
-						fInfo.srcType = results[i].src_type;
-						fInfo.srcId = results[i].src_id;
-						fInfo.objType = results[i].obj_type;
-						fInfo.objId = results[i].obj_id;
-						fInfo.hpHurt = results[i].hp_hurt;
-						fInfos.push(fInfo);
-					}
-					dispatchEvent(new FightEvent(FightEvent.FIGHT_RESULT,fInfos));
+					var results:atk_result_t = MSG_RES_NOTI_ATTACK_RESULT_1041(e.message).results;
+					var fInfo:FightInfo = new FightInfo();
+					fInfo.srcType = results.src_type;
+					fInfo.srcId = results.src_id;
+					fInfo.objType = results.obj_type;
+					fInfo.objId = results.obj_id;
+					fInfo.hpHurt = results.hp_hurt;
+					dispatchEvent(new FightEvent(FightEvent.FIGHT_RESULT,fInfo));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1042:
 					var msg1041:MSG_RES_NOTI_OBJ_DEAD_1042 = e.message as MSG_RES_NOTI_OBJ_DEAD_1042;
-					fInfos = new Vector.<FightInfo>();
 					fInfo = new FightInfo();
 					fInfo.srcType = msg1041.obj_type;
 					fInfo.srcId = msg1041.obj_id;
-					fInfos.push(fInfo);
-					dispatchEvent(new FightEvent(FightEvent.FIGHT_DEATH,fInfos));
+					dispatchEvent(new FightEvent(FightEvent.FIGHT_DEATH,fInfo));
 					break;
 			}
 		}
