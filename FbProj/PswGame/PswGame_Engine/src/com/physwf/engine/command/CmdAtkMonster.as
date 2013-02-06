@@ -35,8 +35,11 @@ package com.physwf.engine.command
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skill:SkillInfo = Engine.challenge.selectSill?Engine.challenge.selectSill:Engine.challenge.basicSkill;
 			var skillID:uint = skill.id;
-			var config:EffectConfig = EffectAssets.configs[skillID];
-			var effect:Effect = EffectFactory.createEffect(config,Engine.map.view.upperEffect,target.view);
+			var config:EffectConfig = EffectAssets.configs[15];
+//			var effect:Effect = EffectFactory.createEffect(config,Engine.map.view.upperEffect,target.view);
+			var effect:Effect = EffectFactory.createDiabloEffect(config,Engine.map.view.upperEffect,target.view);
+			effect.x = mChara.view.x;
+			effect.y = mChara.view.y - 30;
 			mChara.attack();
 			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,
 								targetID,1);

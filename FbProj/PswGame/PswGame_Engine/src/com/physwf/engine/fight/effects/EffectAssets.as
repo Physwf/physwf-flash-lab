@@ -1,5 +1,6 @@
 package com.physwf.engine.fight.effects
 {
+	import com.physwf.components.effects.DiabloEffect;
 	import com.physwf.components.effects.EffectConfig;
 	import com.physwf.components.effects.VerticalEffect;
 
@@ -22,6 +23,7 @@ package com.physwf.engine.fight.effects
 		public static const DROP_THOUDER13:EffectConfig = new EffectConfig(VerticalEffect,DIR_EFFECT+13,400);
 		public static const DROP_THOUDER14:EffectConfig = new EffectConfig(VerticalEffect,DIR_EFFECT+14,400);
 		public static const DROP_THOUDER15:EffectConfig = new EffectConfig(VerticalEffect,DIR_EFFECT+15,400);
+		public static const BIG_HEAD:EffectConfig = new EffectConfig(DiabloEffect,DIR_EFFECT+16,400);
 		
 		public static var configs:Vector.<EffectConfig> = new <EffectConfig>
 																			[
@@ -39,7 +41,8 @@ package com.physwf.engine.fight.effects
 																				DROP_THOUDER12,
 																				DROP_THOUDER13,
 																				DROP_THOUDER14,
-																				DROP_THOUDER15
+																				DROP_THOUDER15,
+																				BIG_HEAD
 																			];
 		
 		public function EffectAssets()
