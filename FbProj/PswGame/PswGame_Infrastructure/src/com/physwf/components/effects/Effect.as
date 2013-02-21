@@ -46,7 +46,6 @@ package com.physwf.components.effects
 		{
 			mFrames = frames;
 			mTotalFrame = mFrames.length;
-			mCurFrameNum = 0;
 		}
 		
 		public function destroy():void

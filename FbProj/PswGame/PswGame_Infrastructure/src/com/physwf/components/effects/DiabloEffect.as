@@ -14,6 +14,7 @@ package com.physwf.components.effects
 	{
 		private var mEffects:Vector.<Vector.<EffectFrame>>;
 		private var mSpeed:uint = 5;
+		private var mDirectFun:Function;
 		
 		public function DiabloEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{
@@ -23,6 +24,14 @@ package com.physwf.components.effects
 		public function setEffects(effects:Vector.<Vector.<EffectFrame>>):void
 		{
 			mEffects = effects;
+			if(mEffects.length==8)
+			{
+				mDirectFun = ISODirection.radianToDirect8;
+			}
+			else if(mEffects.length==16)
+			{
+				mDirectFun = ISODirection.radianToDirect16;
+			}
 		}
 		
 		override public function update():void
@@ -30,7 +39,7 @@ package com.physwf.components.effects
 			var distX:int = mTarget.x - x;
 			var distY:int = mTarget.y - y - 30;
 			var rad:Number = Math.atan2(distY,distX);
-			var direct:int = ISODirection.radianToDirect(rad);
+			var direct:int = mDirectFun(rad);
 			
 			setFrames(mEffects[direct]);
 			
