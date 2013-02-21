@@ -46,7 +46,7 @@ package com.physwf.engine.world.manager
 				
 				line = pathLine.shift();
 				avrgRad = PathUtils.calAverDirec2(pathLine);
-				view.direction = ISODirection.radianToDirect(avrgRad);
+				view.direction = ISODirection.radianToDirect8(avrgRad);
 				run();
 			}
 		}
@@ -96,7 +96,7 @@ package com.physwf.engine.world.manager
 					if(pathLine.length>10)
 					{
 						avrgRad = PathUtils.calAverDirec2(pathLine);
-						view.direction = ISODirection.radianToDirect(avrgRad);
+						view.direction = ISODirection.radianToDirect8(avrgRad);
 					}
 					else if(pathLine.length == 0)
 					{
