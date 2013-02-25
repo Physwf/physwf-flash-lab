@@ -37,6 +37,7 @@ package
 		
 		private function onPluginFinished(e:Event):void
 		{
+			mStartup.removeEventListener("finished",onPluginFinished);
 			dispatchEvent(new PluginEvent(PluginEvent.PLUGIN_FINISHED,mInfo));
 		}
 		
