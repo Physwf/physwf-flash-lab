@@ -74,6 +74,7 @@ package com.physwf.engine.world.manager
 			
 			System.npc.addEventListener(NPCEvent.NPC_LIST,onNPCEvent);
 			System.npc.addEventListener(NPCEvent.NPC_REFRESH,onNPCEvent);
+			System.npc.addEventListener(NPCEvent.NPC_MOVE,onNPCEvent);
 			
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onMyEvent);
 			System.myself.addEventListener(MyEvent.SELF_MOVE_ALLOWED,onMyEvent);
@@ -134,6 +135,11 @@ package com.physwf.engine.world.manager
 				case NPCEvent.NPC_REFRESH:
 					var info:MonsterInfo = e.info;
 					refreshMonster(info);
+					break;
+				case NPCEvent.NPC_MOVE:
+					info = e.info;
+					mon = getMonsterByMID(info.instanceID);
+					mon.goAlong(info.path);
 					break;
 			}
 		}

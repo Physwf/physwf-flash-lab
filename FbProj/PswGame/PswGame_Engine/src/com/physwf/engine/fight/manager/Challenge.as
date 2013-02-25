@@ -98,6 +98,7 @@ package com.physwf.engine.fight.manager
 			var distY:Number = target.view.y - Player.self.view.y;
 			var rad:Number = Math.atan2(distY,distX);
 			var skill:SkillInfo = selectSill?selectSill:basicSkill;
+			selectSill = null;
 			//当给角色指定攻击目标时，角色首先寻路到距离攻击目标在当前攻击技能的范围之内
 			//这里寻路目标点的选择是用目标点所在位置减去角色方向的（长度为技能攻击范围的）一个线段而得到的点
 			//有可能遇到的一个问题是，上述过程计算得到的点在地图上市不可走的，这将导致寻路失败。

@@ -6,6 +6,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Line;
+	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
 	import com.physwf.engine.world.events.CharacterEvent;
 	
@@ -39,11 +40,33 @@ package com.physwf.engine.world.manager
 			var sy:uint = Math.floor(view.y / 10);
 			var ex:uint = Math.floor(tx / 10);
 			var ey:uint = Math.floor(ty / 10);
-			trace(sx,sy,"goto")
+			
 			if(astar.tryFindPath(sx,sy,ex,ey))
 			{
 				pathLine = astar.getPathLine();
 				
+				avrgRad = PathUtils.calAverDirec2(pathLine);
+				line = pathLine.shift();
+				
+				view.direction = ISODirection.radianToDirect8(avrgRad);
+				run();
+			}
+		}
+		
+		public function goAlong(rawPath:Vector.<uint>):void
+		{
+			var len:uint = rawPath.length-2;
+			var path:Vector.<Line> = new Vector.<Line>();
+			for(var i:uint=0;i<len;i+=2)
+			{
+				var prev:Node = new Node(rawPath[i],rawPath[i+1]);
+				var next:Node = new Node(rawPath[i+2],rawPath[i+3]);
+				var ln:Line = new Line(prev,next);
+				path.push(ln);
+			}
+			pathLine = path;
+			if(pathLine.length>0)
+			{
 				line = pathLine.shift();
 				avrgRad = PathUtils.calAverDirec2(pathLine);
 				view.direction = ISODirection.radianToDirect8(avrgRad);
