@@ -54,7 +54,8 @@ package com.physwf.components.map.wayfinding.astar
 		
 		private function search():Boolean
 		{
-			trace(getTimer())
+			trace("开始寻路",getTimer());
+			if(_startNode == _endNode) return false;
 			var minCostNode:Node = _startNode;
 			if(!_endNode.walkable) return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
 			while(minCostNode != _endNode)
@@ -107,7 +108,7 @@ package com.physwf.components.map.wayfinding.astar
 				minCostNode = _openList.Dequeue() as Node;
 			}//end while
 			buildPath();
-			trace(getTimer())
+			trace("寻路结束",getTimer())
 			return true;
 		}
 		
@@ -123,7 +124,6 @@ package com.physwf.components.map.wayfinding.astar
 				line = new Line(node.parent,node);
 				_pathLine.unshift(line);
 				node = node.parent;
-//				_path.unshift(node);
 			}
 		}
 		

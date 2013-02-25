@@ -89,7 +89,6 @@ package com.physwf.components.bitmap.net
 					var name:String = data.readUTFBytes(nameLen);
 					getPackage(name).readExternal(data);
 					_loadStatus[name] = LOAD_STATUS_YES;
-					trace(name,_name);
 					break;
 			}
 		}
