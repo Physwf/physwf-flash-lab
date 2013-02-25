@@ -7,7 +7,7 @@ package
 	
 	public class xml_equip_t implements IExternalizable
 	{
-		public var item:Vector.<xml_equip_item_t>;
+		public var equip:Vector.<xml_equip_equip_t>;
 		
 		public function xml_equip_t()
 		{
@@ -15,22 +15,22 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var itemLen:uint =input.readUnsignedInt();
-			item= new Vector.<xml_equip_item_t>();
-			for(var i:int=0;i<itemLen;++i)
+			var equipLen:uint =input.readUnsignedInt();
+			equip= new Vector.<xml_equip_equip_t>();
+			for(var i:int=0;i<equipLen;++i)
 			{
-				var item_item:xml_equip_item_t = new xml_equip_item_t()
-				item_item.readExternal(input);;
-				item.push(item_item);
+				var equip_item:xml_equip_equip_t = new xml_equip_equip_t()
+				equip_item.readExternal(input);;
+				equip.push(equip_item);
 			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(item.length);
-			for(var j:int=0;j<item.length;++j)
+			output.writeUnsignedInt(equip.length);
+			for(var j:int=0;j<equip.length;++j)
 			{
-				item[j].writeExternal(output);
+				equip[j].writeExternal(output);
 			}			
 		}
 	}

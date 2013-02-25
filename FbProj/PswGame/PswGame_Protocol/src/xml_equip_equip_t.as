@@ -5,10 +5,21 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class stru_equip_t implements IExternalizable
+	public class xml_equip_equip_t implements IExternalizable
 	{
-		public var instance_id:uint;
 		public var equip_id:uint;
+		public var category:uint;
+		public var quality:uint;
+		public var user_lv:uint;
+		public var sell_price:uint;
+		public var buy_price:uint;
+		public var max_num:uint;
+		public var tradeable:uint;
+		public var distory:uint;
+		public var accumulate:uint;
+		public var equip_pos:uint;
+		public var duration_time:uint;
+		public var end_time:uint;
 		public var strength:uint;
 		public var solar:uint;
 		public var physique:uint;
@@ -18,6 +29,12 @@ package
 		public var solar_atk:uint;
 		public var phy_def:uint;
 		public var solar_def:uint;
+		public var phy_def_pre:uint;
+		public var solar_def_pre:uint;
+		public var phy_atk_pre:uint;
+		public var solar_atk_pre:uint;
+		public var phy_def_lv:uint;
+		public var solar_def_lv:uint;
 		public var crit:uint;
 		public var crit_damage:uint;
 		public var crit_tenacity:uint;
@@ -33,14 +50,25 @@ package
 		public var fire_def:uint;
 		public var durability:uint;
 		
-		public function stru_equip_t()
+		public function xml_equip_equip_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			instance_id = input.readUnsignedInt();
 			equip_id = input.readUnsignedInt();
+			category = input.readUnsignedShort();
+			quality = input.readUnsignedShort();
+			user_lv = input.readUnsignedShort();
+			sell_price = input.readUnsignedInt();
+			buy_price = input.readUnsignedInt();
+			max_num = input.readUnsignedShort();
+			tradeable = input.readUnsignedShort();
+			distory = input.readUnsignedShort();
+			accumulate = input.readUnsignedShort();
+			equip_pos = input.readUnsignedShort();
+			duration_time = input.readUnsignedInt();
+			end_time = input.readUnsignedInt();
 			strength = input.readUnsignedShort();
 			solar = input.readUnsignedShort();
 			physique = input.readUnsignedShort();
@@ -50,6 +78,12 @@ package
 			solar_atk = input.readUnsignedInt();
 			phy_def = input.readUnsignedInt();
 			solar_def = input.readUnsignedInt();
+			phy_def_pre = input.readUnsignedByte();
+			solar_def_pre = input.readUnsignedByte();
+			phy_atk_pre = input.readUnsignedByte();
+			solar_atk_pre = input.readUnsignedByte();
+			phy_def_lv = input.readUnsignedShort();
+			solar_def_lv = input.readUnsignedShort();
 			crit = input.readUnsignedByte();
 			crit_damage = input.readUnsignedByte();
 			crit_tenacity = input.readUnsignedByte();
@@ -68,8 +102,19 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(instance_id);
 			output.writeUnsignedInt(equip_id);
+			output.writeShort(category);
+			output.writeShort(quality);
+			output.writeShort(user_lv);
+			output.writeUnsignedInt(sell_price);
+			output.writeUnsignedInt(buy_price);
+			output.writeShort(max_num);
+			output.writeShort(tradeable);
+			output.writeShort(distory);
+			output.writeShort(accumulate);
+			output.writeShort(equip_pos);
+			output.writeUnsignedInt(duration_time);
+			output.writeUnsignedInt(end_time);
 			output.writeShort(strength);
 			output.writeShort(solar);
 			output.writeShort(physique);
@@ -79,6 +124,12 @@ package
 			output.writeUnsignedInt(solar_atk);
 			output.writeUnsignedInt(phy_def);
 			output.writeUnsignedInt(solar_def);
+			output.writeByte(phy_def_pre);
+			output.writeByte(solar_def_pre);
+			output.writeByte(phy_atk_pre);
+			output.writeByte(solar_atk_pre);
+			output.writeShort(phy_def_lv);
+			output.writeShort(solar_def_lv);
 			output.writeByte(crit);
 			output.writeByte(crit_damage);
 			output.writeByte(crit_tenacity);

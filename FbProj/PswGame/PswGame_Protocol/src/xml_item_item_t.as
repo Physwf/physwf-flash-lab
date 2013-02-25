@@ -15,6 +15,7 @@ package
 		public var trade_flag:uint;
 		public var discard_flag:uint;
 		public var accumulate:uint;
+		public var accu_max:uint;
 		public var duration_time:uint;
 		public var function_id:uint;
 		public var function_value:uint;
@@ -33,6 +34,7 @@ package
 			trade_flag = input.readUnsignedInt();
 			discard_flag = input.readUnsignedInt();
 			accumulate = input.readUnsignedInt();
+			accu_max = input.readUnsignedShort();
 			duration_time = input.readUnsignedInt();
 			function_id = input.readUnsignedInt();
 			function_value = input.readUnsignedInt();			
@@ -48,6 +50,7 @@ package
 			output.writeUnsignedInt(trade_flag);
 			output.writeUnsignedInt(discard_flag);
 			output.writeUnsignedInt(accumulate);
+			output.writeShort(accu_max);
 			output.writeUnsignedInt(duration_time);
 			output.writeUnsignedInt(function_id);
 			output.writeUnsignedInt(function_value);			

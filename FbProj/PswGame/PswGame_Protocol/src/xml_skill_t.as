@@ -7,7 +7,7 @@ package
 	
 	public class xml_skill_t implements IExternalizable
 	{
-		public var item:Vector.<xml_skill_item_t>;
+		public var skill:Vector.<xml_skill_skill_t>;
 		
 		public function xml_skill_t()
 		{
@@ -15,22 +15,22 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var itemLen:uint =input.readUnsignedInt();
-			item= new Vector.<xml_skill_item_t>();
-			for(var i:int=0;i<itemLen;++i)
+			var skillLen:uint =input.readUnsignedInt();
+			skill= new Vector.<xml_skill_skill_t>();
+			for(var i:int=0;i<skillLen;++i)
 			{
-				var item_item:xml_skill_item_t = new xml_skill_item_t()
-				item_item.readExternal(input);;
-				item.push(item_item);
+				var skill_item:xml_skill_skill_t = new xml_skill_skill_t()
+				skill_item.readExternal(input);;
+				skill.push(skill_item);
 			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(item.length);
-			for(var j:int=0;j<item.length;++j)
+			output.writeUnsignedInt(skill.length);
+			for(var j:int=0;j<skill.length;++j)
 			{
-				item[j].writeExternal(output);
+				skill[j].writeExternal(output);
 			}			
 		}
 	}

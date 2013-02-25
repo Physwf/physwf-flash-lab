@@ -5,26 +5,22 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class bag_equip_t implements IExternalizable
+	public class xml_map_map_t implements IExternalizable
 	{
-		public var equip:stru_equip_t;
-		public var grid:uint;
+		public var map_id:uint;
 		
-		public function bag_equip_t()
+		public function xml_map_map_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			equip= new stru_equip_t();
-			equip.readExternal(input)
-			grid = input.readUnsignedShort();			
+			map_id = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			equip.writeExternal(output)
-			output.writeShort(grid);			
+			output.writeUnsignedInt(map_id);			
 		}
 	}
 }

@@ -26,7 +26,7 @@ package
 		public var physique:uint;
 		public var spirit:uint;
 		public var agility:uint;
-		public var warrior_attr:warriro_attr_t;
+		public var warrior_attr:warrior_attr_t;
 		public var vigour:uint;
 		public var energy:uint;
 		
@@ -54,7 +54,7 @@ package
 			physique = input.readUnsignedShort();
 			spirit = input.readUnsignedShort();
 			agility = input.readUnsignedShort();
-			warrior_attr= new warriro_attr_t();
+			warrior_attr= new warrior_attr_t();
 			warrior_attr.readExternal(input)
 			vigour = input.readUnsignedShort();
 			energy = input.readUnsignedShort();			
