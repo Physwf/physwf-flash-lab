@@ -25,6 +25,7 @@ package com.physwf.system.entity
 		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1038,onNpcMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1039,onNpcMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1043,onNpcMessage);//怪物移动
 		}
 		
 		public function getMonsterList():void
@@ -66,6 +67,21 @@ package com.physwf.system.entity
 						mInfo.map_y = info.map_y;
 					}
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_REFRESH,mInfo));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1043:
+					if(!svrNpcList) return;
+					var msg1043:MSG_RES_NOTI_MONSTER_MOVE_1043 = e.message as MSG_RES_NOTI_MONSTER_MOVE_1043;
+					mInfo = getMonsInfoById(msg1043.monster_instance_id,false);
+					trace(msg1043.monster_instance_id,"msg1043.monster_instance_id");
+					var list:Vector.<map_pos_t> = msg1043.move_list;
+					var path:Vector.<uint> = new Vector.<uint>();
+					for(i=0;i<list.length;++i)
+					{
+						path.push(list[i].map_x/10);
+						path.push(list[i].map_y/10);
+					}
+					mInfo.path = path;
+					dispatchEvent(new NPCEvent(NPCEvent.NPC_MOVE,mInfo));
 					break;
 			}
 		}

@@ -115,9 +115,8 @@ package com.physwf.system.entity
 						equip.fireAtk = equips[i].equip.fire_atk;
 						equip.fireDef = equips[i].equip.fire_def;
 						equip.durability = equips[i].equip.durability;
-						equip.equipPos = equips[i].equip.position;
 						bagItem = new BagItemInfo();
-						bagItem.girdTag = equips[i].grid_tag;
+						bagItem.girdTag = equips[i].grid;
 						bagItem.item = equip ;
 						bagItems.push(bagItem);
 					}

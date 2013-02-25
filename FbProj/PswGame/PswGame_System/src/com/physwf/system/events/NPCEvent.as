@@ -9,6 +9,7 @@ package com.physwf.system.events
 	{
 		public static const NPC_LIST:String = "n_l";
 		public static const NPC_REFRESH:String = "n_r";
+		public static const NPC_MOVE:String = "n_m";
 		
 		private var mInfo:MonsterInfo;
 		
