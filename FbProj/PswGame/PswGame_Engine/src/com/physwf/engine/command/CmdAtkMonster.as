@@ -12,6 +12,7 @@ package com.physwf.engine.command
 	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.Event;
+	import com.physwf.components.command.Command;
 
 	public class CmdAtkMonster extends Command
 	{

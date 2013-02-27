@@ -71,6 +71,9 @@
     <classEntry path="com.physwf.components.ui.layout.IPopup"/>
     <classEntry path="com.physwf.components.ui.config.PanelConfig"/>
     <classEntry path="com.physwf.components.ui.factory.PanelFactory"/>
+    <classEntry path="com.physwf.components.effects.DiabloEffect"/>
+    <classEntry path="com.physwf.components.effects.DiabloEffectLoader"/>
+    <classEntry path="com.physwf.components.command.Command"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

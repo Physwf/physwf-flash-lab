@@ -5,6 +5,7 @@ package com.physwf.engine.command
 	import com.physwf.system.System;
 	
 	import flash.events.Event;
+	import com.physwf.components.command.Command;
 
 	/**
 	 * 寻路到指定点 
