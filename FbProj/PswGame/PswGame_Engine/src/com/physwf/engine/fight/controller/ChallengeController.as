@@ -6,7 +6,7 @@ package com.physwf.engine.fight.controller
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdWalkTo;
-	import com.physwf.engine.command.Command;
+	import com.physwf.components.command.Command;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.world.manager.Character;

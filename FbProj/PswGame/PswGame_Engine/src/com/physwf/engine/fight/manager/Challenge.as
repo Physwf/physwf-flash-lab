@@ -16,6 +16,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.system.vo.FightInfo;
 	import com.physwf.system.vo.SkillInfo;
 	
+	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
 	public class Challenge implements IUpdatable
@@ -28,6 +29,8 @@ package com.physwf.engine.fight.manager
 		private var controller:ChallengeController;
 		private var lastAtk:uint = 0;
 		
+		private var bloodBars:Dictionary;
+		
 		public function Challenge()
 		{
 			Engine.challenge = this;
@@ -35,10 +38,22 @@ package com.physwf.engine.fight.manager
 		
 		public function initialize():void
 		{
-			System.fight.addEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
-			System.fight.addEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
 			controller = new ChallengeController();
 			controller.initialize(this);
+			
+			bloodBars = new Dictionary();
+		}
+		
+		public function onWorldDestroy():void
+		{
+			System.fight.removeEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
+			System.fight.removeEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
+		}
+		
+		public function onWorldReady():void
+		{
+			System.fight.addEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
+			System.fight.addEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
 		}
 		
 		private function onFightEvent(e:FightEvent):void
@@ -51,8 +66,9 @@ package com.physwf.engine.fight.manager
 					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
 					if(chara)
 					{
-						chara.run();
-						var bbar:BloodBar = new BloodBar(Engine.map.view.upperEffect,chara.view,cInfo.info);
+						chara.attack();
+						cInfo.info.hp -= fInfo.hpHurt;
+						updateBloodBar(fInfo.objId,chara,cInfo.info);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:
@@ -136,6 +152,17 @@ package com.physwf.engine.fight.manager
 					}
 				}
 			}
+		}
+		
+		public function updateBloodBar(id:uint,chara:Character,info:*):void
+		{
+			var bar:BloodBar = bloodBars[id] as BloodBar;
+			if(!bar)
+			{
+				bar = new BloodBar(Engine.map.view.upperEffect,chara.view,info);
+				bloodBars[id] = bar;
+			}
+			bar.setProgress(info.hp,info.hp_max);
 		}
 	}
 }

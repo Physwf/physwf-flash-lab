@@ -23,9 +23,9 @@ package com.physwf.engine.world.manager
 			mInfo = info;
 			mInstanceId = info.instanceID;
 			// 
-			view = new CharacterAnimation(AnimationSystem.MOLE);
+			view = new CharacterAnimation(AnimationSystem.AOTM);
 			mFactory = new MonsterFactory();
-			view.skeleton = mFactory.getWear(1);
+			view.skeleton = mFactory.getWear(2);
 //			view.direction = ISODirection.LEFT;
 			view.x = info.map_x;
 			view.y = info.map_y;

@@ -182,7 +182,7 @@ package com.physwf.engine.world.manager
 			{
 				mMapView.landform = landformLoader.content;
 				Character.astar.analyze(mMapView.landform);
-				dispatchEvent(new WorldEvent(WorldEvent.WORLD_READY));
+				dispatchEvent(new WorldEvent(WorldEvent.MAP_READY));
 			});
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
 		}

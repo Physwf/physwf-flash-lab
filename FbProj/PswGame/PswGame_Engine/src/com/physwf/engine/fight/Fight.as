@@ -3,7 +3,9 @@ package com.physwf.engine.fight
 	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.effects.Effect;
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.manager.Challenge;
+	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 
 	public class Fight implements IUpdatable
@@ -25,6 +27,19 @@ package com.physwf.engine.fight
 			mChallenge.basicSkill = System.skill.basicSill;
 			
 			Effect.effects = new Vector.<Effect>();
+			
+			Engine.map.addEventListener(WorldEvent.WORLD_DESTROY,onWorldDestroy);
+			Engine.map.addEventListener(WorldEvent.WORLD_READY,onWorldReady);
+		}
+		
+		private function onWorldDestroy(e:WorldEvent):void
+		{
+			mChallenge.onWorldDestroy();
+		}
+		
+		private function onWorldReady(e:WorldEvent):void
+		{
+			mChallenge.onWorldReady();
 		}
 		
 		public function update():void

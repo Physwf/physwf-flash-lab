@@ -67,8 +67,8 @@ package com.physwf.engine.world.manager
 			pathLine = path;
 			if(pathLine.length>0)
 			{
-				line = pathLine.shift();
 				avrgRad = PathUtils.calAverDirec2(pathLine);
+				line = pathLine.shift();
 				view.direction = ISODirection.radianToDirect8(avrgRad);
 				run();
 			}
@@ -108,15 +108,22 @@ package com.physwf.engine.world.manager
 				var curX:Number = view.x;
 				var curY:Number = view.y;
 				
-				var nxtX:Number,nxtY:Number;
 				var remainSpeed:Number;
 				// 如果速度大小超过了当前线段长度，则提取下一个线段，并将该线段的起始点减去之前剩下的速度量
 				if(speed>line.length)
 				{
 					remainSpeed = speed - line.length;
-					line = pathLine.shift();
-					line.subLen(remainSpeed);
-					if(pathLine.length>10)
+					
+					if(pathLine.length)
+					{
+						line = pathLine.shift();
+						line.subLen(remainSpeed);
+					}
+					else
+					{
+						line.subLen(line.length);
+					}
+					if(pathLine.length>3)
 					{
 						avrgRad = PathUtils.calAverDirec2(pathLine);
 						view.direction = ISODirection.radianToDirect8(avrgRad);
@@ -124,7 +131,6 @@ package com.physwf.engine.world.manager
 					else if(pathLine.length == 0)
 					{
 						stand();
-						pathLine = null;
 						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
 					}
 				}

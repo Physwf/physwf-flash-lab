@@ -41,6 +41,13 @@ package com.physwf.engine.world
 			System.myself.enterMap(MySelf.userInfo.map_id,MySelf.userInfo.map_x,MySelf.userInfo.map_y);
 			ScreenManager.main.frameRate = 30;
 		}
+		
+		private function onFirstEnterMap(e:MyEvent):void
+		{
+			onEnterMapSuccess(e);
+			// 目前 背包数据在进入地图后才能拉取
+			System.bag.getBagItems();
+		}
 		/**
 		 * 切换地图 
 		 * @param mapID
@@ -52,6 +59,9 @@ package com.physwf.engine.world
 		{
 			if(mapID == MySelf.userInfo.map_id) return;
 			System.myself.leaveMap();
+			
+			map.dispatchEvent(new WorldEvent(WorldEvent.WORLD_DESTROY));
+			
 			System.myself.enterMap(mapID,mapX,mapY);
 			Application.application.sandBox.rebuildMapDomain();
 		}
@@ -60,19 +70,20 @@ package com.physwf.engine.world
 		{
 			map.domain = Application.application.sandBox.curMapDomain;
 			//必须在这个事件之后才能请求地图上的玩家列表,否则玩家的寻路数据为空
-			map.addEventListener(WorldEvent.WORLD_READY,onWorldReady);
+			map.addEventListener(WorldEvent.MAP_READY,onWorldReady);
 			map.load();
 		}
 		
 		private function onWorldReady(e:Event):void
 		{
-			map.removeEventListener(WorldEvent.WORLD_READY,onWorldReady);
+			map.removeEventListener(WorldEvent.MAP_READY,onWorldReady);
 			map.addEventListener(WorldEvent.USERS_READY,onUsersReady);
 			System.map.getMapUserList();
 		}
 		
 		private function onUsersReady(e:WorldEvent):void
 		{
+			map.removeEventListener(WorldEvent.USERS_READY,onUsersReady);
 			System.npc.addEventListener(NPCEvent.NPC_LIST,onMonstersReady);
 			System.npc.getMonsterList();
 		}
@@ -80,7 +91,7 @@ package com.physwf.engine.world
 		private function onMonstersReady(e:NPCEvent):void
 		{
 			System.npc.removeEventListener(NPCEvent.NPC_LIST,onMonstersReady);
-			System.bag.getBagItems();
+			map.dispatchEvent(new WorldEvent(WorldEvent.WORLD_READY));
 		}
 		
 		public function update():void
