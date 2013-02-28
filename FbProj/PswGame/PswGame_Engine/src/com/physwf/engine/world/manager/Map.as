@@ -166,6 +166,7 @@ package com.physwf.engine.world.manager
 				{
 					mMapView.clearBottom();
 					mMapView.fillBottom(loader.content);
+					mCamera.moveToTarget();
 				});
 			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
 //			var ground:TileGround = new TileGround();

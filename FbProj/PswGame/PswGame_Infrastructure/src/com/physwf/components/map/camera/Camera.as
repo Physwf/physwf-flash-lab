@@ -10,11 +10,12 @@ package com.physwf.components.map.camera
 		private var mViewprot:Rectangle;
 		private var mMap:MapView;
 		private var mTarget:DisplayObject;
-		private var sHelpW:Number;
-		private var sHelpH:Number;
+		private var sHelpW:uint;
+		private var sHelpH:uint;
 		private var mTrackEnabled:Boolean;
-		private var mSpeed:Number = 4.0;//摄像机的移动速度
-		private var mDirectRad:Number=0;//摄像机的移动方向，弧度单位
+		private var mEasying:Number = 0.2;//缓动系数
+		private var mX:uint=0;
+		private var mY:uint=0;
 		
 		public function Camera(viewport:Rectangle)
 		{
@@ -39,12 +40,46 @@ package com.physwf.components.map.camera
 			mTrackEnabled = v;
 		}
 		
-		public function moveTo(x:Number, y:Number):void
+		public function moveTo(x:uint, y:uint):void
 		{
-			if(mViewprot.x == x && mViewprot.y == y) return;
-			mViewprot.x = x;
-			mViewprot.y = y;
-			mMap.scrollRect = mViewprot;
+			if(mViewprot.x != x || mViewprot.y != y)
+			{
+				mViewprot.x = x;
+				mViewprot.y = y;
+				mMap.scrollRect = mViewprot;
+			}
+		}
+		
+		public function moveToTarget():void
+		{
+			if(!mTrackEnabled) return;
+			//计算x方向的滚动			
+			if(mTarget.x <= sHelpW)// 目标靠近左边界
+			{
+				mX = 0;
+			}
+			else if((mMap.mapWidth - mTarget.x) <= sHelpW) //目标靠近右边界
+			{
+				mX = mMap.mapWidth - mViewprot.width;
+			}
+			else// 其他情况
+			{
+				mX = mTarget.x - sHelpW;
+			}
+			//计算y方向的滚动
+			if(mTarget.y <= sHelpH)//目标靠近上边界
+			{
+				mY = 0;
+			}
+			else if((mMap.mapHeight - mTarget.y) <= sHelpH)//目标靠近下边界
+			{
+				mY = mMap.mapHeight - mViewprot.height;
+			}
+			else//其他情况
+			{
+				mY = mTarget.y - sHelpH;
+			}
+			moveTo(mX,mY);
 		}
 		
 		public function shake():void
@@ -54,7 +89,7 @@ package com.physwf.components.map.camera
 		
 		public function update():void
 		{
-			var tx:Number,ty:Number;
+			var tx:uint,ty:uint;
 			if(!mTrackEnabled) return;
 			//计算x方向的滚动			
 			if(mTarget.x <= sHelpW)// 目标靠近左边界
@@ -83,11 +118,11 @@ package com.physwf.components.map.camera
 				ty = mTarget.y - sHelpH;
 			}
 			//后面考虑将摄像机跟随设计具有自己的固定速度
-//			mDirectRad = Math.atan2(ty-300,tx-500);
-//			tx += mSpeed * Math.cos(mDirectRad);
-//			ty += mSpeed * Math.sin(mDirectRad);
-			
-			moveTo(tx,ty);
+			var dx:int = tx-mX;
+			var dy:int = ty-mY;
+			mX += dx * mEasying;
+			mY += dy * mEasying;
+			moveTo(mX,mY);
 		}
 		
 		public function get viewprot():Rectangle
