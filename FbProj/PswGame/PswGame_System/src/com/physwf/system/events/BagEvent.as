@@ -10,18 +10,19 @@ package com.physwf.system.events
 		public static const BAG_ITEM_CHANGE_GRID:String = "b_i_c_g";
 		public static const BAG_ITEM_DEL:String = "b_i_d";
 		public static const BAG_EQUIP_DEL:String = "b_e_d";
+		public static const BAG_ITEM_OR_EQUIP_ADDED:String = "b_i_o_e_a";
 		
-		private var mItemInfo:BagItemInfo;
+		private var mItemInfos:Vector.<BagItemInfo>;
 		
-		public function BagEvent(type:String,itemInfo:BagItemInfo)
+		public function BagEvent(type:String,itemInfos:Vector.<BagItemInfo>)
 		{
-			mItemInfo = itemInfo;
+			mItemInfos = itemInfos;
 			super(type, false, false);
 		}
 		
-		public function get itemInfo():BagItemInfo
+		public function get itemInfos():Vector.<BagItemInfo>
 		{
-			return mItemInfo;
+			return mItemInfos;
 		}
 	}
 }

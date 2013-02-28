@@ -50,8 +50,8 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1042:
 					var msg1041:MSG_RES_NOTI_OBJ_DEAD_1042 = e.message as MSG_RES_NOTI_OBJ_DEAD_1042;
 					fInfo = new FightInfo();
-					fInfo.srcType = msg1041.obj_type;
-					fInfo.srcId = msg1041.obj_id;
+					fInfo.objType = msg1041.obj_type;
+					fInfo.objId = msg1041.obj_id;
 					dispatchEvent(new FightEvent(FightEvent.FIGHT_DEATH,fInfo));
 					break;
 			}

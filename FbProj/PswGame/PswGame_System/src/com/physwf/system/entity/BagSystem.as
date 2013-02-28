@@ -52,11 +52,6 @@ package com.physwf.system.entity
 			RPCConnectioin.online.call(msg);
 		}
 		
-		public function addBagItem():void
-		{
-			
-		}
-		
 		public function changeItemGrid(srcGrid:uint,destGrid:uint):void
 		{
 			var msg:MSG_REQ_CHANGE_GRID_1052 = new MSG_REQ_CHANGE_GRID_1052();
@@ -69,63 +64,17 @@ package com.physwf.system.entity
 		{
 			switch(e.type)
 			{
-				case MessageEvent.MSG_SUCCESS_+1050:
+				case MessageEvent.MSG_SUCCESS_+1050://拉取背包
 					var msg1050:MSG_RES_GET_BAG_1050 = e.message as MSG_RES_GET_BAG_1050;
-					var items:Vector.<bag_item_t> = msg1050.items;
-					var equips:Vector.<bag_equip_t> = msg1050.equips;
-					var count:uint = items.length;
 					bagItems = new Vector.<BagItemInfo>();
-					
-					for(var i:int=0;i<count;++i)
-					{
-						var itemInfo:ItemInfo = new ItemInfo();
-						itemInfo.itemID = items[i].item_id;
-						itemInfo.count = items[i].item_cnt;
-						var bagItem:BagItemInfo = new BagItemInfo();
-						bagItem.item = itemInfo;
-						bagItem.girdTag = items[i].grid;
-						bagItems.push(bagItem);
-					}
-					count = equips.length;
-					for(i=0;i<count;++i)
-					{
-						var equip:EquipInfo = new EquipInfo();
-						equip.instanceID = equips[i].equip.instance_id;
-						equip.itemID = equips[i].equip.equip_id;
-						equip.strength = equips[i].equip.strength;
-						equip.solar = equips[i].equip.solar;
-						equip.physique = equips[i].equip.physique;
-						equip.spirit = equips[i].equip.spirit;
-						equip.agility = equips[i].equip.agility;
-						equip.atk = equips[i].equip.phy_atk;
-						equip.def = equips[i].equip.phy_def;
-						equip.magicAtk = equips[i].equip.solar_atk;
-						equip.magicDef = equips[i].equip.solar_def;
-						equip.crit = equips[i].equip.crit;
-						equip.critDamage = equips[i].equip.crit_damage;
-						equip.critTenacity = equips[i].equip.crit_tenacity;
-						equip.hit = equips[i].equip.hit;
-						equip.dodge = equips[i].equip.dodge;
-						equip.earthAtk = equips[i].equip.earth_atk;
-						equip.earthDef = equips[i].equip.earth_def;
-						equip.waterAtk = equips[i].equip.water_atk;
-						equip.waterDef = equips[i].equip.water_def;
-						equip.windAtk = equips[i].equip.wind_atk;
-						equip.windDef = equips[i].equip.wind_def;
-						equip.fireAtk = equips[i].equip.fire_atk;
-						equip.fireDef = equips[i].equip.fire_def;
-						equip.durability = equips[i].equip.durability;
-						bagItem = new BagItemInfo();
-						bagItem.girdTag = equips[i].grid;
-						bagItem.item = equip ;
-						bagItems.push(bagItem);
-					}
-					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_LIST,null));
+					var items:Vector.<BagItemInfo> = setBagItems(msg1050.items,msg1050.equips);
+					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_LIST,items));
 					break;
-				case MessageEvent.MSG_SUCCESS_+1051:
+				case MessageEvent.MSG_SUCCESS_+1051://删除消耗品
 					var msg1051:MSG_RES_DEL_ITEM_1051 = e.message as MSG_RES_DEL_ITEM_1051;
-					count = bagItems.length;
-					for(i=0;i<count;++i)
+					var count:uint = bagItems.length;
+					var bagItem:BagItemInfo;
+					for(var i:uint=0;i<count;++i)
 					{
 						if(bagItems[i].girdTag == msg1051.grid)
 						{
@@ -134,14 +83,16 @@ package com.physwf.system.entity
 							break;
 						}
 					}
-					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_DEL,bagItem));
+					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_DEL,Vector.<BagItemInfo>([bagItem])));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1052://移动物品
 					var msg1052:MSG_RES_CHANGE_GRID_1052 = e.message as MSG_RES_CHANGE_GRID_1052;
 					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_CHANGE_GRID,null));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1053://添加物品
-					
+					var msg1053:MSG_RES_NOTI_ADD_ITEM_1053 = e.message as MSG_RES_NOTI_ADD_ITEM_1053;
+					items = setBagItems(msg1053.items,msg1053.equips);
+					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_OR_EQUIP_ADDED,items));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1092://删除装备
 					var msg1092:MSG_RES_DEL_EQUIP_1092 = e.message as MSG_RES_DEL_EQUIP_1092;
@@ -155,9 +106,61 @@ package com.physwf.system.entity
 							break;
 						}
 					}
-					dispatchEvent(new BagEvent(BagEvent.BAG_EQUIP_DEL,bagItem));
+					dispatchEvent(new BagEvent(BagEvent.BAG_EQUIP_DEL,Vector.<BagItemInfo>([bagItem])));
 					break;
 			}
+		}
+		
+		private function setBagItems(items:Vector.<bag_item_t>,equips:Vector.<bag_equip_t>):Vector.<BagItemInfo>
+		{
+			var count:uint = items.length;
+			var offsetItems:Vector.<BagItemInfo> = new Vector.<BagItemInfo>();
+			for(var i:int=0;i<count;++i)
+			{
+				var itemInfo:ItemInfo = new ItemInfo();
+				itemInfo.itemID = items[i].item_id;
+				itemInfo.count = items[i].item_cnt;
+				var bagItem:BagItemInfo = new BagItemInfo();
+				bagItem.item = itemInfo;
+				bagItem.girdTag = items[i].grid;
+				offsetItems.push(bagItem);
+			}
+			count = equips.length;
+			for(i=0;i<count;++i)
+			{
+				var equip:EquipInfo = new EquipInfo();
+				equip.instanceID = equips[i].equip.instance_id;
+				equip.itemID = equips[i].equip.equip_id;
+				equip.strength = equips[i].equip.strength;
+				equip.solar = equips[i].equip.solar;
+				equip.physique = equips[i].equip.physique;
+				equip.spirit = equips[i].equip.spirit;
+				equip.agility = equips[i].equip.agility;
+				equip.atk = equips[i].equip.phy_atk;
+				equip.def = equips[i].equip.phy_def;
+				equip.magicAtk = equips[i].equip.solar_atk;
+				equip.magicDef = equips[i].equip.solar_def;
+				equip.crit = equips[i].equip.crit;
+				equip.critDamage = equips[i].equip.crit_damage;
+				equip.critTenacity = equips[i].equip.crit_tenacity;
+				equip.hit = equips[i].equip.hit;
+				equip.dodge = equips[i].equip.dodge;
+				equip.earthAtk = equips[i].equip.earth_atk;
+				equip.earthDef = equips[i].equip.earth_def;
+				equip.waterAtk = equips[i].equip.water_atk;
+				equip.waterDef = equips[i].equip.water_def;
+				equip.windAtk = equips[i].equip.wind_atk;
+				equip.windDef = equips[i].equip.wind_def;
+				equip.fireAtk = equips[i].equip.fire_atk;
+				equip.fireDef = equips[i].equip.fire_def;
+				equip.durability = equips[i].equip.durability;
+				bagItem = new BagItemInfo();
+				bagItem.girdTag = equips[i].grid;
+				bagItem.item = equip ;
+				offsetItems.push(bagItem);
+			}
+			bagItems = bagItems.concat(offsetItems);
+			return offsetItems;
 		}
 	}
 }

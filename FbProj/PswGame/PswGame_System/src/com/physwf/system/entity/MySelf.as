@@ -75,6 +75,7 @@ package com.physwf.system.entity
 			msg.x = x;
 			msg.y = y;
 			msg.dir = dir;
+//			dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 			RPCConnectioin.online.call(msg);
 		}
 		/**
