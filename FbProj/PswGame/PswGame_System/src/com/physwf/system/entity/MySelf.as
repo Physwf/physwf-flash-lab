@@ -109,6 +109,18 @@ package com.physwf.system.entity
 			msg
 		}
 		
+		public function syncPosition(x:uint,y:uint):void
+		{
+			var time:uint = System.systemTime;
+			var msg:MSG_REQ_SYNC_POSITION_1029 = new MSG_REQ_SYNC_POSITION_1029();
+			msg.timestamp = time;
+			var pos:map_pos_t = new map_pos_t();
+			pos.map_x = x;
+			pos.map_y = y;
+			msg.postions = pos;
+			RPCConnectioin.online.call(msg);
+		}
+		
 		private function onMessage(e:MessageEvent):void
 		{
 			var msg:MsgBase = e.message;

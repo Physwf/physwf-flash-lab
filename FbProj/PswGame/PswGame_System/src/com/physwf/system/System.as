@@ -12,6 +12,8 @@ package com.physwf.system
 	import com.physwf.system.entity.SkillSystem;
 	import com.physwf.system.events.MyEvent;
 	
+	import flash.utils.getTimer;
+	
 	import mx.utils.RPCObjectUtil;
 
 	public class System
@@ -24,7 +26,7 @@ package com.physwf.system
 		private static var _skill:SkillSystem;
 		
 		private static var _systemTime:uint;
-		public static function get systemTime():uint {return _systemTime;}
+		private static var _lastTimer:uint;
 		
 		public function System()
 		{
@@ -54,12 +56,13 @@ package com.physwf.system
 			_fight.initialize();
 			_skill.initialize();
 			
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1016,onSystemTime);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1003,onSystemTime);
 		}
 		
 		private static function onSystemTime(e:MessageEvent):void
 		{
-			_systemTime = MSG_RES_NOTIFY_SYS_TIME_1016(e.message).time;
+			_lastTimer = getTimer();
+			_systemTime = MSG_RES_GET_SYS_TIME_1003(e.message).timestamp;
 		}
 		
 		public static function estabConnection(ipInfo:Object,onConnect:Function):void
@@ -95,6 +98,14 @@ package com.physwf.system
 		public static function get skill():SkillSystem
 		{
 			return _skill;
+		}
+		
+		public static function get systemTime():uint 
+		{
+			var curTimer:uint = getTimer();
+			_systemTime += curTimer - _lastTimer;
+			_lastTimer = curTimer;
+			return _systemTime;
 		}
 	}
 }

@@ -7,6 +7,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.world.World;
 	import com.physwf.engine.world.controllers.MapController;
+	import com.physwf.engine.world.controllers.SelfController;
 	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
@@ -53,6 +54,10 @@ package com.physwf.engine.world.manager
 			MySelf.userInfo.map_x = 626;
 			MySelf.userInfo.map_y = 566;
 			Player.self.initialize(MySelf.userInfo);
+			
+			// 只有self 才需要controller
+			Player.controller = new SelfController();
+			Player.controller.initialize(Player.self,MySelf.userInfo);
 			
 			mCharactors = new <Player>[];
 			addPlayer(Player.self);
@@ -310,6 +315,7 @@ package com.physwf.engine.world.manager
 			{
 				mMonsters[i].update();
 			}
+			Player.controller.update();
 			mCamera.update();
 		}
 		
