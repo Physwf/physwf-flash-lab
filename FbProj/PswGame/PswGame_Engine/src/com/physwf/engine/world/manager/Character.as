@@ -114,28 +114,30 @@ package com.physwf.engine.world.manager
 				{
 					remainSpeed = speed - line.length;
 					
+					if(pathLine.length>3)
+					{
+						avrgRad = PathUtils.calAverDirec2(pathLine);
+						view.direction = ISODirection.radianToDirect8(avrgRad);
+					}
+					
 					if(pathLine.length)
 					{
+//						trace("下一个line",pathLine.length)
 						line = pathLine.shift();
 						line.subLen(remainSpeed);
 					}
 					else
 					{
 						line.subLen(line.length);
-					}
-					if(pathLine.length>3)
-					{
-						avrgRad = PathUtils.calAverDirec2(pathLine);
-						view.direction = ISODirection.radianToDirect8(avrgRad);
-					}
-					else if(pathLine.length == 0)
-					{
 						stand();
+						trace(view.x,view.x,"角色当前位置")
 						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
 					}
+					
 				}
 				else
 				{
+//					trace("继续",line.length);
 					line.subLen(speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
 				}
 				view.x = line.sx;

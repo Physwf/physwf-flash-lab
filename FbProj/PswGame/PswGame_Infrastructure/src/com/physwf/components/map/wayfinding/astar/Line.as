@@ -26,7 +26,7 @@ package com.physwf.components.map.wayfinding.astar
 			_ey = nextNode.y * GridTypeMapData.GRID_SIZE;
 			if(_sx == _ex || _sy == _ey) _length = GridTypeMapData.GRID_SIZE;
 			else _length = GridTypeMapData.GRID_SIZE * Math.SQRT2;
-			_direcRad = Math.atan2(_ey - _sy,_ex - _sx);
+			_direcRad = Math.atan2(_ey - _sy,_ex - _sx);//有八个可能值
 		}
 		
 		public function get sx():Number
@@ -77,8 +77,6 @@ package com.physwf.components.map.wayfinding.astar
 		{
 			if(_lenInvalide)
 			{
-				if(_sx == _ex || _sy == _ey) _length = GridTypeMapData.GRID_SIZE;
-				else _length = GridTypeMapData.GRID_SIZE * Math.SQRT2;
 				if(_sx == _ex)
 				{
 					_length = Math.abs(_ey - _sy);
@@ -93,13 +91,19 @@ package com.physwf.components.map.wayfinding.astar
 					var weightY:Number = _ey - _sy;
 					_length = Math.sqrt(weightX*weightX+weightY*weightY);
 				}
+				_lenInvalide = false;
 			}
 			return _length;
 		}
 
+		public function get directRad():Number
+		{
+			return _direcRad;
+		}
+		
 		public function toString():String
 		{
-			return "[sx:"+_sx+",sy:"+_sy+",ex:"+_ex+",ey:"+_ey+"]";
+			return "[sx:"+_sx+",sy:"+_sy+",ex:"+_ex+",ey:"+_ey+",length:"+length+",direct:"+_direcRad+"]";
 		}
 	}
 }

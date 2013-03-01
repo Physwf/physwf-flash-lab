@@ -18,10 +18,9 @@ package com.physwf.components.effects
 			super(layer,0,target);
 		}
 
-		override public function update():void
+		public function setProgress(hp:uint,hpMax:uint):void
 		{
-//			var prog:Number = mData.hp  / mData.hp_max;
-			var prog:uint = (mData.hp  / 1000)*100;
+			var prog:uint = (1  / 1) * 100;
 			if(prog<=0) 
 			{
 				prog=0;
@@ -36,8 +35,12 @@ package com.physwf.components.effects
 			shape.graphics.beginFill(color,1);
 			shape.graphics.drawRect(0,0,98,6);
 			shape.graphics.endFill();
+		}
+		
+		override public function update():void
+		{
 			x = mTarget.x - width * .5;
-			y = mTarget.y - mTarget.height;
+			y = mTarget.y - 80;
 		}
 		
 		private function drawBottom():void

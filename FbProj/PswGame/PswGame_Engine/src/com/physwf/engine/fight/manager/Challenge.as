@@ -62,31 +62,35 @@ package com.physwf.engine.fight.manager
 			{
 				case FightEvent.FIGHT_RESULT:
 					var fInfo:FightInfo = e.info;
-					var cInfo:* = {};
+					var cInfo:Object = {};
 					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
+					trace(cInfo.info.hp,"cInfo.info.hp")
 					if(chara)
 					{
 						chara.attack();
-						cInfo.info.hp -= fInfo.hpHurt;
+						trace(fInfo.hpHurt);
 						updateBloodBar(fInfo.objId,chara,cInfo.info);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:
+					cInfo = {};
 					fInfo = e.info;
 					chara = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
 					if(chara)
 					{
+						trace(fInfo.objId,"fInfo.objId");
 						chara.die();
 					}
 					break;
 			}
 		}
 		
-		private function getCharacterByID(type:uint,id:uint,info_out:*):Character
+		private function getCharacterByID(type:uint,id:uint,info_out:Object):Character
 		{
 			if(type == Fight.FIGHT_CHARA_TYPE_PLAYER)
 			{
-				var player:Player = Engine.map.getPlayerByUID(id)
+				var player:Player = Engine.map.getPlayerByUID(id);
+				trace(player.info.hp,"player.info.hp");
 				info_out.info = player.info;
 				return player;
 			}
@@ -97,6 +101,7 @@ package com.physwf.engine.fight.manager
 			else if(type == Fight.FIGHT_CHARA_TYPE_NPC)
 			{
 				var monster:Monster = Engine.map.getMonsterByMID(id);
+				trace(monster.info.hp,"monster.info.hp");
 				info_out.info = monster.info;
 				return monster;
 			}

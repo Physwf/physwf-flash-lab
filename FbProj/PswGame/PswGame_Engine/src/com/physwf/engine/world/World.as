@@ -36,7 +36,7 @@ package com.physwf.engine.world
 
 		public function initialize():void
 		{
-			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onEnterMapSuccess);
+			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onFirstEnterMap);
 			//初始化进入地图
 			System.myself.enterMap(MySelf.userInfo.map_id,MySelf.userInfo.map_x,MySelf.userInfo.map_y);
 			ScreenManager.main.frameRate = 30;

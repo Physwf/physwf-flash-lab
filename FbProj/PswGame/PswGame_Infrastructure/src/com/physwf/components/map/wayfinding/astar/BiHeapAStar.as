@@ -125,6 +125,34 @@ package com.physwf.components.map.wayfinding.astar
 				_pathLine.unshift(line);
 				node = node.parent;
 			}
+			
+			floyd();
+		}
+		/**
+		 * 合并在同一方向上的点(8个可能的方向),该思想参见http://wonderfl.net/c/aWCe或http://www.iamsevent.com/post/34.html
+		 */		
+		private function floyd():void
+		{
+			var len:uint = _pathLine.length
+			if(len>1)
+			{
+				var i:uint=0;
+				while(true)
+				{
+					if(_pathLine[i].directRad == _pathLine[i+1].directRad)
+					{
+						_pathLine[i+1].sx = _pathLine[i].sx;
+						_pathLine[i+1].sy = _pathLine[i].sy;
+						_pathLine.splice(i,1);
+						len--;
+					}
+					else
+					{
+						i++;
+					}
+					if(len-i<2) break;
+				}
+			}
 		}
 		
 		private function manhattan(node:Node):Number

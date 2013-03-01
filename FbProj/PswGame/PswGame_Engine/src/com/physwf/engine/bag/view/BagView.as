@@ -27,6 +27,8 @@ package com.physwf.engine.bag.view
 		private const NUM_CELL_Y:uint = 10;
 		private const CELL_SIZE:uint = 34;
 		
+		private const GRID_OFFSET:uint = 1000;
+		
 		private var bgPanel:Panel;
 		private var cellLayer:Sprite;
 		private var cells:Vector.<Cell>;
@@ -110,7 +112,7 @@ package com.physwf.engine.bag.view
 			{
 				//临时写，后面需要考虑版本控制和加载优化
 				trace(items[i].item.itemID);
-				var grid:uint = items[i].girdTag;
+				var grid:uint = items[i].girdTag - GRID_OFFSET;
 				var cell:Cell = cells[grid];
 				loadIcon(cell,items[i].item.itemID);
 			}

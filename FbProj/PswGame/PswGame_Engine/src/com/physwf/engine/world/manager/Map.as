@@ -151,6 +151,7 @@ package com.physwf.engine.world.manager
 				case MyEvent.ENTER_MAP_SUCCESS:
 					break;
 				case MyEvent.SELF_MOVE_ALLOWED:
+					trace(mController.targetX,mController.targetY,"将要寻路到此");
 					Player.self.goto(mController.targetX,mController.targetY);
 					break;
 			}

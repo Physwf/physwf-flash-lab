@@ -32,9 +32,9 @@ package com.physwf.engine.world.controllers
 		private function onGroundClick(e:MouseEvent):void
 		{
 			Engine.challenge.setTarget(null,0);
-			System.myself.move(mapView.mouseX,mapView.mouseY,0);
 			targetX = mapView.mouseX;
 			targetY = mapView.mouseY;
+			System.myself.move(targetX,targetY,0);
 		}
 		
 		public function getMapID():uint
