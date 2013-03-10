@@ -25,13 +25,13 @@ package com.physwf.engine.world.manager
 		
 		private var target_x:uint;
 		private var target_y:uint;
-		private var speed:uint = 6;
+		private var _speed:uint = 6;
+		public function get speed():uint { return _speed; }
 		private var rad:Number;// 速度的方向
 		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
 		private var line:Line;
 		
-		private var _isMoving:Boolean = false;
-		public function get isMoving():Boolean { return _isMoving; }
+		public var isMoving:Boolean = false;
 		
 		public function Character()
 		{
@@ -108,12 +108,12 @@ package com.physwf.engine.world.manager
 		{
 			if(pathLine)
 			{
-				_isMoving = true;
+				isMoving = true;
 				var remainSpeed:Number;
 				// 如果速度大小超过了当前线段长度，则提取下一个线段，并将该线段的起始点减去之前剩下的速度量
-				if(speed>line.length)
+				if(_speed>line.length)
 				{
-					remainSpeed = speed - line.length;
+					remainSpeed = _speed - line.length;
 					
 					if(pathLine.length>3)
 					{
@@ -131,7 +131,7 @@ package com.physwf.engine.world.manager
 					{
 						line.subLen(line.length);
 						stand();
-						_isMoving = false;
+						isMoving = false;
 						trace(view.x,view.x,"角色当前位置")
 						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
 					}
@@ -140,7 +140,7 @@ package com.physwf.engine.world.manager
 				else
 				{
 //					trace("继续",line.length);
-					line.subLen(speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
+					line.subLen(_speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
 				}
 				view.x = line.sx;
 				view.y = line.sy;

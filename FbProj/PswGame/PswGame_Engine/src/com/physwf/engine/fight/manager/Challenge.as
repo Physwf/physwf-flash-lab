@@ -4,7 +4,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdAtkMonster;
-	import com.physwf.engine.command.CmdWalkTo;
+	import com.physwf.engine.command.CmdGoTo;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
 	import com.physwf.engine.world.manager.Character;
@@ -131,7 +131,7 @@ package com.physwf.engine.fight.manager
 			trace(targetX,targetY,"将要寻路到此");
 			if((distX * distX + distY * distY) >= (skill.range * skill.range))
 			{
-				var walkCmd:CmdWalkTo = new CmdWalkTo(Player.self);
+				var walkCmd:CmdGoTo = new CmdGoTo(Player.self);
 				walkCmd.setDest(targetX,targetY);
 				controller.order(walkCmd);
 			}
