@@ -1,6 +1,7 @@
 package com.physwf.components.command
 {
 	import com.physwf.components.interfaces.INumerical;
+	import com.physwf.components.interfaces.IUpdatable;
 	
 	import flash.events.EventDispatcher;
 
@@ -9,7 +10,7 @@ package com.physwf.components.command
 	 * @author joe
 	 * 
 	 */
-	public class Command extends EventDispatcher implements INumerical
+	public class Command extends EventDispatcher implements INumerical,IUpdatable
 	{
 		public static const FINISH:String = "finish";
 		
@@ -20,6 +21,11 @@ package com.physwf.components.command
 		}
 		
 		public function execute():void
+		{
+			
+		}
+		
+		public function update():void
 		{
 			
 		}
