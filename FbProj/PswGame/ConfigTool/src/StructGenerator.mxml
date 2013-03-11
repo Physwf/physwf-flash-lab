@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="447" height="162" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.lipi.excel.Excel;
+			
+			import mx.controls.Alert;
+			
+			import utils.MethodUtils;
+			import utils.TypeUtils;
+			private var cfgXML:XML;
+			private var rowStruct:String;
+			
+			private function init():void
+			{
+				var urlLoader:URLLoader = new URLLoader();
+				urlLoader.addEventListener(Event.COMPLETE,onConfigLoaded);
+				urlLoader.load(new URLRequest("config/projects.xml"));
+			}
+			
+			private function onConfigLoaded(e:Event):void
+			{
+				var urlLoader:URLLoader = e.target as URLLoader;
+				urlLoader.removeEventListener(Event.COMPLETE,onConfigLoaded);
+				cfgXML = XML(e.target.data);
+				
+				urlLoader.addEventListener(Event.COMPLETE,onTemplateLoad);
+				urlLoader.load(new URLRequest("templates/RowStruct.txt"));
+			}
+			
+			private function onTemplateLoad(e:Event):void
+			{
+				rowStruct = e.target.data as String;
+			}
+			
+			private function onDo():void
+			{
+				for each(var project:XML in cfgXML.project)
+				{
+					readXLS(project.@xlsPath,project.@name);
+				}
+				Alert.show("OK!","ok",4,null,function ():void { exit(); });
+			}
+			
+			private function readXLS(path:String,name:String):void
+			{
+				var file:File = new File(path);
+				var fs:FileStream = new FileStream();
+				fs.open(file,FileMode.READ);
+				var fileData:ByteArray = new ByteArray();
+				fs.readBytes(fileData);
+				fs.close();
+				
+//				var xlsFile:ExcelFile = new ExcelFile();
+//				xlsFile.loadFromByteArray(fileData);
+//				var sheet:Sheet = xlsFile.sheets[0];
+//				trace(sheet.rows);
+				
+				var excel:Excel = new Excel(fileData);
+				var sheet:Array = excel.getSheetArray();
+				var numColumn:uint = sheet[0].length;
+				
+				var stru:String = rowStruct.replace(/{StructName}/g,name);
+				
+				// 字段
+				var fields:Array = sheet[1];
+				var types:Array = sheet[2];
+				var filed:String;
+				var readMethod:String;
+				var writeMethod:String;
+				
+				for(var i:uint=0;i<numColumn;++i)
+				{
+					filed = "public var ";
+					filed +=fields[i]+":"+TypeUtils.transformType(types[i])+";";
+					
+					readMethod = MethodUtils.getRead(fields[i],types[i]);
+					writeMethod = MethodUtils.getWrite(fields[i],types[i]);
+					
+					stru = stru.replace("{fields}",filed+"\n\t\t{fields}");
+					stru = stru.replace("{read}",readMethod+"\n\t\t\t{read}");
+					stru = stru.replace("{write}",writeMethod+"\n\t\t\t{write}");
+				}
+				stru = stru.replace("{fields}","");
+				stru = stru.replace("{read}","");
+				stru = stru.replace("{write}","");
+				
+				var structFile:File = new File(cfgXML.@structDir+"/"+name+".as");
+				fs.open(structFile,FileMode.WRITE);
+				fs.writeUTFBytes(stru);
+				fs.close();
+			}
+		]]>
+	</fx:Script>
+	<s:Button x="347" y="105" label="Do" click="onDo()"/>
+</s:WindowedApplication>

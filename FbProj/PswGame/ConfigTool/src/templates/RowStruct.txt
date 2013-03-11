@@ -1,0 +1,27 @@
+package templates
+{
+	import flash.utils.ByteArray;
+	import flash.utils.IDataInput;
+	import flash.utils.IDataOutput;
+	import flash.utils.IExternalizable;
+	
+	public class {StructName} implements IExternalizable
+	{
+		{fields}
+		
+		public function {StructName}()
+		{
+		}
+		
+		public function readExternal(input:IDataInput):void
+		{
+			{read}
+		}
+		
+		public function writeExternal(output:IDataOutput):void
+		{
+			{write}
+		}
+		
+	}
+}

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<projects>
+<projects structDir="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/src/struct">
 	<project name="map" 
-		xlsPath="" 
+		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/map.xlsx" 
+		xmlPath="" 
+		asPath=""/>
+	<project name="item" 
+		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/item.xlsx" 
+		xmlPath="" 
+		asPath=""/>
+	<project name="monster" 
+		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/monster.xlsx" 
 		xmlPath="" 
 		asPath=""/>
 </projects>

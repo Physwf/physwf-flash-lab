@@ -2,9 +2,74 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="477" height="182">
+					   width="477" height="182" initialize="init()">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="382" y="127" label="Do"/>
+	<fx:Script>
+		<![CDATA[
+			import spark.components.CheckBox;
+			private var cfgXML:XML;
+			private var projectsSelected:XML;
+			
+			private function init():void
+			{
+				var urlLoader:URLLoader = new URLLoader();
+				urlLoader.addEventListener(Event.COMPLETE,onConfigLoaded);
+				urlLoader.load(new URLRequest("config/projects.xml"));
+				projectsSelected = <projects/>;
+			}
+			
+			private function onConfigLoaded(e:Event):void
+			{
+				e.target.removeEventListener(Event.COMPLETE,onConfigLoaded);
+				cfgXML = XML(e.target.data);
+				var i:uint=0;
+				const intervalX:uint = 70;
+				const intervalY:uint = 40;
+				const offsetX:uint = 40;
+				const offsetY:uint = 20;
+				const numPerRow:uint = 6;
+				for each( var project:XML in cfgXML.project)
+				{
+					var cBox:CheckBox = new CheckBox();
+					cBox.label = project.@name; 
+					addElement(cBox);
+					cBox.x = offsetX+i%numPerRow * intervalX;
+					cBox.y = offsetY+Math.floor(i/numPerRow) * intervalY;
+					cBox.addEventListener(MouseEvent.CLICK,onProjectSelected);
+					i++;
+				}
+				
+			}
+			
+			private function onProjectSelected(e:Event):void
+			{
+				var cBox:CheckBox = e.target as CheckBox;
+				if(cBox.selected)
+				{
+					var project:XML = cfgXML.project.(@name == cBox.label)[0] as XML;
+					projectsSelected.appendChild(project);
+				}
+				else
+				{
+					delete projectsSelected.project.(@name == cBox.label)[0];
+				}
+			}
+			
+			private function onSelectClick():void
+			{
+				
+			}
+			
+			private function onAllClick():void
+			{
+				
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:Button x="382" y="127" label="All" click="onAllClick()"/>
+	<s:Button x="289" y="127" label="Select" click="onSelectClick()"/>
 </s:WindowedApplication>
