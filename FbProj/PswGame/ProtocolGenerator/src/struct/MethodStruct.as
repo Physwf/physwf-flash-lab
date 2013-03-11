@@ -226,10 +226,10 @@ package struct
 			switch(type)
 			{
 				case FieldStruct.TYPE_UINT8:
-					return  "output.writeUnsignedByte("+name+"["+indexVar+"])";
+					return  "output.writeByte("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_UINT16:
-					return  "output.writeUnsignedShort("+name+"["+indexVar+"])";
+					return  "output.writeShort("+name+"["+indexVar+"])";
 					break;
 				case FieldStruct.TYPE_UINT32:
 					return  "output.writeUnsignedInt("+name+"["+indexVar+"])";

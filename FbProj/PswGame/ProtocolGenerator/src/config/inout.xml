@@ -5,6 +5,7 @@
  				extendsName = ""
  				url="http://10.1.1.5/su/proto/download.php?project=ultraman_login" 
  				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Application/src/com/physwf/application/login/msg/"
+ 				msgManagerPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Application/src/com/physwf/application/login/msg/MessageManager.as"
  		/>
  		<server name="Online" 
  				packageName="" 

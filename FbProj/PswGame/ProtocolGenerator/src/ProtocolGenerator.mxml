@@ -129,7 +129,7 @@
 				var proto:XML = XML(e.target.data);
 				var structList:XMLList = proto.struct_list[0].struct;
 				var structRaw:XML;
-				if(msgMngPath) 
+				if(msgMngPath != null) 
 				{
 					msgManagerFile = new File(msgMngPath);
 					msgManagerFs = new FileStream();
