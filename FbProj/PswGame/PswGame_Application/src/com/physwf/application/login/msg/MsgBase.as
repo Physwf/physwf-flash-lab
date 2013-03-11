@@ -50,6 +50,7 @@ package com.physwf.application.login.msg
 			}
 			sum %= 100000;
 			output.writeInt(sum);
+			trace("req:包长->"+body.length,"命令号->"+msgid,"用户id->"+uid);
 		}
 		
 		public function readExternal(input:IDataInput):void
@@ -70,7 +71,7 @@ package com.physwf.application.login.msg
 			uid = input.readUnsignedInt();
 			seqIndex = input.readUnsignedInt();
 			statusCode = input.readUnsignedInt();
-			trace("response:包长->"+length,"命令号->"+msgid,"用户id->"+uid,"序列->"+seqIndex,"状态码->"+statusCode)
+			trace("res:包长->"+length,"命令号->"+msgid,"用户id->"+uid,"序列->"+seqIndex,"状态码->"+statusCode)
 		}
 		
 		protected function readBody(input:IDataInput):void

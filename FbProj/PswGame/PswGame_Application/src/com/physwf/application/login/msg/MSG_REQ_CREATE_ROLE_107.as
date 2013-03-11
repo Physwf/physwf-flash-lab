@@ -37,7 +37,7 @@ package com.physwf.application.login.msg
 				output.writeBytes(nickData)
 			}
 			output.writeByte(prof);
-			output.writeInt(channel);
+			output.writeUnsignedInt(channel);
 			if(session_data)
 			{
 				output.writeBytes(session_data)
@@ -49,8 +49,17 @@ package com.physwf.application.login.msg
 				sessionData.length = 16;
 				output.writeBytes(sessionData)
 			}
-			output.writeUnsignedInt(tad.length);
-			output.writeUTFBytes(tad);			
+			if(tad_data)
+			{
+				output.writeBytes(tad_data)
+			}
+			else
+			{
+				var tadData:ByteArray = new ByteArray();
+				tadData.writeUTFBytes(tad)
+				tadData.length = 128;
+				output.writeBytes(tadData)
+			}			
 		}
 	}
 }

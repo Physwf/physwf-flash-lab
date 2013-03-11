@@ -7,7 +7,6 @@ package com.physwf.application.login.msg
 	
 	public class msg_t implements IExternalizable
 	{
-		public var msg_len:uint;
 		public var msg:String;
 		public var msg_data:ByteArray
 		
@@ -17,14 +16,12 @@ package com.physwf.application.login.msg
 		
 		public function readExternal(input:IDataInput):void
 		{
-			msg_len = input.readUnsignedInt();
 			var msgLen:uint =input.readUnsignedInt();
 			msg=input.readUTFBytes(msgLen);			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(msg_len);
 			output.writeUnsignedInt(msg.length);
 			output.writeUTFBytes(msg);			
 		}

@@ -42,7 +42,7 @@ package com.physwf.application.login.msg
 				output.writeBytes(online_ipData)
 			}
 			output.writeShort(online_port);
-			output.writeInt(user_num);
+			output.writeUnsignedInt(user_num);
 			output.writeShort(area_id);			
 		}
 	}

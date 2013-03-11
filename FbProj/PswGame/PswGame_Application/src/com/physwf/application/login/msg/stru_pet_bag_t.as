@@ -5,17 +5,14 @@ package com.physwf.application.login.msg
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class stru_pet_simple_t implements IExternalizable
+	public class stru_pet_bag_t implements IExternalizable
 	{
 		public var instance_id:uint;
 		public var pet_id:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
-		public var level:uint;
-		public var hp:uint;
-		public var mp:uint;
 		
-		public function stru_pet_simple_t()
+		public function stru_pet_bag_t()
 		{
 		}
 		
@@ -23,10 +20,7 @@ package com.physwf.application.login.msg
 		{
 			instance_id = input.readUnsignedInt();
 			pet_id = input.readUnsignedInt();
-			nick = input.readUTFBytes(16);
-			level = input.readUnsignedShort();
-			hp = input.readUnsignedInt();
-			mp = input.readUnsignedInt();			
+			nick = input.readUTFBytes(16);			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -43,10 +37,7 @@ package com.physwf.application.login.msg
 				nickData.writeUTFBytes(nick)
 				nickData.length = 16;
 				output.writeBytes(nickData)
-			}
-			output.writeShort(level);
-			output.writeUnsignedInt(hp);
-			output.writeUnsignedInt(mp);			
+			}			
 		}
 	}
 }

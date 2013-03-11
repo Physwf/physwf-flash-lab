@@ -20,9 +20,9 @@ package com.physwf.application.login.msg
 			recommend_svr_list= new Vector.<recommend_area_list_t>();
 			for(var i:int=0;i<recommend_svr_listLen;++i)
 			{
-				var item:recommend_area_list_t = new recommend_area_list_t()
-				item.readExternal(input);;
-				recommend_svr_list.push(item);
+				var recommend_svr_list_item:recommend_area_list_t = new recommend_area_list_t()
+				recommend_svr_list_item.readExternal(input);;
+				recommend_svr_list.push(recommend_svr_list_item);
 			}			
 		}
 	}

@@ -162,7 +162,8 @@ package com.physwf.application.login
 				selectRolePanel.dispose();
 				finish();
 			};
-			LoginService.instance.getRoles();
+			LoginService.instance.connectLoginServer(MySelf.loginInfo.host,MySelf.loginInfo.port,LoginService.instance.getRoles);
+//			LoginService.instance.getRoles();
 		}
 		
 		private function finish():void

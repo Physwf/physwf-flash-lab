@@ -5,25 +5,25 @@ package com.physwf.application.login.msg
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class uid_role_t implements IExternalizable
+	public class stru_item_t implements IExternalizable
 	{
-		public var user_id:uint;
-		public var role_tm:uint;
+		public var itemid:uint;
+		public var itemcnt:uint;
 		
-		public function uid_role_t()
+		public function stru_item_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			user_id = input.readUnsignedInt();
-			role_tm = input.readUnsignedInt();			
+			itemid = input.readUnsignedInt();
+			itemcnt = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(user_id);
-			output.writeUnsignedInt(role_tm);			
+			output.writeUnsignedInt(itemid);
+			output.writeUnsignedInt(itemcnt);			
 		}
 	}
 }

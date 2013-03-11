@@ -10,7 +10,7 @@ package com.physwf.application.login.msg
 		public var role_tm:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
-		public var prof:uint;
+		public var sex:uint;
 		
 		public function role_info_t()
 		{
@@ -20,12 +20,12 @@ package com.physwf.application.login.msg
 		{
 			role_tm = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
-			prof = input.readUnsignedByte();			
+			sex = input.readUnsignedByte();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(role_tm);
+			output.writeUnsignedInt(role_tm);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)
@@ -37,7 +37,7 @@ package com.physwf.application.login.msg
 				nickData.length = 16;
 				output.writeBytes(nickData)
 			}
-			output.writeByte(prof);			
+			output.writeByte(sex);			
 		}
 	}
 }

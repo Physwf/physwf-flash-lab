@@ -13,6 +13,7 @@ package com.physwf.application.login.controller
 	import com.physwf.application.login.msg.role_info_t;
 	import com.physwf.application.login.rpc.MessageEvent;
 	import com.physwf.application.login.rpc.RPCClient;
+	import com.physwf.application.login.services.LoginService;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.RoleInfo;
 	import com.physwf.system.vo.ServerInfo;
@@ -50,7 +51,8 @@ package com.physwf.application.login.controller
 			{
 				case MessageEvent.MSG_SUCCESS_+103:
 				{
-					MySelf.loginInfo.session = MSG_RES_LOGIN_103(msg).session;
+					MySelf.loginInfo.session = (msg as MSG_RES_LOGIN_103).session;
+					MySelf.userInfo.uid = msg.uid;
 					MsgBase.UID = msg.uid;
 					onLoginSuccess();
 					break;
@@ -76,7 +78,8 @@ package com.physwf.application.login.controller
 						sInfo.user_num = serverList[i].user_num;
 						OnlineInfo.onlines.push(sInfo);
 					}
-					onGetServerList()
+					onGetServerList();
+					RPCClient.close();
 					break;
 				}
 				case MessageEvent.MSG_SUCCESS_+106://获得角色列表
@@ -88,7 +91,7 @@ package com.physwf.application.login.controller
 						var roleInfo:RoleInfo = new RoleInfo();
 						roleInfo.createTime = roleList[i].role_tm;
 						roleInfo.nick = roleList[i].nick;
-						roleInfo.prof = roleList[i].prof;
+						roleInfo.prof = roleList[i].sex;
 						OnlineInfo.roles.push(roleInfo);
 					}
 					onGetRoles();

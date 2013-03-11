@@ -22,9 +22,9 @@ package com.physwf.application.login.msg
 			roles= new Vector.<role_info_t>();
 			for(var i:int=0;i<rolesLen;++i)
 			{
-				var item:role_info_t = new role_info_t()
-				item.readExternal(input);;
-				roles.push(item);
+				var roles_item:role_info_t = new role_info_t()
+				roles_item.readExternal(input);;
+				roles.push(roles_item);
 			}			
 		}
 	}

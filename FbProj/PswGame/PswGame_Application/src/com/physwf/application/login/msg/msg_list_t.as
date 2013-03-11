@@ -19,18 +19,18 @@ package com.physwf.application.login.msg
 			msg_list= new Vector.<msg_t>();
 			for(var i:int=0;i<msg_listLen;++i)
 			{
-				var item:msg_t = new msg_t()
-				item.readExternal(input);;
-				msg_list.push(item);
+				var msg_list_item:msg_t = new msg_t()
+				msg_list_item.readExternal(input);;
+				msg_list.push(msg_list_item);
 			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(msg_list.length);
-			for(var i:int=0;i<msg_list.length;++i)
+			for(var j:int=0;j<msg_list.length;++j)
 			{
-				msg_list[i].writeExternal(output);
+				msg_list[j].writeExternal(output);
 			}			
 		}
 	}

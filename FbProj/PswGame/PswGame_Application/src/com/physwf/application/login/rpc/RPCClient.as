@@ -119,6 +119,9 @@ package com.physwf.application.login.rpc
 				case SecurityErrorEvent.SECURITY_ERROR:
 					trace("login:socket_securityError");
 					break;
+				default:
+					trace("unknown error");
+					break;
 			}
 		}
 		
@@ -135,6 +138,7 @@ package com.physwf.application.login.rpc
 			var msgData:ByteArray = new ByteArray();
 			msg.writeExternal(msgData);
 			rawSocket.writeBytes(msgData);
+//			rawSocket.timeout
 			rawSocket.flush();
 		}
 		

@@ -7,8 +7,8 @@ package com.physwf.application.login.msg
 	
 	public class stru_pet_t implements IExternalizable
 	{
+		public var instance_id:uint;
 		public var pet_id:uint;
-		public var pet_type:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
 		public var level:uint;
@@ -18,28 +18,26 @@ package com.physwf.application.login.msg
 		public var happiness:uint;
 		public var life:uint;
 		public var sex:uint;
-		public var character:uint;
+		public var charactor:uint;
 		public var strength:uint;
-		public var intelligence:uint;
-		public var physical:uint;
-		public var magic:uint;
-		public var speed:uint;
-		public var additions:uint;
-		public var strength_factor:uint;
-		public var intelligence_factor:uint;
-		public var physical_factor:uint;
-		public var magic_factor:uint;
-		public var speed_factor:uint;
-		public var hp_max:uint;
-		public var mp_max:uint;
-		public var attack:uint;
-		public var mattack:uint;
-		public var defense:uint;
-		public var mdefense:uint;
+		public var solar:uint;
+		public var physique:uint;
+		public var spirit:uint;
+		public var agility:uint;
+		public var stren_talent:uint;
+		public var solar_talent:uint;
+		public var physique_talent:uint;
+		public var spirit_talent:uint;
+		public var agility_talent:uint;
+		public var phy_atk:uint;
+		public var solar_atk:uint;
+		public var phy_def:uint;
+		public var solar_def:uint;
+		public var crit:uint;
+		public var crit_damage:uint;
+		public var crit_tenacity:uint;
 		public var hit:uint;
-		public var avoid:uint;
-		public var multi_atk:uint;
-		public var multi_atk_avoid:uint;
+		public var dodge:uint;
 		
 		public function stru_pet_t()
 		{
@@ -47,8 +45,8 @@ package com.physwf.application.login.msg
 		
 		public function readExternal(input:IDataInput):void
 		{
+			instance_id = input.readUnsignedInt();
 			pet_id = input.readUnsignedInt();
-			pet_type = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
 			level = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
@@ -57,34 +55,32 @@ package com.physwf.application.login.msg
 			happiness = input.readUnsignedShort();
 			life = input.readUnsignedShort();
 			sex = input.readUnsignedByte();
-			character = input.readUnsignedByte();
+			charactor = input.readUnsignedByte();
 			strength = input.readUnsignedShort();
-			intelligence = input.readUnsignedShort();
-			physical = input.readUnsignedShort();
-			magic = input.readUnsignedShort();
-			speed = input.readUnsignedShort();
-			additions = input.readUnsignedShort();
-			strength_factor = input.readUnsignedShort();
-			intelligence_factor = input.readUnsignedShort();
-			physical_factor = input.readUnsignedShort();
-			magic_factor = input.readUnsignedShort();
-			speed_factor = input.readUnsignedShort();
-			hp_max = input.readUnsignedInt();
-			mp_max = input.readUnsignedInt();
-			attack = input.readUnsignedInt();
-			mattack = input.readUnsignedInt();
-			defense = input.readUnsignedInt();
-			mdefense = input.readUnsignedInt();
+			solar = input.readUnsignedShort();
+			physique = input.readUnsignedShort();
+			spirit = input.readUnsignedShort();
+			agility = input.readUnsignedShort();
+			stren_talent = input.readUnsignedShort();
+			solar_talent = input.readUnsignedShort();
+			physique_talent = input.readUnsignedShort();
+			spirit_talent = input.readUnsignedShort();
+			agility_talent = input.readUnsignedShort();
+			phy_atk = input.readUnsignedInt();
+			solar_atk = input.readUnsignedInt();
+			phy_def = input.readUnsignedInt();
+			solar_def = input.readUnsignedInt();
+			crit = input.readUnsignedByte();
+			crit_damage = input.readUnsignedByte();
+			crit_tenacity = input.readUnsignedByte();
 			hit = input.readUnsignedShort();
-			avoid = input.readUnsignedShort();
-			multi_atk = input.readUnsignedShort();
-			multi_atk_avoid = input.readUnsignedShort();			
+			dodge = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(pet_id);
-			output.writeInt(pet_type);
+			output.writeUnsignedInt(instance_id);
+			output.writeUnsignedInt(pet_id);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)
@@ -97,34 +93,32 @@ package com.physwf.application.login.msg
 				output.writeBytes(nickData)
 			}
 			output.writeShort(level);
-			output.writeInt(exp);
-			output.writeInt(hp);
-			output.writeInt(mp);
+			output.writeUnsignedInt(exp);
+			output.writeUnsignedInt(hp);
+			output.writeUnsignedInt(mp);
 			output.writeShort(happiness);
 			output.writeShort(life);
 			output.writeByte(sex);
-			output.writeByte(character);
+			output.writeByte(charactor);
 			output.writeShort(strength);
-			output.writeShort(intelligence);
-			output.writeShort(physical);
-			output.writeShort(magic);
-			output.writeShort(speed);
-			output.writeShort(additions);
-			output.writeShort(strength_factor);
-			output.writeShort(intelligence_factor);
-			output.writeShort(physical_factor);
-			output.writeShort(magic_factor);
-			output.writeShort(speed_factor);
-			output.writeInt(hp_max);
-			output.writeInt(mp_max);
-			output.writeInt(attack);
-			output.writeInt(mattack);
-			output.writeInt(defense);
-			output.writeInt(mdefense);
+			output.writeShort(solar);
+			output.writeShort(physique);
+			output.writeShort(spirit);
+			output.writeShort(agility);
+			output.writeShort(stren_talent);
+			output.writeShort(solar_talent);
+			output.writeShort(physique_talent);
+			output.writeShort(spirit_talent);
+			output.writeShort(agility_talent);
+			output.writeUnsignedInt(phy_atk);
+			output.writeUnsignedInt(solar_atk);
+			output.writeUnsignedInt(phy_def);
+			output.writeUnsignedInt(solar_def);
+			output.writeByte(crit);
+			output.writeByte(crit_damage);
+			output.writeByte(crit_tenacity);
 			output.writeShort(hit);
-			output.writeShort(avoid);
-			output.writeShort(multi_atk);
-			output.writeShort(multi_atk_avoid);			
+			output.writeShort(dodge);			
 		}
 	}
 }

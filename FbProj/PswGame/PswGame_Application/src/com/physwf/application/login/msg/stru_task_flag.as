@@ -22,8 +22,8 @@ package com.physwf.application.login.msg
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeInt(tskid);
-			output.writeInt(flag);			
+			output.writeUnsignedInt(tskid);
+			output.writeUnsignedInt(flag);			
 		}
 	}
 }
