@@ -75,7 +75,7 @@ package com.physwf.system.entity
 			msg.x = x;
 			msg.y = y;
 			msg.dir = dir;
-//			dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
+			dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 			RPCConnectioin.online.call(msg);
 		}
 		/**
@@ -117,7 +117,7 @@ package com.physwf.system.entity
 			var pos:map_pos_t = new map_pos_t();
 			pos.map_x = x;
 			pos.map_y = y;
-			msg.postions = pos;
+			msg.postion = pos;
 			RPCConnectioin.online.call(msg);
 		}
 		
