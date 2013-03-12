@@ -16,6 +16,8 @@ package com.physwf.application.startup
 	import flash.geom.Point;
 	import flash.ui.Mouse;
 	import flash.ui.MouseCursorData;
+	
+	import flashx.textLayout.elements.Configuration;
 
 	public class Startup extends EventDispatcher implements IDestroyable
 	{
@@ -40,6 +42,19 @@ package com.physwf.application.startup
 		private function onLoginSuccess(e:MyEvent):void
 		{
 			System.myself.removeEventListener(MyEvent.LOGIN_SUCCESS,onLoginSuccess);
+			loadConfig();
+		}
+		
+		private function loadConfig():void
+		{
+			var messenger:EventDispatcher = new EventDispatcher();
+			messenger.addEventListener(Event.COMPLETE,onConfigComplete);
+			Config.initialize(messenger);
+		}
+		
+		private function onConfigComplete(e:Event):void
+		{
+			e.target.removeEventListener(Event.COMPLETE,onConfigComplete);
 			registerMouseCursor();
 		}
 		
