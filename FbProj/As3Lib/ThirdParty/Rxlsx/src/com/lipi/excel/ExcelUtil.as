@@ -32,11 +32,15 @@ package com.lipi.excel
 		public static function textToInt(abc:String):int
 		{
 			var returnValue:int = 0;
+			var pow:Number = 0;
 			for(var i:int = abc.length-1;i>=0;i--)
 			{
-				var cValue:int = abc.charCodeAt(0) - 65;
-				returnValue = returnValue + cValue + (i*26);
+				var cValue:int = abc.charCodeAt(i) - 65;
+//				returnValue = returnValue + cValue + (i*26);
+				returnValue += (cValue+1) * Math.pow(26,pow);
+				pow++;
 			}
+			returnValue -= 1;
 			return returnValue;
 		}
 		
