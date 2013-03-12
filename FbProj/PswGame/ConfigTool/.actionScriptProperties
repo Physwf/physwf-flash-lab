@@ -10,11 +10,15 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/As3Lib/bin/As3Lib.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/PswGame_Config/bin/PswGame_Config.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
     <application path="ConfigTool.mxml">
+      <airExcludes/>
+    </application>
+    <application path="StructGenerator.mxml">
       <airExcludes/>
     </application>
   </applications>

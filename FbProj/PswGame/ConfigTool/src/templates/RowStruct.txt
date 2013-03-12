@@ -1,4 +1,4 @@
-package templates
+package struct
 {
 	import flash.utils.ByteArray;
 	import flash.utils.IDataInput;

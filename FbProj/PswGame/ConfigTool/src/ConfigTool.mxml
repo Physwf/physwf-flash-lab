@@ -8,6 +8,16 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.lipi.excel.Excel;
+			
+			import file.IClientFile;
+			import file.MapFile;
+			import file.MonsterFile;
+			
+			import flash.utils.getDefinitionByName;
+			
+			import mx.controls.Alert;
+			
 			import spark.components.CheckBox;
 			private var cfgXML:XML;
 			private var projectsSelected:XML;
@@ -18,6 +28,8 @@
 				urlLoader.addEventListener(Event.COMPLETE,onConfigLoaded);
 				urlLoader.load(new URLRequest("config/projects.xml"));
 				projectsSelected = <projects/>;
+				MapFile;
+				MonsterFile;
 			}
 			
 			private function onConfigLoaded(e:Event):void
@@ -59,14 +71,35 @@
 			
 			private function onSelectClick():void
 			{
-				
+				readFile();
 			}
 			
 			private function onAllClick():void
 			{
-				
+				projectsSelected = cfgXML;
+				readFile();
 			}
 			
+			private function readFile():void
+			{
+				for each(var project:XML in projectsSelected.project)
+				{
+					var f:File = new File(project.@xlsPath);
+					var fs:FileStream = new FileStream();
+					fs.open(f,FileMode.READ);
+					var fileData:ByteArray = new ByteArray();
+					fs.readBytes(fileData);
+					
+					var excel:Excel = new Excel(fileData);
+					var sheet:Array = excel.getSheetArray();
+					trace(project.@fileClass)
+					var FileClass:Class = getDefinitionByName(project.@fileClass) as Class;
+					var $file:IClientFile = new FileClass(project.@asPath) as IClientFile;
+					$file.readExcel(sheet);
+					$file.write();
+				}
+				Alert.show("ok","ok",4,null,function ():void { exit(); });
+			}
 			
 		]]>
 	</fx:Script>
