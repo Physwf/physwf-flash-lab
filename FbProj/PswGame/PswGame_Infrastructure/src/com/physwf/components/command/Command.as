@@ -1,5 +1,6 @@
 package com.physwf.components.command
 {
+	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.interfaces.INumerical;
 	import com.physwf.components.interfaces.IUpdatable;
 	
@@ -10,7 +11,7 @@ package com.physwf.components.command
 	 * @author joe
 	 * 
 	 */
-	public class Command extends EventDispatcher implements INumerical,IUpdatable
+	public class Command extends EventDispatcher implements ICommand
 	{
 		public static const FINISH:String = "finish";
 		
