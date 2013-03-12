@@ -9,7 +9,8 @@ package
 	{
 		public var userid:uint;
 		public var role_tm:uint;
-		public var model:uint;
+		public var role_sex:uint;
+		public var prof:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
 		public var mapid:uint;
@@ -26,7 +27,8 @@ package
 		{
 			userid = input.readUnsignedInt();
 			role_tm = input.readUnsignedInt();
-			model = input.readUnsignedInt();
+			role_sex = input.readUnsignedByte();
+			prof = input.readUnsignedByte();
 			nick = input.readUTFBytes(16);
 			mapid = input.readUnsignedInt();
 			map_x = input.readUnsignedInt();
@@ -46,7 +48,8 @@ package
 		{
 			output.writeUnsignedInt(userid);
 			output.writeUnsignedInt(role_tm);
-			output.writeUnsignedInt(model);
+			output.writeByte(role_sex);
+			output.writeByte(prof);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)

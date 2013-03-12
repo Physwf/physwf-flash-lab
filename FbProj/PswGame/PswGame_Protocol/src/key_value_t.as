@@ -5,30 +5,24 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class stru_task_info implements IExternalizable
+	public class key_value_t implements IExternalizable
 	{
-		public var task_id:uint;
-		public var step:uint;
-		public var flag:uint;
+		public var key:uint;
 		public var value:uint;
 		
-		public function stru_task_info()
+		public function key_value_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			task_id = input.readUnsignedShort();
-			step = input.readUnsignedShort();
-			flag = input.readUnsignedByte();
+			key = input.readUnsignedInt();
 			value = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeShort(task_id);
-			output.writeShort(step);
-			output.writeByte(flag);
+			output.writeUnsignedInt(key);
 			output.writeUnsignedInt(value);			
 		}
 	}

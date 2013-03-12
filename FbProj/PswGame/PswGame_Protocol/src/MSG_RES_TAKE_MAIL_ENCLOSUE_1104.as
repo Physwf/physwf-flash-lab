@@ -5,19 +5,18 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_FROM_BLACKLIST_1073 extends MsgBase
+	final public class MSG_RES_TAKE_MAIL_ENCLOSUE_1104 extends MsgBase
 	{
-		public var user:uid_role_t;
+		public var mail_id:uint;
 		
-		public function MSG_RES_DEL_FROM_BLACKLIST_1073(mid:uint)
+		public function MSG_RES_TAKE_MAIL_ENCLOSUE_1104(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			user= new uid_role_t();
-			user.readExternal(input)			
+			mail_id = input.readUnsignedInt();			
 		}
 	}
 }

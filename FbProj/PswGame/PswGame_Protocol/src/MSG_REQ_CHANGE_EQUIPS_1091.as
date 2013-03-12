@@ -7,7 +7,7 @@ package
 	
 	final public class MSG_REQ_CHANGE_EQUIPS_1091 extends MsgBase
 	{
-		public var equips:Vector.<uint>;
+		public var equips:Vector.<exchange_grid_t>;
 		
 		public function MSG_REQ_CHANGE_EQUIPS_1091()
 		{
@@ -16,11 +16,11 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			for(var i:int=0;i<16;++i)
+			output.writeUnsignedInt(equips.length);
+			for(var i:int=0;i<equips.length;++i)
 			{
-				output.writeUnsignedInt(equips[i])
-			}
-			
+				equips[i].writeExternal(output);
+			}			
 		}
 	}
 }

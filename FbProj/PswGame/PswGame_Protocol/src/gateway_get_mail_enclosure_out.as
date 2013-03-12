@@ -5,25 +5,23 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class msg_t implements IExternalizable
+	public class gateway_get_mail_enclosure_out implements IExternalizable
 	{
-		public var msg:String;
-		public var msg_data:ByteArray
+		public var enclosure:mail_enclosure_t;
 		
-		public function msg_t()
+		public function gateway_get_mail_enclosure_out()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var msgLen:uint =input.readUnsignedInt();
-			msg=input.readUTFBytes(msgLen);			
+			enclosure= new mail_enclosure_t();
+			enclosure.readExternal(input)			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(msg.length);
-			output.writeUTFBytes(msg);			
+			enclosure.writeExternal(output)			
 		}
 	}
 }

@@ -5,23 +5,21 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_PICK_UP_ITEM_1056 extends MsgBase
+	final public class MSG_REQGATEWAY_GET_MAIL_ENCLOSURE_5003 extends MsgBase
 	{
-		public var monster_id:uint;
-		public var items:Vector.<uint>;
+		public var items:Vector.<bag_item_t>;
 		
-		public function MSG_REQ_PICK_UP_ITEM_1056()
+		public function MSG_REQGATEWAY_GET_MAIL_ENCLOSURE_5003()
 		{
-			super(1056)
+			super(5003)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(monster_id);
 			output.writeUnsignedInt(items.length);
 			for(var i:int=0;i<items.length;++i)
 			{
-				output.writeUnsignedInt(items[i]);
+				items[i].writeExternal(output);
 			}			
 		}
 	}

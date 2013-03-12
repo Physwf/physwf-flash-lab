@@ -5,18 +5,18 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_FROM_BLACKLIST_1073 extends MsgBase
+	final public class MSG_RES_NOTI_USER_REBIRTH_1046 extends MsgBase
 	{
-		public var user:uid_role_t;
+		public var user:map_user_info;
 		
-		public function MSG_RES_DEL_FROM_BLACKLIST_1073(mid:uint)
+		public function MSG_RES_NOTI_USER_REBIRTH_1046(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			user= new uid_role_t();
+			user= new map_user_info();
 			user.readExternal(input)			
 		}
 	}

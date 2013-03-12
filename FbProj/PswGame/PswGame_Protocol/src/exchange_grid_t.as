@@ -5,25 +5,25 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class msg_t implements IExternalizable
+	public class exchange_grid_t implements IExternalizable
 	{
-		public var msg:String;
-		public var msg_data:ByteArray
+		public var src:uint;
+		public var obj:uint;
 		
-		public function msg_t()
+		public function exchange_grid_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var msgLen:uint =input.readUnsignedInt();
-			msg=input.readUTFBytes(msgLen);			
+			src = input.readUnsignedShort();
+			obj = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(msg.length);
-			output.writeUTFBytes(msg);			
+			output.writeShort(src);
+			output.writeShort(obj);			
 		}
 	}
 }

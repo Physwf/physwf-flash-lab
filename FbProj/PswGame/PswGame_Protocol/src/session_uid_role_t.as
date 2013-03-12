@@ -5,25 +5,25 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class msg_t implements IExternalizable
+	public class session_uid_role_t implements IExternalizable
 	{
-		public var msg:String;
-		public var msg_data:ByteArray
+		public var user_id:uint;
+		public var role_tm:uint;
 		
-		public function msg_t()
+		public function session_uid_role_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var msgLen:uint =input.readUnsignedInt();
-			msg=input.readUTFBytes(msgLen);			
+			user_id = input.readUnsignedInt();
+			role_tm = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(msg.length);
-			output.writeUTFBytes(msg);			
+			output.writeUnsignedInt(user_id);
+			output.writeUnsignedInt(role_tm);			
 		}
 	}
 }

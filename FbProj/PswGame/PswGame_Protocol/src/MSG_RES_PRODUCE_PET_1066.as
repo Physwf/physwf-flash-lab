@@ -5,19 +5,21 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_DEL_FROM_BLACKLIST_1073 extends MsgBase
+	final public class MSG_RES_PRODUCE_PET_1066 extends MsgBase
 	{
-		public var user:uid_role_t;
+		public var pet:stru_pet_t;
+		public var grid:uint;
 		
-		public function MSG_RES_DEL_FROM_BLACKLIST_1073(mid:uint)
+		public function MSG_RES_PRODUCE_PET_1066(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			user= new uid_role_t();
-			user.readExternal(input)			
+			pet= new stru_pet_t();
+			pet.readExternal(input)
+			grid = input.readUnsignedShort();			
 		}
 	}
 }

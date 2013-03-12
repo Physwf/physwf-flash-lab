@@ -5,22 +5,22 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_SYNC_POSITION_1029 extends MsgBase
+	final public class MSG_REQ_CHAT_PUBLIC_MSG_1086 extends MsgBase
 	{
-		public var timestamp:uint;
 		public var type:uint;
-		public var postion:map_pos_t;
+		public var msg_content:String;
+		public var msg_content_data:ByteArray
 		
-		public function MSG_REQ_SYNC_POSITION_1029()
+		public function MSG_REQ_CHAT_PUBLIC_MSG_1086()
 		{
-			super(1029)
+			super(1086)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(timestamp);
 			output.writeByte(type);
-			postion.writeExternal(output)			
+			output.writeUnsignedInt(msg_content.length);
+			output.writeUTFBytes(msg_content);			
 		}
 	}
 }
