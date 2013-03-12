@@ -83,7 +83,7 @@ package com.physwf.engine.command
 					else
 					{
 						line.subLen(line.length);
-						stand();
+//						stand();
 						mChara.isMoving = false;
 						trace(mChara.view.x,mChara.view.x,"角色当前位置")
 						dispatchEvent(new Event(Command.FINISH));

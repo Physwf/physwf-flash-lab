@@ -14,13 +14,13 @@ package com.physwf.engine.command
 	import flash.events.Event;
 	import com.physwf.components.command.Command;
 
-	public class CmdAtkMonster extends Command
+	public class CmdAttack extends Command
 	{
 		private var mChara:Character;
 		private var target:Character;
 		private var targetID:uint;
 		
-		public function CmdAtkMonster(chara:Character)
+		public function CmdAttack(chara:Character)
 		{
 			mChara = chara;
 		}

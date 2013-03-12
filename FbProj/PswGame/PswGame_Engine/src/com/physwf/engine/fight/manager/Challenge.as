@@ -3,7 +3,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdAtkMonster;
+	import com.physwf.engine.command.CmdAttack;
 	import com.physwf.engine.command.CmdGoTo;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
@@ -149,7 +149,7 @@ package com.physwf.engine.fight.manager
 				{
 					if(getTimer() - lastAtk > 2000)
 					{
-						var atkCmd:CmdAtkMonster = new CmdAtkMonster(Player.self);
+						var atkCmd:CmdAttack = new CmdAttack(Player.self);
 						atkCmd.setTarget(target,targetID);
 						trace("进攻命令");
 						controller.order(atkCmd);
