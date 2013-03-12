@@ -21,6 +21,9 @@
 	<item name="protocol" type="dll" url="dlls/protocol.swf">
 		<domain level="1" useSub="0"/>
 	</item>
+	<item name="config" type="dll"  url="dlls/config.swf">
+		<domain level="1" useSub="0"/>
+	</item>
 	<item name="engine" type="dll"  url="dlls/engine.swf">
 		<domain level="1" useSub="0"/>
 	</item>
