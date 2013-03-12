@@ -1,11 +1,11 @@
-package templates
+package struct
 {
 	import flash.utils.ByteArray;
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
 	
-	public class monster implements IExternalizable
+	public class cfg_monster implements IExternalizable
 	{
 		public var monster_id:uint;
 		public var res_id:uint;
@@ -33,12 +33,37 @@ package templates
 		public var atk_speed:uint;
 		public var earth_atk:uint;
 		public var earth_def:uint;
+		public var water_atk:uint;
+		public var water_def:uint;
+		public var fire_atk:uint;
+		public var fire_def:uint;
+		public var wind_atk:uint;
+		public var wind_def:uint;
+		public var timed_imm:uint;
+		public var continue_imm:uint;
+		public var attacked:uint;
+		public var exp:uint;
+		public var friendliness:uint;
+		public var takt_time:uint;
+		public var camp:uint;
+		public var drop_radius:uint;
+		public var max_effect_group:uint;
+		public var damage_in_percent:uint;
+		public var drop_id:uint;
+		public var interactive:uint;
+		public var exterior:uint;
+		public var head_info:uint;
+		public var veer:uint;
+		public var nameplate_height:uint;
+		public var selected_ring:uint;
+		public var shadow:uint;
+		public var width:uint;
 		public var height:uint;
-		public var undefined:null;
+		public var visual_field:uint;
 		public var head_icon:uint;
 		
 		
-		public function monster()
+		public function cfg_monster()
 		{
 		}
 		
@@ -71,8 +96,33 @@ package templates
 			atk_speed = input.readUnsignedByte();
 			earth_atk = input.readUnsignedByte();
 			earth_def = input.readUnsignedByte();
+			water_atk = input.readUnsignedByte();
+			water_def = input.readUnsignedByte();
+			fire_atk = input.readUnsignedByte();
+			fire_def = input.readUnsignedByte();
+			wind_atk = input.readUnsignedByte();
+			wind_def = input.readUnsignedByte();
+			timed_imm = input.readUnsignedByte();
+			continue_imm = input.readUnsignedByte();
+			attacked = input.readUnsignedByte();
+			exp = input.readUnsignedByte();
+			friendliness = input.readUnsignedByte();
+			takt_time = input.readUnsignedByte();
+			camp = input.readUnsignedByte();
+			drop_radius = input.readUnsignedByte();
+			max_effect_group = input.readUnsignedByte();
+			damage_in_percent = input.readUnsignedByte();
+			drop_id = input.readUnsignedByte();
+			interactive = input.readUnsignedByte();
+			exterior = input.readUnsignedByte();
+			head_info = input.readUnsignedByte();
+			veer = input.readUnsignedByte();
+			nameplate_height = input.readUnsignedByte();
+			selected_ring = input.readUnsignedByte();
+			shadow = input.readUnsignedByte();
+			width = input.readUnsignedByte();
 			height = input.readUnsignedByte();
-			null
+			visual_field = input.readUnsignedByte();
 			head_icon = input.readUnsignedByte();
 			
 		}
@@ -108,8 +158,33 @@ package templates
 			output.writeByte(atk_speed);
 			output.writeByte(earth_atk);
 			output.writeByte(earth_def);
+			output.writeByte(water_atk);
+			output.writeByte(water_def);
+			output.writeByte(fire_atk);
+			output.writeByte(fire_def);
+			output.writeByte(wind_atk);
+			output.writeByte(wind_def);
+			output.writeByte(timed_imm);
+			output.writeByte(continue_imm);
+			output.writeByte(attacked);
+			output.writeByte(exp);
+			output.writeByte(friendliness);
+			output.writeByte(takt_time);
+			output.writeByte(camp);
+			output.writeByte(drop_radius);
+			output.writeByte(max_effect_group);
+			output.writeByte(damage_in_percent);
+			output.writeByte(drop_id);
+			output.writeByte(interactive);
+			output.writeByte(exterior);
+			output.writeByte(head_info);
+			output.writeByte(veer);
+			output.writeByte(nameplate_height);
+			output.writeByte(selected_ring);
+			output.writeByte(shadow);
+			output.writeByte(width);
 			output.writeByte(height);
-			null
+			output.writeByte(visual_field);
 			output.writeByte(head_icon);
 			
 		}

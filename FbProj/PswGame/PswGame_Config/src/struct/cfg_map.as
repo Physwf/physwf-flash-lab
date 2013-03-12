@@ -1,11 +1,11 @@
-package templates
+package struct
 {
 	import flash.utils.ByteArray;
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
 	
-	public class map implements IExternalizable
+	public class cfg_map implements IExternalizable
 	{
 		public var map_id:uint;
 		public var map_name:String;
@@ -13,7 +13,7 @@ package templates
 		public var born:String;
 		
 		
-		public function map()
+		public function cfg_map()
 		{
 		}
 		
