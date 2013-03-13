@@ -4,10 +4,12 @@ package com.physwf.system.vo
 	{
 		public var id:uint;
 		public var name:String;
-		public var range:uint;
+		public var range:uint;//预存为平方值
+		public var singType:uint;//吟唱类型 0:不需要吟唱，1:需要吟唱
 		
 		public function SkillInfo()
 		{
+			
 		}
 	}
 }
