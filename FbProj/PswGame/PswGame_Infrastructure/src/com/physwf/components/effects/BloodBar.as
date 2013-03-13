@@ -40,7 +40,7 @@ package com.physwf.components.effects
 		override public function update():void
 		{
 			x = mTarget.x - width * .5;
-			y = mTarget.y +  mTarget.height + 80;
+			y = mTarget.y -  mTarget.height - 10;//暂时先用显示对象的高度 后面要改成配置中的高度
 		}
 		
 		private function drawBottom():void
