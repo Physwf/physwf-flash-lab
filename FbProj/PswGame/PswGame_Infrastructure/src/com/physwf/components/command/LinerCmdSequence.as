@@ -1,6 +1,8 @@
 package com.physwf.components.command
 {
 	import flash.events.Event;
+	
+	import mx.states.OverrideBase;
 
 	/**
 	 * 线性命令为一个命令序列，该命令中包含的子命令将按照添加的顺序来执行 
@@ -28,6 +30,7 @@ package com.physwf.components.command
 			mCurCmd = mCmds.shift();
 			if(mCurCmd)
 			{
+				mCurCmd.execute();
 				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish); 
 			}
 			else
@@ -45,7 +48,12 @@ package com.physwf.components.command
 		
 		override public function execute():void
 		{
-			
+			next();
+		}
+		
+		override public function update():void
+		{
+			mCurCmd.update();
 		}
 	}
 }

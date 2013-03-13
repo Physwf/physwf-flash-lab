@@ -44,5 +44,15 @@ package com.physwf.components.command
 			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish); 
 			next();
 		}
+		
+		override public function execute():void
+		{
+			next();
+		}
+		
+		override public function update():void
+		{
+			mCurCmd.update();
+		}
 	}
 }

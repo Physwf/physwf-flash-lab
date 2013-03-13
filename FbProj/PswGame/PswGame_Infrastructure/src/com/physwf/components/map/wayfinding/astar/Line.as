@@ -15,7 +15,7 @@ package com.physwf.components.map.wayfinding.astar
 		private var _ey:uint;
 		
 		private var _length:Number;
-		private var _lenInvalide:Boolean = false;
+		private var _lenInvalide:Boolean = true;
 		private var _direcRad:Number;
 		
 		public function Line(preNode:Node,nextNode:Node)
