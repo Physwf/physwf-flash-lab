@@ -40,7 +40,7 @@ package com.physwf.components.effects
 		override public function update():void
 		{
 			x = mTarget.x - width * .5;
-			y = mTarget.y - 80;
+			y = mTarget.y +  mTarget.height + 80;
 		}
 		
 		private function drawBottom():void

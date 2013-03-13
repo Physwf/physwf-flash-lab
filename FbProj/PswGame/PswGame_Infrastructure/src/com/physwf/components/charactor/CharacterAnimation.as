@@ -76,7 +76,7 @@ package com.physwf.components.charactor
 				function(e:Event):void 
 				{ 
 					isSkeletonReady = (mSkeleton.loadFlag == SkeletonLoader.LOAD_FLAG_YES);
-					action = CharacterAction.ACTION_STAND;
+					status = CharacterAction.ACTION_STAND;
 					direction = ISODirection.LEFT;
 				});
 		}
@@ -177,7 +177,6 @@ package com.physwf.components.charactor
 		private function onActioinComplete(e:Event):void
 		{
 			mNude.removeEventListener(Event.COMPLETE,onActioinComplete);
-			status = CharacterAction.ACTION_STAND;
 		}
 			
 		public function update():void

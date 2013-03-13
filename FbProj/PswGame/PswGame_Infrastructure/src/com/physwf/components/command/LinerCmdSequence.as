@@ -28,7 +28,7 @@ package com.physwf.components.command
 		override public function next():ICommand
 		{
 			mCurCmd = mCmds.shift();
-			if(mCurCmd)
+			if(mCurCmd != null)
 			{
 				mCurCmd.execute();
 				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish); 
@@ -43,6 +43,7 @@ package com.physwf.components.command
 		private function onCurCmdFinish(e:Event):void
 		{
 			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish); 
+			mCurCmd = null;
 			next();
 		}
 		

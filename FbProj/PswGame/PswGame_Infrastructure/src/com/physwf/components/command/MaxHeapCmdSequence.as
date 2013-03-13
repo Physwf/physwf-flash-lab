@@ -42,6 +42,7 @@ package com.physwf.components.command
 		private function onCurCmdFinish(e:Event):void
 		{
 			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish); 
+			mCurCmd = null;
 			next();
 		}
 		
