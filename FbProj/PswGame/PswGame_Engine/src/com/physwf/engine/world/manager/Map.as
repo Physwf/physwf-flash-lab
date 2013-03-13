@@ -1,10 +1,14 @@
 package com.physwf.engine.world.manager
 {
+	import com.physwf.components.command.LinerCmdSequence;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
 	import com.physwf.components.map.tile.TileGround;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.command.CmdGoAlong;
+	import com.physwf.engine.command.CmdGoTo;
+	import com.physwf.engine.command.CmdStand;
 	import com.physwf.engine.world.World;
 	import com.physwf.engine.world.controllers.MapController;
 	import com.physwf.engine.world.controllers.SelfController;
@@ -116,7 +120,14 @@ package com.physwf.engine.world.manager
 				case MapEvent.MAP_USER_MOVE:
 					// to do 根据userInfo找到相应的Player，然后设置该Player到指定点
 					var player:Player = getPlayerByUID(e.userInfo.uid);
-					player.goto(e.userInfo.target_x,e.userInfo.target_y);
+					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
+					var goCmd:CmdGoTo= new CmdGoTo(player);
+					goCmd.setDest(e.userInfo.target_x,e.userInfo.target_y);
+					var standCmd:CmdStand = new CmdStand(player);
+					cmdSeq.addCommand(goCmd);
+					cmdSeq.addCommand(standCmd);
+					player.execute(cmdSeq);
+//					player.goto(e.userInfo.target_x,e.userInfo.target_y);
 					break;
 				
 			}
@@ -144,7 +155,13 @@ package com.physwf.engine.world.manager
 				case NPCEvent.NPC_MOVE:
 					info = e.info;
 					mon = getMonsterByMID(info.instanceID);
-					mon.goAlong(info.path);
+					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
+					var goAlong:CmdGoAlong = new CmdGoAlong(mon);
+					goAlong.setPath(info.path);
+					cmdSeq.addCommand(goAlong);
+					cmdSeq.addCommand(new CmdStand(mon));
+					mon.execute(cmdSeq);
+//					mon.goAlong(info.path);
 					break;
 			}
 		}
@@ -157,7 +174,14 @@ package com.physwf.engine.world.manager
 					break;
 				case MyEvent.SELF_MOVE_ALLOWED:
 					trace(mController.targetX,mController.targetY,"将要寻路到此");
-					Player.self.goto(mController.targetX,mController.targetY);
+					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
+					var goCmd:CmdGoTo= new CmdGoTo(Player.self);
+					goCmd.setDest(mController.targetX,mController.targetY);
+					var standCmd:CmdStand = new CmdStand(Player.self);
+					cmdSeq.addCommand(goCmd);
+					cmdSeq.addCommand(standCmd);
+					Player.self.execute(cmdSeq);
+//					Player.self.goto(mController.targetX,mController.targetY);
 					break;
 			}
 		}

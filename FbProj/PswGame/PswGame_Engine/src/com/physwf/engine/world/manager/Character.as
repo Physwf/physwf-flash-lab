@@ -3,6 +3,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
+	import com.physwf.components.command.ICommand;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Line;
@@ -33,53 +34,21 @@ package com.physwf.engine.world.manager
 		
 		public var isMoving:Boolean = false;
 		
+		protected var mCmd:ICommand;
+		
 		public function Character()
 		{
 		}
 		
-		public function goto(tx:uint,ty:uint):void
-		{
-			var sx:uint = Math.floor(view.x / 10);
-			var sy:uint = Math.floor(view.y / 10);
-			var ex:uint = Math.floor(tx / 10);
-			var ey:uint = Math.floor(ty / 10);
-			
-			if(astar.tryFindPath(sx,sy,ex,ey))
-			{
-				pathLine = astar.getPathLine();
-				
-				avrgRad = PathUtils.calAverDirec2(pathLine);
-				line = pathLine.shift();
-				
-				view.direction = ISODirection.radianToDirect8(avrgRad);
-				run();
-			}
-		}
 		
-		public function goAlong(rawPath:Vector.<uint>):void
+		public function execute(cmd:ICommand):void
 		{
-			var len:uint = rawPath.length-2;
-			var path:Vector.<Line> = new Vector.<Line>();
-			for(var i:uint=0;i<len;i+=2)
-			{
-				var prev:Node = new Node(rawPath[i],rawPath[i+1]);
-				var next:Node = new Node(rawPath[i+2],rawPath[i+3]);
-				var ln:Line = new Line(prev,next);
-				path.push(ln);
-			}
-			pathLine = path;
-			if(pathLine.length>0)
-			{
-				avrgRad = PathUtils.calAverDirec2(pathLine);
-				line = pathLine.shift();
-				view.direction = ISODirection.radianToDirect8(avrgRad);
-				run();
-			}
+			mCmd = cmd;
+			mCmd.execute();
 		}
 		
 		public function stand():void
 		{
-			pathLine = null;
 			view.status = CharacterAction.ACTION_STAND;
 		}
 		
@@ -95,7 +64,6 @@ package com.physwf.engine.world.manager
 		
 		public function attack():void
 		{
-			pathLine = null;
 			view.action = CharacterAction.ACTION_ATTACK;
 		}
 		
@@ -106,45 +74,7 @@ package com.physwf.engine.world.manager
 		
 		public function update():void
 		{
-			if(pathLine)
-			{
-				isMoving = true;
-				var remainSpeed:Number;
-				// 如果速度大小超过了当前线段长度，则提取下一个线段，并将该线段的起始点减去之前剩下的速度量
-				if(_speed>line.length)
-				{
-					remainSpeed = _speed - line.length;
-					
-					if(pathLine.length>3)
-					{
-						avrgRad = PathUtils.calAverDirec2(pathLine);
-						view.direction = ISODirection.radianToDirect8(avrgRad);
-					}
-					
-					if(pathLine.length)
-					{
-//						trace("下一个line",pathLine.length)
-						line = pathLine.shift();
-						line.subLen(remainSpeed);
-					}
-					else
-					{
-						line.subLen(line.length);
-						stand();
-						isMoving = false;
-						trace(view.x,view.x,"角色当前位置")
-						dispatchEvent(new CharacterEvent(CharacterEvent.CHARA_PATH_FINISH));
-					}
-					
-				}
-				else
-				{
-//					trace("继续",line.length);
-					line.subLen(_speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
-				}
-				view.x = line.sx;
-				view.y = line.sy;
-			}
+			mCmd.update();
 			view.update();
 		}
 		

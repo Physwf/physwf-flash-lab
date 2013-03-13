@@ -3,6 +3,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.factory.BoyFactory;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
+	import com.physwf.engine.command.CmdStand;
 	import com.physwf.engine.world.controllers.SelfController;
 	import com.physwf.system.vo.UserInfo;
 
@@ -32,6 +33,8 @@ package com.physwf.engine.world.manager
 			view.y = userInfo.map_y;
 			
 			Character.managers[view] = this;
+			
+			execute(new CmdStand(this));
 		}
 		
 		public function get userId():uint { return uid; }

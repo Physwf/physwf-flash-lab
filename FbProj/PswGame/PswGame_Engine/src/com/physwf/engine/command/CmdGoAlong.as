@@ -2,57 +2,55 @@ package com.physwf.engine.command
 {
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;
-	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.map.wayfinding.astar.Line;
+	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.world.events.CharacterEvent;
 	import com.physwf.engine.world.manager.Character;
-	import com.physwf.system.System;
 	
 	import flash.events.Event;
-
-	/**
-	 * 寻路到指定点 
-	 * @author joe
-	 * 
-	 */
-	public class CmdGoTo extends Command
+	
+	public class CmdGoAlong extends Command
 	{
-		private var mChara:Character;
-		private var endX:uint;
-		private var endY:uint;
+		private var rawPath:Vector.<uint>;
 		private var pathLine:Vector.<Line>;
+		private var rad:Number;// 速度的方向
 		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
 		private var line:Line;
 		
-		public function CmdGoTo(chara:Character)
+		private var mChara:Character;
+		
+		public function CmdGoAlong(chara:Character)
 		{
 			mChara = chara;
 		}
 		
-		public function setDest(tx:uint,ty:uint):void
+		public function setPath(rawPath:Vector.<uint>):void
 		{
-			endX = tx;
-			endY = ty;
+			this.rawPath = rawPath;
+			trace(rawPath,"rawPath");
+			trace(mChara.view.x);
+			trace(mChara.view.y);
 		}
 		
 		override public function execute():void
 		{
-			var sx:uint = Math.floor(mChara.view.x / 10);
-			var sy:uint = Math.floor(mChara.view.y / 10);
-			var ex:uint = Math.floor(endX / 10);
-			var ey:uint = Math.floor(endY / 10);
-			
-			if(Character.astar.tryFindPath(sx,sy,ex,ey))
+			var len:uint = rawPath.length-2;
+			var path:Vector.<Line> = new Vector.<Line>();
+			for(var i:uint=0;i<len;i+=2)
 			{
-				pathLine = Character.astar.getPathLine();
-				
+				var prev:Node = new Node(rawPath[i],rawPath[i+1]);
+				var next:Node = new Node(rawPath[i+2],rawPath[i+3]);
+				var ln:Line = new Line(prev,next);
+				path.push(ln);
+			}
+			pathLine = path;
+			if(pathLine.length>0)
+			{
 				avrgRad = PathUtils.calAverDirec2(pathLine);
 				line = pathLine.shift();
-				mChara.run();
 				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
+				mChara.run();
 			}
-			
 		}
 		
 		override public function update():void
@@ -81,7 +79,7 @@ package com.physwf.engine.command
 					{
 						line.subLen(line.length);
 						mChara.isMoving = false;
-						trace(mChara.view.x,mChara.view.x,"角色当前位置");
+						trace(mChara.view.x,mChara.view.x,"角色当前位置")
 						pathLine = null;
 						dispatchEvent(new Event(Command.FINISH));
 					}
@@ -89,7 +87,9 @@ package com.physwf.engine.command
 				}
 				else
 				{
+					trace(line.length,"line.length")
 					line.subLen(mChara.speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
+					trace(line.sx,line.sy,"goalong");
 				}
 				mChara.view.x = line.sx;
 				mChara.view.y = line.sy;

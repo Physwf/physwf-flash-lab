@@ -5,6 +5,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.charactor.factory.MonsterFactory;
+	import com.physwf.engine.command.CmdStand;
 	import com.physwf.system.vo.MonsterInfo;
 
 	public class Monster extends Character
@@ -31,6 +32,8 @@ package com.physwf.engine.world.manager
 			view.y = info.map_y;
 			
 			Character.managers[view] = this;
+			
+			execute(new CmdStand(this));
 		}
 		
 		public function get instanId():uint { return mInstanceId; }
