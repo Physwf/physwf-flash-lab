@@ -27,9 +27,6 @@ package com.physwf.engine.command
 		public function setPath(rawPath:Vector.<uint>):void
 		{
 			this.rawPath = rawPath;
-			trace(rawPath,"rawPath");
-			trace(mChara.view.x);
-			trace(mChara.view.y);
 		}
 		
 		override public function execute():void
@@ -50,6 +47,10 @@ package com.physwf.engine.command
 				line = pathLine.shift();
 				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
 				mChara.run();
+			}
+			else
+			{
+				pathLine = null;
 			}
 		}
 		
@@ -79,7 +80,6 @@ package com.physwf.engine.command
 					{
 						line.subLen(line.length);
 						mChara.isMoving = false;
-						trace(mChara.view.x,mChara.view.x,"角色当前位置")
 						pathLine = null;
 						dispatchEvent(new Event(Command.FINISH));
 					}
@@ -87,9 +87,7 @@ package com.physwf.engine.command
 				}
 				else
 				{
-					trace(line.length,"line.length")
 					line.subLen(mChara.speed);// 如果速度没有超过当前线段长度 则用当前线段长度减去速度值，
-					trace(line.sx,line.sy,"goalong");
 				}
 				mChara.view.x = line.sx;
 				mChara.view.y = line.sy;

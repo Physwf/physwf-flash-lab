@@ -37,7 +37,7 @@ package com.physwf.engine.world.manager
 			execute(new CmdStand(this));
 		}
 		
-		public function get userId():uint { return uid; }
+		override public function get id():uint { return uid; }
 		public function get info():UserInfo { return userInfo; }
 	}
 }

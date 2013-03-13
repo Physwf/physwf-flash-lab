@@ -252,7 +252,7 @@ package com.physwf.engine.world.manager
 		{
 			for(var i:int=0;i<mCharactors.length;++i)
 			{
-				if(mCharactors[i].userId == info.uid)
+				if(mCharactors[i].id == info.uid)
 				{
 					mMapView.removeSwapElement(mCharactors[i].view);
 					mCharactors.splice(i,1);
@@ -270,7 +270,7 @@ package com.physwf.engine.world.manager
 		{
 			for(var i:int=0;i<mMonsters.length;++i)
 			{
-				if(mMonsters[i].instanId == info.instanceID)
+				if(mMonsters[i].id == info.instanceID)
 				{
 					if(info.hp == 0)
 					{
@@ -295,7 +295,7 @@ package com.physwf.engine.world.manager
 		{
 			for(var j:int=0;j<mCharactors.length;++j)
 			{
-				if(mCharactors[j].userId == uid)
+				if(mCharactors[j].id == uid)
 				{
 					return mCharactors[j];
 				}
@@ -311,7 +311,7 @@ package com.physwf.engine.world.manager
 		{
 			for(var j:int=0;j<mMonsters.length;++j)
 			{
-				if(mMonsters[j].instanId == mid)
+				if(mMonsters[j].id == mid)
 				{
 					return mMonsters[j];
 				}

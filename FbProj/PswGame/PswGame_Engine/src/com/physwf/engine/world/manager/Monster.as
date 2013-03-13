@@ -36,7 +36,7 @@ package com.physwf.engine.world.manager
 			execute(new CmdStand(this));
 		}
 		
-		public function get instanId():uint { return mInstanceId; }
+		override public function get id():uint { return mInstanceId; }
 		public function get info():MonsterInfo { return mInfo; }
 	}
 }

@@ -2,12 +2,9 @@ package com.physwf.engine.command
 {
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;
-	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.world.events.CharacterEvent;
 	import com.physwf.engine.world.manager.Character;
-	import com.physwf.system.System;
 	
 	import flash.events.Event;
 
@@ -81,7 +78,6 @@ package com.physwf.engine.command
 					{
 						line.subLen(line.length);
 						mChara.isMoving = false;
-						trace(mChara.view.x,mChara.view.x,"角色当前位置");
 						pathLine = null;
 						dispatchEvent(new Event(Command.FINISH));
 					}

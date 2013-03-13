@@ -36,6 +36,8 @@ package com.physwf.engine.world.manager
 		
 		protected var mCmd:ICommand;
 		
+		public function get id():uint { return 0};//需要在子类中重写
+		
 		public function Character()
 		{
 		}

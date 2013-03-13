@@ -43,7 +43,7 @@ package com.physwf.engine.fight.controller
 		private function onSwapClick(e:MouseEvent):void
 		{
 			var target:Character = Character.managers[e.target] as Character;
-			mView.setTarget(target,Monster(target).instanId);
+			mView.setTarget(target,Monster(target).id);
 			Mouse.cursor = MouseCursor.AUTO;
 			return;
 		}
