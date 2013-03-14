@@ -160,6 +160,7 @@ package com.physwf.components.charactor
 				{
 					mNudeBmdt[mDirect][mAction] = mSkeleton.getCharacterAction(mDirect,mAction);
 				}
+				mNude.currentFrame = 0;
 				mNude.bitmapFrames = mNudeBmdt[mDirect][mAction];
 				mNude.addEventListener(Event.COMPLETE,onActioinComplete);
 				mActionDirty = false;

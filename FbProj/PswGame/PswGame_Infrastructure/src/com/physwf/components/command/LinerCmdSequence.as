@@ -1,6 +1,7 @@
 package com.physwf.components.command
 {
 	import flash.events.Event;
+	import flash.utils.getTimer;
 	
 	import mx.states.OverrideBase;
 
@@ -30,8 +31,9 @@ package com.physwf.components.command
 			mCurCmd = mCmds.shift();
 			if(mCurCmd != null)
 			{
-				mCurCmd.execute();
 				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish); 
+				trace(mCurCmd,"开始执行",getTimer())
+				mCurCmd.execute();
 			}
 			else
 			{
@@ -43,7 +45,6 @@ package com.physwf.components.command
 		private function onCurCmdFinish(e:Event):void
 		{
 			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish); 
-			mCurCmd = null;
 			next();
 		}
 		
@@ -54,7 +55,7 @@ package com.physwf.components.command
 		
 		override public function update():void
 		{
-			mCurCmd.update();
+			if(mCurCmd) mCurCmd.update();
 		}
 	}
 }
