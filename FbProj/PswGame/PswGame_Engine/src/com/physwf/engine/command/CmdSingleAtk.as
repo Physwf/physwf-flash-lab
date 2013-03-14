@@ -35,14 +35,13 @@ package com.physwf.engine.command
 		{
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skillID:uint = mSkill.id;
-			var config:EffectConfig = EffectAssets.configs[15];
-			//			var effect:Effect = EffectFactory.createEffect(config,Engine.map.view.upperEffect,target.view);
-			var effect:Effect = EffectFactory.createDiabloEffect(config,Engine.map.view.upperEffect,mTarget.view);
+			var config:EffectConfig = EffectAssets.configs[0];
+			var effect:Effect = EffectFactory.createEffect(config,Engine.map.view.upperEffect,mTarget.view);
+//			var effect:Effect = EffectFactory.createDiabloEffect(config,Engine.map.view.upperEffect,mTarget.view);
 			effect.x = mChara.view.x;
 			effect.y = mChara.view.y - 30;
 			mChara.attack();
-			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,
-				mTarget.id,1);
+			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,1);
 			super.execute();
 		}
 	}

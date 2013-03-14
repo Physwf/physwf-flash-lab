@@ -36,10 +36,8 @@ package com.physwf.engine.command
 		{
 			// to do
 			//角色动画 吟唱 通道的进度等
-			trace("atackiiiiiiiiiiiiiiiiiiiiing");
 			if(getTimer() - mStartTime > 800)//暂定
 			{
-				trace("atackeeeeeeeeeeeeeeeeeeeeeeeeeed");
 				dispatchEvent(new Event(Command.FINISH));
 			}
 		}

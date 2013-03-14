@@ -68,7 +68,7 @@ package com.physwf.engine.fight.manager
 					var fInfo:FightInfo = e.info;
 					var cInfo:Object = {};
 					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
-					trace(cInfo.info.hp,"cInfo.info.hp")
+//					trace(cInfo.info.hp,"cInfo.info.hp")
 					if(chara)
 					{
 //						chara.attack();
@@ -105,7 +105,7 @@ package com.physwf.engine.fight.manager
 			else if(type == Fight.FIGHT_CHARA_TYPE_NPC)
 			{
 				var monster:Monster = Engine.map.getMonsterByMID(id);
-				trace(monster.info.hp,"monster.info.hp");
+//				trace(monster.info.hp,"monster.info.hp");
 				info_out.info = monster.info;
 				return monster;
 			}
@@ -125,7 +125,7 @@ package com.physwf.engine.fight.manager
 			var skill:SkillInfo = selectSill?selectSill:basicSkill;
 			selectSill = null;
 			
-			var attack:CmdSingleAtk = new CmdSingleAtk(tgt);
+			var attack:CmdSingleAtk = new CmdSingleAtk(Player.self);
 			attack.setTarget(tgt);
 			attack.skill = skill;
 			

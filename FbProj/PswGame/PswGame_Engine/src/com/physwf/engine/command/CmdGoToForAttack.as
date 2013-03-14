@@ -40,7 +40,6 @@ package com.physwf.engine.command
 		{
 			var distX:int = mChara.view.x - endX;
 			var distY:int = mChara.view.x - endY;
-			trace(distX * distX + distX * distX,mSkill.range * mSkill.range)
 			if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
 			{
 				pathLine = null;
@@ -104,7 +103,6 @@ package com.physwf.engine.command
 				//到达了技能的范围之内
 				var distX:int = line.sx - endX;
 				var distY:int = line.sy - endY;
-				trace(distX * distX + distY * distY,mSkill.range * mSkill.range)
 				if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
 				{
 					pathLine = null;
