@@ -6,13 +6,13 @@ package com.physwf.components.effects
 	import flash.utils.getTimer;
 
 	/**
-	 * 垂直特效 
+	 * 垂直降落特效，特效从目标头顶垂直降落，击中目标 
 	 * @author Physwf
 	 * 
 	 */	
-	public class VerticalEffect extends Effect
+	public class DropEffect extends Effect
 	{
-		public function VerticalEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		public function DropEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{
 			super(layer, life, target);
 		}

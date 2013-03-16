@@ -11,6 +11,11 @@ package com.physwf.components.effects
 	
 	public class Effect extends Sprite implements IUpdatable, IDisposible
 	{
+		public static const TYPE_VERTI_DROP:uint = 1;
+		public static const TYPE_VERTI_TRAN:uint = 2;
+		public static const TYPE_MISSILE_JET:uint = 3;
+		public static const TYPE_MISSILE_TRACE:uint = 4;
+		
 		public static var effects:Vector.<Effect>;
 		
 		protected var mContent:Bitmap;
