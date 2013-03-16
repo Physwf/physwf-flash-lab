@@ -13,6 +13,10 @@ package com.physwf.engine.fight.effects
 	{
 		public static const DIR_EFFECT:String = "resource/effects/";
 		
+		public static const TYPE_NORMAL:uint = 1;
+		public static const TYPE_DIABLO:uint = 2;
+		
+		// to do 建立特效配表 给每个忒小拟定名称 id 和 type
 		public static const DROP_THOUDER:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+1,400);
 		public static const DROP_THOUDER2:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+2,400);
 		public static const DROP_THOUDER3:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+3,400);
@@ -73,7 +77,11 @@ package com.physwf.engine.fight.effects
 		{
 			switch(type)
 			{
-				case 0:
+				case TYPE_NORMAL:
+					return effectFactory;
+					break;
+				case TYPE_DIABLO:
+					return diabloFactory;
 					break;
 			}
 			return null;
@@ -85,7 +93,7 @@ package com.physwf.engine.fight.effects
 		 */		
 		public static function getConfig(id:uint):EffectConfig
 		{
-			return null;
+			return configs[id];
 		}
 	}
 }
