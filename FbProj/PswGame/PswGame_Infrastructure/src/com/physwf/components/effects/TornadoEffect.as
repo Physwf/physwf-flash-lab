@@ -7,7 +7,7 @@ package com.physwf.components.effects
 	 * @author Physwf
 	 * 
 	 */	
-	public class TornadoEffect extends TrackEffect
+	public class TornadoEffect extends Effect
 	{
 		public function TornadoEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{

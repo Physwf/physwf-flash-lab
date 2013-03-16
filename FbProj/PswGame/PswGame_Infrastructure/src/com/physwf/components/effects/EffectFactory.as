@@ -5,21 +5,15 @@ package com.physwf.components.effects
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class EffectFactory
+	public class EffectFactory implements IEffectFactory
 	{
-		private static var zeroFrames:Vector.<EffectFrame> = new <EffectFrame>[new EffectFrame(new BitmapData(1,1,true,0))];
-		private static var zeroEffects:Vector.<Vector.<EffectFrame>> = new <Vector.<EffectFrame>>[
-																									zeroFrames,zeroFrames,
-																									zeroFrames,zeroFrames,
-																									zeroFrames,zeroFrames,
-																									zeroFrames,zeroFrames
-																								];
+		public static var zeroFrames:Vector.<EffectFrame> = new <EffectFrame>[new EffectFrame(new BitmapData(1,1,true,0))];
 		
 		public function EffectFactory()
 		{
 		}
 		
-		public static function createEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):Effect
+		public function createEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):Effect
 		{
 			var effect:Effect = new config.Definition(layer,config.life,target);
 			effect.setFrames(zeroFrames);//必须放在load之前，否则将覆盖load完成时的setFrame
@@ -33,22 +27,6 @@ package com.physwf.components.effects
 			eLoader.load();
 			
 			return effect;
-		}
-		
-		public static function createDiabloEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):DiabloEffect
-		{
-			var diablo:DiabloEffect = new config.Definition(layer,config.life,target);
-			diablo.setEffects(zeroEffects);
-			var dLoader:DiabloEffectLoader = DiabloEffectLoader.getSameDiabloLoader(config.url);
-			function onComplete():void
-			{
-				dLoader.removeEventListener(Event.COMPLETE,onComplete);
-				diablo.setEffects(dLoader.getEffects());
-			};
-			dLoader.addEventListener(Event.COMPLETE,onComplete);
-			dLoader.load();
-			
-			return diablo;
 		}
 	}
 }

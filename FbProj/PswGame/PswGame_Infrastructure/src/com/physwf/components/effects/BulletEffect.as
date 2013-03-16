@@ -10,25 +10,25 @@ package com.physwf.components.effects
 	 * @author Physwf
 	 * 
 	 */	
-	public class BulletEffect extends Effect
+	public class BulletEffect extends DiabloEffect
 	{
-		private var mEffects:Vector.<Vector.<EffectFrame>>;
-		private var mSpeed:uint = 6;// to do
 		private var mRad:Number = 0;
 		private var mRange:uint = 150;// 射程，超出后，特效消失
 		private var mPathLen:uint=0;
 		
 		public function BulletEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{
+			mRad = Math.atan2(target.x-x,target.y-y);
+			
 			super(layer, life, target);
 		}
 		
-		public function setDirect(tx:uint,ty:uint):void
+		override public function setEffects(effects:Vector.<Vector.<EffectFrame>>):void
 		{
-			mRad = Math.atan2(tx-x,ty-y);
+			super.setEffects(effects);
 			setFrames(mEffects[ ISODirection.radianToDirect8(mRad) ]);
 		}
-		
+			
 		override public function update():void
 		{
 			x += mSpeed * Math.cos(mRad);

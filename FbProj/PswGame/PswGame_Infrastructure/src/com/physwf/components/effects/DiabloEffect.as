@@ -12,8 +12,8 @@ package com.physwf.components.effects
 	 */	
 	public class DiabloEffect extends Effect
 	{
-		private var mEffects:Vector.<Vector.<EffectFrame>>;
-		private var mSpeed:uint = 5;
+		protected var mEffects:Vector.<Vector.<EffectFrame>>;
+		protected var mSpeed:uint = 5;
 		private var mDirectFun:Function;
 		
 		public function DiabloEffect(layer:Sprite, life:uint, target:DisplayObject=null)
@@ -36,30 +36,6 @@ package com.physwf.components.effects
 		
 		override public function update():void
 		{
-			var distX:int = mTarget.x - x;
-			var distY:int = mTarget.y - y - 30;
-			var rad:Number = Math.atan2(distY,distX);
-			var direct:int = mDirectFun(rad);
-			
-			setFrames(mEffects[direct]);
-			
-			x += mSpeed * Math.cos(rad);
-			y += mSpeed * Math.sin(rad);
-			
-			mCurFrame = mFrames[mCurFrameNum];
-			mContent.x = mCurFrame.x;
-			mContent.y = mCurFrame.y;
-			mContent.bitmapData = mCurFrame.frameData;
-			mCurFrameNum++;
-			if(mCurFrameNum>=mTotalFrame)
-			{
-				mCurFrameNum = 0;
-			}
-			if(distX*distX + distY*distY < 3)
-			{
-				mLayer.removeChild(this);
-				effects.splice(effects.indexOf(this),1);;
-			}
 		}
 	}
 }

@@ -10,9 +10,8 @@ package com.physwf.components.effects
 	 * @author Physwf
 	 * 
 	 */	
-	public class MissileEffect extends TrackEffect
+	public class MissileEffect extends DiabloEffect
 	{
-		private var mEffects:Vector.<Vector.<EffectFrame>>;
 		
 		public function MissileEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{
@@ -40,7 +39,12 @@ package com.physwf.components.effects
 			{
 				mCurFrameNum = 0;
 			}
-			super.update();
+			
+			if(distX*distX + distY*distY < mSpeed)
+			{
+				mLayer.removeChild(this);
+				effects.splice(effects.indexOf(this),1);
+			}
 		}
 	}
 }
