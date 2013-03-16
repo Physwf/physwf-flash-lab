@@ -1,10 +1,15 @@
 package com.physwf.engine.fight.effects
 {
 	import com.physwf.components.effects.DiabloEffect;
+	import com.physwf.components.effects.DiabloFactory;
 	import com.physwf.components.effects.DropEffect;
 	import com.physwf.components.effects.EffectConfig;
+	import com.physwf.components.effects.EffectFactory;
+	import com.physwf.components.effects.IEffectFactory;
+	
+	import mx.messaging.AbstractConsumer;
 
-	public class EffectAssets
+	public class EffectSystem
 	{
 		public static const DIR_EFFECT:String = "resource/effects/";
 		
@@ -45,9 +50,42 @@ package com.physwf.engine.fight.effects
 																				BIG_HEAD
 																			];
 		
-		public function EffectAssets()
+		public static var diabloFactory:DiabloFactory;
+		public static var effectFactory:EffectFactory;
+		
+		public function EffectSystem()
 		{
 			
+		}
+		
+		public static function initialize():void
+		{
+			diabloFactory = new DiabloFactory();
+			effectFactory = new EffectFactory();
+		}
+		/**
+		 * 根据特效的类型来选择特效工厂 
+		 * @param type
+		 * @return 
+		 * 
+		 */		
+		public static function getFactory(type:uint):IEffectFactory
+		{
+			switch(type)
+			{
+				case 0:
+					break;
+			}
+			return null;
+		}
+		/**
+		 * 根据特效的id来选择配置
+		 * @return 
+		 * 
+		 */		
+		public static function getConfig(id:uint):EffectConfig
+		{
+			return null;
 		}
 	}
 }

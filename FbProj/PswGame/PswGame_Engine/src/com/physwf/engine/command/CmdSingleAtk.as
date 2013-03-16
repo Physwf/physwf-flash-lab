@@ -4,9 +4,10 @@ package com.physwf.engine.command
 	import com.physwf.components.effects.Effect;
 	import com.physwf.components.effects.EffectConfig;
 	import com.physwf.components.effects.EffectFactory;
+	import com.physwf.components.effects.IEffectFactory;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.Fight;
-	import com.physwf.engine.fight.effects.EffectAssets;
+	import com.physwf.engine.fight.effects.EffectSystem;
 	import com.physwf.engine.world.manager.Character;
 	import com.physwf.system.System;
 	
@@ -35,9 +36,9 @@ package com.physwf.engine.command
 		{
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skillID:uint = mSkill.id;
-			var config:EffectConfig = EffectAssets.configs[0];
-			var effect:Effect = EffectFactory.createEffect(config,Engine.map.view.upperEffect,mTarget.view);
-//			var effect:Effect = EffectFactory.createDiabloEffect(config,Engine.map.view.upperEffect,mTarget.view);
+			var config:EffectConfig = EffectSystem.getConfig(0);;
+			var factory:IEffectFactory = EffectSystem.getFactory(0);
+			var effect:Effect = factory.createEffect(config,Engine.map.view.upperEffect,mTarget.view);
 			effect.x = mChara.view.x;
 			effect.y = mChara.view.y - 30;
 			mChara.attack();

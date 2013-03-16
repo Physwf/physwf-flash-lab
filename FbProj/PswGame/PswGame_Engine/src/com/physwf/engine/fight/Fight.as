@@ -4,6 +4,7 @@ package com.physwf.engine.fight
 	import com.physwf.components.effects.Effect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.fight.effects.EffectSystem;
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
@@ -27,6 +28,7 @@ package com.physwf.engine.fight
 			mChallenge.basicSkill = System.skill.basicSill;
 			
 			Effect.effects = new Vector.<Effect>();
+			EffectSystem.initialize();
 			
 			Engine.map.addEventListener(WorldEvent.WORLD_DESTROY,onWorldDestroy);
 			Engine.map.addEventListener(WorldEvent.WORLD_READY,onWorldReady);
