@@ -44,7 +44,6 @@ package com.physwf.components.effects
 		
 		public function update():void
 		{
-			
 		}
 		
 		public function setFrames(frames:Vector.<EffectFrame>):void

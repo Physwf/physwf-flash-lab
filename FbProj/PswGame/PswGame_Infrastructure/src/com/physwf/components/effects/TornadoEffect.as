@@ -16,6 +16,15 @@ package com.physwf.components.effects
 		
 		override public function update():void
 		{
+			mCurFrame = mFrames[mCurFrameNum];
+			mContent.x = mCurFrame.x;
+			mContent.y = mCurFrame.y;
+			mContent.bitmapData = mCurFrame.frameData;
+			mCurFrameNum++;
+			if(mCurFrameNum>=mTotalFrame)
+			{
+				mCurFrameNum = 0;
+			}
 			super.update();
 		}
 	}

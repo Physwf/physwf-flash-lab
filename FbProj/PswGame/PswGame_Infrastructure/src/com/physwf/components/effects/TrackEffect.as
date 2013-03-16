@@ -9,6 +9,8 @@ package com.physwf.components.effects
 	 */	
 	public class TrackEffect extends Effect
 	{
+		protected var mSpeed:uint = 6;// to do 临时写死
+		
 		public function TrackEffect(layer:Sprite, life:uint, target:DisplayObject=null)
 		{
 			super(layer, life, target);
@@ -19,10 +21,10 @@ package com.physwf.components.effects
 			var distX:int = mTarget.x - x;
 			var distY:int = mTarget.y - y - 30;
 			
-			if(distX*distX + distY*distY < 3)
+			if(distX*distX + distY*distY < mSpeed)
 			{
 				mLayer.removeChild(this);
-				effects.splice(effects.indexOf(this),1);;
+				effects.splice(effects.indexOf(this),1);
 			}
 		}
 	}
