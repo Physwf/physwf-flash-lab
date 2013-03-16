@@ -7,7 +7,7 @@ package com.physwf.engine.command
 	 * @author joe
 	 * 
 	 */	
-	public class CmdFollowForAtk extends Command
+	public class CmdFollowForAtk extends Command 
 	{
 		private var mChara:Character;
 		private var mTarget:Character;
