@@ -1,5 +1,6 @@
 package com.physwf.components.map
 {
+	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Node;
@@ -9,7 +10,7 @@ package com.physwf.components.map
 	import flash.display.Sprite;
 	import flash.geom.Point;
 
-	public class MapView extends Sprite
+	public class MapView extends Sprite implements IUpdatable
 	{
 		private var mBottom:Sprite;
 		private var mUnderEffect:Sprite;//底部特效层
@@ -18,6 +19,7 @@ package com.physwf.components.map
 		private var mLandform:DisplayObject;
 		private var mMapW:Number;
 		private var mMapH:Number;
+		private var mSwapElements:Vector.<DisplayObject>;
 		
 		public function MapView()
 		{
@@ -29,6 +31,8 @@ package com.physwf.components.map
 			addChild(mUnderEffect);
 			addChild(mSwap);
 			addChild(mUpperEffct);
+			
+			mSwapElements = new Vector.<DisplayObject>();
 		}
 		
 		public function fillBottom(v:DisplayObject):void
@@ -50,12 +54,41 @@ package com.physwf.components.map
 		
 		public function addSwapElement(element:DisplayObject):DisplayObject
 		{
+			mSwapElements.push(element);
 			return mSwap.addChild(element);
 		}
 		
 		public function removeSwapElement(element:DisplayObject):DisplayObject
 		{
+			var i:int= mSwapElements.indexOf(element);
+			mSwapElements.splice(i,1);
 			return mSwap.removeChild(element);
+		}
+		
+		public function update():void
+		{
+			mSwapElements.sort(sortElements);
+			var count:uint = mSwapElements.length;
+			for(var i:uint=0;i<count;++i)
+			{
+				mSwap.setChildIndex(mSwapElements[i],i);
+			}
+		}
+		
+		private function sortElements(A:DisplayObject,B:DisplayObject):int
+		{
+			if(A.y>B.y)
+			{
+				return 1;
+			}
+			else if(A.y<B.y)
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 		
 		public function get bottom():Sprite

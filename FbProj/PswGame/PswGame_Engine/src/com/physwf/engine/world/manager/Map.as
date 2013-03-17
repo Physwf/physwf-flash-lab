@@ -340,6 +340,7 @@ package com.physwf.engine.world.manager
 				mMonsters[i].update();
 			}
 			Player.controller.update();
+			mMapView.update();
 			mCamera.update();
 		}
 		
