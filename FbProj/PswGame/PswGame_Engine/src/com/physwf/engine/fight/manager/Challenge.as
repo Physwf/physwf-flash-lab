@@ -68,10 +68,9 @@ package com.physwf.engine.fight.manager
 					var fInfo:FightInfo = e.info;
 					var cInfo:Object = {};
 					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
-//					trace(cInfo.info.hp,"cInfo.info.hp")
+					trace(cInfo.info.hp,"cInfo.info.hp")
 					if(chara)
 					{
-//						chara.attack();
 						trace(fInfo.hpHurt);
 						updateBloodBar(fInfo.objId,chara,cInfo.info);
 					}

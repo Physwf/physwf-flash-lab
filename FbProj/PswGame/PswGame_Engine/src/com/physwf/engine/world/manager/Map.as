@@ -127,7 +127,6 @@ package com.physwf.engine.world.manager
 					cmdSeq.addCommand(goCmd);
 					cmdSeq.addCommand(standCmd);
 					player.execute(cmdSeq);
-//					player.goto(e.userInfo.target_x,e.userInfo.target_y);
 					break;
 				
 			}
