@@ -10,6 +10,7 @@
 		<![CDATA[
 			import com.lipi.excel.Excel;
 			
+			import file.EffectFile;
 			import file.IClientFile;
 			import file.MapFile;
 			import file.MonsterFile;
@@ -28,8 +29,13 @@
 				urlLoader.addEventListener(Event.COMPLETE,onConfigLoaded);
 				urlLoader.load(new URLRequest("config/projects.xml"));
 				projectsSelected = <projects/>;
-				MapFile;
-				MonsterFile;
+				
+				{
+					MapFile;
+					MonsterFile;
+					EffectFile;
+				}
+				
 			}
 			
 			private function onConfigLoaded(e:Event):void
@@ -96,7 +102,7 @@
 					var FileClass:Class = getDefinitionByName(project.@fileClass) as Class;
 					var $file:IClientFile = new FileClass(project.@asPath) as IClientFile;
 					$file.readExcel(sheet);
-					$file.write();
+					$file.write(project.@name,project.@structClass);
 				}
 				Alert.show("ok","ok",4,null,function ():void { exit(); });
 			}

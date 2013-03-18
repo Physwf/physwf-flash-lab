@@ -91,7 +91,7 @@
 				stru = stru.replace("{read}","");
 				stru = stru.replace("{write}","");
 				
-				var structFile:File = new File(cfgXML.@structDir+"/"+name+".as");
+				var structFile:File = new File(cfgXML.@structDir+"/"+"cfg_"+name+".as");
 				fs.open(structFile,FileMode.WRITE);
 				fs.writeUTFBytes(stru);
 				fs.close();
