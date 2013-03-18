@@ -9,7 +9,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.world.events.CharacterEvent;
+	import com.physwf.engine.events.CharacterEvent;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
