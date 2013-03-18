@@ -10,6 +10,9 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.getDefinitionByName;
 	
+	import mx.messaging.AbstractConsumer;
+	
+	import struct.cfg_effect;
 	import struct.cfg_map;
 	import struct.cfg_monster;
 
@@ -18,6 +21,7 @@ package
 		private static var configs:Dictionary;
 		private static var mapConfig:Dictionary;
 		private static var monsterConfig:Dictionary;
+		private static var effectConfig:Dictionary;
 		
 		public function Config()
 		{
@@ -44,13 +48,11 @@ package
 			{
 				var stream:URLStream = new URLStream();
 				var $name:String = item.@name;
+				var $item:XML = item;
 				stream.addEventListener(Event.COMPLETE,function onComplete(e:Event):void
 				{
-					var fileData:ByteArray = new ByteArray();
-					stream.readBytes(fileData);
-					var config:Dictionary = new Dictionary();
-					configs[item.@name] = config;
-					parse(item.@struct,fileData,config);
+					
+					onItemComplete(e);
 					
 					listLen--;
 					if(listLen == 0)
@@ -60,6 +62,23 @@ package
 				});
 				stream.load(new URLRequest("resource/config/"+item.@name+".cfg"));
 			}
+		}
+		
+		private static function onItemComplete(e:Event):void
+		{
+			var target:URLStream = e.target as URLStream;
+			var fileData:ByteArray = new ByteArray();
+			target.readBytes(fileData);
+			var config:Dictionary = new Dictionary();
+			
+			var nameLen:uint = fileData.readShort();
+			var name:String = fileData.readUTFBytes(nameLen);
+			
+			var structLen:uint = fileData.readShort();
+			var structName:String = fileData.readUTFBytes(structLen);
+			
+			configs[name] = config;
+			parse(structName,fileData,config);
 		}
 		
 		private static function parse(structName:String,fileData:ByteArray,configDic:Dictionary):void
@@ -95,6 +114,20 @@ package
 			if(monsterConfig[monId])
 			{
 				return monsterConfig[monId] as cfg_monster;
+			}
+			else
+			{
+				throw "没有该项配置！";
+			}
+			return null;
+		}
+		
+		public static function getEffectConfig(effId:uint):cfg_effect
+		{
+			if(!effectConfig) effectConfig = configs["effect"];
+			if(effectConfig[effId])
+			{
+				return effectConfig[effId] as cfg_effect;
 			}
 			else
 			{
