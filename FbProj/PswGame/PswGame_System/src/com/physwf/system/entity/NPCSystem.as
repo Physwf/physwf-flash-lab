@@ -72,7 +72,7 @@ package com.physwf.system.entity
 					if(!svrNpcList) return;
 					var msg1043:MSG_RES_NOTI_MONSTER_MOVE_1043 = e.message as MSG_RES_NOTI_MONSTER_MOVE_1043;
 					mInfo = getMonsInfoById(msg1043.monster_instance_id,false);
-					trace(msg1043.monster_instance_id,"msg1043.monster_instance_id");
+//					trace(msg1043.monster_instance_id,"msg1043.monster_instance_id");
 					var list:Vector.<map_pos_t> = msg1043.move_list;
 					var path:Vector.<uint> = new Vector.<uint>();
 					for(i=0;i<list.length;++i)

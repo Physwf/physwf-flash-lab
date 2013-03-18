@@ -19,7 +19,8 @@ package com.physwf.system.entity
 				var skill:SkillInfo = new SkillInfo();
 				skill.id = i;
 				skill.name = "";
-				skill.range = 100 + i*10;
+				skill.range = 500 + i*10;
+				skill.effectId = i;
 				mSkillsInBar.push(skill);
 			}
 			basicSill = mSkillsInBar[0];
