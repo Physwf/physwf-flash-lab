@@ -122,9 +122,10 @@ package com.physwf.engine.fight.manager
 			var distX:Number = target.view.x - Player.self.view.x;
 			var distY:Number = target.view.y - Player.self.view.y;
 			var rad:Number = Math.atan2(distY,distX);
-			var skill:SkillInfo = selectSill?selectSill:basicSkill;
-			selectSill = null;
-			
+			var skills:Vector.<SkillInfo> = System.skill.getSkillsInBar();
+			var random:uint = Math.random() * 8;
+			var skill:SkillInfo = skills[random];
+			trace(skill,skill.id,"skill");
 			var attack:CmdSingleAtk = new CmdSingleAtk(Player.self);
 			attack.setTarget(tgt);
 			attack.skill = skill;

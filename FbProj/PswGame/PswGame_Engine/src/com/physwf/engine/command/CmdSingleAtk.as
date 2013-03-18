@@ -1,5 +1,6 @@
 package com.physwf.engine.command
 {
+	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;
 	import com.physwf.components.effects.Effect;
 	import com.physwf.components.effects.EffectConfig;
@@ -38,11 +39,15 @@ package com.physwf.engine.command
 		{
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skillID:uint = mSkill.id;
-			var config:EffectConfig = EffectSystem.getConfig(4);;
-			var factory:IEffectFactory = EffectSystem.getFactory(1);
+			var type:uint = Config.getEffectConfig(mSkill.effectId).type;
+			var config:EffectConfig = EffectSystem.getConfig(mSkill.effectId);
+			trace("type=",type,"effectId",mSkill.effectId);
+			var factory:IEffectFactory = EffectSystem.getFactory(type);
 			var effect:Effect = factory.createEffect(config,Engine.map.view.upperEffect,Player.self.view,mTarget.view);
 			effect.x = mChara.view.x;
 			effect.y = mChara.view.y - 30;
+			var rad:Number = Math.atan2(mTarget.view.y - Player.self.view.x,mTarget.view.x -Player.self.view.x);
+			mChara.view.direction = ISODirection.radianToDirect8(rad);
 			mChara.attack();
 			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,1);
 			super.execute();
