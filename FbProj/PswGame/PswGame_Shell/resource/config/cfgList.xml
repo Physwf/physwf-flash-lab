@@ -2,4 +2,5 @@
 <configs>
 	<config name="map" struct="struct.cfg_map"/>
 	<config name="monster" struct="struct.cfg_monster"/>
+	<config name="effect" struct="struct.cfg_effect"/>
 </configs>
