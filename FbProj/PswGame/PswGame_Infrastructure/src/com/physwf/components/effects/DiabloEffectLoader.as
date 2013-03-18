@@ -69,7 +69,6 @@ package com.physwf.components.effects
 		
 		private function onComplete(e:Event):void
 		{
-			
 			var stream:URLStream = e.target as URLStream;
 			stream.removeEventListener(Event.COMPLETE,onComplete);
 			var numDirect:uint = stream.readUnsignedByte();

@@ -13,7 +13,7 @@ package com.physwf.components.effects
 	public class DiabloEffect extends Effect
 	{
 		protected var mEffects:Vector.<Vector.<EffectFrame>>;
-		protected var mSpeed:uint = 5;
+		protected var mSpeed:uint = 9;
 		private var mDirectFun:Function;
 		
 		public function DiabloEffect(layer:Sprite, life:uint, source:DisplayObject=null ,target:DisplayObject=null)
