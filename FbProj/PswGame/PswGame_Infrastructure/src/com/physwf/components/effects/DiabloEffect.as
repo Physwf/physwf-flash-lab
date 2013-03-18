@@ -16,9 +16,9 @@ package com.physwf.components.effects
 		protected var mSpeed:uint = 5;
 		private var mDirectFun:Function;
 		
-		public function DiabloEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		public function DiabloEffect(layer:Sprite, life:uint, source:DisplayObject=null ,target:DisplayObject=null)
 		{
-			super(layer, life, target);
+			super(layer, life, source, target);
 		}
 		
 		public function setEffects(effects:Vector.<Vector.<EffectFrame>>):void

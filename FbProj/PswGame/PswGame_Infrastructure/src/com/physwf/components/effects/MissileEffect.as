@@ -13,9 +13,9 @@ package com.physwf.components.effects
 	public class MissileEffect extends DiabloEffect
 	{
 		
-		public function MissileEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		public function MissileEffect(layer:Sprite, life:uint, source:DisplayObject=null ,target:DisplayObject=null)
 		{
-			super(layer, life, target);
+			super(layer, life, source, target);
 		}
 		
 		override public function update():void

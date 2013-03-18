@@ -15,7 +15,7 @@ package com.physwf.components.effects
 			drawBottom();
 			drawShape();
 			mData = data;
-			super(layer,0,target);
+			super(layer,0,null,target);
 		}
 
 		public function setProgress(hp:uint,hpMax:uint):void

@@ -12,9 +12,9 @@ package com.physwf.components.effects
 	 */	
 	public class DropEffect extends Effect
 	{
-		public function DropEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		public function DropEffect(layer:Sprite, life:uint,source:DisplayObject=null, target:DisplayObject=null)
 		{
-			super(layer, life, target);
+			super(layer, life, source, target);
 		}
 		
 		override public function update():void

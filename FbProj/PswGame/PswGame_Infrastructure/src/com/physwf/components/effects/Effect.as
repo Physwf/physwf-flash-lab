@@ -20,6 +20,7 @@ package com.physwf.components.effects
 		
 		protected var mContent:Bitmap;
 		protected var mTarget:DisplayObject;
+		protected var mSource:DisplayObject;
 		protected var mLayer:Sprite;
 		protected var mLife:uint;//单位ms
 		protected var mBornTime:uint;
@@ -28,11 +29,12 @@ package com.physwf.components.effects
 		protected var mCurFrameNum:uint;
 		protected var mCurFrame:EffectFrame;
 		
-		public function Effect(layer:Sprite,life:uint,target:DisplayObject=null)
+		public function Effect(layer:Sprite,life:uint,source:DisplayObject=null,target:DisplayObject=null)
 		{
 			mLayer = layer;
 			mLife = life;
 			mTarget = target;
+			mSource = source;
 			mouseEnabled = false;
 			mouseChildren = false;
 			mContent = new Bitmap();

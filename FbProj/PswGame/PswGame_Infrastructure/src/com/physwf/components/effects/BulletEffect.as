@@ -16,10 +16,9 @@ package com.physwf.components.effects
 		private var mRange:uint = 150;// 射程，超出后，特效消失
 		private var mPathLen:uint=0;
 		
-		public function BulletEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		public function BulletEffect(layer:Sprite, life:uint, source:DisplayObject=null ,target:DisplayObject=null)
 		{
-			mRad = Math.atan2(target.x-x,target.y-y);
-			
+			mRad = Math.atan2(target.y-source.y,target.x-source.x);
 			super(layer, life, target);
 		}
 		
@@ -33,8 +32,8 @@ package com.physwf.components.effects
 		{
 			x += mSpeed * Math.cos(mRad);
 			y += mSpeed * Math.sin(mRad);
-			mPathLen + mSpeed;
-			
+			mPathLen += mSpeed;
+			trace(mRad * 180/Math.PI,mPathLen);
 			mCurFrame = mFrames[mCurFrameNum];
 			mContent.x = mCurFrame.x;
 			mContent.y = mCurFrame.y;

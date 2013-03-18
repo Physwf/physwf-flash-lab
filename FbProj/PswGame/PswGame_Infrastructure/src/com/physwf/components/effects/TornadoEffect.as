@@ -9,13 +9,20 @@ package com.physwf.components.effects
 	 */	
 	public class TornadoEffect extends Effect
 	{
-		public function TornadoEffect(layer:Sprite, life:uint, target:DisplayObject=null)
+		private var mSpeed:uint = 8;
+		private var mRad:Number = 0.0;
+		
+		public function TornadoEffect(layer:Sprite, life:uint, source:DisplayObject=null ,target:DisplayObject=null)
 		{
-			super(layer, life, target);
+			mRad = Math.atan2(target.y- source.y,target.x- source.x);
+			super(layer, life, source, target);
 		}
 		
 		override public function update():void
 		{
+			x += mSpeed * Math.cos(mRad);
+			y += mSpeed * Math.sin(mRad);
+			
 			mCurFrame = mFrames[mCurFrameNum];
 			mContent.x = mCurFrame.x;
 			mContent.y = mCurFrame.y;
@@ -25,7 +32,14 @@ package com.physwf.components.effects
 			{
 				mCurFrameNum = 0;
 			}
-			super.update();
+			var distX:int = mTarget.x - x;
+			var distY:int = mTarget.y - y - 30;
+			
+			if(distX*distX + distY*distY < mSpeed)
+			{
+				mLayer.removeChild(this);
+				effects.splice(effects.indexOf(this),1);
+			}
 		}
 	}
 }

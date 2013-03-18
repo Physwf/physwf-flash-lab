@@ -5,6 +5,6 @@ package com.physwf.components.effects
 
 	public interface IEffectFactory
 	{
-		function createEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):Effect;
+		function createEffect(config:EffectConfig,layer:Sprite,source:DisplayObject=null,target:DisplayObject=null):Effect;
 	}
 }

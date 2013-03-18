@@ -1,11 +1,14 @@
 package com.physwf.engine.fight.effects
 {
+	import com.physwf.components.effects.BulletEffect;
 	import com.physwf.components.effects.DiabloEffect;
 	import com.physwf.components.effects.DiabloFactory;
 	import com.physwf.components.effects.DropEffect;
 	import com.physwf.components.effects.EffectConfig;
 	import com.physwf.components.effects.EffectFactory;
 	import com.physwf.components.effects.IEffectFactory;
+	import com.physwf.components.effects.MissileEffect;
+	import com.physwf.components.effects.TornadoEffect;
 	
 	import mx.messaging.AbstractConsumer;
 
@@ -18,10 +21,10 @@ package com.physwf.engine.fight.effects
 		
 		// to do 建立特效配表 给每个忒小拟定名称 id 和 type
 		public static const DROP_THOUDER:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+1,400);
-		public static const DROP_THOUDER2:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+2,400);
+		public static const DROP_THOUDER2:EffectConfig = new EffectConfig(BulletEffect,DIR_EFFECT+16,400);
 		public static const DROP_THOUDER3:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+3,400);
-		public static const DROP_THOUDER4:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+4,400);
-		public static const DROP_THOUDER5:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+5,400);
+		public static const DROP_THOUDER4:EffectConfig = new EffectConfig(MissileEffect,DIR_EFFECT+4,400);
+		public static const DROP_THOUDER5:EffectConfig = new EffectConfig(TornadoEffect,DIR_EFFECT+5,400);
 		public static const DROP_THOUDER6:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+6,400);
 		public static const DROP_THOUDER7:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+7,400);
 		public static const DROP_THOUDER8:EffectConfig = new EffectConfig(DropEffect,DIR_EFFECT+8,400);

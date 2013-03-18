@@ -16,8 +16,6 @@ package com.physwf.engine.world.manager
 
 	public class Character extends EventDispatcher implements IUpdatable
 	{
-		public static var self:Character;
-		
 		public var view:CharacterAnimation;
 		public static var managers:Dictionary;//从显示到manager的映射,用于在战斗系统中通过鼠标事件目标获取角色对象
 		

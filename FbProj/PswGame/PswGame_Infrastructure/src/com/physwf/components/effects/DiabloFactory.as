@@ -17,9 +17,9 @@ package com.physwf.components.effects
 		{
 		}
 		
-		public function createEffect(config:EffectConfig,layer:Sprite,target:DisplayObject):Effect
+		public function createEffect(config:EffectConfig,layer:Sprite,source:DisplayObject=null,target:DisplayObject=null):Effect
 		{
-			var diablo:DiabloEffect = new config.Definition(layer,config.life,target);
+			var diablo:DiabloEffect = new config.Definition(layer,config.life,source,target);
 			diablo.setEffects(zeroEffects);
 			var dLoader:DiabloEffectLoader = DiabloEffectLoader.getSameDiabloLoader(config.url);
 			function onComplete():void
