@@ -42,7 +42,10 @@
 	<item name="fight" type="exe" thread="3" url="plugins/FightPlugin.swf">
 		<domain level="1" useSub="0"/>
 	</item>
-	<item name="debug" type="exe" thread="4" url="plugins/DebugPlugin.swf">
+	<item name="input" type="exe" thread="4" url="plugins/InputPlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="debug" type="exe" thread="5" url="plugins/DebugPlugin.swf">
 		<domain level="1" useSub="0"/>
 	</item>
 </startup>
