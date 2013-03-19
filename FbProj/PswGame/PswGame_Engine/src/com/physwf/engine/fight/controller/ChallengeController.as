@@ -2,11 +2,12 @@ package com.physwf.engine.fight.controller
 {
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
+	import com.physwf.components.command.Command;
 	import com.physwf.components.ds.heap.MaxHeap;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdGoTo;
-	import com.physwf.components.command.Command;
+	import com.physwf.engine.events.MonsterEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.world.manager.Character;
@@ -37,41 +38,15 @@ package com.physwf.engine.fight.controller
 		public function initialize(view:Challenge):void
 		{
 			mView = view;
-			Engine.map.view.swapLayer.addEventListener(MouseEvent.CLICK,onSwapClick);
+			view.addEventListener(MonsterEvent.MONSTER_SELECTED,onMonsterSelect);
 		}
 		
-		private function onSwapClick(e:MouseEvent):void
+		private function onMonsterSelect(e:MonsterEvent):void
 		{
-			var target:Character = Character.managers[e.target] as Character;
-			mView.setTarget(target,Monster(target).id);
-			Mouse.cursor = MouseCursor.AUTO;
+			var target:Monster = Engine.map.getMonsterByMID(e.info.instanceID);
+			mView.setTarget(target,target.id);
+			Challenge.targetEffect.changeTarget(target.view);
 			return;
-		}
-		
-		public function order(cmd:Command):void
-		{
-			mCmdQueue.Enqueue(cmd);
-			if(!mCurCmd)
-			{
-				mCurCmd = mCmdQueue.Dequeue() as Command;
-				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish);
-				mCurCmd.execute();
-			}
-		}
-		
-		private function onCurCmdFinish(e:Event):void
-		{
-			mCurCmd.removeEventListener(Command.FINISH,onCurCmdFinish);
-			if(mCmdQueue.size>0)
-			{
-				mCurCmd = mCmdQueue.Dequeue() as Command;
-				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish);
-				mCurCmd.execute();
-			}
-			else
-			{
-				mCurCmd = null;
-			}
 		}
 	}
 }

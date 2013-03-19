@@ -2,32 +2,34 @@ package com.physwf.engine.fight.manager
 {
 	import com.physwf.components.command.LinerCmdSequence;
 	import com.physwf.components.effects.BloodBar;
+	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdAttack;
-	import com.physwf.engine.command.CmdGoTo;
 	import com.physwf.engine.command.CmdGoToForAttack;
 	import com.physwf.engine.command.CmdSingleAtk;
 	import com.physwf.engine.command.CmdStand;
+	import com.physwf.engine.events.MonsterEvent;
+	import com.physwf.engine.events.PlayerEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
 	import com.physwf.engine.world.manager.Character;
 	import com.physwf.engine.world.manager.Monster;
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
-	import com.physwf.system.entity.FightSystem;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
 	import com.physwf.system.vo.SkillInfo;
 	
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
-	import flash.utils.getTimer;
 	
-	public class Challenge implements IUpdatable
+	public class Challenge extends EventDispatcher implements IUpdatable
 	{
 		public var target:Character;//选中的目标
 		public var basicSkill:SkillInfo;//基础技能
 		public var selectSill:SkillInfo;//点击技能栏选择的技能
+		
+		public static var targetEffect:TargetEffect;
 		
 		private var targetID:uint = 0;
 		private var controller:ChallengeController;
@@ -68,10 +70,12 @@ package com.physwf.engine.fight.manager
 					var fInfo:FightInfo = e.info;
 					var cInfo:Object = {};
 					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
-					trace(cInfo.info.hp,"cInfo.info.hp")
+//					var attack:CmdSingleAtk = new CmdSingleAtk(chara);
+//					chara.execute();
+					cInfo.info.hp -= fInfo.hpHurt;
+					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
 					if(chara)
 					{
-						trace(fInfo.hpHurt);
 						updateBloodBar(fInfo.objId,chara,cInfo.info);
 					}
 					break;
@@ -79,11 +83,15 @@ package com.physwf.engine.fight.manager
 					cInfo = {};
 					fInfo = e.info;
 					chara = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
-					if(chara)
+					if(chara is Player)
 					{
-						trace(fInfo.objId,"fInfo.objId");
-						chara.die();
+						dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_DIE,Player(chara).info));
 					}
+					else if(chara is Monster)
+					{
+						dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_DIE,MonsterEvent(chara).info));
+					}
+					chara.die();
 					break;
 			}
 		}
@@ -93,7 +101,6 @@ package com.physwf.engine.fight.manager
 			if(type == Fight.FIGHT_CHARA_TYPE_PLAYER)
 			{
 				var player:Player = Engine.map.getPlayerByUID(id);
-				trace(player.info.hp,"player.info.hp");
 				info_out.info = player.info;
 				return player;
 			}
@@ -106,6 +113,7 @@ package com.physwf.engine.fight.manager
 				var monster:Monster = Engine.map.getMonsterByMID(id);
 //				trace(monster.info.hp,"monster.info.hp");
 				info_out.info = monster.info;
+				//ConfigReader.readMonster(info_out.info.id,info_out.info);//temp
 				return monster;
 			}
 			return null;

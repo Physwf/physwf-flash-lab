@@ -2,6 +2,7 @@ package com.physwf.engine.fight
 {
 	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.effects.Effect;
+	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.effects.EffectSystem;
@@ -30,6 +31,9 @@ package com.physwf.engine.fight
 			Effect.effects = new Vector.<Effect>();
 			EffectSystem.initialize();
 			
+			Challenge.targetEffect = new TargetEffect(Engine.map.view.underEffect,0);
+			Challenge.targetEffect.hide();
+				
 			Engine.map.addEventListener(WorldEvent.WORLD_DESTROY,onWorldDestroy);
 			Engine.map.addEventListener(WorldEvent.WORLD_READY,onWorldReady);
 		}
