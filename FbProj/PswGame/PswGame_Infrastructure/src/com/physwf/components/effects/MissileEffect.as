@@ -40,7 +40,7 @@ package com.physwf.components.effects
 				mCurFrameNum = 0;
 			}
 			
-			if(distX*distX + distY*distY < mSpeed)
+			if(distX*distX + distY*distY <= mSpeed * mSpeed)
 			{
 				mLayer.removeChild(this);
 				effects.splice(effects.indexOf(this),1);

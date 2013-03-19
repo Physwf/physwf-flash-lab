@@ -33,7 +33,7 @@ package com.physwf.components.effects
 			x += mSpeed * Math.cos(mRad);
 			y += mSpeed * Math.sin(mRad);
 			mPathLen += mSpeed;
-			trace(mRad * 180/Math.PI,mPathLen);
+
 			mCurFrame = mFrames[mCurFrameNum];
 			mContent.x = mCurFrame.x;
 			mContent.y = mCurFrame.y;
@@ -46,7 +46,7 @@ package com.physwf.components.effects
 			var distX:int = mTarget.x - x;
 			var distY:int = mTarget.y - y - 30;
 			
-			if(mPathLen > mRange || distX*distX + distY*distY < mSpeed)
+			if(mPathLen > mRange || distX*distX + distY*distY <= mSpeed * mSpeed)
 			{
 				mLayer.removeChild(this);
 				effects.splice(effects.indexOf(this),1);

@@ -35,7 +35,7 @@ package com.physwf.components.effects
 			var distX:int = mTarget.x - x;
 			var distY:int = mTarget.y - y - 30;
 			
-			if(distX*distX + distY*distY < mSpeed)
+			if(distX*distX + distY*distY <= mSpeed * mSpeed)
 			{
 				mLayer.removeChild(this);
 				effects.splice(effects.indexOf(this),1);

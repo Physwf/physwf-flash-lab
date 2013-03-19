@@ -20,7 +20,7 @@ package com.physwf.components.effects
 
 		public function setProgress(hp:uint,hpMax:uint):void
 		{
-			var prog:uint = (1  / 1) * 100;
+			var prog:uint = (hp  / 2000) * 100;
 			if(prog<=0) 
 			{
 				prog=0;
@@ -30,7 +30,7 @@ package com.physwf.components.effects
 			shape.scaleX = prog/100;
 			var n:Number = BL * prog;
 			var p:Number = n - Math.floor(n);
-			var color:uint = ( 0xFF * p << 16 ) + ( 0xFF * (1-p) << 8 );
+			var color:uint = ( 0xFF * (1-p) << 16 ) + ( 0xFF * p << 8 );
 			shape.graphics.clear();
 			shape.graphics.beginFill(color,1);
 			shape.graphics.drawRect(0,0,98,6);

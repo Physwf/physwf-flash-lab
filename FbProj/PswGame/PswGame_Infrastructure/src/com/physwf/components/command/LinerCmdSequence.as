@@ -32,7 +32,6 @@ package com.physwf.components.command
 			if(mCurCmd != null)
 			{
 				mCurCmd.addEventListener(Command.FINISH,onCurCmdFinish); 
-				trace(mCurCmd,"开始执行",getTimer())
 				mCurCmd.execute();
 			}
 			else
