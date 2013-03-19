@@ -5,11 +5,13 @@ package com.physwf.system
 	import com.physwf.components.rpc.msg.MessageManager;
 	import com.physwf.components.rpc.msg.MsgBase;
 	import com.physwf.system.entity.BagSystem;
+	import com.physwf.system.entity.DropSystem;
 	import com.physwf.system.entity.FightSystem;
 	import com.physwf.system.entity.MapSystem;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.entity.NPCSystem;
 	import com.physwf.system.entity.SkillSystem;
+	import com.physwf.system.entity.TaskSystem;
 	import com.physwf.system.events.MyEvent;
 	
 	import flash.utils.getTimer;
@@ -24,6 +26,8 @@ package com.physwf.system
 		private static var _bag:BagSystem;
 		private static var _fight:FightSystem;
 		private static var _skill:SkillSystem;
+		private static var _drop:DropSystem;
+		private static var _task:TaskSystem;
 		
 		private static var _systemTime:uint;
 		private static var _lastTimer:uint;
@@ -38,6 +42,7 @@ package com.physwf.system
 		{
 			RPCConnectioin.online = new RPCConnectioin();
 			RPCConnectioin.online.initialze();
+			
 			MessageManager.instance.initialize();
 			MessageManager.instance.registerMessage();
 			MessageManager.instance.setMsgUID(uint(MySelf.loginInfo.userID));
@@ -48,6 +53,8 @@ package com.physwf.system
 			_bag = new BagSystem();
 			_fight = new FightSystem();
 			_skill = new SkillSystem();
+			_drop = new DropSystem();
+			_task = new TaskSystem();
 			
 			_myself.initialize();
 			_map.initialize();
@@ -55,6 +62,8 @@ package com.physwf.system
 			_bag.initialize();
 			_fight.initialize();
 			_skill.initialize();
+			_drop.initialize();
+			_task.initialize();
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1003,onSystemTime);
 		}
@@ -98,6 +107,16 @@ package com.physwf.system
 		public static function get skill():SkillSystem
 		{
 			return _skill;
+		}
+		
+		public static function get drop():DropSystem
+		{
+			return _drop;
+		}
+		
+		public static function get task():TaskSystem
+		{
+			return _task;
 		}
 		
 		public static function get systemTime():uint 
