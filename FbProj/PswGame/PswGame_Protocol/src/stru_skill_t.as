@@ -5,22 +5,25 @@ package
 	import flash.utils.IExternalizable;
 	import flash.utils.ByteArray;
 	
-	public class gateway_take_enclosure_out implements IExternalizable
+	public class stru_skill_t implements IExternalizable
 	{
-		public var mail_id:uint;
+		public var skill_id:uint;
+		public var skill_lv:uint;
 		
-		public function gateway_take_enclosure_out()
+		public function stru_skill_t()
 		{
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
-			mail_id = input.readUnsignedInt();			
+			skill_id = input.readUnsignedShort();
+			skill_lv = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(mail_id);			
+			output.writeShort(skill_id);
+			output.writeShort(skill_lv);			
 		}
 	}
 }

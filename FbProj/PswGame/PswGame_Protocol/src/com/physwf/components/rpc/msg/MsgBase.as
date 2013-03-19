@@ -65,7 +65,7 @@ package com.physwf.components.rpc.msg
 			userID = input.readUnsignedInt();
 			seqIndex = input.readUnsignedInt();
 			statusCode = input.readUnsignedInt();
-			trace("response:包长->"+length,"命令号->"+msgid,"用户id->"+userID,"序列->"+seqIndex,"状态码->"+statusCode)
+//			trace("response:包长->"+length,"命令号->"+msgid,"用户id->"+userID,"序列->"+seqIndex,"状态码->"+statusCode)
 		}
 		
 		protected function readBody(input:IDataInput):void
