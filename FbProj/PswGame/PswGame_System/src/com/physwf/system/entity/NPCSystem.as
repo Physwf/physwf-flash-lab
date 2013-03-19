@@ -45,6 +45,7 @@ package com.physwf.system.entity
 					{
 						var mons:MonsterInfo = new MonsterInfo();
 						mons.instanceID = monsters[i].instance_id;
+						mons.id = monsters[i].monster_id;
 						mons.map_x = monsters[i].map_x;
 						mons.map_y = monsters[i].map_y;
 						mons.hp = monsters[i].hp;
