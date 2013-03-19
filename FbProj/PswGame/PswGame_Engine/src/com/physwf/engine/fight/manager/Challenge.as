@@ -16,6 +16,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.engine.world.manager.Monster;
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
+	import com.physwf.system.events.DeathEvent;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
 	import com.physwf.system.vo.SkillInfo;
@@ -54,12 +55,14 @@ package com.physwf.engine.fight.manager
 		{
 			System.fight.removeEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
 			System.fight.removeEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
+			System.fight.removeEventListener(DeathEvent.SELF_DEATH,onDeathEvent);//temp
 		}
 		
 		public function onWorldReady():void
 		{
 			System.fight.addEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
 			System.fight.addEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
+			System.fight.addEventListener(DeathEvent.SELF_DEATH,onDeathEvent);//temp
 		}
 		
 		private function onFightEvent(e:FightEvent):void
@@ -69,9 +72,16 @@ package com.physwf.engine.fight.manager
 				case FightEvent.FIGHT_RESULT:
 					var fInfo:FightInfo = e.info;
 					var cInfo:Object = {};
-					var chara:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
-//					var attack:CmdSingleAtk = new CmdSingleAtk(chara);
-//					chara.execute();
+					var chara:Character = getCharacterByID(fInfo.srcType,fInfo.srcId,cInfo);
+					var target:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo)
+					var attack:CmdSingleAtk = new CmdSingleAtk(chara);
+					var skill:SkillInfo = basicSkill;//temp
+					attack.skill = skill;
+					attack.setTarget(target);
+					var seq:LinerCmdSequence = new LinerCmdSequence();
+					seq.addCommand(attack);
+					seq.addCommand(new CmdStand(chara));
+					chara.execute(seq);
 					cInfo.info.hp -= fInfo.hpHurt;
 					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
 					if(chara)
@@ -89,9 +99,19 @@ package com.physwf.engine.fight.manager
 					}
 					else if(chara is Monster)
 					{
-						dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_DIE,MonsterEvent(chara).info));
+						dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_DIE,Monster(chara).info));
 					}
 					chara.die();
+					break;
+			}
+		}
+		
+		private function onDeathEvent(e:DeathEvent):void
+		{
+			switch(e.type)
+			{
+				case DeathEvent.SELF_DEATH:
+					//temp
 					break;
 			}
 		}

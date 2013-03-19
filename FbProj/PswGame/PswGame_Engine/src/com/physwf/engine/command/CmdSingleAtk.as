@@ -43,10 +43,10 @@ package com.physwf.engine.command
 			var config:EffectConfig = EffectSystem.getConfig(mSkill.effectId);
 			trace("type=",type,"effectId",mSkill.effectId);
 			var factory:IEffectFactory = EffectSystem.getFactory(type);
-			var effect:Effect = factory.createEffect(config,Engine.map.view.upperEffect,Player.self.view,mTarget.view);
+			var effect:Effect = factory.createEffect(config,Engine.map.view.upperEffect,mChara.view,mTarget.view);
 			effect.x = mChara.view.x;
 			effect.y = mChara.view.y - 30;
-			var rad:Number = Math.atan2(mTarget.view.y - Player.self.view.x,mTarget.view.x -Player.self.view.x);
+			var rad:Number = Math.atan2(mTarget.view.y - mChara.view.y,mTarget.view.x -mChara.view.x);
 			mChara.view.direction = ISODirection.radianToDirect8(rad);
 			mChara.attack();
 			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,1);
