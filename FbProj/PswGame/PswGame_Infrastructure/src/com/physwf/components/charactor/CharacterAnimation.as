@@ -79,7 +79,7 @@ package com.physwf.components.charactor
 					direction = ISODirection.LEFT;
 				});
 			
-			mSkeleton.loadNude();
+			mSkeleton.loadNude();//一定要在侦听之后加载，否则侦听不到
 		}
 		
 		/**
