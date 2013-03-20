@@ -70,7 +70,6 @@ package com.physwf.components.charactor
 		public function set skeleton(v:SkeletonLoader):void
 		{
 			mSkeleton = v;
-			mSkeleton.loadNude();
 			
 			mSkeleton.addEventListener(PackageEvent.PACKAGE_ALL_INITED,
 				function(e:Event):void 
@@ -79,6 +78,8 @@ package com.physwf.components.charactor
 					status = CharacterAction.ACTION_STAND;
 					direction = ISODirection.LEFT;
 				});
+			
+			mSkeleton.loadNude();
 		}
 		
 		/**
