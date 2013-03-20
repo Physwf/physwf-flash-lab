@@ -156,6 +156,7 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1001://登录成功
 					userInfo.createTime = loginInfo.roleInfo.createTime;
 					var msg1001:MSG_RES_LOGIN_1001 = msg as MSG_RES_LOGIN_1001;
+					userInfo.nick = msg1001.user.nick;
 					userInfo.level = msg1001.user.level;
 					userInfo.exp = msg1001.user.exp;
 					userInfo.map_id = msg1001.user.map_id;
