@@ -16,6 +16,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.engine.world.manager.Monster;
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
+	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.DeathEvent;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
@@ -74,19 +75,23 @@ package com.physwf.engine.fight.manager
 					var cInfo:Object = {};
 					var chara:Character = getCharacterByID(fInfo.srcType,fInfo.srcId,cInfo);
 					var target:Character = getCharacterByID(fInfo.objType,fInfo.objId,cInfo)
-					var attack:CmdSingleAtk = new CmdSingleAtk(chara);
-					var skill:SkillInfo = basicSkill;//temp
-					attack.skill = skill;
-					attack.setTarget(target);
-					var seq:LinerCmdSequence = new LinerCmdSequence();
-					seq.addCommand(attack);
-					seq.addCommand(new CmdStand(chara));
-					chara.execute(seq);
+					if(chara != Player.self)
+					{
+						var attack:CmdSingleAtk = new CmdSingleAtk(chara);
+						var skill:SkillInfo = basicSkill;//temp
+						attack.skill = skill;
+						attack.setTarget(target);
+						var seq:LinerCmdSequence = new LinerCmdSequence();
+						seq.addCommand(attack);
+						seq.addCommand(new CmdStand(chara));
+						chara.execute(seq);
+					}
+
 					cInfo.info.hp -= fInfo.hpHurt;
 					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
 					if(chara)
 					{
-						updateBloodBar(fInfo.objId,chara,cInfo.info);
+						updateBloodBar(fInfo.objId,target,cInfo.info);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:

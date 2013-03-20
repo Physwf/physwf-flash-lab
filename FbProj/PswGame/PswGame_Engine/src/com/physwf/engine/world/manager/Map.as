@@ -49,6 +49,8 @@ package com.physwf.engine.world.manager
 		
 		public function Map()
 		{
+			Engine.map = this;
+			
 			mMapView = new MapView();
 			mCamera = new Camera(new Rectangle(0,0,1000,600));
 			
@@ -70,8 +72,6 @@ package com.physwf.engine.world.manager
 			
 			mCamera.target = Player.self.view;
 			mCamera.initialize(mMapView);
-			
-			Engine.map = this;
 		}
 		
 		public function initialize():void
@@ -121,10 +121,12 @@ package com.physwf.engine.world.manager
 					// to do 根据userInfo找到相应的Player，然后设置该Player到指定点
 					var player:Player = getPlayerByUID(e.userInfo.uid);
 					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
-					var goCmd:CmdGoTo= new CmdGoTo(player);
-					goCmd.setDest(e.userInfo.target_x,e.userInfo.target_y);
+//					var goAlong:CmdGoAlong = new CmdGoAlong(player);
+//					goAlong.setPath(e.userInfo.path);
+					var goTo:CmdGoTo = new CmdGoTo(player);
+					goTo.setDest(e.userInfo.path[0],e.userInfo.path[1]);
 					var standCmd:CmdStand = new CmdStand(player);
-					cmdSeq.addCommand(goCmd);
+					cmdSeq.addCommand(goTo);
 					cmdSeq.addCommand(standCmd);
 					player.execute(cmdSeq);
 					break;
@@ -172,7 +174,6 @@ package com.physwf.engine.world.manager
 				case MyEvent.ENTER_MAP_SUCCESS:
 					break;
 				case MyEvent.SELF_MOVE_ALLOWED:
-					trace(mController.targetX,mController.targetY,"将要寻路到此");
 					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
 					var goCmd:CmdGoTo= new CmdGoTo(Player.self);
 					goCmd.setDest(mController.targetX,mController.targetY);
@@ -254,6 +255,7 @@ package com.physwf.engine.world.manager
 				if(mCharactors[i].id == info.uid)
 				{
 					mMapView.removeSwapElement(mCharactors[i].view);
+					mCharactors[i].destroy()
 					mCharactors.splice(i,1);
 				}
 			}

@@ -28,9 +28,6 @@ package com.physwf.engine.fight
 			mChallenge.initialize();
 			mChallenge.basicSkill = System.skill.basicSill;
 			
-			Effect.effects = new Vector.<Effect>();
-			EffectSystem.initialize();
-			
 			Challenge.targetEffect = new TargetEffect(Engine.map.view.underEffect,0);
 			Challenge.targetEffect.hide();
 				

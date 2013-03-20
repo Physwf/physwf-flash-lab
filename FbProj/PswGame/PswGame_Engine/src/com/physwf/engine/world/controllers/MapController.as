@@ -35,6 +35,7 @@ package com.physwf.engine.world.controllers
 			targetX = mapView.mouseX;
 			targetY = mapView.mouseY;
 			System.myself.move(targetX,targetY,0);
+//			System.myself.walkAlong(System.systemTime,Vector.<uint>([targetX,targetY]));
 		}
 		
 		public function getMapID():uint

@@ -1,8 +1,10 @@
 package com.physwf.engine.world
 {
+	import com.physwf.components.effects.Effect;
 	import com.physwf.components.map.wayfinding.astar.BiHeapAStar;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.fight.effects.EffectSystem;
 	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.engine.world.manager.Character;
 	import com.physwf.engine.world.manager.Map;
@@ -25,6 +27,10 @@ package com.physwf.engine.world
 		public function World()
 		{
 			super();
+			
+			Effect.effects = new Vector.<Effect>();
+			EffectSystem.initialize();
+			
 			map = new Map();
 			map.attachLayer(ScreenManager.main.world);
 			map.initialize();
@@ -32,7 +38,6 @@ package com.physwf.engine.world
 			
 			Engine.world = this;
 		}
-		
 
 		public function initialize():void
 		{
