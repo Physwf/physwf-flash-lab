@@ -3,6 +3,8 @@ package com.physwf.components.effects
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.text.TextField;
+	
+	import mx.states.OverrideBase;
 
 	/**
 	 * 角色头顶的名字特效 ,后期加入头衔 门牌等显示
@@ -28,10 +30,27 @@ package com.physwf.components.effects
 			addChild(mTxtName);
 		}
 		
+		public function hide():void
+		{
+			mLayer.removeChild(this);
+			effects.splice(effects.indexOf(this),1);
+		}
+		
+		public function show():void
+		{
+			if(mLayer.contains(this)) return;
+			mLayer.addChild(this);
+			effects.push(this);
+		}
+		
 		override public function update():void
 		{
-			x = mTarget.x - width * .5;
-			y = mTarget.y -  mTarget.height - 30;//暂时先用显示对象的高度 后面要改成配置中的高度
+			if(visible)
+			{
+				x = mTarget.x - width * .5;
+				y = mTarget.y -  mTarget.height - 30;//暂时先用显示对象的高度 后面要改成配置中的高度
+			}
 		}
+		
 	}
 }

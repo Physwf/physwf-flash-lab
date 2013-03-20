@@ -64,6 +64,7 @@ package com.physwf.components.effects
 			mTarget = null;
 			
 			mLayer.removeChild(this);
+			effects.splice(effects.indexOf(this),1);
 		}
 	}
 }
