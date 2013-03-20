@@ -14,6 +14,8 @@ package com.physwf.system.entity
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.ByteArray;
+	
+	import mx.messaging.AbstractConsumer;
 
 	public class MySelf extends EventDispatcher
 	{
@@ -40,9 +42,12 @@ package com.physwf.system.entity
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1001,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1002,onMessage);
 			
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1028,onMessage);//移动
+			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1030,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1031,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);//移动
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);//移动old
+			
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1091,onMessage);//换装
 		}
@@ -63,7 +68,7 @@ package com.physwf.system.entity
 			RPCConnectioin.online.call(msg);
 		}
 		/**
-		 * 移动 
+		 * 移动 old
 		 * @param x
 		 * @param y
 		 * @param dir
@@ -76,6 +81,27 @@ package com.physwf.system.entity
 			msg.y = y;
 			msg.dir = dir;
 			dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
+			RPCConnectioin.online.call(msg);
+		}
+		/**
+		 * 玩家移动
+		 * @param timeStap
+		 * @param path
+		 * 
+		 */		
+		public function walkAlong(timeStap:uint,path:Vector.<uint>):void
+		{
+			var msg:MSG_REQ_WALK_1028 = new MSG_REQ_WALK_1028();
+			msg.timestamp;
+			msg.type = 0;//0 人 1 宠
+			msg.postions = new Vector.<map_pos_t>();
+			for(var i:uint=0;i<path.length;i+=2)
+			{
+				var p:map_pos_t = new map_pos_t();
+				p.map_x = path[2*i];
+				p.map_y = path[2*i+1]
+				msg.postions.push(p);
+			}
 			RPCConnectioin.online.call(msg);
 		}
 		/**
@@ -147,6 +173,18 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+1002://被踢下线
 					dispatchEvent(new MyEvent(MyEvent.KICKED_OFF));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1028://移动
+					var msg1028:MSG_RES_WALK_1028 = e.message as MSG_RES_WALK_1028;
+					var positions:Vector.<map_pos_t> = msg1028.postions;
+					var path:Vector.<uint> = new Vector.<uint>();
+					for(i=0;i<positions.length;++i)
+					{
+						path.push(positions[i].map_x,positions[i].map_y);
+						trace(positions[i].map_x,positions[i].map_y);
+					}
+					userInfo.path = path;
+					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1030://进入地图
 					var msg1030:MSG_RES_ENTER_MAP_1030 = MSG_RES_ENTER_MAP_1030(msg);

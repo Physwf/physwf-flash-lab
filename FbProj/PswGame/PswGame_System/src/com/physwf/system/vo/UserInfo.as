@@ -47,6 +47,10 @@ package com.physwf.system.vo
 		 */		
 		public var target_y:uint;
 		/**
+		 * 移动路径 
+		 */		
+		public var path:Vector.<uint>;
+		/**
 		 *裸模id 
 		 */		
 		public var resource_id:uint;

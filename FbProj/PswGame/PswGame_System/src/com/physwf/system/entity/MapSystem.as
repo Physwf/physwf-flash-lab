@@ -20,6 +20,8 @@ package com.physwf.system.entity
 		
 		public function initialize():void
 		{
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1028,onMessage);
+			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1032,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1033,onMessage);
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1034,onMessage);
@@ -39,6 +41,14 @@ package com.physwf.system.entity
 			var userInfo:UserInfo;
 			switch(e.type)
 			{
+				case MessageEvent.MSG_SUCCESS_+1028:
+					var msg1028:MSG_RES_WALK_1028 = e.message as MSG_RES_WALK_1028;
+					for(var j:uint=0;j<msg1028.postions.length;++j)
+					{
+						trace(msg1028.postions[i].map_x);
+						trace(msg1028.postions[i].map_y);
+					}
+					break;
 				case MessageEvent.MSG_SUCCESS_+1032://获取地图上的玩家列表
 					mapUserList = new <UserInfo>[];
 					var msg1032:MSG_RES_GET_MAP_USER_LIST_1032 = e.message as MSG_RES_GET_MAP_USER_LIST_1032;
@@ -54,6 +64,10 @@ package com.physwf.system.entity
 						userInfo.map_y = mapUserInfo.map_y;
 						//to do 装备 宠物
 						mapUserList.push(userInfo);
+//						if(mapUserInfo.userid != MySelf.userInfo.uid)
+//						{
+//
+//						}
 					}
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_LIST_SUCCESS));
 					break;
@@ -83,10 +97,16 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1037://玩家移动
 					if(!mapUserList) return;
 					var msg1037:MSG_RES_NOTI_USER_MOVE_1037 = e.message as MSG_RES_NOTI_USER_MOVE_1037;
-					userInfo = getUserInfoById(msg1037.uid,false);
+					userInfo = getUserInfoById(msg1037.user_id,false);
 					if(!userInfo) return;
-					userInfo.target_x = msg1037.x;
-					userInfo.target_y = msg1037.y;
+					var positions:Vector.<map_pos_t> = msg1037.postions;
+					var path:Vector.<uint> = new Vector.<uint>();
+					for(i=0;i<positions.length;++i)
+					{
+						path.push(positions[i].map_x,positions[i].map_y);
+						trace(positions[i].map_x,positions[i].map_y);
+					}
+					userInfo.path = path;
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_MOVE,userInfo));
 					break;
 			}
