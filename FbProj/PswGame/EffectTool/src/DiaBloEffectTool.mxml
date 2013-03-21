@@ -70,7 +70,7 @@
 				}
 				trace("-------------------------------------");
 				//write
-				var file:File = new File("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/effects/16.swf");
+				var file:File = new File("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/effects/17.swf");
 				
 				var output:ByteArray = new ByteArray();
 				var directNum:uint = effects.length;
