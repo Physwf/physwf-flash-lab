@@ -7,10 +7,9 @@ package
 	
 	public class xml_task_quest_step_t implements IExternalizable
 	{
-		public var step_id:uint;
 		public var type:uint;
 		public var condition:uint;
-		public var num:uint;
+		public var parmcount:uint;
 		public var pre:Vector.<uint>;
 		public var isand:uint;
 		
@@ -20,10 +19,9 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			step_id = input.readUnsignedShort();
 			type = input.readUnsignedByte();
 			condition = input.readUnsignedInt();
-			num = input.readUnsignedShort();
+			parmcount = input.readUnsignedShort();
 			var preLen:uint =input.readUnsignedInt();
 			pre= new Vector.<uint>();
 			for(var i:int=0;i<preLen;++i)
@@ -36,10 +34,9 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeShort(step_id);
 			output.writeByte(type);
 			output.writeUnsignedInt(condition);
-			output.writeShort(num);
+			output.writeShort(parmcount);
 			output.writeUnsignedInt(pre.length);
 			for(var j:int=0;j<pre.length;++j)
 			{

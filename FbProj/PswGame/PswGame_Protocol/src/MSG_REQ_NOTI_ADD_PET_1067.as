@@ -5,15 +5,15 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_NOTI_NEW_MAIL_1106 extends MsgBase
+	final public class MSG_REQ_NOTI_ADD_PET_1067 extends MsgBase
 	{
 		
-		public function MSG_RES_NOTI_NEW_MAIL_1106(mid:uint)
+		public function MSG_REQ_NOTI_ADD_PET_1067()
 		{
-			super(mid);
+			super(1067)
 		}
 		
-		override protected function readBody(input:IDataInput):void
+		override protected function writeBody(output:IDataOutput):void
 		{
 			
 		}

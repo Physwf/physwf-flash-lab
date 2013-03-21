@@ -5,7 +5,7 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_SEND_MAIL_1105 extends MsgBase
+	final public class MSG_REQGATEWAY_SEND_MAIL_WITH_ENCLOSURE_5003 extends MsgBase
 	{
 		public var recvers:Vector.<uid_role_t>;
 		public var mail_title:String;
@@ -13,9 +13,9 @@ package
 		public var mail_content:msg_t;
 		public var items:Vector.<bag_item_t>;
 		
-		public function MSG_REQ_SEND_MAIL_1105()
+		public function MSG_REQGATEWAY_SEND_MAIL_WITH_ENCLOSURE_5003()
 		{
-			super(1105)
+			super(5003)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void

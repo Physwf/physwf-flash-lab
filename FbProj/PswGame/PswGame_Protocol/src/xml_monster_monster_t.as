@@ -11,7 +11,7 @@ package
 		public var type:uint;
 		public var dept:uint;
 		public var level:uint;
-		public var drop:uint;
+		public var drop_id:uint;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
 		public var phy_def:uint;
@@ -37,9 +37,15 @@ package
 		public var walk_speed:uint;
 		public var attack_speed:uint;
 		public var exp:uint;
-		public var friendliness:uint;
-		public var camp:uint;
-		public var damage_in_percent:uint;
+		public var pet_id:uint;
+		public var pet_ratio:uint;
+		public var success_chance:uint;
+		public var skill_ai_type:uint;
+		public var use_type:uint;
+		public var skill_ai_id:uint;
+		public var ai_key:uint;
+		public var use_once:uint;
+		public var use_time:uint;
 		
 		public function xml_monster_monster_t()
 		{
@@ -51,7 +57,7 @@ package
 			type = input.readUnsignedByte();
 			dept = input.readUnsignedByte();
 			level = input.readUnsignedShort();
-			drop = input.readUnsignedShort();
+			drop_id = input.readUnsignedShort();
 			phy_atk = input.readUnsignedInt();
 			solar_atk = input.readUnsignedInt();
 			phy_def = input.readUnsignedInt();
@@ -77,9 +83,15 @@ package
 			walk_speed = input.readUnsignedShort();
 			attack_speed = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
-			friendliness = input.readUnsignedShort();
-			camp = input.readUnsignedInt();
-			damage_in_percent = input.readUnsignedInt();			
+			pet_id = input.readUnsignedShort();
+			pet_ratio = input.readUnsignedShort();
+			success_chance = input.readUnsignedShort();
+			skill_ai_type = input.readUnsignedByte();
+			use_type = input.readUnsignedByte();
+			skill_ai_id = input.readUnsignedShort();
+			ai_key = input.readUnsignedByte();
+			use_once = input.readUnsignedByte();
+			use_time = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -88,7 +100,7 @@ package
 			output.writeByte(type);
 			output.writeByte(dept);
 			output.writeShort(level);
-			output.writeShort(drop);
+			output.writeShort(drop_id);
 			output.writeUnsignedInt(phy_atk);
 			output.writeUnsignedInt(solar_atk);
 			output.writeUnsignedInt(phy_def);
@@ -114,9 +126,15 @@ package
 			output.writeShort(walk_speed);
 			output.writeShort(attack_speed);
 			output.writeUnsignedInt(exp);
-			output.writeShort(friendliness);
-			output.writeUnsignedInt(camp);
-			output.writeUnsignedInt(damage_in_percent);			
+			output.writeShort(pet_id);
+			output.writeShort(pet_ratio);
+			output.writeShort(success_chance);
+			output.writeByte(skill_ai_type);
+			output.writeByte(use_type);
+			output.writeShort(skill_ai_id);
+			output.writeByte(ai_key);
+			output.writeByte(use_once);
+			output.writeShort(use_time);			
 		}
 	}
 }

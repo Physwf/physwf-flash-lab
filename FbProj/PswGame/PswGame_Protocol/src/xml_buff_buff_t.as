@@ -8,14 +8,18 @@ package
 	public class xml_buff_buff_t implements IExternalizable
 	{
 		public var buff_id:uint;
-		public var buff_type:uint;
-		public var buff_finish_type:uint;
-		public var duration_time:uint;
-		public var buff_repeat:uint;
-		public var max_trigger_times:uint;
+		public var buff_sub_type:uint;
+		public var clear:uint;
+		public var immune:uint;
+		public var trigger_type:uint;
+		public var trigger_time:uint;
+		public var trigger_rate:uint;
+		public var trigger_value:uint;
+		public var trigger_percent:uint;
+		public var duration:uint;
+		public var repeat:uint;
 		public var dead_delete:uint;
-		public var aura_radius:uint;
-		public var inflect_id:uint;
+		public var radius:uint;
 		public var sys_time:uint;
 		public var out_time:uint;
 		
@@ -26,14 +30,18 @@ package
 		public function readExternal(input:IDataInput):void
 		{
 			buff_id = input.readUnsignedShort();
-			buff_type = input.readUnsignedShort();
-			buff_finish_type = input.readUnsignedShort();
-			duration_time = input.readUnsignedShort();
-			buff_repeat = input.readUnsignedShort();
-			max_trigger_times = input.readUnsignedShort();
+			buff_sub_type = input.readUnsignedShort();
+			clear = input.readUnsignedByte();
+			immune = input.readUnsignedByte();
+			trigger_type = input.readUnsignedShort();
+			trigger_time = input.readUnsignedShort();
+			trigger_rate = input.readUnsignedShort();
+			trigger_value = input.readUnsignedShort();
+			trigger_percent = input.readUnsignedShort();
+			duration = input.readUnsignedInt();
+			repeat = input.readUnsignedShort();
 			dead_delete = input.readUnsignedShort();
-			aura_radius = input.readUnsignedShort();
-			inflect_id = input.readUnsignedShort();
+			radius = input.readUnsignedShort();
 			sys_time = input.readUnsignedInt();
 			out_time = input.readUnsignedShort();			
 		}
@@ -41,14 +49,18 @@ package
 		public function writeExternal(output:IDataOutput):void
 		{
 			output.writeShort(buff_id);
-			output.writeShort(buff_type);
-			output.writeShort(buff_finish_type);
-			output.writeShort(duration_time);
-			output.writeShort(buff_repeat);
-			output.writeShort(max_trigger_times);
+			output.writeShort(buff_sub_type);
+			output.writeByte(clear);
+			output.writeByte(immune);
+			output.writeShort(trigger_type);
+			output.writeShort(trigger_time);
+			output.writeShort(trigger_rate);
+			output.writeShort(trigger_value);
+			output.writeShort(trigger_percent);
+			output.writeUnsignedInt(duration);
+			output.writeShort(repeat);
 			output.writeShort(dead_delete);
-			output.writeShort(aura_radius);
-			output.writeShort(inflect_id);
+			output.writeShort(radius);
 			output.writeUnsignedInt(sys_time);
 			output.writeShort(out_time);			
 		}

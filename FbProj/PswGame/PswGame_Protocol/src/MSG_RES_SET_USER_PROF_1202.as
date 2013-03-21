@@ -5,10 +5,10 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_NOTI_NEW_MAIL_1106 extends MsgBase
+	final public class MSG_RES_SET_USER_PROF_1202 extends MsgBase
 	{
 		
-		public function MSG_RES_NOTI_NEW_MAIL_1106(mid:uint)
+		public function MSG_RES_SET_USER_PROF_1202(mid:uint)
 		{
 			super(mid);
 		}

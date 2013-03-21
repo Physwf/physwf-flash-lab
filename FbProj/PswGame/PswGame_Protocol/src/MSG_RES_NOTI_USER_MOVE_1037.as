@@ -7,10 +7,10 @@ package
 	
 	final public class MSG_RES_NOTI_USER_MOVE_1037 extends MsgBase
 	{
-		public var uid:uint;
-		public var x:uint;
-		public var y:uint;
-		public var dir:uint;
+		public var timestamp:uint;
+		public var user_id:uint;
+		public var type:uint;
+		public var postions:Vector.<map_pos_t>;
 		
 		public function MSG_RES_NOTI_USER_MOVE_1037(mid:uint)
 		{
@@ -19,10 +19,17 @@ package
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			uid = input.readUnsignedInt();
-			x = input.readUnsignedInt();
-			y = input.readUnsignedInt();
-			dir = input.readUnsignedInt();			
+			timestamp = input.readUnsignedInt();
+			user_id = input.readUnsignedInt();
+			type = input.readUnsignedByte();
+			var postionsLen:uint =input.readUnsignedInt();
+			postions= new Vector.<map_pos_t>();
+			for(var i:int=0;i<postionsLen;++i)
+			{
+				var postions_item:map_pos_t = new map_pos_t()
+				postions_item.readExternal(input);;
+				postions.push(postions_item);
+			}			
 		}
 	}
 }
