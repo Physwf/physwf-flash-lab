@@ -1,10 +1,12 @@
 package com.physwf.engine.fight.manager
 {
+	import com.physwf.components.command.CommandSequence;
 	import com.physwf.components.command.LinerCmdSequence;
 	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdGoToForAttack;
+	import com.physwf.engine.command.CmdOnHurt;
 	import com.physwf.engine.command.CmdSingleAtk;
 	import com.physwf.engine.command.CmdStand;
 	import com.physwf.engine.events.MonsterEvent;
@@ -85,6 +87,12 @@ package com.physwf.engine.fight.manager
 					if(target)
 					{
 						target.headEffect.setProgress(cInfo.info.hp,cInfo.info.hp_max);
+						var targetSeq:LinerCmdSequence = new LinerCmdSequence();
+						var onHurt:CmdOnHurt = new CmdOnHurt(target);
+						onHurt.setHurt(fInfo.hpHurt,skill);
+						targetSeq.addCommand(onHurt);
+						targetSeq.addCommand(new CmdStand(target));
+						target.execute(targetSeq);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:

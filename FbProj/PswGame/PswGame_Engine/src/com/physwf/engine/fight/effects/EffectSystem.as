@@ -16,6 +16,10 @@ package com.physwf.engine.fight.effects
 	{
 		public static const DIR_EFFECT:String = "resource/effects/";
 		
+		public static const DIR_TEXT:String = "resource/text/";
+		
+		public static const STYLE_COOPER:String = "cooper";
+		
 		public static const TYPE_NORMAL:uint = 1;
 		public static const TYPE_DIABLO:uint = 2;
 		
