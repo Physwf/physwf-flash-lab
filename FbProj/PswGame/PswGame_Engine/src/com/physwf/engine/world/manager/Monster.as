@@ -5,6 +5,8 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.charactor.factory.MonsterFactory;
+	import com.physwf.components.effects.HeadEffect;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdStand;
 	import com.physwf.system.vo.MonsterInfo;
 
@@ -17,6 +19,7 @@ package com.physwf.engine.world.manager
 		
 		public function Monster()
 		{
+			super();
 		}
 		
 		public function initialize(info:MonsterInfo):void
@@ -32,6 +35,8 @@ package com.physwf.engine.world.manager
 			view.y = info.map_y;
 			
 			Character.managers[view] = this;
+			
+			mHeadEffect = new HeadEffect(Engine.map.view.upperEffect,0,null,view);
 			
 			execute(new CmdStand(this));
 		}

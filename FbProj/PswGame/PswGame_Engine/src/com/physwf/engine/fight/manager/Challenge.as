@@ -1,7 +1,6 @@
 package com.physwf.engine.fight.manager
 {
 	import com.physwf.components.command.LinerCmdSequence;
-	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
@@ -16,14 +15,12 @@ package com.physwf.engine.fight.manager
 	import com.physwf.engine.world.manager.Monster;
 	import com.physwf.engine.world.manager.Player;
 	import com.physwf.system.System;
-	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.events.DeathEvent;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
 	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
 	
 	public class Challenge extends EventDispatcher implements IUpdatable
 	{
@@ -37,8 +34,6 @@ package com.physwf.engine.fight.manager
 		private var controller:ChallengeController;
 		private var lastAtk:uint = 0;
 		
-		private var bloodBars:Dictionary;
-		
 		public function Challenge()
 		{
 			Engine.challenge = this;
@@ -48,8 +43,6 @@ package com.physwf.engine.fight.manager
 		{
 			controller = new ChallengeController();
 			controller.initialize(this);
-			
-			bloodBars = new Dictionary();
 		}
 		
 		public function onWorldDestroy():void
@@ -89,9 +82,9 @@ package com.physwf.engine.fight.manager
 
 					cInfo.info.hp -= fInfo.hpHurt;
 					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
-					if(chara)
+					if(target)
 					{
-						updateBloodBar(fInfo.objId,target,cInfo.info);
+						target.headEffect.setProgress(cInfo.info.hp,cInfo.info.hp_max);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:
@@ -178,17 +171,7 @@ package com.physwf.engine.fight.manager
 		
 		public function update():void
 		{
-		}
-		
-		public function updateBloodBar(id:uint,chara:Character,info:*):void
-		{
-			var bar:BloodBar = bloodBars[id] as BloodBar;
-			if(!bar)
-			{
-				bar = new BloodBar(Engine.map.view.upperEffect,chara.view,info);
-				bloodBars[id] = bar;
-			}
-			bar.setProgress(info.hp,info.hp_max);
+			
 		}
 	}
 }

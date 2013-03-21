@@ -1,11 +1,9 @@
 package com.physwf.engine.fight
 {
-	import com.physwf.components.effects.BloodBar;
 	import com.physwf.components.effects.Effect;
 	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.fight.effects.EffectSystem;
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;

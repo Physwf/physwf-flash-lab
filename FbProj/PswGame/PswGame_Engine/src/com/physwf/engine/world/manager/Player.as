@@ -3,7 +3,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.factory.BoyFactory;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
-	import com.physwf.components.effects.NameEffect;
+	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdStand;
 	import com.physwf.engine.world.controllers.SelfController;
@@ -36,17 +36,16 @@ package com.physwf.engine.world.manager
 			
 			Character.managers[view] = this;
 			
-			mNameEffect = new NameEffect(Engine.map.view.upperEffect,0,null,view);
-			mNameEffect.update();//刷新位置
-			mNameEffect.setName(userInfo.nick);
-			
+			mHeadEffect = new HeadEffect(Engine.map.view.upperEffect,0,null,view);
+			mHeadEffect.update();//刷新位置
+			mHeadEffect.setName(userInfo.nick);
 			
 			execute(new CmdStand(this));
 		}
 		
 		override public function destroy():void
 		{
-			mNameEffect.destroy();
+			mHeadEffect.destroy();
 			super.destroy();
 		}
 		

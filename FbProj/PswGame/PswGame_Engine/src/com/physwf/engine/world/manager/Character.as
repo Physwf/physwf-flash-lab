@@ -2,17 +2,12 @@ package com.physwf.engine.world.manager
 {
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
-	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.ICommand;
-	import com.physwf.components.effects.NameEffect;
+	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.wayfinding.astar.IAstar;
 	import com.physwf.components.map.wayfinding.astar.Line;
-	import com.physwf.components.map.wayfinding.astar.Node;
-	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.Engine;
-	import com.physwf.engine.events.CharacterEvent;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
@@ -21,7 +16,9 @@ package com.physwf.engine.world.manager
 	{
 		public var view:CharacterAnimation;
 		public static var managers:Dictionary;//从显示到manager的映射,用于在战斗系统中通过鼠标事件目标获取角色对象
-		protected var mNameEffect:NameEffect;
+		
+		protected var mHeadEffect:HeadEffect;
+		public function get headEffect():HeadEffect { return mHeadEffect; }
 		
 		public static var astar:IAstar;
 		private var pathLine:Vector.<Line>;
@@ -42,6 +39,7 @@ package com.physwf.engine.world.manager
 		
 		public function Character()
 		{
+			
 		}
 		
 		
@@ -84,7 +82,7 @@ package com.physwf.engine.world.manager
 		
 		public function destroy():void
 		{
-			mNameEffect = null;
+			mHeadEffect = null;
 		}
 		
 	}
