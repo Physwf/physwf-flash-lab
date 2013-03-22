@@ -14,6 +14,7 @@
 			import file.IClientFile;
 			import file.MapFile;
 			import file.MonsterFile;
+			import file.NPCFile;
 			
 			import flash.utils.getDefinitionByName;
 			
@@ -34,6 +35,7 @@
 					MapFile;
 					MonsterFile;
 					EffectFile;
+					NPCFile;
 				}
 				
 			}

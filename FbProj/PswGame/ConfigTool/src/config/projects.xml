@@ -16,4 +16,8 @@
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/effect.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/effect.cfg"/>
+	<project name="npc" fileClass="file.NPCFile" structClass = "struct.cfg_npc"
+		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/npc.xlsx" 
+		xmlPath="" 
+		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/npc.cfg"/>
 </projects>
