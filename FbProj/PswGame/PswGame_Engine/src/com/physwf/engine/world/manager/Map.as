@@ -4,12 +4,11 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
-	import com.physwf.components.map.tile.TileGround;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.command.CmdGoAlong;
 	import com.physwf.engine.command.CmdGoTo;
 	import com.physwf.engine.command.CmdStand;
-	import com.physwf.engine.world.World;
+	import com.physwf.engine.script.IMapScript;
 	import com.physwf.engine.world.controllers.MapController;
 	import com.physwf.engine.world.controllers.SelfController;
 	import com.physwf.engine.world.events.WorldEvent;
@@ -30,7 +29,6 @@ package com.physwf.engine.world.manager
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 	
-	import mx.core.mx_internal;
 
 	public class Map extends EventDispatcher implements IUpdatable
 	{
@@ -46,6 +44,7 @@ package com.physwf.engine.world.manager
 		
 		private var mCharactors:Vector.<Player>;
 		private var mMonsters:Vector.<Monster>;
+		private var mNpcs:Vector.<NPC>;
 		
 		public function Map()
 		{
@@ -69,6 +68,7 @@ package com.physwf.engine.world.manager
 			addPlayer(Player.self);
 			
 			mMonsters = new <Monster>[];
+			mNpcs = new <NPC>[];
 			
 			mCamera.target = Player.self.view;
 			mCamera.initialize(mMapView);
@@ -218,28 +218,24 @@ package com.physwf.engine.world.manager
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
 		}
 		/**
-		 * 加载客户端的npc配置，根据npc配置信息，它将创建npc显示
-		 * 
-		 */		
-		public function loadClientNPC():void
-		{
-			
-		}
-		/**
-		 *加载npc脚本，npc脚本主要用来实现NPC同用户的状态或者用户的操作进行交互逻辑
-		 * 
-		 */		
-		public function loadNPCScript():void
-		{
-			
-		}
-		/**
-		 * 加载地图脚本，地图脚本用来根据玩家当前状态（如任务状态）来改变地图显示（如隐藏其他玩家，控制环境等）
+		 * 加载地图脚本，该脚本包含 地图配置信息 如npc信息 和 如下逻辑：
+		 * 根据玩家当前状态（如任务状态）来
+		 * 1.改变地图显示（如隐藏其他玩家，控制环境等）
+		 * 2.选择创建npc，设置npc状态
 		 * 这些都是客户端状态，与服务端无关 
 		 */		
 		public function loadMapScript():void
 		{
-			
+			var id:uint = MySelf.userInfo.map_id;
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function (e:Event):void
+			{
+				var script:IMapScript = loader.content as IMapScript;
+				script.initialize();
+				loader.unload();
+				dispatchEvent(new WorldEvent(WorldEvent.NPCS_READY));
+			});
+			loader.load(new URLRequest("script/map/Script_Map_"+id+".swf"));
 		}
 		
 		public function addPlayer(chara:Player):void
@@ -265,6 +261,12 @@ package com.physwf.engine.world.manager
 		{
 			mMonsters.push(mon);
 			mMapView.addSwapElement(mon.view);
+		}
+		
+		public function addNPC(npc:NPC):void
+		{
+			mNpcs.push(npc);
+			mMapView.addSwapElement(npc.view);
 		}
 		
 		public function refreshMonster(info:MonsterInfo):void
@@ -339,6 +341,10 @@ package com.physwf.engine.world.manager
 			for(i=0;i<mMonsters.length;++i)
 			{
 				mMonsters[i].update();
+			}
+			for(i=0;i<mNpcs.length;++i)
+			{
+				mNpcs[i].update();
 			}
 			Player.controller.update();
 			mMapView.update();

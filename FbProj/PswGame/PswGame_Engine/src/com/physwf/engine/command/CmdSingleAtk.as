@@ -15,6 +15,7 @@ package com.physwf.engine.command
 	import com.physwf.system.entity.MySelf;
 	
 	import flash.events.Event;
+	import com.physwf.config.Config;
 
 	/**
 	 *单体攻击，只对一个目标进行攻击 

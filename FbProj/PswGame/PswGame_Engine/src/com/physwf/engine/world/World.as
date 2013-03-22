@@ -96,6 +96,13 @@ package com.physwf.engine.world
 		private function onMonstersReady(e:NPCEvent):void
 		{
 			System.npc.removeEventListener(NPCEvent.NPC_LIST,onMonstersReady);
+			map.addEventListener(WorldEvent.NPCS_READY,onNpcReady);
+			map.loadMapScript();
+		}
+		
+		private function onNpcReady(e:WorldEvent):void
+		{
+			map.removeEventListener(WorldEvent.NPCS_READY,onNpcReady);
 			map.dispatchEvent(new WorldEvent(WorldEvent.WORLD_READY));
 		}
 		
