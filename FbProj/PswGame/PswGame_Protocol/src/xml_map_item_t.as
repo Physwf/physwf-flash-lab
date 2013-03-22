@@ -7,7 +7,10 @@ package
 	
 	public class xml_map_item_t implements IExternalizable
 	{
-		public var map_id:uint;
+		public var id:uint;
+		public var width:uint;
+		public var height:uint;
+		public var monster:Vector.<xml_map_item_monster_t>;
 		
 		public function xml_map_item_t()
 		{
@@ -15,12 +18,29 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			map_id = input.readUnsignedInt();			
+			id = input.readUnsignedInt();
+			width = input.readUnsignedShort();
+			height = input.readUnsignedInt();
+			var monsterLen:uint =input.readUnsignedInt();
+			monster= new Vector.<xml_map_item_monster_t>();
+			for(var i:int=0;i<monsterLen;++i)
+			{
+				var monster_item:xml_map_item_monster_t = new xml_map_item_monster_t()
+				monster_item.readExternal(input);;
+				monster.push(monster_item);
+			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(map_id);			
+			output.writeUnsignedInt(id);
+			output.writeShort(width);
+			output.writeUnsignedInt(height);
+			output.writeUnsignedInt(monster.length);
+			for(var j:int=0;j<monster.length;++j)
+			{
+				monster[j].writeExternal(output);
+			}			
 		}
 	}
 }

@@ -5,17 +5,18 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_GET_UNION_LIST_1012 extends MsgBase
+	final public class MSG_REQ_CATCH_PET_1068 extends MsgBase
 	{
+		public var monster_id:uint;
 		
-		public function MSG_REQ_GET_UNION_LIST_1012()
+		public function MSG_REQ_CATCH_PET_1068()
 		{
-			super(1012)
+			super(1068)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			
+			output.writeShort(monster_id);			
 		}
 	}
 }

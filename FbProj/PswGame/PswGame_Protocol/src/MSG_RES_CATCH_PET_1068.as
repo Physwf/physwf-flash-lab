@@ -5,20 +5,19 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_SETBUFF_TASK_1115 extends MsgBase
+	final public class MSG_RES_CATCH_PET_1068 extends MsgBase
 	{
-		public var tskid:uint;
-		public var step:uint;
+		public var pet:stru_pet_t;
 		
-		public function MSG_RES_SETBUFF_TASK_1115(mid:uint)
+		public function MSG_RES_CATCH_PET_1068(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			tskid = input.readUnsignedInt();
-			step = input.readUnsignedInt();			
+			pet= new stru_pet_t();
+			pet.readExternal(input)			
 		}
 	}
 }

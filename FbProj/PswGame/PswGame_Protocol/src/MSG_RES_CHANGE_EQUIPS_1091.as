@@ -8,6 +8,7 @@ package
 	final public class MSG_RES_CHANGE_EQUIPS_1091 extends MsgBase
 	{
 		public var uid:uint;
+		public var sex:uint;
 		public var equips:Vector.<stru_equip_simple_t>;
 		
 		public function MSG_RES_CHANGE_EQUIPS_1091(mid:uint)
@@ -18,6 +19,7 @@ package
 		override protected function readBody(input:IDataInput):void
 		{
 			uid = input.readUnsignedInt();
+			sex = input.readUnsignedByte();
 			equips= new Vector.<stru_equip_simple_t>();
 			for(var i:int=0;i<16;++i)
 			{

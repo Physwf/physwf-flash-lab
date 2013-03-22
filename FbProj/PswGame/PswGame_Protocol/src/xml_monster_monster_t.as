@@ -38,6 +38,7 @@ package
 		public var attack_speed:uint;
 		public var exp:uint;
 		public var pet_id:uint;
+		public var pet_catch_aging:uint;
 		public var pet_ratio:uint;
 		public var success_chance:uint;
 		public var skill_ai_type:uint;
@@ -84,6 +85,7 @@ package
 			attack_speed = input.readUnsignedShort();
 			exp = input.readUnsignedInt();
 			pet_id = input.readUnsignedShort();
+			pet_catch_aging = input.readUnsignedShort();
 			pet_ratio = input.readUnsignedShort();
 			success_chance = input.readUnsignedShort();
 			skill_ai_type = input.readUnsignedByte();
@@ -127,6 +129,7 @@ package
 			output.writeShort(attack_speed);
 			output.writeUnsignedInt(exp);
 			output.writeShort(pet_id);
+			output.writeShort(pet_catch_aging);
 			output.writeShort(pet_ratio);
 			output.writeShort(success_chance);
 			output.writeByte(skill_ai_type);
