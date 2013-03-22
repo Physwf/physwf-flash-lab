@@ -3,7 +3,7 @@ package file
 	import flash.utils.ByteArray;
 	
 	import struct.Record;
-	import struct.cfg_effect;
+	import com.physwf.config.struct.cfg_effect;
 
 	public class EffectFile extends ClientFile
 	{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<projects structDir="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/src/struct">
-	<project name="map" fileClass="file.MapFile" structClass = "struct.cfg_map"
+<projects structDir="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/src/com/physwf/config/struct">
+	<project name="map" fileClass="file.MapFile" structClass = "com.physwf.config.struct.cfg_map"
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/map.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/map.cfg"/>
@@ -8,15 +8,15 @@
 <!-- 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/item.xlsx"  -->
 <!-- 		xmlPath=""  -->
 <!-- 		asPath=""/> -->
-	<project name="monster" fileClass="file.MonsterFile" structClass = "struct.cfg_monster"
+	<project name="monster" fileClass="file.MonsterFile" structClass = "com.physwf.config.struct.cfg_monster"
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/monster.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/monster.cfg"/>
-	<project name="effect" fileClass="file.EffectFile" structClass = "struct.cfg_effect"
+	<project name="effect" fileClass="file.EffectFile" structClass = "com.physwf.config.struct.cfg_effect"
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/effect.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/effect.cfg"/>
-	<project name="npc" fileClass="file.NPCFile" structClass = "struct.cfg_npc"
+	<project name="npc" fileClass="file.NPCFile" structClass = "com.physwf.config.struct.cfg_npc"
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/npc.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/npc.cfg"/>

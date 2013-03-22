@@ -6,7 +6,7 @@ package file
 	import flash.utils.ByteArray;
 	
 	import struct.Record;
-	import struct.cfg_map;
+	import com.physwf.config.struct.cfg_map;
 
 	public class MapFile extends ClientFile
 	{

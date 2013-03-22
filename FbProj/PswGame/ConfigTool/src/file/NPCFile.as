@@ -3,7 +3,7 @@ package file
 	import flash.utils.ByteArray;
 	
 	import struct.Record;
-	import struct.cfg_npc;
+	import com.physwf.config.struct.cfg_npc;
 
 	public class NPCFile extends ClientFile
 	{

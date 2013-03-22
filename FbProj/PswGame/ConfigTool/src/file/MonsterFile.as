@@ -3,7 +3,7 @@ package file
 	import flash.utils.ByteArray;
 	
 	import struct.Record;
-	import struct.cfg_monster;
+	import com.physwf.config.struct.cfg_monster;
 
 	public class MonsterFile extends ClientFile
 	{
