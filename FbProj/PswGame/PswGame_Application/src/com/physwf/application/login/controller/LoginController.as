@@ -2,23 +2,18 @@ package com.physwf.application.login.controller
 {
 	import com.physwf.application.login.cache.LoginContext;
 	import com.physwf.application.login.cache.OnlineInfo;
-	import com.physwf.application.login.msg.MSG_REQ_GET_RECOMMEND_SVR_LIST_105;
 	import com.physwf.application.login.msg.MSG_RES_CREATE_ROLE_107;
 	import com.physwf.application.login.msg.MSG_RES_GET_RECOMMEND_SVR_LIST_105;
 	import com.physwf.application.login.msg.MSG_RES_GET_ROLE_INFO_106;
 	import com.physwf.application.login.msg.MSG_RES_LOGIN_103;
 	import com.physwf.application.login.msg.MsgBase;
 	import com.physwf.application.login.msg.recommend_area_list_t;
-	import com.physwf.application.login.msg.recommend_svrs_t;
-	import com.physwf.application.login.msg.role_info_t;
+	import com.physwf.application.login.msg.role_detail_info;
 	import com.physwf.application.login.rpc.MessageEvent;
 	import com.physwf.application.login.rpc.RPCClient;
-	import com.physwf.application.login.services.LoginService;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.RoleInfo;
 	import com.physwf.system.vo.ServerInfo;
-	
-	import flash.utils.ByteArray;
 
 	public class LoginController
 	{
@@ -85,7 +80,7 @@ package com.physwf.application.login.controller
 				case MessageEvent.MSG_SUCCESS_+106://获得角色列表
 				{
 					OnlineInfo.roles = new <RoleInfo>[];
-					var roleList:Vector.<role_info_t> = MSG_RES_GET_ROLE_INFO_106(msg).roles;
+					var roleList:Vector.<role_detail_info> = MSG_RES_GET_ROLE_INFO_106(msg).roles;
 					for(i=0;i<roleList.length;++i)
 					{
 						var roleInfo:RoleInfo = new RoleInfo();

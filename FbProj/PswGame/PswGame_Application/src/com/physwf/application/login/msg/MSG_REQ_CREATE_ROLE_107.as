@@ -10,6 +10,7 @@ package com.physwf.application.login.msg
 		public var area_id:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
+		public var sex:uint;
 		public var prof:uint;
 		public var channel:uint;
 		public var session:String;
@@ -36,6 +37,7 @@ package com.physwf.application.login.msg
 				nickData.length = 16;
 				output.writeBytes(nickData)
 			}
+			output.writeByte(sex);
 			output.writeByte(prof);
 			output.writeUnsignedInt(channel);
 			if(session_data)
