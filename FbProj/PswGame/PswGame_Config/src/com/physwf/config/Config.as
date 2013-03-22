@@ -1,5 +1,10 @@
-package
+package com.physwf.config
 {
+	import com.physwf.config.struct.cfg_effect;
+	import com.physwf.config.struct.cfg_map;
+	import com.physwf.config.struct.cfg_monster;
+	import com.physwf.config.struct.cfg_npc;
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
@@ -9,12 +14,6 @@ package
 	import flash.utils.Dictionary;
 	import flash.utils.IExternalizable;
 	import flash.utils.getDefinitionByName;
-	
-	import mx.messaging.AbstractConsumer;
-	
-	import struct.cfg_effect;
-	import struct.cfg_map;
-	import struct.cfg_monster;
 
 	public class Config
 	{
@@ -22,6 +21,7 @@ package
 		private static var mapConfig:Dictionary;
 		private static var monsterConfig:Dictionary;
 		private static var effectConfig:Dictionary;
+		private static var npcConfig:Dictionary;
 		
 		public function Config()
 		{
@@ -128,6 +128,20 @@ package
 			if(effectConfig[effId])
 			{
 				return effectConfig[effId] as cfg_effect;
+			}
+			else
+			{
+				throw "没有该项配置！";
+			}
+			return null;
+		}
+		
+		public static function getNPCConfig(npcId:uint):cfg_npc
+		{
+			if(!npcConfig) npcConfig = configs["npc"];
+			if(npcConfig[npcId])
+			{
+				return npcConfig[npcId] as cfg_npc;
 			}
 			else
 			{

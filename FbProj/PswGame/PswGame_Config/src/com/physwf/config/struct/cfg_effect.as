@@ -1,4 +1,4 @@
-package struct
+package com.physwf.config.struct
 {
 	import flash.utils.ByteArray;
 	import flash.utils.IDataInput;
