@@ -140,7 +140,19 @@
 					trace(reg.test(msgManagerContent))
 					msgManagerContent = msgManagerContent.replace(reg,"registerMessage():void\n\t\t{\n\t\t\t{register}\n\t\t}");
 				}
-				for(var i:int =0;i<structList.length();++i)
+				//清空目录中的as文件
+				if(btnClearOld.selected)
+				{
+					var dir:File = new File(outputDir);
+					var asList:Array = dir.getDirectoryListing();
+					for(var i:uint =0;i<asList.length;++i)
+					{
+						if(File(asList[i]).isDirectory) continue;
+						File(asList[i]).moveToTrash();
+					}
+				}
+				
+				for(i =0;i<structList.length();++i)
 				{
 					structRaw = structList[i];
 					var sName:String = structRaw.@name;
@@ -202,4 +214,5 @@
 		]]>
 	</fx:Script>
 	<s:Button x="256" y="93" label="Do" click="getXML()"/>
+	<s:CheckBox x="55" y="93" label="清空旧文件" id="btnClearOld"/>
 </s:WindowedApplication>
