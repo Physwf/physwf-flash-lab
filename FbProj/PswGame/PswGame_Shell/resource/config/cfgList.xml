@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configs>
-	<config name="map" struct="struct.cfg_map"/>
-	<config name="monster" struct="struct.cfg_monster"/>
-	<config name="effect" struct="struct.cfg_effect"/>
+	<config name="map" struct="com.physwf.config.struct.cfg_map"/>
+	<config name="monster" struct="com.physwf.config.struct.cfg_monster"/>
+	<config name="effect" struct="com.physwf.config.struct.cfg_effect"/>
+	<config name="npc" struct="com.physwf.config.struct.cfg_npc"/>
 </configs>
