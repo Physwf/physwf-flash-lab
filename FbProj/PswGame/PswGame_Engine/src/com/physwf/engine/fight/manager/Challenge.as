@@ -13,9 +13,9 @@ package com.physwf.engine.fight.manager
 	import com.physwf.engine.common.events.PlayerEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
-	import com.physwf.engine.world.manager.Character;
-	import com.physwf.engine.world.manager.Monster;
-	import com.physwf.engine.world.manager.Player;
+	import com.physwf.engine.world.objects.Character;
+	import com.physwf.engine.world.objects.Monster;
+	import com.physwf.engine.world.objects.Player;
 	import com.physwf.system.System;
 	import com.physwf.system.events.DeathEvent;
 	import com.physwf.system.events.FightEvent;

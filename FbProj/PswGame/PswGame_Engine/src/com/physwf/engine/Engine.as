@@ -4,7 +4,7 @@ package com.physwf.engine
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.frame.Frame;
 	import com.physwf.engine.world.World;
-	import com.physwf.engine.world.manager.Map;
+	import com.physwf.engine.world.objects.Map;
 
 	public class Engine
 	{

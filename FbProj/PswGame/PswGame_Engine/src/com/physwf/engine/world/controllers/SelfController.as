@@ -2,7 +2,7 @@ package com.physwf.engine.world.controllers
 {
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.engine.world.manager.Character;
+	import com.physwf.engine.world.objects.Character;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.UserInfo;

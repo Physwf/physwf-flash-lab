@@ -9,8 +9,8 @@ package com.physwf.engine.common.command
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.effects.EffectSystem;
-	import com.physwf.engine.world.manager.Character;
-	import com.physwf.engine.world.manager.Player;
+	import com.physwf.engine.world.objects.Character;
+	import com.physwf.engine.world.objects.Player;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
 	

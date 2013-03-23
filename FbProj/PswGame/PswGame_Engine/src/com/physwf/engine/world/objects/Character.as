@@ -1,4 +1,4 @@
-package com.physwf.engine.world.manager
+package com.physwf.engine.world.objects
 {
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;

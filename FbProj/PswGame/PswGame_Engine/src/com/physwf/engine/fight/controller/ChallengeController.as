@@ -10,9 +10,9 @@ package com.physwf.engine.fight.controller
 	import com.physwf.engine.common.events.MonsterEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.manager.Challenge;
-	import com.physwf.engine.world.manager.Character;
-	import com.physwf.engine.world.manager.Monster;
-	import com.physwf.engine.world.manager.Player;
+	import com.physwf.engine.world.objects.Character;
+	import com.physwf.engine.world.objects.Monster;
+	import com.physwf.engine.world.objects.Player;
 	import com.physwf.system.System;
 	
 	import flash.events.Event;

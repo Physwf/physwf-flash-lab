@@ -1,4 +1,4 @@
-package com.physwf.engine.world.manager
+package com.physwf.engine.world.objects
 {
 	import com.physwf.components.bitmap.display.BitmapPalyer;
 	import com.physwf.components.interfaces.IUpdatable;

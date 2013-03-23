@@ -6,8 +6,8 @@ package com.physwf.engine.world
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.effects.EffectSystem;
 	import com.physwf.engine.world.events.WorldEvent;
-	import com.physwf.engine.world.manager.Character;
-	import com.physwf.engine.world.manager.Map;
+	import com.physwf.engine.world.objects.Character;
+	import com.physwf.engine.world.objects.Map;
 	import com.physwf.shell.Application;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;

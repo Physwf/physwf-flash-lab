@@ -4,7 +4,7 @@ package com.physwf.engine.common.command
 	import com.physwf.components.effects.HurtEffect;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.effects.EffectSystem;
-	import com.physwf.engine.world.manager.Character;
+	import com.physwf.engine.world.objects.Character;
 	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.Event;

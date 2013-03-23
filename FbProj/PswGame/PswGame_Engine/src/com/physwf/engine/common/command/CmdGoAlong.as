@@ -5,7 +5,7 @@ package com.physwf.engine.common.command
 	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
-	import com.physwf.engine.world.manager.Character;
+	import com.physwf.engine.world.objects.Character;
 	
 	import flash.events.Event;
 	
