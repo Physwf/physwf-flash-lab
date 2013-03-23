@@ -1,4 +1,4 @@
-package com.physwf.engine.events
+package com.physwf.engine.common.events
 {
 	import flash.events.Event;
 	

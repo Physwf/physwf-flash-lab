@@ -1,26 +1,28 @@
-package com.physwf.engine.command
+package com.physwf.engine.common.command
 {
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;
 	import com.physwf.components.map.wayfinding.astar.Line;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
 	import com.physwf.engine.world.manager.Character;
-	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.Event;
-	
-	public class CmdGoToForAttack extends Command
+
+	/**
+	 * 寻路到指定点 
+	 * @author joe
+	 * 
+	 */
+	public class CmdGoTo extends Command
 	{
 		private var mChara:Character;
 		private var endX:uint;
 		private var endY:uint;
-		private var mSkill:SkillInfo;
-		
 		private var pathLine:Vector.<Line>;
 		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
 		private var line:Line;
 		
-		public function CmdGoToForAttack(chara:Character)
+		public function CmdGoTo(chara:Character)
 		{
 			mChara = chara;
 		}
@@ -31,22 +33,8 @@ package com.physwf.engine.command
 			endY = ty;
 		}
 		
-		public function setSkill(skill:SkillInfo):void
-		{
-			mSkill = skill;
-		}
-		
 		override public function execute():void
 		{
-			var distX:int = mChara.view.x - endX;
-			var distY:int = mChara.view.x - endY;
-			if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
-			{
-				pathLine = null;
-				dispatchEvent(new Event(Command.FINISH));
-				return;
-			}
-			
 			var sx:uint = Math.floor(mChara.view.x / 10);
 			var sy:uint = Math.floor(mChara.view.y / 10);
 			var ex:uint = Math.floor(endX / 10);
@@ -61,6 +49,7 @@ package com.physwf.engine.command
 				mChara.run();
 				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
 			}
+			
 		}
 		
 		override public function update():void
@@ -100,14 +89,6 @@ package com.physwf.engine.command
 				}
 				mChara.view.x = line.sx;
 				mChara.view.y = line.sy;
-				//到达了技能的范围之内
-				var distX:int = line.sx - endX;
-				var distY:int = line.sy - endY;
-				if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
-				{
-					pathLine = null;
-					dispatchEvent(new Event(Command.FINISH));
-				}
 			}
 		}
 	}

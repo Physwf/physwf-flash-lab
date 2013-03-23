@@ -6,7 +6,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.config.struct.cfg_npc;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdStand;
+	import com.physwf.engine.common.command.CmdStand;
 
 	public class NPC extends Character
 	{

@@ -5,9 +5,9 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdGoAlong;
-	import com.physwf.engine.command.CmdGoTo;
-	import com.physwf.engine.command.CmdStand;
+	import com.physwf.engine.common.command.CmdGoAlong;
+	import com.physwf.engine.common.command.CmdGoTo;
+	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.engine.script.IMapScript;
 	import com.physwf.engine.world.controllers.MapController;
 	import com.physwf.engine.world.controllers.SelfController;

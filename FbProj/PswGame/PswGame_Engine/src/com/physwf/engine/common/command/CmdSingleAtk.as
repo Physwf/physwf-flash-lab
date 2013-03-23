@@ -1,4 +1,4 @@
-package com.physwf.engine.command
+package com.physwf.engine.common.command
 {
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;

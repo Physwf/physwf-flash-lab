@@ -7,7 +7,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.factory.MonsterFactory;
 	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdStand;
+	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.system.vo.MonsterInfo;
 
 	public class Monster extends Character

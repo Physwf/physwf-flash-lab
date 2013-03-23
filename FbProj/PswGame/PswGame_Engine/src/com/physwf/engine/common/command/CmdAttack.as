@@ -1,4 +1,4 @@
-package com.physwf.engine.command
+package com.physwf.engine.common.command
 {
 	import com.physwf.components.command.Command;
 	import com.physwf.engine.world.manager.Character;

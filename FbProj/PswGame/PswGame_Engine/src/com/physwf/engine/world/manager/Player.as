@@ -5,7 +5,7 @@ package com.physwf.engine.world.manager
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdStand;
+	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.engine.world.controllers.SelfController;
 	import com.physwf.system.vo.UserInfo;
 

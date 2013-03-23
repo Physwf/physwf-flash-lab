@@ -6,8 +6,8 @@ package com.physwf.engine.fight.controller
 	import com.physwf.components.ds.heap.MaxHeap;
 	import com.physwf.components.screen.ScreenManager;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdGoTo;
-	import com.physwf.engine.events.MonsterEvent;
+	import com.physwf.engine.common.command.CmdGoTo;
+	import com.physwf.engine.common.events.MonsterEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.manager.Challenge;
 	import com.physwf.engine.world.manager.Character;

@@ -1,56 +1,65 @@
-package com.physwf.engine.command
+package com.physwf.engine.common.command
 {
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.command.Command;
 	import com.physwf.components.map.wayfinding.astar.Line;
-	import com.physwf.components.map.wayfinding.astar.Node;
 	import com.physwf.components.map.wayfinding.astar.PathUtils;
 	import com.physwf.engine.world.manager.Character;
+	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.Event;
 	
-	public class CmdGoAlong extends Command
+	public class CmdGoToForAttack extends Command
 	{
-		private var rawPath:Vector.<uint>;
+		private var mChara:Character;
+		private var endX:uint;
+		private var endY:uint;
+		private var mSkill:SkillInfo;
+		
 		private var pathLine:Vector.<Line>;
-		private var rad:Number;// 速度的方向
 		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
 		private var line:Line;
 		
-		private var mChara:Character;
-		
-		public function CmdGoAlong(chara:Character)
+		public function CmdGoToForAttack(chara:Character)
 		{
 			mChara = chara;
 		}
 		
-		public function setPath(rawPath:Vector.<uint>):void
+		public function setDest(tx:uint,ty:uint):void
 		{
-			this.rawPath = rawPath;
+			endX = tx;
+			endY = ty;
+		}
+		
+		public function setSkill(skill:SkillInfo):void
+		{
+			mSkill = skill;
 		}
 		
 		override public function execute():void
 		{
-			var len:uint = rawPath.length-2;
-			var path:Vector.<Line> = new Vector.<Line>();
-			for(var i:uint=0;i<len;i+=2)
-			{
-				var prev:Node = new Node(rawPath[i],rawPath[i+1]);
-				var next:Node = new Node(rawPath[i+2],rawPath[i+3]);
-				var ln:Line = new Line(prev,next);
-				path.push(ln);
-			}
-			pathLine = path;
-			if(pathLine.length>0)
-			{
-				avrgRad = PathUtils.calAverDirec2(pathLine);
-				line = pathLine.shift();
-				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
-				mChara.run();
-			}
-			else
+			var distX:int = mChara.view.x - endX;
+			var distY:int = mChara.view.x - endY;
+			if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
 			{
 				pathLine = null;
+				dispatchEvent(new Event(Command.FINISH));
+				return;
+			}
+			
+			var sx:uint = Math.floor(mChara.view.x / 10);
+			var sy:uint = Math.floor(mChara.view.y / 10);
+			var ex:uint = Math.floor(endX / 10);
+			var ey:uint = Math.floor(endY / 10);
+			
+			if(Character.astar.tryFindPath(sx,sy,ex,ey))
+			{
+				pathLine = Character.astar.getPathLine();
+				
+				avrgRad = PathUtils.calAverDirec2(pathLine);
+				line = pathLine.shift();
+				mChara.run();
+				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
 			}
 		}
 		
@@ -91,6 +100,14 @@ package com.physwf.engine.command
 				}
 				mChara.view.x = line.sx;
 				mChara.view.y = line.sy;
+				//到达了技能的范围之内
+				var distX:int = line.sx - endX;
+				var distY:int = line.sy - endY;
+				if(distX * distX + distY * distY <= mSkill.range * mSkill.range)
+				{
+					pathLine = null;
+					dispatchEvent(new Event(Command.FINISH));
+				}
 			}
 		}
 	}

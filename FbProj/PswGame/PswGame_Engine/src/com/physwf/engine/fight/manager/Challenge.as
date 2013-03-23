@@ -5,12 +5,12 @@ package com.physwf.engine.fight.manager
 	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.command.CmdGoToForAttack;
-	import com.physwf.engine.command.CmdOnHurt;
-	import com.physwf.engine.command.CmdSingleAtk;
-	import com.physwf.engine.command.CmdStand;
-	import com.physwf.engine.events.MonsterEvent;
-	import com.physwf.engine.events.PlayerEvent;
+	import com.physwf.engine.common.command.CmdGoToForAttack;
+	import com.physwf.engine.common.command.CmdOnHurt;
+	import com.physwf.engine.common.command.CmdSingleAtk;
+	import com.physwf.engine.common.command.CmdStand;
+	import com.physwf.engine.common.events.MonsterEvent;
+	import com.physwf.engine.common.events.PlayerEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
 	import com.physwf.engine.world.manager.Character;

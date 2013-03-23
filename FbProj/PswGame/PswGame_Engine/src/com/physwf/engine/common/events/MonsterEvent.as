@@ -1,4 +1,4 @@
-package com.physwf.engine.events
+package com.physwf.engine.common.events
 {
 	import com.physwf.system.vo.MonsterInfo;
 	
