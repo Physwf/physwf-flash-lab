@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="405" height="169">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.physwf.components.effects.EffectFrame;
+			
+			import mx.controls.Alert;
+			private var file:File;
+			private function onFrames():void
+			{
+				file = new File();
+				file.addEventListener(Event.SELECT,onSelect);
+				file.browse([new FileFilter("Flash Movie","*.swf")]);
+			}
+			
+			private function onSelect(e:Event):void
+			{
+				function onComplete(e:Event):void
+				{
+					var data:ByteArray = file.data;
+					var loader:Loader = new Loader();
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onLoad);
+					var lc:LoaderContext = new LoaderContext();
+					lc.allowCodeImport = true;
+					loader.loadBytes(data,lc);
+				}
+				file.addEventListener(Event.COMPLETE,onComplete);
+				file.load();
+			}
+			
+			private function onLoad(e:Event):void
+			{
+				var loaderInfo:LoaderInfo = e.target as LoaderInfo;
+				loaderInfo.addEventListener(Event.COMPLETE,onLoad);
+				var loader:Loader = loaderInfo.loader;
+				parse(loader.content as MovieClip);
+			}
+			
+			private function parse(swf:MovieClip):void
+			{
+				var effects:Vector.<Vector.<EffectFrame>> = new Vector.<Vector.<EffectFrame>>(swf.numChildren,true);
+				var frames:Vector.<EffectFrame> = new Vector.<EffectFrame>();
+				
+				for(var i:int=0;i<swf.numChildren;++i)
+				{
+					var mc:MovieClip = swf.getChildAt(i) as MovieClip;
+					if(mc)
+					{	//read
+						for(var j:int=0;j<mc.totalFrames;++j)
+						{
+							mc.gotoAndStop(j);
+							var frame:EffectFrame = new EffectFrame();
+							var rect:Rectangle = mc.getBounds(mc);
+							if(rect.width==0)
+							{
+								rect.width = 1;
+							}
+							if(rect.height==0)
+							{
+								rect.height = 1;
+							}
+							frame.x = rect.x;
+							frame.y = rect.y;
+							trace(frame.x,frame.y,rect.width,rect.height);
+							var rawBmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
+							rawBmd.draw(mc,new Matrix(1,0,0,1,-rect.x,-rect.y),null,null);
+							frame.frameData = rawBmd;
+							frames.push(frame);
+						}
+						//write
+						var output:ByteArray = new ByteArray();
+						var frameNum:uint = frames.length;
+						output.writeByte(frameNum);
+						trace(frameNum,"frameNum");
+						for(j=0;j<frameNum;++j)
+						{
+							frame = frames[j];
+							var frameBytes:ByteArray = frame.frameData.getPixels(frame.frameData.rect);
+							frameBytes.deflate();
+							output.writeShort(frame.x);
+							output.writeShort(frame.y);
+							output.writeShort(frame.frameData.rect.width);
+							output.writeShort(frame.frameData.rect.height);
+							trace(frame.x,frame.y,frame.frameData.rect.width,frame.frameData.rect.height,frameBytes.length);
+							output.writeUnsignedInt(frameBytes.length);
+							output.writeBytes(frameBytes);
+						}
+						
+						var file:File = new File("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/effects/"+mc.name+".swf");
+						var fs:FileStream = new FileStream();
+						fs.open(file,FileMode.WRITE);
+						fs.writeBytes(output);
+						fs.close();
+					}
+					Alert.show("Ok!");
+				}
+			}
+		]]>
+	</fx:Script>
+	<s:Button x="44" y="104" label="Sprite"/>
+	<s:Button x="168" y="104" label="Diablo"/>
+	<s:Button x="290" y="104" label="Frames" click="onFrames()"/>
+</s:WindowedApplication>
