@@ -1,10 +1,11 @@
-package com.physwf.engine.script
+package 
 {
 	import flash.display.Sprite;
+	import com.physwf.engine.script.IMapScript;
 
 	public class MapScriptBase extends Sprite implements IMapScript
 	{
-		public var npcList:Vector.<uint>;
+		public var npcList:XML;
 		
 		public function MapScriptBase()
 		{

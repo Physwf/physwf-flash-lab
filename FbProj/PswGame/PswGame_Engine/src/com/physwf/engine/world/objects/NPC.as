@@ -26,8 +26,6 @@ package com.physwf.engine.world.objects
 			view = new CharacterAnimation();
 			var mFactory:ICharacterFactory = new BoyFactory();//后期需要根据用户信息进行选择
 			view.skeleton = mFactory.getNude();
-			view.x = 900;
-			view.y = 400;
 			
 			mHeadEffect = new HeadEffect(Engine.map.view.upperEffect,0,null,view);
 			mHeadEffect.setName(cfg.npc_name);
