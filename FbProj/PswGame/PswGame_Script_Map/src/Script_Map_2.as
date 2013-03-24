@@ -3,6 +3,7 @@ package
 	import com.physwf.config.Config;
 	import com.physwf.config.struct.cfg_npc;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.script.MapScriptBase;
 	import com.physwf.engine.world.objects.NPC;
 	
 	public class Script_Map_2 extends MapScriptBase

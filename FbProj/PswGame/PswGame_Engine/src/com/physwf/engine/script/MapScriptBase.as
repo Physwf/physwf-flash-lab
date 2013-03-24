@@ -1,7 +1,6 @@
-package 
+package com.physwf.engine.script 
 {
 	import flash.display.Sprite;
-	import com.physwf.engine.script.IMapScript;
 
 	public class MapScriptBase extends Sprite implements IMapScript
 	{
