@@ -18,6 +18,7 @@ package com.physwf.application.startup
 	import flash.ui.MouseCursorData;
 	
 	import flashx.textLayout.elements.Configuration;
+	import com.physwf.config.Config;
 
 	public class Startup extends EventDispatcher implements IDestroyable
 	{

@@ -1,14 +1,16 @@
 package com.physwf.application.input
 {
-	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.events.MonsterEvent;
-	import com.physwf.engine.events.PlayerEvent;
+	import com.physwf.engine.common.events.MonsterEvent;
+	import com.physwf.engine.common.events.PlayerEvent;
 	import com.physwf.engine.frame.config.FrameAssets;
-	import com.physwf.engine.world.manager.Character;
-	import com.physwf.engine.world.manager.Monster;
-	import com.physwf.engine.world.manager.Player;
+	import com.physwf.engine.world.objects.Character;
+	import com.physwf.engine.world.objects.Monster;
+	import com.physwf.engine.world.objects.NPC;
+	import com.physwf.engine.world.objects.Player;
 	import com.physwf.shell.interfaces.IDestroyable;
+	import com.physwf.system.vo.MonsterInfo;
+	import com.physwf.system.vo.UserInfo;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -38,6 +40,10 @@ package com.physwf.application.input
 			{
 				Mouse.cursor = FrameAssets.CURSOR_AIM_NAME;
 			}
+			else if(manager is NPC)
+			{
+				Mouse.cursor = MouseCursor.BUTTON;
+			}
 			else
 			{
 				Mouse.cursor = MouseCursor.AUTO;
@@ -50,12 +56,14 @@ package com.physwf.application.input
 			var manager:Character = Character.managers[target] as Character;
 			if(manager is Monster)
 			{
-				Engine.challenge.dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_SELECTED,Monster(manager).info));
+				var mInfo:MonsterInfo = (manager as Monster).info;
+				Engine.challenge.dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_SELECTED,mInfo));
 				e.stopImmediatePropagation();
 			}
 			else if(manager is Player)
 			{
-				Engine.challenge.dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_SELECTED,Player(manager).info));
+				var pInfo:UserInfo = (manager as Player).info;
+				Engine.challenge.dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_SELECTED,pInfo));
 				e.stopImmediatePropagation();
 			}
 		}
