@@ -21,6 +21,8 @@ package com.physwf.system.entity
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1041,onFightMessage);//战斗结果
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1042,onFightMessage);//目标被打死
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1045,onFightMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1047,onFightMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1048,onFightMessage);
 		}
 		
 		public function attack(srcType:uint,objType:uint,objId:uint,skillId:uint):void
@@ -29,6 +31,13 @@ package com.physwf.system.entity
 			msg.src_type = srcType;
 			msg.obj_type = objType;
 			msg.obj_id = objId;
+			msg.skill_id = skillId;
+			RPCConnectioin.online.call(msg);
+		}
+		
+		public function chant(skillId:uint):void
+		{
+			var msg:MSG_REQ_SET_SKILL_CHANT_1048 = new MSG_REQ_SET_SKILL_CHANT_1048();
 			msg.skill_id = skillId;
 			RPCConnectioin.online.call(msg);
 		}
@@ -59,6 +68,11 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1045:
 					var msg1045:MSG_RES_NOTI_USER_DEAD_TYPE_1045 = e.message as MSG_RES_NOTI_USER_DEAD_TYPE_1045;
 					dispatchEvent(new DeathEvent(DeathEvent.SELF_DEATH,msg1045.type,msg1045.src_id,msg1045.src_type,msg1045.money_lose,msg1045.exp_lose,msg1045.duration_type));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1047:
+					
+					break;
+				case MessageEvent.MSG_SUCCESS_+1048:
 					break;
 			}
 		}
