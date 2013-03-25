@@ -57,13 +57,13 @@ package com.physwf.application.input
 			if(manager is Monster)
 			{
 				var mInfo:MonsterInfo = (manager as Monster).info;
-				Engine.challenge.dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_SELECTED,mInfo));
+				//Engine.challenge.dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_SELECTED,mInfo));
 				e.stopImmediatePropagation();
 			}
 			else if(manager is Player)
 			{
 				var pInfo:UserInfo = (manager as Player).info;
-				Engine.challenge.dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_SELECTED,pInfo));
+				//Engine.challenge.dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_SELECTED,pInfo));
 				e.stopImmediatePropagation();
 			}
 		}
