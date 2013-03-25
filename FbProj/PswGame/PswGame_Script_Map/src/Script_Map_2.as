@@ -19,7 +19,7 @@ package
 					<npc id="40000" x="900" y="400"/>
 				</npcs>;
 			
-			for each(var item:XML in npcList)
+			for each(var item:XML in npcList.npc)
 			{
 				var npc:NPC = new NPC();
 				var cfg:cfg_npc = Config.getNPCConfig(item.@id);
