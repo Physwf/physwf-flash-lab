@@ -38,6 +38,8 @@ package
 		public var falldown:uint;
 		public var invoke_skill_id:uint;
 		public var invoke_skill_odds:uint;
+		public var chant_time:uint;
+		public var chant_break:uint;
 		
 		public function xml_skill_skill_t()
 		{
@@ -81,7 +83,9 @@ package
 			speed = input.readUnsignedShort();
 			falldown = input.readUnsignedShort();
 			invoke_skill_id = input.readUnsignedShort();
-			invoke_skill_odds = input.readUnsignedShort();			
+			invoke_skill_odds = input.readUnsignedShort();
+			chant_time = input.readUnsignedInt();
+			chant_break = input.readUnsignedByte();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -120,7 +124,9 @@ package
 			output.writeShort(speed);
 			output.writeShort(falldown);
 			output.writeShort(invoke_skill_id);
-			output.writeShort(invoke_skill_odds);			
+			output.writeShort(invoke_skill_odds);
+			output.writeUnsignedInt(chant_time);
+			output.writeByte(chant_break);			
 		}
 	}
 }

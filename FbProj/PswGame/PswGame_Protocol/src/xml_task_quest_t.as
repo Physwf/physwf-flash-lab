@@ -11,6 +11,7 @@ package
 		public var type:uint;
 		public var pre:Vector.<uint>;
 		public var isand:uint;
+		public var profession:uint;
 		public var need_level:uint;
 		public var bind_map_id:uint;
 		public var prize_id:uint;
@@ -33,6 +34,7 @@ package
 				pre.push(pre_item);
 			}
 			isand = input.readUnsignedByte();
+			profession = input.readUnsignedByte();
 			need_level = input.readUnsignedShort();
 			bind_map_id = input.readUnsignedInt();
 			prize_id = input.readUnsignedShort();
@@ -63,6 +65,7 @@ package
 				output.writeShort(pre[j]);
 			}
 			output.writeByte(isand);
+			output.writeByte(profession);
 			output.writeShort(need_level);
 			output.writeUnsignedInt(bind_map_id);
 			output.writeShort(prize_id);
