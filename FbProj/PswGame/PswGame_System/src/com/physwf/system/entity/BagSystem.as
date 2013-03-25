@@ -90,9 +90,9 @@ package com.physwf.system.entity
 					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_CHANGE_GRID,null));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1053://添加物品
-					var msg1053:MSG_RES_NOTI_ADD_ITEM_1053 = e.message as MSG_RES_NOTI_ADD_ITEM_1053;
-					items = setBagItems(msg1053.items,msg1053.equips);
-					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_OR_EQUIP_ADDED,items));
+//					var msg1053:MSG_RES_NOTI_ADD_ITEM_1053 = e.message as MSG_RES_NOTI_ADD_ITEM_1053;
+//					items = setBagItems(msg1053.items,msg1053.equips);
+//					dispatchEvent(new BagEvent(BagEvent.BAG_ITEM_OR_EQUIP_ADDED,items));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1092://删除装备
 					var msg1092:MSG_RES_DEL_EQUIP_1092 = e.message as MSG_RES_DEL_EQUIP_1092;
