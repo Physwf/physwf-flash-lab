@@ -10,9 +10,9 @@ package com.physwf.engine.world.objects
 
 	public class NPC extends Character
 	{
-		public static const STATUS_NONE:uint = 1;
-		public static const STATUS_HAVE_TASK:uint = 2;//有任务
-		public static const STATUS_TASK_FINISHED:uint = 3;//任务完成
+		public static const STATUS_HAVE_TASK:uint = 1;//有任务
+		public static const STATUS_TASK_FINISHED:uint = 2;//任务完成
+		public static const STATUS_NONE:uint = 3;
 		
 		public var nid:uint;
 		public var name:String;
@@ -33,6 +33,8 @@ package com.physwf.engine.world.objects
 			
 			mHeadEffect = new HeadEffect(Engine.map.view.upperEffect,0,null,view);
 			mHeadEffect.setName(cfg.npc_name);
+			
+			Character.managers[view] = this;
 			
 			execute(new CmdStand(this));
 		}

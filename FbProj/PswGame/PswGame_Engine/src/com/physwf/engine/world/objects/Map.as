@@ -56,8 +56,8 @@ package com.physwf.engine.world.objects
 			Character.managers = new Dictionary();//后面要放到地图初始化时清空，但要保留自己的数据
 			
 			Player.self = new Player();
-			MySelf.userInfo.map_x = 626;
-			MySelf.userInfo.map_y = 566;
+//			MySelf.userInfo.map_x = 626;
+//			MySelf.userInfo.map_y = 566;
 			Player.self.initialize(MySelf.userInfo);
 			
 			// 只有self 才需要controller
