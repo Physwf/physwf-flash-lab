@@ -3,6 +3,7 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.charactor.CharacterAnimation;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.command.ICommand;
+	import com.physwf.components.command.LinerCmdSequence;
 	import com.physwf.components.effects.HeadEffect;
 	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.interfaces.IUpdatable;
@@ -33,16 +34,32 @@ package com.physwf.engine.world.objects
 		
 		public var isMoving:Boolean = false;
 		
-		protected var mCmd:ICommand;
+		protected var mCmd:ICommand;//主线程
+		protected var mCmdThreads:Vector.<ICommand>;//辅助线程
 		
 		public function get id():uint { return 0};//需要在子类中重写
 		
 		public function Character()
 		{
-			
+			mCmdThreads = new Vector.<ICommand>();
 		}
-		
-		
+		/**
+		 * 创建辅助线程 
+		 * @param thread
+		 * @return 
+		 * 
+		 */		
+		public function createThread(thread:ICommand=null):ICommand
+		{
+			thread ||= new LinerCmdSequence();
+			mCmdThreads.push(thread);
+			return thread;
+		}
+		/**
+		 * 主线程推送命令 
+		 * @param cmd
+		 * 
+		 */		
 		public function execute(cmd:ICommand):void
 		{
 			mCmd = cmd;
@@ -77,6 +94,10 @@ package com.physwf.engine.world.objects
 		public function update():void
 		{
 			mCmd.update();
+			for(var i:uint=0;i<mCmdThreads.length;++i)
+			{
+				mCmdThreads[i].update();
+			}
 			view.update();
 		}
 		

@@ -92,7 +92,7 @@ package com.physwf.engine.fight.manager
 						onHurt.setHurt(fInfo.hpHurt,skill);
 						targetSeq.addCommand(onHurt);
 						targetSeq.addCommand(new CmdStand(target));
-						target.execute(targetSeq);
+						target.createThread(targetSeq);
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:

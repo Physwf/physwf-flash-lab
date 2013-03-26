@@ -10,6 +10,10 @@ package com.physwf.engine.world.objects
 
 	public class NPC extends Character
 	{
+		public static const STATUS_NONE:uint = 1;
+		public static const STATUS_HAVE_TASK:uint = 2;//有任务
+		public static const STATUS_TASK_FINISHED:uint = 3;//任务完成
+		
 		public var nid:uint;
 		public var name:String;
 		private var mResouceID:uint;
