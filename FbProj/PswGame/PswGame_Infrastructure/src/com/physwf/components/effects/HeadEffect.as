@@ -1,10 +1,16 @@
 package com.physwf.components.effects
 {
+	import com.physwf.components.ui.SpriteLoader;
+	
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.text.TextField;
 	
+	import mx.messaging.AbstractConsumer;
 	import mx.states.OverrideBase;
 
 	/**
@@ -14,6 +20,13 @@ package com.physwf.components.effects
 	 */	
 	public class HeadEffect extends Effect
 	{
+		public static const NPC_ASSETS:String = "resource/ui/npcAssets.swf";
+		public static const NPC_QUES_MARK:uint = 0;
+		public static const NPC_THINK_MARK:uint = 1;
+		
+		private var mNpcStatus:uint = 3;
+		private var mNpcMark:Bitmap;
+		
 		private var mTxtName:TextField;
 		
 		private var mShape:Shape;
@@ -30,9 +43,11 @@ package com.physwf.components.effects
 			mTxtName ||= new TextField();
 			mTxtName.mouseEnabled = false;
 			mTxtName.selectable = false;
-			mTxtName.autoSize = "center";
+			mTxtName.autoSize = "left";
+			mTxtName.multiline = false;
 			mTxtName.text = name;
 			mTxtName.y = -20;
+			mTxtName.x = -mTxtName.width * .5
 			addChild(mTxtName);
 		}
 		
@@ -51,7 +66,7 @@ package com.physwf.components.effects
 		
 		public function setProgress(hp:uint,hpMax:uint):void
 		{
-			var prog:uint = (hp  / 2000) * 100;
+			var prog:uint = (Math.random()) * 100;
 			if(prog<=0) 
 			{
 				prog=0;
@@ -73,11 +88,48 @@ package com.physwf.components.effects
 			mShape.graphics.endFill();
 		}
 		
+		public function setNPCStatus(status:uint):void
+		{
+			if(mNpcStatus <= status) return;
+			mNpcStatus = status;
+			if(mNpcStatus == 3)
+			{
+				mNpcMark.bitmapData && mNpcMark.bitmapData.dispose();
+				mNpcMark.bitmapData.dispose();
+				return;
+			}
+			else if(mNpcStatus == 2)
+			{
+				var markAsset:uint = NPC_THINK_MARK;
+			}
+			else if(mNpcStatus == 1)
+			{
+				markAsset = NPC_QUES_MARK;
+			}
+			var sLoader:SpriteLoader = SpriteLoader.getSameSpriteLoader(NPC_ASSETS);
+			var effect:Sprite = this;
+			function onComplete(e:Event):void 
+			{
+				sLoader.removeEventListener(Event.COMPLETE,onComplete);
+				var ques:BitmapData = sLoader.getAsset(markAsset);
+				mNpcMark ||= new Bitmap();
+				mNpcMark.bitmapData = ques;
+				mNpcMark.x = - mNpcMark.width * .5; 
+				mNpcMark.y = -14; 
+				if(!effect.contains(mNpcMark))
+				{
+					effect.addChild(mNpcMark);
+				}
+			}
+			sLoader.addEventListener(Event.COMPLETE,onComplete);
+			sLoader.load();
+		}
+		
 		override public function update():void
 		{
 			if(visible)
 			{
-				x = mTarget.x - width * .5;
+				x = mTarget.x;
 				y = mTarget.y -  mTarget.height - 10;//暂时先用显示对象的高度 后面要改成配置中的高度
 			}
 		}
