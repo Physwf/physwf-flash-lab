@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="629" height="390" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.setTimeout;
+			
+			import shinater.swing.Menu;
+			import shinater.swing.MenuBar;
+			import shinater.swing.MenuItem;
+			
+			private function init():void
+			{
+				addEventListener(Event.ADDED_TO_STAGE,onAddToStage);
+			}
+			
+			private function onAddToStage(e:Event):void
+			{
+				removeEventListener(Event.ADDED_TO_STAGE,onAddToStage);
+				maximize();
+				var menuBar:MenuBar = new MenuBar();
+				stage.addChild(menuBar);
+				var menu:Menu = new Menu("&新建");
+				menu.addMenuItem(new MenuItem("&地图"));
+				menuBar.addMenu(menu);
+				
+			}
+		]]>
+	</fx:Script>
+</s:WindowedApplication>
