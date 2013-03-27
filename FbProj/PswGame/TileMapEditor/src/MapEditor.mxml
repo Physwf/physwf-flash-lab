@@ -8,11 +8,20 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import flash.utils.setTimeout;
+			import com.bit101.components.Window;
+			
+			import components.MapDisplay;
+			import components.WinNewMap;
 			
 			import shinater.swing.Menu;
 			import shinater.swing.MenuBar;
 			import shinater.swing.MenuItem;
+			
+			private var mMapLayer:Sprite;
+			private var mUiLayer:Sprite;
+			
+			private var mNewMapWin:WinNewMap;
+			private var mMapDisplay:MapDisplay;
 			
 			private function init():void
 			{
@@ -22,13 +31,72 @@
 			private function onAddToStage(e:Event):void
 			{
 				removeEventListener(Event.ADDED_TO_STAGE,onAddToStage);
-				maximize();
+				
+//				maximize();
 				var menuBar:MenuBar = new MenuBar();
 				stage.addChild(menuBar);
-				var menu:Menu = new Menu("&新建");
-				menu.addMenuItem(new MenuItem("&地图"));
-				menuBar.addMenu(menu);
+				var fileMenu:Menu = new Menu("&文件");
+				var newItem:MenuItem = new MenuItem("&新建");
+				var opnItem:MenuItem = new MenuItem("&打开");
+				var savItem:MenuItem = new MenuItem("&保存");
+				var extItem:MenuItem = new MenuItem("&退出");
+				fileMenu.addMenuItem(newItem);
+				fileMenu.addMenuItem(opnItem);
+				fileMenu.addMenuItem(savItem);
+				fileMenu.addMenuItem(extItem);
+				menuBar.addMenu(fileMenu);
 				
+				var viewMenu:Menu = new Menu("&视图");
+				menuBar.addMenu(viewMenu);
+				var itemBox:MenuItem = new MenuItem("&物品箱");
+				viewMenu.addMenuItem(itemBox);
+				newItem.addEventListener(MouseEvent.MOUSE_UP,onNew);
+				
+				mUiLayer = new Sprite();
+				stage.addChild(mUiLayer);
+				
+				stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
+				stage.addEventListener(KeyboardEvent.KEY_UP,onKeyUp);
+			}
+			
+			private function onNew(e:MouseEvent):void
+			{
+				mNewMapWin ||= new WinNewMap(mUiLayer);
+				mNewMapWin.addEventListener("ok",onWinNewMapOk);
+				mNewMapWin.show();
+			}
+			
+			private function onWinNewMapOk(e:Event):void
+			{
+				mNewMapWin.removeEventListener("ok",onWinNewMapOk);
+				mNewMapWin.hide();
+				var name:String = mNewMapWin.inputContent;
+				mMapDisplay ||= new MapDisplay();
+				mMapDisplay.load(name);
+				stage.addChild(mMapDisplay);
+			}
+			
+			private function onKeyDown(e:KeyboardEvent):void
+			{
+				switch(e.keyCode)
+				{
+					case Keyboard.SPACE:
+						Mouse.cursor = MouseCursor.HAND;
+						Mouse.show();//为了让鼠标上一行代码立即有效，需要调用show()一次
+						e.updateAfterEvent();
+						break;
+				}
+			}
+			
+			private function onKeyUp(e:KeyboardEvent):void
+			{
+				switch(e.keyCode)
+				{
+					case Keyboard.SPACE:
+						Mouse.cursor = MouseCursor.AUTO;
+						Mouse.show();//为了让鼠标上一行代码立即有效，需要调用show()一次
+						break;
+				}
 			}
 		]]>
 	</fx:Script>

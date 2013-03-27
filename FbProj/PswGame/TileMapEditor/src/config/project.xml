@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editor>
+	<read>
+		<ground dir="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
+		<items dir=""/>
+	</read>
+	<write>
+		<xml dir=""/>
+	</write>
+</editor>
