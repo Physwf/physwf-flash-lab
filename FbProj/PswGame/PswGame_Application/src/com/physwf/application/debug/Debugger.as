@@ -1,5 +1,6 @@
 package com.physwf.application.debug
 {
+	import com.physwf.application.debug.console.Console;
 	import com.physwf.application.debug.map.MapDebuger;
 	
 	import flash.display.Sprite;
@@ -10,9 +11,12 @@ package com.physwf.application.debug
 	public class Debugger extends EventDispatcher
 	{
 		private var mapDebug:MapDebuger;
+		private var mConsole:Console;
+		private var mRoot:Sprite;
 		
 		public function Debugger(root:Sprite)
 		{
+			mRoot = root;
 			root.stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 		}
 		
@@ -25,7 +29,17 @@ package com.physwf.application.debug
 					if(!mapDebug)mapDebug = new MapDebuger();
 					mapDebug.toggleAstarDebug();
 					break;
+				case Keyboard.D:
+					if(!e.ctrlKey) return;
+					mConsole ||= new Console(mRoot);
+					mConsole.toogle();
+					break;
 			}
+		}
+		
+		public function get console():Console
+		{
+			return mConsole;
 		}
 		
 		public function dispose():void
