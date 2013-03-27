@@ -1,28 +1,10 @@
 package com.physwf.engine.fight.controller
 {
-	import com.physwf.components.charactor.CharacterAnimation;
-	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.command.Command;
 	import com.physwf.components.ds.heap.MaxHeap;
-	import com.physwf.components.screen.ScreenManager;
-	import com.physwf.engine.Engine;
-	import com.physwf.engine.common.command.CmdGoTo;
-	import com.physwf.engine.common.events.MonsterEvent;
-	import com.physwf.engine.fight.Fight;
+	import com.physwf.engine.common.events.CharacterEvent;
 	import com.physwf.engine.fight.manager.Challenge;
-	import com.physwf.engine.world.objects.Character;
 	import com.physwf.engine.world.objects.Monster;
-	import com.physwf.engine.world.objects.Player;
-	import com.physwf.system.System;
-	
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.ui.Mouse;
-	import flash.ui.MouseCursor;
-	
-	import flashx.textLayout.utils.CharacterUtil;
-	
-	import mx.core.mx_internal;
 
 	public class ChallengeController
 	{
@@ -38,12 +20,12 @@ package com.physwf.engine.fight.controller
 		public function initialize(view:Challenge):void
 		{
 			mView = view;
-			view.addEventListener(MonsterEvent.MONSTER_SELECTED,onMonsterSelect);
+			view.addEventListener(CharacterEvent.MONSTER_SELECTED,onMonsterSelect);
 		}
 		
-		private function onMonsterSelect(e:MonsterEvent):void
+		private function onMonsterSelect(e:CharacterEvent):void
 		{
-			var target:Monster = Engine.map.getMonsterByMID(e.info.instanceID);
+			var target:Monster = e.charactor as Monster;
 			mView.setTarget(target,target.id);
 			Challenge.targetEffect.changeTarget(target.view);
 			return;

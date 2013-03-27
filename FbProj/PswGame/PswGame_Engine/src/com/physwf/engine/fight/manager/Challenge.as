@@ -1,6 +1,5 @@
 package com.physwf.engine.fight.manager
 {
-	import com.physwf.components.command.CommandSequence;
 	import com.physwf.components.command.LinerCmdSequence;
 	import com.physwf.components.effects.TargetEffect;
 	import com.physwf.components.interfaces.IUpdatable;
@@ -9,8 +8,7 @@ package com.physwf.engine.fight.manager
 	import com.physwf.engine.common.command.CmdOnHurt;
 	import com.physwf.engine.common.command.CmdSingleAtk;
 	import com.physwf.engine.common.command.CmdStand;
-	import com.physwf.engine.common.events.MonsterEvent;
-	import com.physwf.engine.common.events.PlayerEvent;
+	import com.physwf.engine.common.events.CharacterEvent;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.controller.ChallengeController;
 	import com.physwf.engine.world.objects.Character;
@@ -101,11 +99,11 @@ package com.physwf.engine.fight.manager
 					chara = getCharacterByID(fInfo.objType,fInfo.objId,cInfo);
 					if(chara is Player)
 					{
-						dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_DIE,Player(chara).info));
+						dispatchEvent(new CharacterEvent(CharacterEvent.PLAYER_DIE,chara));
 					}
 					else if(chara is Monster)
 					{
-						dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_DIE,Monster(chara).info));
+						dispatchEvent(new CharacterEvent(CharacterEvent.MONSTER_DIE,chara));
 					}
 					chara.die();
 					break;

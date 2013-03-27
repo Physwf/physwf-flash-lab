@@ -1,8 +1,7 @@
 package com.physwf.application.input
 {
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.common.events.MonsterEvent;
-	import com.physwf.engine.common.events.PlayerEvent;
+	import com.physwf.engine.common.events.CharacterEvent;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.world.objects.Character;
 	import com.physwf.engine.world.objects.Monster;
@@ -57,14 +56,18 @@ package com.physwf.application.input
 			if(manager is Monster)
 			{
 				var mInfo:MonsterInfo = (manager as Monster).info;
-				//Engine.challenge.dispatchEvent(new MonsterEvent(MonsterEvent.MONSTER_SELECTED,mInfo));
+				Engine.challenge.dispatchEvent(new CharacterEvent(CharacterEvent.MONSTER_SELECTED,manager));
 				e.stopImmediatePropagation();
 			}
 			else if(manager is Player)
-			{
+			{ 
 				var pInfo:UserInfo = (manager as Player).info;
-				//Engine.challenge.dispatchEvent(new PlayerEvent(PlayerEvent.PLAYER_SELECTED,pInfo));
+				Engine.challenge.dispatchEvent(new CharacterEvent(CharacterEvent.PLAYER_SELECTED,manager));
 				e.stopImmediatePropagation();
+			}
+			else if(manager is NPC)
+			{
+//				new CharacterEvent(CharacterEvent.
 			}
 		}
 		

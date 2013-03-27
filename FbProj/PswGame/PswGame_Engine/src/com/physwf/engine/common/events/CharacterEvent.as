@@ -1,23 +1,28 @@
 package com.physwf.engine.common.events
 {
-	import com.physwf.system.vo.UserInfo;
+	import com.physwf.engine.world.objects.Character;
 	
 	import flash.events.Event;
 	
 	public class CharacterEvent extends Event
 	{
+		public static const PLAYER_SELECTED:String = "c_s";
+		public static const PLAYER_DIE:String = "c_d";
 		
-		private var mInfo:UserInfo;
+		public static const MONSTER_SELECTED:String = "m_s";
+		public static const MONSTER_DIE:String = "m_d";
 		
-		public function CharacterEvent(type:String,info:UserInfo=null)
+		private var mChara:Character;
+		
+		public function CharacterEvent(type:String,chara:Character=null)
 		{
-			mInfo = info;
+			mChara = charactor;
 			super(type, false, false);
 		}
 		
-		public function get info():UserInfo
+		public function get charactor():Character
 		{
-			return mInfo;
+			return mChara;
 		}
 	}
 }
