@@ -21,13 +21,26 @@ package com.physwf.system.entity
 		public function initialize():void
 		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1028,onMessage);
-			
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1032,onMessage);
+		}
+		
+		public function onMapSwitchStart():void
+		{
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1032,onMessage);//get map user list
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1033,onMessage);
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1034,onMessage);// notify player enter map
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);// notify player leave map
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);// notify player move
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);// (old) notify player move
+		}
+		
+		public function onMapSwitchEnd():void
+		{
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1032,onMessage);//get map user list
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1033,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1034,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1034,onMessage);// notify player enter map
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);// notify player leave map
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);// notify player move
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);// (old) notify player move
 		}
 		
 		public function getMapUserList():void
@@ -45,8 +58,6 @@ package com.physwf.system.entity
 					var msg1028:MSG_RES_WALK_1028 = e.message as MSG_RES_WALK_1028;
 					for(var j:uint=0;j<msg1028.postions.length;++j)
 					{
-						trace(msg1028.postions[i].map_x);
-						trace(msg1028.postions[i].map_y);
 					}
 					break;
 				case MessageEvent.MSG_SUCCESS_+1032://获取地图上的玩家列表
@@ -104,7 +115,6 @@ package com.physwf.system.entity
 					for(i=0;i<positions.length;++i)
 					{
 						path.push(positions[i].map_x,positions[i].map_y);
-						trace(positions[i].map_x,positions[i].map_y);
 					}
 					userInfo.path = path;
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_MOVE,userInfo));

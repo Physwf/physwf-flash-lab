@@ -44,8 +44,8 @@ package com.physwf.system.entity
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1028,onMessage);//移动
 			
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1030,onMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1031,onMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1030,onMessage);//进入地图
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1031,onMessage);//离开地图
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);//移动old
 			
 			
@@ -182,19 +182,26 @@ package com.physwf.system.entity
 					for(i=0;i<positions.length;++i)
 					{
 						path.push(positions[i].map_x,positions[i].map_y);
-						trace(positions[i].map_x,positions[i].map_y);
 					}
 					userInfo.path = path;
 					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1030://进入地图
 					var msg1030:MSG_RES_ENTER_MAP_1030 = MSG_RES_ENTER_MAP_1030(msg);
-					petInfo.id = msg1030.user.pet_follow.instance_id;
-					petInfo.type = msg1030.user.pet_follow.pet_id;
-					petInfo.nick = msg1030.user.pet_follow.nick;
-					petInfo.level = msg1030.user.pet_follow.level;
-					petInfo.hp = msg1030.user.pet_follow.hp;
-					petInfo.mp = msg1030.user.pet_follow.mp;
+					var user:map_user_info = msg1030.user;
+					var pet_follow:stru_pet_simple_t = msg1030.user.pet_follow;
+					
+					userInfo.map_id = user.mapid;
+					userInfo.map_x = user.map_x;
+					userInfo.map_y = user.map_y;
+					
+					petInfo.id = pet_follow.instance_id;
+					petInfo.type = pet_follow.pet_id;
+					petInfo.nick = pet_follow.nick;
+					petInfo.level = pet_follow.level;
+					petInfo.hp = pet_follow.hp;
+					petInfo.mp = pet_follow.mp;
+					
 					var equipList:Vector.<uint> = msg1030.user.equips;
 					var bagItems:Vector.<BagItemInfo> = System.bag.bagItems;
 					for(var i:int=0;i<equipList.length;++i)
@@ -206,6 +213,7 @@ package com.physwf.system.entity
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1031://离开地图
+					dispatchEvent(new MyEvent(MyEvent.LEAVE_MAP_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1036://移动
 					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));

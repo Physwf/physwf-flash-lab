@@ -23,8 +23,18 @@ package com.physwf.system.entity
 		
 		public function initialize():void
 		{
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1038,onNpcMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1039,onNpcMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1038,onNpcMessage);// get map monster list
+		}
+		
+		public function onMapSwitchStart():void
+		{
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1039,onNpcMessage);// map monster refresh
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1043,onNpcMessage);//怪物移动
+		}
+		
+		public function onMapSwitchEnd():void
+		{
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1039,onNpcMessage);// map monster refresh
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1043,onNpcMessage);//怪物移动
 		}
 		
@@ -55,7 +65,7 @@ package com.physwf.system.entity
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_LIST,null));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1039:
-					if(!svrNpcList) return;
+					if(!svrNpcList || svrNpcList.length <= 0) return;
 					var msg1039:MSG_RES_NOTI_MAP_MONSTERS_1039 = e.message as MSG_RES_NOTI_MAP_MONSTERS_1039;
 					var info:map_monster_t = msg1039.monsters;
 					var remove:Boolean = (info.hp == 0);
@@ -70,7 +80,7 @@ package com.physwf.system.entity
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_REFRESH,mInfo));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1043:
-					if(!svrNpcList) return;
+					if(!svrNpcList || svrNpcList.length <= 0) return;
 					var msg1043:MSG_RES_NOTI_MONSTER_MOVE_1043 = e.message as MSG_RES_NOTI_MONSTER_MOVE_1043;
 					mInfo = getMonsInfoById(msg1043.monster_instance_id,false);
 //					trace(msg1043.monster_instance_id,"msg1043.monster_instance_id");

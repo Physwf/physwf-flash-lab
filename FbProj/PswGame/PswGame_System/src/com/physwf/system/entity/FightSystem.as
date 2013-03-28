@@ -17,12 +17,25 @@ package com.physwf.system.entity
 		
 		public function initialize():void
 		{
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1040,onFightMessage);//
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1040,onFightMessage);//战斗攻击
+		}
+		
+		public function onMapSwitchStart():void
+		{
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1041,onFightMessage);//战斗结果
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1042,onFightMessage);//目标被打死
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1045,onFightMessage);//通知玩家死亡类型
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1047,onFightMessage);//通知buff
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1048,onFightMessage);//设置技能吟唱开始时间
+		}
+		
+		public function onMapSwitchEnd():void
+		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1041,onFightMessage);//战斗结果
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1042,onFightMessage);//目标被打死
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1045,onFightMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1047,onFightMessage);
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1048,onFightMessage);
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1045,onFightMessage);//通知玩家死亡类型
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1047,onFightMessage);//通知buff
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1048,onFightMessage);//设置技能吟唱开始时间
 		}
 		
 		public function attack(srcType:uint,objType:uint,objId:uint,skillId:uint):void
