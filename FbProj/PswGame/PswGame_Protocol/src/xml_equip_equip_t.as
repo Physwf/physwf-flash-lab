@@ -25,6 +25,10 @@ package
 		public var physique:uint;
 		public var spirit:uint;
 		public var agility:uint;
+		public var hp_max:uint;
+		public var mp_max:uint;
+		public var hp_max_pre:uint;
+		public var mp_max_pre:uint;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
 		public var phy_def:uint;
@@ -74,6 +78,10 @@ package
 			physique = input.readUnsignedShort();
 			spirit = input.readUnsignedShort();
 			agility = input.readUnsignedShort();
+			hp_max = input.readUnsignedInt();
+			mp_max = input.readUnsignedInt();
+			hp_max_pre = input.readUnsignedShort();
+			mp_max_pre = input.readUnsignedShort();
 			phy_atk = input.readUnsignedInt();
 			solar_atk = input.readUnsignedInt();
 			phy_def = input.readUnsignedInt();
@@ -120,6 +128,10 @@ package
 			output.writeShort(physique);
 			output.writeShort(spirit);
 			output.writeShort(agility);
+			output.writeUnsignedInt(hp_max);
+			output.writeUnsignedInt(mp_max);
+			output.writeShort(hp_max_pre);
+			output.writeShort(mp_max_pre);
 			output.writeUnsignedInt(phy_atk);
 			output.writeUnsignedInt(solar_atk);
 			output.writeUnsignedInt(phy_def);

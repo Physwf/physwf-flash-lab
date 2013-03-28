@@ -50,6 +50,7 @@ package com.physwf.components.rpc.msg
 			}
 			sum %= 100000;
 			output.writeInt(sum);
+//			trace("req:命令号->"+msgid,"用户id->"+userID,"包长->"+body.length);
 		}
 		
 		public function readExternal(input:IDataInput):void
@@ -65,7 +66,7 @@ package com.physwf.components.rpc.msg
 			userID = input.readUnsignedInt();
 			seqIndex = input.readUnsignedInt();
 			statusCode = input.readUnsignedInt();
-//			trace("response:包长->"+length,"命令号->"+msgid,"用户id->"+userID,"序列->"+seqIndex,"状态码->"+statusCode)
+//			trace("response:命令号->"+msgid,"用户id->"+userID,"包长->"+length,"序列->"+seqIndex,"状态码->"+statusCode)
 		}
 		
 		protected function readBody(input:IDataInput):void

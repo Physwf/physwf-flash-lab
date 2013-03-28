@@ -32,7 +32,7 @@ package
 			equips= new Vector.<uint>();
 			for(var i:int=0;i<16;++i)
 			{
-				var equips_item:uint = input.readUnsignedInt();
+				var equips_item:uint = input.readUnsignedShort();
 				equips.push(equips_item)
 			}
 			

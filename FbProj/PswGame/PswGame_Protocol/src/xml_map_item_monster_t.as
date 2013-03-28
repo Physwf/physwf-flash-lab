@@ -15,6 +15,7 @@ package
 		public var refreshInterval:uint;
 		public var face:uint;
 		public var pursuitRange:uint;
+		public var dialog:Vector.<xml_map_monster_dialog_t>;
 		
 		public function xml_map_item_monster_t()
 		{
@@ -29,7 +30,15 @@ package
 			partolRange = input.readUnsignedInt();
 			refreshInterval = input.readUnsignedInt();
 			face = input.readUnsignedInt();
-			pursuitRange = input.readUnsignedInt();			
+			pursuitRange = input.readUnsignedInt();
+			var dialogLen:uint =input.readUnsignedInt();
+			dialog= new Vector.<xml_map_monster_dialog_t>();
+			for(var i:int=0;i<dialogLen;++i)
+			{
+				var dialog_item:xml_map_monster_dialog_t = new xml_map_monster_dialog_t()
+				dialog_item.readExternal(input);;
+				dialog.push(dialog_item);
+			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -41,7 +50,12 @@ package
 			output.writeUnsignedInt(partolRange);
 			output.writeUnsignedInt(refreshInterval);
 			output.writeUnsignedInt(face);
-			output.writeUnsignedInt(pursuitRange);			
+			output.writeUnsignedInt(pursuitRange);
+			output.writeUnsignedInt(dialog.length);
+			for(var j:int=0;j<dialog.length;++j)
+			{
+				dialog[j].writeExternal(output);
+			}			
 		}
 	}
 }

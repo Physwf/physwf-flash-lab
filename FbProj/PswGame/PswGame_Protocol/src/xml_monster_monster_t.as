@@ -11,6 +11,7 @@ package
 		public var type:uint;
 		public var dept:uint;
 		public var level:uint;
+		public var attack:uint;
 		public var drop_id:uint;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
@@ -58,6 +59,7 @@ package
 			type = input.readUnsignedByte();
 			dept = input.readUnsignedByte();
 			level = input.readUnsignedShort();
+			attack = input.readUnsignedInt();
 			drop_id = input.readUnsignedShort();
 			phy_atk = input.readUnsignedInt();
 			solar_atk = input.readUnsignedInt();
@@ -102,6 +104,7 @@ package
 			output.writeByte(type);
 			output.writeByte(dept);
 			output.writeShort(level);
+			output.writeUnsignedInt(attack);
 			output.writeShort(drop_id);
 			output.writeUnsignedInt(phy_atk);
 			output.writeUnsignedInt(solar_atk);

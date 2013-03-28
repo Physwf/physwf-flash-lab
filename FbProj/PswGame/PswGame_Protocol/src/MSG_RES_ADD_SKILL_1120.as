@@ -5,20 +5,19 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_SET_SKILL_CHANT_1048 extends MsgBase
+	final public class MSG_RES_ADD_SKILL_1120 extends MsgBase
 	{
-		public var user_id:uint;
-		public var skill_id:uint;
+		public var skill:stru_skill_t;
 		
-		public function MSG_RES_SET_SKILL_CHANT_1048(mid:uint)
+		public function MSG_RES_ADD_SKILL_1120(mid:uint)
 		{
 			super(mid);
 		}
 		
 		override protected function readBody(input:IDataInput):void
 		{
-			user_id = input.readUnsignedInt();
-			skill_id = input.readUnsignedShort();			
+			skill= new stru_skill_t();
+			skill.readExternal(input)			
 		}
 	}
 }
