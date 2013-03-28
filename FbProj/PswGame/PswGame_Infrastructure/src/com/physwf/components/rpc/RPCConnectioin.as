@@ -75,11 +75,11 @@ package com.physwf.components.rpc
 					{
 						var mid:uint = buffer.readUnsignedShort();
 						var MSG:Class = MessageManager.instance.getMSG(mid);
-						if(!MSG) 
-						{
-							trace("未知的协议id:",mid);
-							return;
-						}
+//						if(!MSG) 
+//						{
+//							trace("未知的协议id:",mid);
+//							return;
+//						}
 						var msg:MsgBase = new MSG(mid) as MsgBase;
 						buffer.position -= 6;
 						msg.readExternal(buffer);
@@ -97,7 +97,7 @@ package com.physwf.components.rpc
 				}
 			}
 			
-			if(msgQueue.length>0)
+			while(msgQueue.length>0)
 			{
 				var message:MsgBase = msgQueue.shift();
 				if(message.statusCode>0)

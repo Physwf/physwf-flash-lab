@@ -86,6 +86,8 @@ package com.physwf.components.effects
 			mShape.graphics.beginFill(color,1);
 			mShape.graphics.drawRect(1,1,98*prog/100,6);
 			mShape.graphics.endFill();
+			
+			mShape.x = -mShape.width * .5;
 		}
 		
 		public function setNPCStatus(status:uint):void
