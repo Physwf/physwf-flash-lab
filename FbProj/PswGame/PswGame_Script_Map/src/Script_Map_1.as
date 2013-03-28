@@ -6,10 +6,11 @@ package
 	import com.physwf.engine.script.MapScriptBase;
 	import com.physwf.engine.world.objects.NPC;
 	
-	public class Script_Map_2 extends MapScriptBase
+	public class Script_Map_1 extends MapScriptBase
 	{
-		public function Script_Map_2()
+		public function Script_Map_1()
 		{
+			super();
 		}
 		
 		override public function initialize():void
@@ -26,8 +27,16 @@ package
 				npc.initialize(cfg);
 				npc.view.x = item.@x;
 				npc.view.y = item.@y;
-				npc.headEffect.setNPCStatus(NPC.STATUS_HAVE_TASK);
+				npc.headEffect.setNPCStatus(NPC.STATUS_TASK_FINISHED);
 				Engine.map.addNPC(npc);;
+			}
+		}
+		
+		override public function destroy():void
+		{
+			for each(var item:XML in npcList.npc)
+			{
+				Engine.map.delNPC(item.@id);
 			}
 		}
 	}
