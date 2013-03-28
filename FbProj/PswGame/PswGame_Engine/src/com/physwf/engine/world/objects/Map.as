@@ -27,6 +27,7 @@ package com.physwf.engine.world.objects
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
 	
 
@@ -45,6 +46,7 @@ package com.physwf.engine.world.objects
 		private var mCharactors:Vector.<Player>;
 		private var mMonsters:Vector.<Monster>;
 		private var mNpcs:Vector.<NPC>;
+		private var mScript:IMapScript;
 		
 		public function Map()
 		{
@@ -172,6 +174,9 @@ package com.physwf.engine.world.objects
 			switch(e.type)
 			{
 				case MyEvent.ENTER_MAP_SUCCESS:
+					Player.self.view.x = MySelf.userInfo.map_x;
+					Player.self.view.y = MySelf.userInfo.map_y;
+					mCamera.moveToTarget();
 					break;
 				case MyEvent.SELF_MOVE_ALLOWED:
 					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
@@ -209,13 +214,21 @@ package com.physwf.engine.world.objects
 			
 			var landformLoader:Loader = new Loader();
 			landformLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,
-			function ():void
+			function (e:Event):void
 			{
 				mMapView.landform = landformLoader.content;
 				Character.astar.analyze(mMapView.landform);
 				dispatchEvent(new WorldEvent(WorldEvent.MAP_READY));
 			});
 			landformLoader.load(new URLRequest("resource/map/"+id+"/landform.png"));
+		}
+		/**
+		 * 卸载地形等显示层 
+		 */		
+		public function unload():void
+		{
+			mMapView.clearBottom();
+			mMapView.landform = null;
 		}
 		/**
 		 * 加载地图脚本，该脚本包含 地图配置信息 如npc信息 和 如下逻辑：
@@ -230,12 +243,19 @@ package com.physwf.engine.world.objects
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function (e:Event):void
 			{
-				var script:IMapScript = loader.content as IMapScript;
-				script.initialize();
+				mScript = loader.content as IMapScript;
+				mScript.initialize();
 				loader.unload();
 				dispatchEvent(new WorldEvent(WorldEvent.NPCS_READY));
 			});
-			loader.load(new URLRequest("script/map/Script_Map_"+id+".swf"));
+			var contex:LoaderContext = new LoaderContext(false,mAppDomain);
+			loader.load(new URLRequest("script/map/Script_Map_"+id+".swf"),contex);
+		}
+		
+		public function unloadMapScript():void
+		{
+			mScript && mScript.destroy();
+			mScript = null;
 		}
 		
 		public function addPlayer(chara:Player):void
@@ -257,6 +277,19 @@ package com.physwf.engine.world.objects
 			}
 		}
 		
+		public function delMonster(info:MonsterInfo):void
+		{
+			for(var i:int=0;i<mMonsters.length;++i)
+			{
+				if(mMonsters[i].id == info.instanceID)
+				{
+					mMapView.removeSwapElement(mMonsters[i].view);
+					mMonsters[i].destroy()
+					mCharactors.splice(i,1);
+				}
+			}
+		}
+		
 		public function addMonster(mon:Monster):void
 		{
 			mMonsters.push(mon);
@@ -267,6 +300,19 @@ package com.physwf.engine.world.objects
 		{
 			mNpcs.push(npc);
 			mMapView.addSwapElement(npc.view);
+		}
+		
+		public function delNPC(id:uint):void
+		{
+			for(var i:int=0;i<mNpcs.length;++i)
+			{
+				if(mNpcs[i].id == id)
+				{
+					mMapView.removeSwapElement(mNpcs[i].view);
+					mNpcs[i].destroy()
+					mNpcs.splice(i,1);
+				}
+			}
 		}
 		
 		public function refreshMonster(info:MonsterInfo):void
@@ -289,6 +335,24 @@ package com.physwf.engine.world.objects
 				}
 			}
 		}
+		/**
+		 * 清扫场景 
+		 */		
+		public function sweep():void
+		{
+			for(var i:uint=0;i<mCharactors.length;++i)
+			{
+				if(mCharactors[i] == Player.self) continue;
+				mMapView.removeSwapElement(mCharactors[i].view);
+				mCharactors.splice(i,1);
+			}
+			for(i=0;i<mMonsters.length;++i)
+			{
+				mMapView.removeSwapElement(mMonsters[i].view);
+				mMonsters.splice(i,1);
+			}
+		}
+		
 		/**
 		 * 获取玩家
 		 * @param uid
@@ -349,6 +413,7 @@ package com.physwf.engine.world.objects
 			Player.controller.update();
 			mMapView.update();
 			mCamera.update();
+			if(mScript) mScript.update();
 		}
 		
 		public function set domain(value:ApplicationDomain):void { mAppDomain = value; }

@@ -91,6 +91,16 @@ package com.physwf.engine.world.objects
 			trace("dead!");
 		}
 		
+		public function show():void
+		{
+			view.visible = true;
+		}
+		
+		public function hide():void
+		{
+			view.visible = false;
+		}
+		
 		public function update():void
 		{
 			mCmd.update();

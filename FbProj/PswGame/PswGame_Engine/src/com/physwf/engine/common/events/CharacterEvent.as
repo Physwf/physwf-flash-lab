@@ -14,9 +14,9 @@ package com.physwf.engine.common.events
 		
 		private var mChara:Character;
 		
-		public function CharacterEvent(type:String,chara:Character=null)
+		public function CharacterEvent(type:String,chara:Character)
 		{
-			mChara = charactor;
+			mChara = chara;
 			super(type, false, false);
 		}
 		
