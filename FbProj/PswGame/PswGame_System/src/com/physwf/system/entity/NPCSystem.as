@@ -97,7 +97,7 @@ package com.physwf.system.entity
 			}
 		}
 		
-		private function getMonsInfoById(instanId:uint,remove:Boolean):MonsterInfo
+		public function getMonsInfoById(instanId:uint,remove:Boolean):MonsterInfo
 		{
 			var mInfo:MonsterInfo
 			for(var i:int=0;i<svrNpcList.length;++i)
