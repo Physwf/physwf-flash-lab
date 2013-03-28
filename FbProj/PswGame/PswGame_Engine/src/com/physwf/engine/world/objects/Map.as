@@ -271,8 +271,9 @@ package com.physwf.engine.world.objects
 				if(mCharactors[i].id == info.uid)
 				{
 					mMapView.removeSwapElement(mCharactors[i].view);
-					mCharactors[i].destroy()
+					var player:Player = mCharactors[i];
 					mCharactors.splice(i,1);
+					player.destroy()
 				}
 			}
 		}
@@ -284,8 +285,9 @@ package com.physwf.engine.world.objects
 				if(mMonsters[i].id == info.instanceID)
 				{
 					mMapView.removeSwapElement(mMonsters[i].view);
-					mMonsters[i].destroy()
+					var mons:Monster = mMonsters[i];
 					mCharactors.splice(i,1);
+					mons.destroy();
 				}
 			}
 		}

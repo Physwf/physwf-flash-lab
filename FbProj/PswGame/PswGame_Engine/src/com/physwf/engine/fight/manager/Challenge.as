@@ -18,7 +18,9 @@ package com.physwf.engine.fight.manager
 	import com.physwf.system.events.DeathEvent;
 	import com.physwf.system.events.FightEvent;
 	import com.physwf.system.vo.FightInfo;
+	import com.physwf.system.vo.MonsterInfo;
 	import com.physwf.system.vo.SkillInfo;
+	import com.physwf.system.vo.UserInfo;
 	
 	import flash.events.EventDispatcher;
 	
@@ -100,10 +102,14 @@ package com.physwf.engine.fight.manager
 					if(chara is Player)
 					{
 						dispatchEvent(new CharacterEvent(CharacterEvent.PLAYER_DIE,chara));
+//						var pInfo:UserInfo =  System.map.getUserInfoById(chara.id,true);
+//						Engine.map.delCharactor(pInfo);
 					}
 					else if(chara is Monster)
 					{
 						dispatchEvent(new CharacterEvent(CharacterEvent.MONSTER_DIE,chara));
+						var mInfo:MonsterInfo = System.npc.getMonsInfoById(chara.id,true);
+						Engine.map.delMonster(mInfo);
 					}
 					chara.die();
 					break;
