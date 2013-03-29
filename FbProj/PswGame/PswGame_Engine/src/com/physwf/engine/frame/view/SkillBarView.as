@@ -1,6 +1,7 @@
 package com.physwf.engine.frame.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.ui.IconManager;
 	import com.physwf.components.ui.SpriteLoader;
 	import com.physwf.components.ui.config.CellConfig;
 	import com.physwf.components.ui.controls.Cell;
@@ -67,17 +68,19 @@ package com.physwf.engine.frame.view
 		private function loadIcon(cell:Cell,iconID:uint):void
 		{
 			//to do 临时写的加载，后面考虑统一加载
-			var stream:URLStream = new URLStream();
-			function onComplete(e:Event):void
-			{
-				stream.removeEventListener(Event.COMPLETE,onComplete);
-				var tgaData:ByteArray = new ByteArray();
-				stream.readBytes(tgaData,0,stream.bytesAvailable);
-				var tgaDecoder:TGADecoder = new TGADecoder(tgaData);
-				cell.contentData = tgaDecoder.bitmap;
-			};
-			stream.addEventListener(Event.COMPLETE,onComplete);
-			stream.load(new URLRequest("resource/icons/skills/"+iconID+".tga"));
+//			var stream:URLStream = new URLStream();
+//			function onComplete(e:Event):void
+//			{
+//				stream.removeEventListener(Event.COMPLETE,onComplete);
+//				var tgaData:ByteArray = new ByteArray();
+//				stream.readBytes(tgaData,0,stream.bytesAvailable);
+//				var tgaDecoder:TGADecoder = new TGADecoder(tgaData);
+//				cell.content = tgaDecoder.bitmap;
+//			};
+//			stream.addEventListener(Event.COMPLETE,onComplete);
+//			stream.load(new URLRequest("resource/icons/skills/"+iconID+".tga"));
+			
+			IconManager.setCell(cell,iconID,".tga");
 		}
 		
 		public function update():void

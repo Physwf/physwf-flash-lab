@@ -86,13 +86,13 @@ package com.physwf.engine.fight.manager
 					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
 					if(target)
 					{
-						target.headEffect.setProgress(cInfo.info.hp,cInfo.info.hp_max);
 						var targetSeq:LinerCmdSequence = new LinerCmdSequence();
 						var onHurt:CmdOnHurt = new CmdOnHurt(target);
 						onHurt.setHurt(fInfo.hpHurt,skill);
 						targetSeq.addCommand(onHurt);
 						targetSeq.addCommand(new CmdStand(target));
 						target.createThread(targetSeq);
+						targetSeq.execute();
 					}
 					break;
 				case FightEvent.FIGHT_DEATH:

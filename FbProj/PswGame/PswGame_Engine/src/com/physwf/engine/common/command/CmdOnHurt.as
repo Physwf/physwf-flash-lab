@@ -37,6 +37,7 @@ package com.physwf.engine.common.command
 		{
 			var hurtEff:HurtEffect = new HurtEffect(Engine.map.view.upperEffect,1000,null,mChara.view);
 			hurtEff.setHurt(mHpLoss,EffectSystem.DIR_TEXT+EffectSystem.STYLE_COOPER);
+			mChara.headEffect.setProgress(mChara["info"].hp,mChara["info"].hp_max);
 			mStartTime = getTimer();
 		}
 		

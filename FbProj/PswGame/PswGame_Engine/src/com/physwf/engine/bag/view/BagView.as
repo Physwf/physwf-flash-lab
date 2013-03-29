@@ -1,6 +1,7 @@
 package com.physwf.engine.bag.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.ui.IconManager;
 	import com.physwf.components.ui.config.PanelConfig;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.components.ui.factory.CellFactory;
@@ -120,15 +121,16 @@ package com.physwf.engine.bag.view
 		
 		private function loadIcon(cell:Cell,iconID:uint):void
 		{
-			var loader:Loader = new Loader();
-			function onComplete(e:Event):void
-			{
-				var target:LoaderInfo = e.target as LoaderInfo;
-				cell.contentData = Bitmap(target.content).bitmapData;
-				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onComplete);
-			};
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
-			loader.load(new URLRequest("resource/icons/"+iconID+".jpg"));
+//			var loader:Loader = new Loader();
+//			function onComplete(e:Event):void
+//			{
+//				var target:LoaderInfo = e.target as LoaderInfo;
+//				cell.content = Bitmap(target.content).bitmapData;
+//				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onComplete);
+//			};
+//			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
+//			loader.load(new URLRequest("resource/icons/"+iconID+".jpg"));
+			IconManager.setCell(cell,iconID,".jpg");
 		}
 	}
 }
