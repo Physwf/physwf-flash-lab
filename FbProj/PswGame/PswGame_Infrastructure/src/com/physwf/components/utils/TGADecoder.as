@@ -32,7 +32,7 @@ package com.physwf.components.utils {
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
-	public class TGADecoder {
+	public class TGADecoder implements IDecoder{
 		//___________________________________________________________ const
 		
 		// constant value for _imageType
@@ -81,7 +81,12 @@ package com.physwf.components.utils {
 		/**
 		 * Construct TGA file from ByteArray.
 		 */
-		public function TGADecoder(bytes:ByteArray) {
+		public function TGADecoder() 
+		{
+		}
+		
+		public function decode(bytes:ByteArray):BitmapData
+		{
 			bytes.position = 0;
 			bytes.endian = Endian.LITTLE_ENDIAN;
 			
@@ -116,8 +121,8 @@ package com.physwf.components.utils {
 			} finally {
 				_bitmap.unlock();
 			}
+			return _bitmap;
 		}
-		
 		/**
 		 * Load 32 bpp bitmap.
 		 */

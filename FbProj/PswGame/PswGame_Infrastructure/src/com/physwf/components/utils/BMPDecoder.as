@@ -28,7 +28,7 @@ package com.physwf.components.utils{
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
-	public class BMPDecoder {
+	public class BMPDecoder implements IDecoder{
 		//___________________________________________________________ const
 		
 		private const BITMAP_HEADER_TYPE:String = "BM";
@@ -54,8 +54,10 @@ package com.physwf.components.utils{
 		
 		private var bytes:ByteArray;
 		private var palette:Array;
+		
 		private var bd:BitmapData;
-	
+		public function get bitmap():BitmapData { return bd; }
+		
 		private var nFileSize:uint;
 		private var nReserved1:uint;
 		private var nReserved2:uint;

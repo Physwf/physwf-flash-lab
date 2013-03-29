@@ -17,9 +17,9 @@ package com.physwf.components.ui.controls
 		
 		public var data:*;//格子所对应的数据
 		
-		private var bg:Bitmap;
-		private var content:Bitmap;
-		private var state:Bitmap;
+		private var mBg:Bitmap;
+		private var mContent:Bitmap;
+		private var mStateView:Bitmap;
 		
 		private var assets:CellAssets;
 		
@@ -29,14 +29,14 @@ package com.physwf.components.ui.controls
 		{
 			this.assets = assets;
 			
-			bg = new Bitmap();
-			addChild(bg);
+			mBg = new Bitmap();
+			addChild(mBg);
 			
-			content = new Bitmap();
-			addChild(content);
+			mContent = new Bitmap();
+			addChild(mContent);
 			
-			state = new Bitmap();
-			addChild(state);
+			mStateView = new Bitmap();
+			addChild(mStateView);
 			configListeners();
 		}
 		
@@ -68,45 +68,41 @@ package com.physwf.components.ui.controls
 			}
 		}
 		
-		public function set contentData(data:BitmapData):void
+		public function set contentData(v:BitmapData):void
 		{
-			if(content.bitmapData)
-			{
-				content.bitmapData.dispose();
-			}
-			content.bitmapData = data;
-			content.width = content.height = assets.size;
+			mContent.bitmapData = v;
+			mContent.width = mContent.height = assets.size;
 		}
 		
-		public function get contentData():BitmapData
+		public function get content():Bitmap
 		{
-			return content.bitmapData;
+			return mContent;
 		}
 		
 		public function update():void
 		{
-			if(bg.bitmapData != assets.bg)
+			if(mBg.bitmapData != assets.bg)
 			{
-				bg.bitmapData = assets.bg;
+				mBg.bitmapData = assets.bg;
 			}
 			switch(mState)
 			{
 				case STATE_UP:
-					if(state.bitmapData != assets.upstate)
+					if(mStateView.bitmapData != assets.upstate)
 					{
-						state.bitmapData = assets.upstate;
+						mStateView.bitmapData = assets.upstate;
 					}
 					break;
 				case STATE_OVER:
-					if(state.bitmapData != assets.overstate)
+					if(mStateView.bitmapData != assets.overstate)
 					{
-						state.bitmapData = assets.overstate;
+						mStateView.bitmapData = assets.overstate;
 					}
 					break;
 				case STATE_DOWN:
-					if(state.bitmapData != assets.downstate)
+					if(mStateView.bitmapData != assets.downstate)
 					{
-						state.bitmapData = assets.downstate;
+						mStateView.bitmapData = assets.downstate;
 					}
 					break;
 			}
