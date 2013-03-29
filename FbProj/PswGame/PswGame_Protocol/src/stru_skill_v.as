@@ -7,7 +7,7 @@ package
 	
 	public class stru_skill_v implements IExternalizable
 	{
-		public var skills:Vector.<stru_skill_t>;
+		public var skill_vec:Vector.<stru_skill_t>;
 		
 		public function stru_skill_v()
 		{
@@ -15,22 +15,22 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			var skillsLen:uint =input.readUnsignedInt();
-			skills= new Vector.<stru_skill_t>();
-			for(var i:int=0;i<skillsLen;++i)
+			var skill_vecLen:uint =input.readUnsignedInt();
+			skill_vec= new Vector.<stru_skill_t>();
+			for(var i:int=0;i<skill_vecLen;++i)
 			{
-				var skills_item:stru_skill_t = new stru_skill_t()
-				skills_item.readExternal(input);;
-				skills.push(skills_item);
+				var skill_vec_item:stru_skill_t = new stru_skill_t()
+				skill_vec_item.readExternal(input);;
+				skill_vec.push(skill_vec_item);
 			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(skills.length);
-			for(var j:int=0;j<skills.length;++j)
+			output.writeUnsignedInt(skill_vec.length);
+			for(var j:int=0;j<skill_vec.length;++j)
 			{
-				skills[j].writeExternal(output);
+				skill_vec[j].writeExternal(output);
 			}			
 		}
 	}

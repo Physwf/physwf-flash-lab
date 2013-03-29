@@ -9,6 +9,8 @@ package
 	{
 		public var role_type:uint;
 		public var level:uint;
+		public var hp_max:uint;
+		public var mp_max:uint;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
 		public var phy_def:uint;
@@ -34,6 +36,8 @@ package
 		{
 			role_type = input.readUnsignedByte();
 			level = input.readUnsignedShort();
+			hp_max = input.readUnsignedInt();
+			mp_max = input.readUnsignedInt();
 			phy_atk = input.readUnsignedInt();
 			solar_atk = input.readUnsignedInt();
 			phy_def = input.readUnsignedInt();
@@ -56,6 +60,8 @@ package
 		{
 			output.writeByte(role_type);
 			output.writeShort(level);
+			output.writeUnsignedInt(hp_max);
+			output.writeUnsignedInt(mp_max);
 			output.writeUnsignedInt(phy_atk);
 			output.writeUnsignedInt(solar_atk);
 			output.writeUnsignedInt(phy_def);

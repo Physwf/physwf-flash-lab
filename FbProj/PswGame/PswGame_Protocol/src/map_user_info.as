@@ -38,7 +38,7 @@ package
 			equips= new Vector.<uint>();
 			for(var i:int=0;i<16;++i)
 			{
-				var equips_item:uint = input.readUnsignedInt();
+				var equips_item:uint = input.readUnsignedShort();
 				equips.push(equips_item)
 			}
 			
@@ -67,7 +67,7 @@ package
 			pet_follow.writeExternal(output)
 			for(var j:int=0;j<16;++j)
 			{
-				output.writeUnsignedInt(equips[j])
+				output.writeShort(equips[j])
 			}
 			
 		}
