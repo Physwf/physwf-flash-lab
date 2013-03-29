@@ -12,7 +12,12 @@ package com.physwf.components.ui
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-
+	/**
+	 * 这个类提供了icon缓存机制 ,iconList中存有Bitmap对象，但这些对象并不被任何cell实例引用，这些实例只是为了缓存icon的位图数据。
+	 * 每个cell实例只引用这些bitmap的位图数据。
+	 * @author joe
+	 * 
+	 */
 	public class IconManager
 	{
 		public static var iconDir:String;
@@ -74,6 +79,18 @@ package com.physwf.components.ui
 			};
 			stream.addEventListener(Event.COMPLETE,onStreamComplete);
 			stream.load(new URLRequest(url));
+		}
+		/**
+		 * 清空缓存，在游戏中可以选择执行，比如在切换场景时，或者根据一定启发算法来调用 。
+		 * 
+		 */		
+		public static function clear():void
+		{
+			for each(var item:Bitmap in iconList)
+			{
+				item.bitmapData && item.bitmapData.dispose();
+			}
+			iconList = new Dictionary();
 		}
 	}
 }
