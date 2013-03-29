@@ -21,20 +21,17 @@ package com.physwf.components.effects
 		{
 			mText = new BitmapText(style);
 			mText.text = "-"+String(v);
-			mText.scaleX = mText.scaleY = 0;
 			addChild(mText);
+			x = mTarget.x+(Math.random()-1)*100;
+			y = mTarget.y - 70;
 			mBornTime = getTimer();
 		}
 		
 		override public function update():void
 		{
 			var per:Number = (getTimer() - mBornTime) / mLife;
-			x = mTarget.x;
-			y = mTarget.y - 70;
 			var factor:Number = Math.min(1,per);
-			mText.x += 10 * Math.cos(mDirc) * (1-factor);
-			mText.y += 10 * Math.sin(mDirc) * (1-factor);
-			mText.scaleX = mText.scaleY = Math.min(1,per);
+			mText.y -= 6 * (1-factor);
 			if(per>1)
 			{
 				trace("hurtted");
