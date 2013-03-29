@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editor>
-	<read>
-		<ground dir="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
-		<items dir=""/>
-	</read>
+	<read 
+		mapDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
+		itemDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
+		npcDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
+		iconDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
+	/>
 	<write>
 		<xml dir=""/>
 	</write>

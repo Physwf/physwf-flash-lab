@@ -10,31 +10,41 @@
 		<![CDATA[
 			import com.bit101.components.Window;
 			
+			import components.ItemDisplay;
 			import components.MapDisplay;
+			import components.WinItemBox;
 			import components.WinNewMap;
 			
 			import shinater.swing.Menu;
 			import shinater.swing.MenuBar;
 			import shinater.swing.MenuItem;
 			
+			private var mMenuBar:MenuBar;
 			private var mMapLayer:Sprite;
 			private var mUiLayer:Sprite;
 			
 			private var mNewMapWin:WinNewMap;
 			private var mMapDisplay:MapDisplay;
+			private var isSpacePressed:Boolean;
+			
+			private var mNPCBox:WinItemBox;
 			
 			private function init():void
 			{
-				addEventListener(Event.ADDED_TO_STAGE,onAddToStage);
+				stage?onAddToStage(null):addEventListener(Event.ADDED_TO_STAGE,onAddToStage);
+				var configLoader:URLLoader = new URLLoader();
+				configLoader.addEventListener(Event.COMPLETE,onConfigComplete);
+				configLoader.load(new URLRequest("config/project.xml"))
 			}
 			
 			private function onAddToStage(e:Event):void
 			{
 				removeEventListener(Event.ADDED_TO_STAGE,onAddToStage);
-				
-//				maximize();
-				var menuBar:MenuBar = new MenuBar();
-				stage.addChild(menuBar);
+				stage.addEventListener(Event.RESIZE,onStageResize);
+				maximize();
+				mUiLayer = new Sprite();
+				mMenuBar = new MenuBar();
+				mUiLayer.addChild(mMenuBar);
 				var fileMenu:Menu = new Menu("&文件");
 				var newItem:MenuItem = new MenuItem("&新建");
 				var opnItem:MenuItem = new MenuItem("&打开");
@@ -44,19 +54,40 @@
 				fileMenu.addMenuItem(opnItem);
 				fileMenu.addMenuItem(savItem);
 				fileMenu.addMenuItem(extItem);
-				menuBar.addMenu(fileMenu);
+				mMenuBar.addMenu(fileMenu);
 				
 				var viewMenu:Menu = new Menu("&视图");
-				menuBar.addMenu(viewMenu);
-				var itemBox:MenuItem = new MenuItem("&物品箱");
+				mMenuBar.addMenu(viewMenu);
+				var itemBox:MenuItem = new MenuItem("&物品");
+				var teleBox:MenuItem = new MenuItem("&传送点");
+				var npcBox:MenuItem = new MenuItem("&NPC");
 				viewMenu.addMenuItem(itemBox);
+				viewMenu.addMenuItem(teleBox);
+				viewMenu.addMenuItem(npcBox);
 				newItem.addEventListener(MouseEvent.MOUSE_UP,onNew);
 				
-				mUiLayer = new Sprite();
-				stage.addChild(mUiLayer);
+				npcBox.addEventListener(MouseEvent.CLICK,oViewnNpc);
 				
 				stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 				stage.addEventListener(KeyboardEvent.KEY_UP,onKeyUp);
+				
+				mMapDisplay = new MapDisplay();
+				
+				mMapDisplay.addEventListener(MouseEvent.MOUSE_DOWN,onMapDisplayPress);
+				mMapDisplay.addEventListener(MouseEvent.MOUSE_UP,onMapDisplayRelease);
+				
+				stage.addChild(mMapDisplay);
+				stage.addChild(mUiLayer);
+			}
+			
+			private function onConfigComplete(e:Event):void
+			{
+				var target:URLLoader = e.target as URLLoader;
+				target.removeEventListener(Event.COMPLETE,onConfigComplete);
+				var config:XML = XML(target.data);
+				var read:XML = config.read[0];
+				MapDisplay.mapDir = read.@mapDir;
+				ItemDisplay.iconDir = read.@iconDir;
 			}
 			
 			private function onNew(e:MouseEvent):void
@@ -71,9 +102,15 @@
 				mNewMapWin.removeEventListener("ok",onWinNewMapOk);
 				mNewMapWin.hide();
 				var name:String = mNewMapWin.inputContent;
-				mMapDisplay ||= new MapDisplay();
 				mMapDisplay.load(name);
-				stage.addChild(mMapDisplay);
+			}
+			
+			private function oViewnNpc(e:MouseEvent):void
+			{
+				mNPCBox ||= new WinItemBox(mUiLayer,"NPC");
+				mNPCBox.toogle();
+				var item:ItemDisplay = new ItemDisplay("npc");
+				mNPCBox.pushItem(item);
 			}
 			
 			private function onKeyDown(e:KeyboardEvent):void
@@ -83,7 +120,7 @@
 					case Keyboard.SPACE:
 						Mouse.cursor = MouseCursor.HAND;
 						Mouse.show();//为了让鼠标上一行代码立即有效，需要调用show()一次
-						e.updateAfterEvent();
+						isSpacePressed = true;
 						break;
 				}
 			}
@@ -95,8 +132,26 @@
 					case Keyboard.SPACE:
 						Mouse.cursor = MouseCursor.AUTO;
 						Mouse.show();//为了让鼠标上一行代码立即有效，需要调用show()一次
+						isSpacePressed = false;
 						break;
 				}
+			}
+			
+			private function onMapDisplayPress(e:MouseEvent):void
+			{
+				if(isSpacePressed)
+				{
+					mMapDisplay.startDrag(false,new Rectangle(0,0,-mMapDisplay.width+stage.stageWidth,-mMapDisplay.height+stage.stageHeight));
+				}
+			}
+			private function onMapDisplayRelease(e:MouseEvent):void
+			{
+				mMapDisplay.stopDrag();
+			}
+			
+			private function onStageResize(e:Event):void
+			{
+				mMenuBar.width = stage.stageWidth;
 			}
 		]]>
 	</fx:Script>

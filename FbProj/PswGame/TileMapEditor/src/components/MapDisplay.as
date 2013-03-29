@@ -8,6 +8,8 @@ package components
 	
 	public class MapDisplay extends Sprite
 	{
+		public static var mapDir:String;
+		
 		private var mGroundLayer:Sprite;
 		private var mNpcLayer:Sprite;
 		private var mTeleprotLayer:Sprite;
@@ -26,7 +28,7 @@ package components
 		{
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
-			loader.load(new URLRequest("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"+name+"/ground.jpg"));
+			loader.load(new URLRequest(mapDir+name+"/ground.jpg"));
 		}
 		
 		private function onComplete(e:Event):void

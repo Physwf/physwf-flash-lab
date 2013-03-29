@@ -52,22 +52,38 @@ package components
 			winNewMap.x = (mLayer.stage.stageWidth - winNewMap.width) * .5;
 			winNewMap.y = (mLayer.stage.stageHeight - winNewMap.height) * .5;
 			btnOk.addEventListener(MouseEvent.CLICK,onOk);
+			input.addEventListener(Event.CHANGE,onTextChange);
+			onTextChange(null);
 		}
 		
 		public function hide():void
 		{
 			mLayer.removeChild(winNewMap);
 			btnOk.removeEventListener(MouseEvent.CLICK,onOk);
+			input.removeEventListener(Event.CHANGE,onTextChange);
 		}
 		
 		public function get inputContent():String
 		{
-			return input.textField.text
+			return input.textField.text;
 		}
 		
 		private function onOk(e:MouseEvent):void
 		{
 			dispatchEvent(new Event("ok"));
+		}
+		
+		private function onTextChange(e:Event):void
+		{
+			input.text = input.text.replace(/\s/g,"");
+			if(input.text == "")
+			{
+				btnOk.enabled = false;
+			}
+			else
+			{
+				btnOk.enabled = true;
+			}
 		}
 	}
 }
