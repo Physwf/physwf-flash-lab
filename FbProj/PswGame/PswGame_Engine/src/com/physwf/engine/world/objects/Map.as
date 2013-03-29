@@ -286,7 +286,7 @@ package com.physwf.engine.world.objects
 				{
 					mMapView.removeSwapElement(mMonsters[i].view);
 					var mons:Monster = mMonsters[i];
-					mCharactors.splice(i,1);
+					mMonsters.splice(i,1);
 					mons.destroy();
 				}
 			}
