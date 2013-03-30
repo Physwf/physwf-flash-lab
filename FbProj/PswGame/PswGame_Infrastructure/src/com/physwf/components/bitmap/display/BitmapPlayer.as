@@ -4,13 +4,13 @@ package com.physwf.components.bitmap.display {
 	import flash.display.BitmapData;
 	import flash.events.Event;
 
-	public class BitmapPalyer extends Bitmap {
+	public class BitmapPlayer extends Bitmap {
 
 		private var mBitmapFrames:Vector.<BitmapFrame>;
 		private var mTotalFrames:int;
 		public var currentFrame:int;
 		
-		public function BitmapPalyer() 
+		public function BitmapPlayer() 
 		{
 		}
 		

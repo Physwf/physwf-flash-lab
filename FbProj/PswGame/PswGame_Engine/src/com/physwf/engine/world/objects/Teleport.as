@@ -1,7 +1,7 @@
 package com.physwf.engine.world.objects
 {
-	import com.physwf.components.bitmap.display.BitmapPalyer;
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.view.Animation;
 	import com.physwf.system.System;
 	
 	import flash.events.TimerEvent;
@@ -19,11 +19,11 @@ package com.physwf.engine.world.objects
 		
 		private static const radius:uint = 30;
 		
-		private var mView:BitmapPalyer;
+		private var mView:Animation;
 		
 		public function Teleport()// to do 传入传送点信息结构体
 		{
-			mView = new BitmapPalyer();
+			mView = new Animation();
 			// to do 加载动画
 		}
 		
@@ -62,7 +62,7 @@ package com.physwf.engine.world.objects
 		
 		public function update():void
 		{
-			mView.nextFrame();
+			mView.update();
 		}
 	}
 }

@@ -2,11 +2,11 @@ package com.physwf.components.charactor
 {
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.view.IAnimation;
+	import com.physwf.components.view.ISkeleton;
 	
 	import flash.display.Sprite;
 	
-	public class SpectialLayer extends Sprite implements IAnimation
+	public class SpectialLayer extends Sprite implements ISkeleton
 	{
 		public function SpectialLayer()
 		{

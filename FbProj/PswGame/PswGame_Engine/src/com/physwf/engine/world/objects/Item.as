@@ -1,13 +1,14 @@
 package com.physwf.engine.world.objects
 {
-	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.interfaces.IUpdatable;
+	import com.physwf.components.view.Animation;
 	
-	import flash.display.Sprite;
+	import flash.events.EventDispatcher;
 
-	public class Item extends Sprite implements IUpdatable
+	public class Item extends EventDispatcher implements IUpdatable
 	{
-		private var view:BitmapPalyer;
+		private var view:Animation;
 		
 		public function Item()
 		{
@@ -15,7 +16,6 @@ package com.physwf.engine.world.objects
 		
 		public function update():void
 		{
-			// TODO Auto Generated method stub
 		}
 	}
 }

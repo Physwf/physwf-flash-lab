@@ -1,13 +1,13 @@
 package com.physwf.components.charactor
 {
-	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.view.IAnimation;
+	import com.physwf.components.view.ISkeleton;
 	
 	import flash.display.Sprite;
 
-	public class WearLayer extends Sprite implements IAnimation
+	public class WearLayer extends Sprite implements ISkeleton
 	{
 		public var shoes:Wear;
 		public var pants:Wear;

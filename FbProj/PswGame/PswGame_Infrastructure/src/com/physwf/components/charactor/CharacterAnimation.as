@@ -1,20 +1,20 @@
 package com.physwf.components.charactor
 {
 	import com.physwf.components.bitmap.display.BitmapFrame;
-	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.bitmap.events.PackageEvent;
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.charactor.enum.AnimationSystem;
 	import com.physwf.components.charactor.enum.CharacterAction;
 	import com.physwf.components.charactor.enum.ISODirection;
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.view.IAnimation;
+	import com.physwf.components.view.ISkeleton;
 	
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class CharacterAnimation extends Sprite implements IAnimation
+	public class CharacterAnimation extends Sprite implements ISkeleton
 	{
 		public static const NUM_ACTIONS:uint = 5;
 		/**
@@ -22,7 +22,7 @@ package com.physwf.components.charactor
 		 */		
 		private var mSystem:uint;
 		
-		private var mNude:BitmapPalyer;
+		private var mNude:BitmapPlayer;
 		private var mSkeleton:SkeletonLoader;
 		
 		private var mWearLayer:WearLayer;
@@ -42,7 +42,7 @@ package com.physwf.components.charactor
 		public function CharacterAnimation(system:uint = 0)
 		{
 			mSystem = system;
-			mNude = new BitmapPalyer();
+			mNude = new BitmapPlayer();
 			mWearLayer = new WearLayer();
 			mSpecialLayer = new SpectialLayer();
 			
@@ -206,7 +206,7 @@ package com.physwf.components.charactor
 			return mWearLayer;
 		}
 
-		public function get nude():BitmapPalyer
+		public function get nude():BitmapPlayer
 		{
 			return mNude;
 		}

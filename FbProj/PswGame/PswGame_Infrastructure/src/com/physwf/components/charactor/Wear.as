@@ -1,16 +1,16 @@
 package com.physwf.components.charactor
 {
 	import com.physwf.components.bitmap.display.BitmapFrame;
-	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.charactor.enum.ISODirection;
-	import com.physwf.components.view.IAnimation;
+	import com.physwf.components.view.ISkeleton;
 	
 	import flash.display.Sprite;
 
-	public class Wear implements IAnimation
+	public class Wear implements ISkeleton
 	{
-		public var mWear:BitmapPalyer;
+		public var mWear:BitmapPlayer;
 		private var mWearBmdt:Vector.<Vector.<Vector.<BitmapFrame>>>;
 		private var mSkeleton:SkeletonLoader;
 		
@@ -22,7 +22,7 @@ package com.physwf.components.charactor
 		
 		public function Wear(layer:Sprite)
 		{
-			mWear = new BitmapPalyer();
+			mWear = new BitmapPlayer();
 			mWearBmdt = new Vector.<Vector.<Vector.<BitmapFrame>>>(ISODirection.NUM_DIRECTIONS,true);
 			for(var i:int=0;i<ISODirection.NUM_DIRECTIONS;++i)
 			{

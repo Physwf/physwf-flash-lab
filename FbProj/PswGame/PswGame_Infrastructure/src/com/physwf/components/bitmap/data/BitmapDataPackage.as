@@ -2,7 +2,7 @@ package com.physwf.components.bitmap.data {
 
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.display.BitmapKeyFrame;
-	import com.physwf.components.bitmap.display.BitmapPalyer;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.bitmap.net.BitmapDataPackageLoader;
 	import com.physwf.components.utils.AlgebraUtils;
 	
