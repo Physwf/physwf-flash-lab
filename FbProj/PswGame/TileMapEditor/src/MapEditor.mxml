@@ -28,6 +28,9 @@
 			private var isSpacePressed:Boolean;
 			
 			private var mNPCBox:WinItemBox;
+			private var mBuildingBox:WinItemBox;
+			private var mItemBox:WinItemBox;
+			private var mTeleportBox:WinItemBox;
 			
 			private function init():void
 			{
