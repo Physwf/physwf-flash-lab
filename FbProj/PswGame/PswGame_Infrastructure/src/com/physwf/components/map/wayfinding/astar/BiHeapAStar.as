@@ -4,6 +4,7 @@ package com.physwf.components.map.wayfinding.astar
 	import com.physwf.components.map.data.GridTypeMapData;
 	
 	import flash.display.DisplayObject;
+	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 
 	/**
@@ -15,7 +16,8 @@ package com.physwf.components.map.wayfinding.astar
 	{
 		private var _mapData:GridTypeMapData;
 		private var _openList:MinHeap;
-		private var _closedList:Vector.<Node>;
+//		private var _closedList:Vector.<Node>;
+		private var _closeDic:Dictionary;
 		private var _path:Vector.<Node>;
 		private var _pathLine:Vector.<Line>;
 		
@@ -47,13 +49,15 @@ package com.physwf.components.map.wayfinding.astar
 			_startNode.f = _startNode.g + _startNode.h;
 			
 			_openList = new MinHeap(100000);
-			_closedList = new Vector.<Node>();
+//			_closedList = new Vector.<Node>();
+			_closeDic = new Dictionary();
 			
 			return search();
 		}
 		
 		private function search():Boolean
 		{
+			var start:uint = getTimer()
 //			trace("开始寻路",getTimer());
 			if(_startNode == _endNode) return false;
 			var minCostNode:Node = _startNode;
@@ -81,7 +85,7 @@ package com.physwf.components.map.wayfinding.astar
 						var h:Number = _heuristic(neerNode);
 						var f:Number = gSum + h;
 //						if(_openList.hasItem(neerNode) || (_closedList.indexOf(neerNode)>-1))
-						if((_openList.hasItem(neerNode)) || (_closedList.indexOf(neerNode)>-1))
+						if((_openList.hasItem(neerNode)) || _closeDic[neerNode] != null)
 						{
 							if(neerNode.f > f)
 							{
@@ -102,13 +106,14 @@ package com.physwf.components.map.wayfinding.astar
 					}//end for y
 				}//end for x
 				
-				_closedList.push(minCostNode);
+//				_closedList.push(minCostNode);
+				_closeDic[minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
 				if(!_openList.size) return false;//no path found
 				
 				minCostNode = _openList.Dequeue() as Node;
 			}//end while
 			buildPath();
-//			trace("寻路结束",getTimer())
+			trace("寻路结束:",getTimer() - start + "ms");
 			return true;
 		}
 		

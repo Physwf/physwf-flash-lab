@@ -1,6 +1,8 @@
 package com.physwf.components.ds.heap
 {
 	import com.physwf.components.interfaces.INumerical;
+	
+	import flash.utils.Dictionary;
 
 	public class MinHeap implements IHeap
 	{
@@ -9,11 +11,14 @@ package com.physwf.components.ds.heap
 		 */
 		private var heapVec:Vector.<INumerical>;
 		private var heapSize:uint =0;
+		private var itemFlag:Dictionary;//用来检查某元素是否在堆中
+		
 		public function MinHeap(size:uint)
 		{
 //			heapVec = new Vector.<INumerical>(size,true);
 			heapVec = new Vector.<INumerical>();
 			heapSize = 0;
+			itemFlag = new Dictionary();
 		}
 		
 		/**
@@ -38,6 +43,7 @@ package com.physwf.components.ds.heap
 				parentIndex = ( lastIndex - 1) * .5;
 				if(parentIndex<0) break;//说明已经到头
 			}
+			itemFlag[item] = true;
 		}
 		
 		/**
@@ -48,7 +54,7 @@ package com.physwf.components.ds.heap
 		public function Dequeue():INumerical
 		{
 			if(!heapSize) return null;
-			var min:INumerical = heapVec[0];
+			var $min:INumerical = heapVec[0];
 			heapSize--;
 			heapVec[0] = heapVec[heapSize];//将堆尾移到堆顶
 			
@@ -68,7 +74,8 @@ package com.physwf.components.ds.heap
 				childIndex=2*parentIndex+1;
 			}
 			heapVec[parentIndex] = temp;
-			return min;
+			delete itemFlag[$min];
+			return $min;
 		}
 		
 		/**
@@ -85,7 +92,7 @@ package com.physwf.components.ds.heap
 		
 		public function hasItem(item:INumerical):Boolean
 		{
-			return (heapVec.indexOf(item) > -1);
+			return itemFlag[item];
 		}
 		
 		public function get size():int
