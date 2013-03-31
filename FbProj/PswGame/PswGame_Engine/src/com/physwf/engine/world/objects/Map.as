@@ -46,6 +46,7 @@ package com.physwf.engine.world.objects
 		private var mCharactors:Vector.<Player>;
 		private var mMonsters:Vector.<Monster>;
 		private var mNpcs:Vector.<NPC>;
+		private var mItems:Vector.<Item>;
 		private var mTeleprots:Vector.<Teleport>;
 		
 		private var mScript:IMapScript;
@@ -73,6 +74,7 @@ package com.physwf.engine.world.objects
 			
 			mMonsters = new <Monster>[];
 			mNpcs = new <NPC>[];
+			mItems = new <Item>[];
 			mTeleprots = new <Teleport>[];
 			
 			mCamera.target = Player.self.view;
@@ -351,6 +353,32 @@ package com.physwf.engine.world.objects
 			mMapView.addSwapElement(tp.view);
 		}
 		/**
+		 * 添加物品到场景中 
+		 * @param item
+		 * 
+		 */		
+		public function addItem(item:Item):void
+		{
+			mItems.push(item);
+			mMapView.addSwapElement(item.view);
+		}
+		/**
+		 * 从场景中移除物品
+		 * 
+		 */		
+		public function delItem(id:uint):void
+		{
+			for(var i:int=0;i<mItems.length;++i)
+			{
+				if(mItems[i].id == id)
+				{
+					mMapView.removeSwapElement(mItems[i].view);
+					mItems[i].destroy()
+					mItems.splice(i,1);
+				}
+			}
+		}
+		/**
 		 * 清扫场景 
 		 */		
 		public function sweep():void
@@ -371,13 +399,17 @@ package com.physwf.engine.world.objects
 				mMapView.removeSwapElement(mNpcs[i].view);
 				mNpcs.splice(i,1);
 			}
+			for(i=0;i<mItems.length;++i)
+			{
+				mMapView.removeSwapElement(mItems[i].view);
+				mItems.splice(i,1);
+			}
 			for(i=0;i<mTeleprots.length;++i)
 			{
 				mMapView.removeSwapElement(mTeleprots[i].view);
 				mTeleprots.splice(i,1);
 			}
 		}
-		
 		/**
 		 * 获取玩家
 		 * @param uid
@@ -434,6 +466,10 @@ package com.physwf.engine.world.objects
 			for(i=0;i<mNpcs.length;++i)
 			{
 				mNpcs[i].update();
+			}
+			for(i=0;i<mItems.length;++i)
+			{
+				mItems[i].update();
 			}
 			for(i=0;i<mTeleprots.length;++i)
 			{
