@@ -6,6 +6,7 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.charactor.factory.MonsterFactory;
 	import com.physwf.components.effects.HeadEffect;
+	import com.physwf.config.ConfigReader;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.system.vo.MonsterInfo;
@@ -26,11 +27,13 @@ package com.physwf.engine.world.objects
 		{
 			mInfo = info;
 			mInstanceId = info.instanceID;
+			
+//			ConfigReader.readMonster(mInfo);
 			// 
 			view = new CharacterAnimation(AnimationSystem.AOTM);
 			mFactory = new MonsterFactory();
 			view.skeleton = mFactory.getWear(2);
-//			view.direction = ISODirection.LEFT;
+			
 			view.x = info.map_x;
 			view.y = info.map_y;
 			
