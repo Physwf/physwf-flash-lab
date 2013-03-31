@@ -9,7 +9,20 @@ package com.physwf.components.bitmap.net {
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
-
+	/**
+	 * 骨骼加载器。
+	 * 该组件在原有的代码上(author jack)进行了比较大的修正简化。
+	 * 必须在PackageEvent.PACKAGE_ALL_INITED事件之后才能访问加载器内的内容。
+	 * 应用示例：
+	 * var skeleton:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(url);
+	 * function onComplete(e:PackageEvent):void
+	 * {
+	 *    skeleton.getAction(direction,action);//direction可根据SkeletonLoader.getDirections()来获取。
+	 * };
+	 * skeleton.addEventListener(PackageEvent.PACKAGE_ALL_INITED,onComplete);
+	 * @author joe
+	 * 
+	 */
 	public class SkeletonLoader extends EventDispatcher
 	{
 		public static const POSTFIX_SWF:String = ".swf";
@@ -27,10 +40,6 @@ package com.physwf.components.bitmap.net {
 		private var _keyName:String;
 		private var _postfix:String;
 		
-		private var _isCloneMode:Boolean;
-		private var _isDynamicMode:Boolean;
-		private var _isBigKeyMode:Boolean;
-		
 		private var _isNude:Boolean = false; //是否是裸模
 		private var _loaded:Boolean = false;
 		private var _loadFlag:uint = LOAD_FLAG_NO;
@@ -39,36 +48,17 @@ package com.physwf.components.bitmap.net {
 		private var _bigKey:BigKey;
 		
 		public function get loadFlag():uint { return _loadFlag; }
+		
 		/**
-		 * 
-		 * @param directionList
-		 * @param resourceList
-		 * @param mirroringList
-		 * @param offsetList
 		 * @param url
 		 * @param keName
 		 * @param postFix
-		 * @param isCloneMode
-		 * @param isDynamicMode
-		 * @param isBigKeyMode
-		 * 
 		 */		
-		public function SkeletonLoader(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true) 
+		public function SkeletonLoader(url:String,keyName:String="key",postFix:String=".swf") 
 		{
-			init(url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
-		}
-		
-		private function init(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):void
-		{
-			
 			_url = url;
 			_keyName = keyName;
 			_postfix = postFix;
-			
-			_isCloneMode = isCloneMode;
-			_isDynamicMode = isDynamicMode;
-			_isBigKeyMode = isBigKeyMode;
-			
 		}
 		
 		public static function getSameSkeletonLoader(url:String,keyName:String="key",postFix:String=".swf",isCloneMode:Boolean=false,isDynamicMode:Boolean=false,isBigKeyMode:Boolean=true):SkeletonLoader
@@ -77,7 +67,7 @@ package com.physwf.components.bitmap.net {
 			var sLoader:SkeletonLoader = SkeletonLoaderPool.getLoader(tag);
 			if(!sLoader)
 			{
-				sLoader = new SkeletonLoader(url,keyName,postFix,isCloneMode,isDynamicMode,isBigKeyMode);
+				sLoader = new SkeletonLoader(url,keyName,postFix);
 				SkeletonLoaderPool.addLoader(tag,sLoader);
 			}
 			return sLoader;
@@ -131,14 +121,27 @@ package com.physwf.components.bitmap.net {
 		{
 			return null;
 		}
+		/**
+		 * 获取该骨架中所包含的方向 
+		 * @return 
+		 * 
+		 */		
+		public function getDirections():Vector.<String>
+		{
+			return _bigKey.directions;
+		}
 		
 		public function loadNude():void
 		{
-
 			_isNude = true;
 			load();
 		}
-		
+		/**
+		 * 执行加载。
+		 * 加载步骤为先加载bigKey,（bigKey中包含骨骼的方向信息）,然后根据这些方向信息加载各个SmallKey。
+		 * SmallKey全部加载完毕之后抛出PackageEvent.PACKAGE_ALL_INITED事件。在这个事件之后用户可以
+		 * 安全的通过SkeletonLoader.getAction()接口来获取每个数据包中的内容，但是获取过程是异步的。
+		 */		
 		public function load():void
 		{
 			//判断加载状态
@@ -156,7 +159,6 @@ package com.physwf.components.bitmap.net {
 				_loadFlag = LOAD_FLAG_LOADING;
 			}
 			
-			
 			var request:URLRequest = new URLRequest(_url+"/"+_keyName+_postfix);
 			var urlStream:URLStream = new URLStream();
 			urlStream.addEventListener(Event.COMPLETE,function(e:Event):void
@@ -167,7 +169,6 @@ package com.physwf.components.bitmap.net {
 				bigKeyData.position = 0;
 				_bigKey.readKey(bigKeyData);
 				loadSmallKeys();
-				dispatchEvent(new Event(Event.COMPLETE));
 			});
 			urlStream.load(request);
 		}

@@ -44,7 +44,7 @@ package com.physwf.components.bitmap.data {
 			var bmdBytes:ByteArray ;
 			var rect:Rectangle;
 			
-			var keyLen:uint = input.readShort();
+			var keyLen:uint = input.readUnsignedShort();
 			for(var i:int=0;i<keyLen;++i)
 			{
 				bitmapKeyFrames[i].x = input.readShort();
@@ -52,7 +52,7 @@ package com.physwf.components.bitmap.data {
 				rect = new Rectangle();
 				rect.width = input.readShort();
 				rect.height = input.readShort();
-				len = input.readShort();
+				len = input.readUnsignedShort();
 				bmdBytes = new ByteArray();
 				input.readBytes(bmdBytes,0,len);
 				bmdBytes.inflate();

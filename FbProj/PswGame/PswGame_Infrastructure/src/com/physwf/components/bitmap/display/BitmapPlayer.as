@@ -1,10 +1,12 @@
 package com.physwf.components.bitmap.display {
 
+	import com.physwf.components.interfaces.IDisposible;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 
-	public class BitmapPlayer extends Bitmap {
+	public class BitmapPlayer extends Bitmap implements IDisposible {
 
 		private var mBitmapFrames:Vector.<BitmapFrame>;
 		private var mTotalFrames:int;
@@ -50,6 +52,11 @@ package com.physwf.components.bitmap.display {
 		{
 			return mTotalFrames;
 		}
-
+		
+		public function destroy():void
+		{
+			mBitmapFrames = null;
+		}
+		
 	} // end class
 } // end package

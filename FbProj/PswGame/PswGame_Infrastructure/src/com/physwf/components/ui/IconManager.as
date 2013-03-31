@@ -48,7 +48,7 @@ package com.physwf.components.ui
 				case ".jpg":
 				case ".png":
 					var loader:Loader = new Loader();
-					function onLoaderComplete(e:Event):void
+					var onLoaderComplete:Function = function (e:Event):void
 					{
 						loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onLoaderComplete);
 						cell.contentData = Bitmap(loader.content).bitmapData;
