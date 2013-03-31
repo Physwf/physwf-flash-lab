@@ -46,6 +46,8 @@ package com.physwf.engine.world.objects
 		private var mCharactors:Vector.<Player>;
 		private var mMonsters:Vector.<Monster>;
 		private var mNpcs:Vector.<NPC>;
+		private var mTeleprots:Vector.<Teleport>;
+		
 		private var mScript:IMapScript;
 		
 		public function Map()
@@ -71,6 +73,7 @@ package com.physwf.engine.world.objects
 			
 			mMonsters = new <Monster>[];
 			mNpcs = new <NPC>[];
+			mTeleprots = new <Teleport>[];
 			
 			mCamera.target = Player.self.view;
 			mCamera.initialize(mMapView);
@@ -338,6 +341,16 @@ package com.physwf.engine.world.objects
 			}
 		}
 		/**
+		 * 添加传送点 
+		 * @param tp
+		 * 
+		 */		
+		public function addTeleport(tp:Teleport):void
+		{
+			mTeleprots.push(tp);
+			mMapView.addSwapElement(tp.view);
+		}
+		/**
 		 * 清扫场景 
 		 */		
 		public function sweep():void
@@ -352,6 +365,16 @@ package com.physwf.engine.world.objects
 			{
 				mMapView.removeSwapElement(mMonsters[i].view);
 				mMonsters.splice(i,1);
+			}
+			for(i=0;i<mNpcs.length;++i)
+			{
+				mMapView.removeSwapElement(mNpcs[i].view);
+				mNpcs.splice(i,1);
+			}
+			for(i=0;i<mTeleprots.length;++i)
+			{
+				mMapView.removeSwapElement(mTeleprots[i].view);
+				mTeleprots.splice(i,1);
 			}
 		}
 		
@@ -411,6 +434,10 @@ package com.physwf.engine.world.objects
 			for(i=0;i<mNpcs.length;++i)
 			{
 				mNpcs[i].update();
+			}
+			for(i=0;i<mTeleprots.length;++i)
+			{
+				mTeleprots[i].update();
 			}
 			Player.controller.update();
 			mMapView.update();

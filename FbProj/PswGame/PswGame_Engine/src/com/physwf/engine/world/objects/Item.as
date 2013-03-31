@@ -8,7 +8,7 @@ package com.physwf.engine.world.objects
 
 	public class Item extends EventDispatcher implements IUpdatable
 	{
-		private var view:Animation;
+		public var view:Animation;
 		
 		public function Item()
 		{

@@ -4,7 +4,7 @@ package com.physwf.engine.script
 
 	public class MapScriptBase extends Sprite implements IMapScript
 	{
-		public var npcList:XML;
+		public var description:XML
 		
 		public function MapScriptBase()
 		{

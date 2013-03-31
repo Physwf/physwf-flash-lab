@@ -9,6 +9,7 @@ package com.physwf.engine.world
 	import com.physwf.engine.world.objects.Character;
 	import com.physwf.engine.world.objects.Map;
 	import com.physwf.engine.world.objects.Player;
+	import com.physwf.engine.world.objects.Teleport;
 	import com.physwf.shell.Application;
 	import com.physwf.system.System;
 	import com.physwf.system.entity.MySelf;
@@ -36,6 +37,8 @@ package com.physwf.engine.world
 			map.attachLayer(ScreenManager.main.world);
 			map.initialize();
 			Character.astar = new BiHeapAStar();
+			
+			Teleport.initialize();
 			
 			Engine.world = this;
 		}

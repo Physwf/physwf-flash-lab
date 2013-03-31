@@ -1,5 +1,7 @@
 package com.physwf.engine.world.objects
 {
+	import com.physwf.components.bitmap.net.SkeletonLoader;
+	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.view.Animation;
 	import com.physwf.system.System;
@@ -7,7 +9,7 @@ package com.physwf.engine.world.objects
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 
-	public class Teleport implements IUpdatable
+	public class Teleport implements IUpdatable,IDisposible
 	{
 		public static var teleports:Vector.<Teleport>;
 		private static var timer:Timer;
@@ -19,11 +21,13 @@ package com.physwf.engine.world.objects
 		
 		private static const radius:uint = 30;
 		
-		private var mView:Animation;
+		public var view:Animation;
 		
 		public function Teleport()// to do 传入传送点信息结构体
 		{
-			mView = new Animation();
+			var skeleton:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("resource/teleport");
+			view = new Animation(skeleton);
+			view.gotoAndPlay("f");
 			// to do 加载动画
 		}
 		
@@ -50,19 +54,15 @@ package com.physwf.engine.world.objects
 			}
 		}
 		
-		/**
-		 * 传入传送点信息列表作为参数 
-		 * 
-		 */		
-		public static function setMapTeleports():void
-		{
-			// to do 销毁 + 新建
-			timer.start();
-		}
-		
 		public function update():void
 		{
-			mView.update();
+			view.update();
+		}
+		
+		public function destroy():void
+		{
+			view.destroy();
+			view = null;
 		}
 	}
 }

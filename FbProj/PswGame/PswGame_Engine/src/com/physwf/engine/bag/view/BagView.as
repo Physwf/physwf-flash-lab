@@ -113,7 +113,7 @@ package com.physwf.engine.bag.view
 			{
 				//临时写，后面需要考虑版本控制和加载优化
 				trace(items[i].item.itemID);
-				var grid:uint = items[i].girdTag - GRID_OFFSET;
+				var grid:uint = items[i].girdTag //- GRID_OFFSET;
 				var cell:Cell = cells[grid];
 				loadIcon(cell,items[i].item.itemID);
 			}
