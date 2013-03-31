@@ -64,12 +64,18 @@
 				var itemBox:MenuItem = new MenuItem("&物品");
 				var teleBox:MenuItem = new MenuItem("&传送点");
 				var npcBox:MenuItem = new MenuItem("&NPC");
+				var buildingBox:MenuItem = new MenuItem("&建筑");
+				viewMenu.addMenuItem(npcBox);
+				viewMenu.addMenuItem(buildingBox);
 				viewMenu.addMenuItem(itemBox);
 				viewMenu.addMenuItem(teleBox);
-				viewMenu.addMenuItem(npcBox);
+				
 				newItem.addEventListener(MouseEvent.MOUSE_UP,onNew);
 				
 				npcBox.addEventListener(MouseEvent.CLICK,oViewnNpc);
+				itemBox.addEventListener(MouseEvent.CLICK,onViewItem);
+				teleBox.addEventListener(MouseEvent.CLICK,onViewTeleport);
+				buildingBox.addEventListener(MouseEvent.CLICK,onViewBuiding);
 				
 				stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 				stage.addEventListener(KeyboardEvent.KEY_UP,onKeyUp);
@@ -111,11 +117,29 @@
 			private function oViewnNpc(e:MouseEvent):void
 			{
 				mNPCBox ||= new WinItemBox(mUiLayer,"NPC");
+				mNPCBox.setPosition(stage.stageWidth - 280,30);
 				mNPCBox.toogle();
 				var item:ItemDisplay = new ItemDisplay("npc");
 				mNPCBox.pushItem(item);
 			}
-			
+			private function onViewBuiding(e:MouseEvent):void
+			{
+				mBuildingBox ||= new WinItemBox(mUiLayer,"Building");
+				mBuildingBox.setPosition(stage.stageWidth - 280,230);
+				mBuildingBox.toogle();
+			}
+			private function onViewItem(e:MouseEvent):void
+			{
+				mItemBox ||= new WinItemBox(mUiLayer,"Item");
+				mItemBox.setPosition(stage.stageWidth - 280,430);
+				mItemBox.toogle();
+			}
+			private function onViewTeleport(e:MouseEvent):void
+			{
+				mTeleportBox ||= new WinItemBox(mUiLayer,"Teleport");
+				mTeleportBox.setPosition(stage.stageWidth - 280,630);
+				mTeleportBox.toogle();
+			}
 			private function onKeyDown(e:KeyboardEvent):void
 			{
 				switch(e.keyCode)

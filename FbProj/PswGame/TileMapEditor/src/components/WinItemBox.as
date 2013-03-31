@@ -17,9 +17,7 @@ package components
 			mLayer = layer;
 			mWin = new Window(null,0,0,name);
 			mWin.width = 260;
-			mWin.height = 300;
-			mWin.x = layer.stage.stageWidth - 280;
-			mWin.y = 30;
+			mWin.height = 200;
 			
 			mItemLayer = new Sprite();
 			mWin.addChild(mItemLayer);
@@ -54,6 +52,12 @@ package components
 			item.icon.y = 5+Math.floor(mItemList.length / 5) * 40;
 			mItemList.push(item);
 			mItemLayer.addChild(item.icon);
+		}
+		
+		public function setPosition(x:Number,y:Number):void
+		{
+			mWin.x = x;
+			mWin.y = y;
 		}
 	}
 }
