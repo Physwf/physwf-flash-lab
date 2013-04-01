@@ -76,6 +76,7 @@ package com.physwf.system.entity
 						mapUserInfo = msg1032.user_infos[i];
 						userInfo = new UserInfo();
 						userInfo.uid = mapUserInfo.userid;
+						userInfo.prof = mapUserInfo.prof;
 						userInfo.createTime = mapUserInfo.role_tm;
 						userInfo.nick = mapUserInfo.nick;
 						userInfo.map_id = mapUserInfo.mapid;
@@ -100,6 +101,7 @@ package com.physwf.system.entity
 					userInfo.uid = mapUserInfo.userid;
 					userInfo.createTime = mapUserInfo.role_tm;
 					userInfo.nick = mapUserInfo.nick;
+					userInfo.prof = mapUserInfo.prof;
 					userInfo.map_id = mapUserInfo.mapid;
 					userInfo.map_x = mapUserInfo.map_x;
 					userInfo.map_y = mapUserInfo.map_y;

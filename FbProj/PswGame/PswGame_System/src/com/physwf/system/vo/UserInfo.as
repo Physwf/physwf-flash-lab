@@ -17,7 +17,7 @@ package com.physwf.system.vo
 		/**
 		 *职业 
 		 */		
-		public var prof:String;//profession
+		public var prof:uint;//profession
 		/**
 		 *等级 
 		 */		
