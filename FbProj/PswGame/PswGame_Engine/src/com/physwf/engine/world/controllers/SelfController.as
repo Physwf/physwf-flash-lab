@@ -36,7 +36,7 @@ package com.physwf.engine.world.controllers
 				if(curTime - lastSyncTime >= syncInterval)
 				{
 					lastSyncTime = curTime;
-					System.myself.syncPosition(chara.view.x,chara.view.x);
+					System.myself.syncPosition(chara.view.x,chara.view.y);
 //					trace("sync pos",lastSyncTime);
 				}
 			}
