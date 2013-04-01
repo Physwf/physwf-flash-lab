@@ -68,7 +68,8 @@ package com.physwf.system.entity
 					fInfo.srcId = results.src_id;
 					fInfo.objType = results.obj_type;
 					fInfo.objId = results.obj_id;
-					fInfo.hpHurt = results.hp_hurt;
+					fInfo.objHp = results.obj_hp;
+					fInfo.objMp = results.obj_mp;
 					dispatchEvent(new FightEvent(FightEvent.FIGHT_RESULT,fInfo));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1042:

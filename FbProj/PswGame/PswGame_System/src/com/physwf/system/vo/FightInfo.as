@@ -7,7 +7,8 @@ package com.physwf.system.vo
 		public var objType:uint;
 		public var objId:uint;
 		public var skillID:uint;
-		public var hpHurt:uint;
+		public var objHp:uint;
+		public var objMp:uint;
 		
 		public function FightInfo()
 		{
