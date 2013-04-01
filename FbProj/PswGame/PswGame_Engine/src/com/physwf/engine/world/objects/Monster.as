@@ -28,7 +28,7 @@ package com.physwf.engine.world.objects
 			mInfo = info;
 			mInstanceId = info.instanceID;
 			
-//			ConfigReader.readMonster(mInfo);
+			ConfigReader.readMonster(mInfo);
 			// 
 			view = new CharacterAnimation(AnimationSystem.AOTM);
 			mFactory = new MonsterFactory();
