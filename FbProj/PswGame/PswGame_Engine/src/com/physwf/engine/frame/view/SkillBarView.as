@@ -43,7 +43,7 @@ package com.physwf.engine.frame.view
 		
 		private function createCells():void
 		{
-			var skills:Vector.<SkillInfo> = System.skill.getSkillsInBar();
+			var skills:Vector.<SkillInfo> = System.skill.skills;
 			
 			var cellFactory:CellFactory = FactoryManager.cellFactroy;
 			cells = new Vector.<Cell>();

@@ -10,6 +10,7 @@ package com.physwf.system.entity
 	import com.physwf.system.vo.LoginInfo;
 	import com.physwf.system.vo.MapInfo;
 	import com.physwf.system.vo.PetInfo;
+	import com.physwf.system.vo.SkillInfo;
 	import com.physwf.system.vo.UserInfo;
 	
 	import flash.events.EventDispatcher;
@@ -170,6 +171,15 @@ package com.physwf.system.entity
 					userInfo.energy = msg1001.user.energy;
 					userInfo.hp_max = msg1001.user.hp_max;
 					userInfo.attack = msg1001.user.level;
+					var skills:Vector.<SkillInfo> = new Vector.<SkillInfo>();
+					for(i=0;i<msg1001.skills.length;++i)
+					{
+						var sInfo:SkillInfo = new SkillInfo();
+						sInfo.id = msg1001.skills[i].skill_id;
+						sInfo.level = msg1001.skills[i].skill_lv;
+						skills.push(sInfo);
+					}
+					System.skill.skills = skills;
 					dispatchEvent(new MyEvent(MyEvent.LOGIN_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1002://被踢下线
