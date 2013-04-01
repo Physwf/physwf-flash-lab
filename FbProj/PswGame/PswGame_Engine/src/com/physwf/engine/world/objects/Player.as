@@ -4,6 +4,7 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.charactor.factory.BoyFactory;
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.effects.HeadEffect;
+	import com.physwf.config.ConfigReader;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.engine.world.controllers.SelfController;
@@ -28,6 +29,9 @@ package com.physwf.engine.world.objects
 		{
 			this.userInfo = userInfo;
 			uid = userInfo.uid;
+			
+			ConfigReader.readPlayer(userInfo);
+			
 			mFactory = new BoyFactory();//后期需要根据用户信息进行选择
 			view = new CharacterAnimation();
 			view.skeleton = mFactory.getNude();
