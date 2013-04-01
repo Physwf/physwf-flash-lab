@@ -66,7 +66,8 @@ package com.physwf.components.effects
 		
 		public function setProgress(hp:uint,hpMax:uint):void
 		{
-			var prog:uint = (Math.random()) * 100;
+			hpMax = hpMax == 0 ? 1000 : hpMax;
+			var prog:uint = (hp / hpMax) * 100;
 			if(prog<=0) 
 			{
 				prog=0;
