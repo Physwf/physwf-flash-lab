@@ -44,26 +44,32 @@ package com.physwf.engine.frame.view
 		private function createCells():void
 		{
 			var skills:Vector.<SkillInfo> = System.skill.skills;
+			var shortcuts:Vector.<uint> = System.skill.shortcutSkill;
 			
 			var cellFactory:CellFactory = FactoryManager.cellFactroy;
 			cells = new Vector.<Cell>();
 			
-			const num:uint = skills.length;
+			const num:uint = shortcuts.length;
 			const offsetX:uint = 62;
 			const offsetY:uint = 7;
 			const interval:uint = 3;
 			var config:CellConfig = FrameAssets.SKILL_CELL;
-			for(var i:int=0;i<num;++i)
+			//temp 后面需要读取快捷列表
+			for(var i:int=0;i<skills.length;++i)
 			{
 				var cell:Cell = cellFactory.createCell(config);
-				cell.data = skills[i];
+				var skill:SkillInfo = skills[i];
+				if(skill == null) continue;
+				cell.data = skill;
 				cell.cdTime = 5000;//ms
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
 				addChild(cell);
 				cells.push(cell);
-				loadIcon(cell,skills[i].id-100);
+				loadIcon(cell,skill.id);
 			}
+			
+			
 		}
 		
 		private function loadIcon(cell:Cell,iconID:uint):void

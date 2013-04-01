@@ -180,6 +180,7 @@ package com.physwf.system.entity
 						skills.push(sInfo);
 					}
 					System.skill.skills = skills;
+					System.skill.shortcutSkill = msg1001.skill_shortcut;
 					dispatchEvent(new MyEvent(MyEvent.LOGIN_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1002://被踢下线
