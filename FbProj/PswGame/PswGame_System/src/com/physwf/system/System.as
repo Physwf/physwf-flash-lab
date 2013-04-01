@@ -26,7 +26,7 @@ package com.physwf.system
 		private static var _bag:BagSystem;
 		private static var _fight:FightSystem;
 		private static var _skill:SkillSystem;
-		private static var _drop:LootSystem;
+		private static var _loot:LootSystem;
 		private static var _task:TaskSystem;
 		
 		private static var _systemTime:uint;
@@ -53,7 +53,7 @@ package com.physwf.system
 			_bag = new BagSystem();
 			_fight = new FightSystem();
 			_skill = new SkillSystem();
-			_drop = new LootSystem();
+			_loot = new LootSystem();
 			_task = new TaskSystem();
 			
 			_myself.initialize();
@@ -62,7 +62,7 @@ package com.physwf.system
 			_bag.initialize();
 			_fight.initialize();
 			_skill.initialize();
-			_drop.initialize();
+			_loot.initialize();
 			_task.initialize();
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1003,onSystemTime);
@@ -109,9 +109,9 @@ package com.physwf.system
 			return _skill;
 		}
 		
-		public static function get drop():LootSystem
+		public static function get loot():LootSystem
 		{
-			return _drop;
+			return _loot;
 		}
 		
 		public static function get task():TaskSystem
