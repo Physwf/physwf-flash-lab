@@ -51,6 +51,9 @@ package com.physwf.system.entity
 			
 			
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1091,onMessage);//换装
+			
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1012,onMessage);//经验金钱 变化
+			
 		}
 		/**
 		 * 登陆 
@@ -231,6 +234,12 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+1091://换装
 					dispatchEvent(new MyEvent(MyEvent.CHANGE_EQUIPS));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1012:
+					var msg1021:MSG_RES_NOTI_EXP_MONEY_1012 = e.message as MSG_RES_NOTI_EXP_MONEY_1012;
+					userInfo.exp = msg1021.exp;
+					userInfo.money = msg1021.money;
+					dispatchEvent(new MyEvent(MyEvent.EXP_MONEY_CHANGE));
 					break;
 			}
 		}

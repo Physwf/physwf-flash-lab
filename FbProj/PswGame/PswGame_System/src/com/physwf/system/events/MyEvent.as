@@ -10,6 +10,8 @@ package com.physwf.system.events
 		public static const LEAVE_MAP_SUCCESS:String = "l_m_s";
 		public static const SELF_MOVE_ALLOWED:String = "s_m_a";
 		public static const CHANGE_EQUIPS:String = "c_e";
+		public static const EXP_MONEY_CHANGE:String = "e_m_c";
+		
 		public function MyEvent(type:String)
 		{
 			super(type, false, false);

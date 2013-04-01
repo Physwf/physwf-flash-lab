@@ -10,6 +10,10 @@ package com.physwf.system.entity
 
 	public class MapSystem extends EventDispatcher
 	{
+		public static const TYPE_PALYER:uint = 1;
+		public static const TYPE_PET:uint = 2;
+		public static const TYPE_MONSTER:uint = 3;
+		
 		public var mapInfo:MapInfo;
 		public var mapUserList:Vector.<UserInfo>;
 		
@@ -31,6 +35,8 @@ package com.physwf.system.entity
 			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);// notify player leave map
 			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);// notify player move
 			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);// (old) notify player move
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1010,onMessage);// 通知升级
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+1011,onMessage);// 通知属性变化
 		}
 		
 		public function onMapSwitchEnd():void
@@ -41,6 +47,8 @@ package com.physwf.system.entity
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1035,onMessage);// notify player leave map
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1036,onMessage);// notify player move
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1037,onMessage);// (old) notify player move
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1010,onMessage);// 通知升级
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+1011,onMessage);// 通知属性变化
 		}
 		
 		public function getMapUserList():void
@@ -118,6 +126,24 @@ package com.physwf.system.entity
 					}
 					userInfo.path = path;
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_MOVE,userInfo));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1010:
+					var msg1010:MSG_RES_USER_LEVEL_UP_1010 = e.message as MSG_RES_USER_LEVEL_UP_1010;
+					var uInfo:UserInfo = getUserInfoById(msg1010.user_id,false);
+					uInfo.level = msg1010.level;
+					dispatchEvent(new MapEvent(MapEvent.MAP_USER_LEVEL_UP,uInfo));
+					break;
+				case MessageEvent.MSG_SUCCESS_+1011:// 通知属性变化
+					var msg1011:MSG_RES_NOTI_ATTR_CHANGE_1011 = e.message as MSG_RES_NOTI_ATTR_CHANGE_1011;
+					var srcId:uint = msg1011.src_id;
+					var srcType:uint = msg1011.src_type;
+					if(msg1011.src_type == TYPE_PALYER)
+					{
+						uInfo = getUserInfoById(srcType,false);
+//						uInfo.level = msg1011
+						dispatchEvent(new MapEvent(MapEvent.MAP_USER_ATTRI_CHANGE,uInfo));
+					}
+					// to do 宠物的属性变化和怪物的属性变化 分别要发送宠物事件和怪物事件
 					break;
 			}
 		}

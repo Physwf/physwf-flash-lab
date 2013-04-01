@@ -27,6 +27,10 @@ package com.physwf.system.vo
 		 */		
 		public var exp:uint;
 		/**
+		 *金钱 
+		 */		
+		public var money:uint;
+		/**
 		 *当前所在的地图ID 
 		 */		
 		public var map_id:uint;
