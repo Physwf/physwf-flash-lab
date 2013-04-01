@@ -24,4 +24,8 @@
 		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/skill.xlsx" 
 		xmlPath="" 
 		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/skill.cfg"/>
+	<project name="player" fileClass="file.PlayerFile" structClass = "com.physwf.config.struct.cfg_player"
+		xlsPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Config/xls/player.xlsx" 
+		xmlPath="" 
+		asPath="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/config/player.cfg"/>
 </projects>

@@ -15,6 +15,7 @@
 			import file.MapFile;
 			import file.MonsterFile;
 			import file.NPCFile;
+			import file.PlayerFile;
 			import file.SkillFile;
 			
 			import flash.utils.getDefinitionByName;
@@ -38,6 +39,7 @@
 					EffectFile;
 					NPCFile;
 					SkillFile;
+					PlayerFile;
 				}
 				
 			}
