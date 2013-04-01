@@ -12,7 +12,8 @@ package
 		public var obj_type:uint;
 		public var obj_id:uint;
 		public var skill_id:uint;
-		public var hp_hurt:uint;
+		public var obj_hp:uint;
+		public var obj_mp:uint;
 		
 		public function atk_result_t()
 		{
@@ -25,7 +26,8 @@ package
 			obj_type = input.readUnsignedByte();
 			obj_id = input.readUnsignedInt();
 			skill_id = input.readUnsignedShort();
-			hp_hurt = input.readUnsignedInt();			
+			obj_hp = input.readUnsignedInt();
+			obj_mp = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -35,7 +37,8 @@ package
 			output.writeByte(obj_type);
 			output.writeUnsignedInt(obj_id);
 			output.writeShort(skill_id);
-			output.writeUnsignedInt(hp_hurt);			
+			output.writeUnsignedInt(obj_hp);
+			output.writeUnsignedInt(obj_mp);			
 		}
 	}
 }

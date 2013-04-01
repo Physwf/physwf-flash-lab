@@ -8,7 +8,6 @@ package
 	final public class MSG_REQ_ADD_SKILL_1120 extends MsgBase
 	{
 		public var skill_id:uint;
-		public var skill_lv:uint;
 		
 		public function MSG_REQ_ADD_SKILL_1120()
 		{
@@ -17,8 +16,7 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeShort(skill_id);
-			output.writeShort(skill_lv);			
+			output.writeShort(skill_id);			
 		}
 	}
 }

@@ -27,7 +27,7 @@ package
 				items_item.readExternal(input);;
 				items.push(items_item);
 			}
-			pet_id = input.readUnsignedByte();			
+			pet_id = input.readUnsignedShort();			
 		}
 	}
 }
