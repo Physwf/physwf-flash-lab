@@ -5,7 +5,7 @@ package com.physwf.system
 	import com.physwf.components.rpc.msg.MessageManager;
 	import com.physwf.components.rpc.msg.MsgBase;
 	import com.physwf.system.entity.BagSystem;
-	import com.physwf.system.entity.DropSystem;
+	import com.physwf.system.entity.LootSystem;
 	import com.physwf.system.entity.FightSystem;
 	import com.physwf.system.entity.MapSystem;
 	import com.physwf.system.entity.MySelf;
@@ -26,7 +26,7 @@ package com.physwf.system
 		private static var _bag:BagSystem;
 		private static var _fight:FightSystem;
 		private static var _skill:SkillSystem;
-		private static var _drop:DropSystem;
+		private static var _drop:LootSystem;
 		private static var _task:TaskSystem;
 		
 		private static var _systemTime:uint;
@@ -53,7 +53,7 @@ package com.physwf.system
 			_bag = new BagSystem();
 			_fight = new FightSystem();
 			_skill = new SkillSystem();
-			_drop = new DropSystem();
+			_drop = new LootSystem();
 			_task = new TaskSystem();
 			
 			_myself.initialize();
@@ -109,7 +109,7 @@ package com.physwf.system
 			return _skill;
 		}
 		
-		public static function get drop():DropSystem
+		public static function get drop():LootSystem
 		{
 			return _drop;
 		}

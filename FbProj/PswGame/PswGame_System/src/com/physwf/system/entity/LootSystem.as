@@ -2,16 +2,16 @@ package com.physwf.system.entity
 {
 	import com.physwf.components.rpc.RPCConnectioin;
 	import com.physwf.components.rpc.events.MessageEvent;
-	import com.physwf.system.events.DropEvent;
-	import com.physwf.system.vo.DropInfo;
+	import com.physwf.system.events.LootEvent;
+	import com.physwf.system.vo.LootInfo;
 	import com.physwf.system.vo.ItemInfo;
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
-	public class DropSystem extends EventDispatcher
+	public class LootSystem extends EventDispatcher
 	{
-		public function DropSystem()
+		public function LootSystem()
 		{
 		}
 		
@@ -35,7 +35,7 @@ package com.physwf.system.entity
 			{
 				case MessageEvent.MSG_SUCCESS_+1055:
 					var msg1055:MSG_RES_NOTI_DROP_ITEM_1055 = e.message as MSG_RES_NOTI_DROP_ITEM_1055;
-					var info:DropInfo = new DropInfo();
+					var info:LootInfo = new LootInfo();
 					info.monsterId = msg1055.monster_id;
 					info.items = new Vector.<ItemInfo>();
 					var items:Vector.<xml_drop_drop_group_item_t> = msg1055.items;
@@ -46,11 +46,11 @@ package com.physwf.system.entity
 						item.count = items[i].item_cnt;
 						info.items.push(item);
 					}
-					dispatchEvent(new DropEvent(DropEvent.DROP_NOTI_NEW,info));
+					dispatchEvent(new LootEvent(LootEvent.DROP_NOTI_NEW,info));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1056:
 					var msg1056:MSG_RES_PICK_UP_ITEM_1056 = e.message as MSG_RES_PICK_UP_ITEM_1056;
-					info = new DropInfo();
+					info = new LootInfo();
 					info.monsterId = msg1056.monster_id;
 					info.items = new Vector.<ItemInfo>();
 					items = msg1056.items;
@@ -61,7 +61,7 @@ package com.physwf.system.entity
 						item.count = items[i].item_cnt;
 						info.items.push(item);
 					}
-					dispatchEvent(new DropEvent(DropEvent.DROP_PICKED_UP,info));
+					dispatchEvent(new LootEvent(LootEvent.DROP_PICKED_UP,info));
 					break;
 			}
 		}
