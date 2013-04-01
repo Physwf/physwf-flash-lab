@@ -26,7 +26,8 @@ package com.physwf.engine.frame.controller
 			if(cell)
 			{
 				Engine.challenge.selectSill = cell.data as SkillInfo;
-				Mouse.cursor = FrameAssets.CURSOR_AIM_NAME;
+				cell.startCd();
+//				Mouse.cursor = FrameAssets.CURSOR_AIM_NAME;
 			}
 		}
 	}

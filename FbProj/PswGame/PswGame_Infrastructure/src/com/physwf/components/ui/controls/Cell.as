@@ -6,8 +6,12 @@ package com.physwf.components.ui.controls
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.GradientType;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.utils.getTimer;
 	
 	public class Cell extends Sprite implements IUpdatable,IDisposible
 	{
@@ -19,11 +23,18 @@ package com.physwf.components.ui.controls
 		
 		private var mBg:Bitmap;
 		private var mContent:Bitmap;
+		private var mCdShape:Shape;
 		private var mStateView:Bitmap;
 		
 		private var assets:CellAssets;
 		
 		private var mState:uint = STATE_UP;
+		
+		private var mCdTime:uint;//cd时间
+		private var mTime:uint;//cd计时
+		private var sHelpPoint:Point;
+		private var mIsCding:Boolean = false;
+		private var sHelpTime:uint;
 		
 		public function Cell(assets:CellAssets)
 		{
@@ -34,6 +45,11 @@ package com.physwf.components.ui.controls
 			
 			mContent = new Bitmap();
 			addChild(mContent);
+			
+			mCdShape = new Shape();
+			mCdShape.x = assets.size * .5;
+			mCdShape.y = assets.size * .5;
+			addChild(mCdShape);
 			
 			mStateView = new Bitmap();
 			addChild(mStateView);
@@ -79,6 +95,24 @@ package com.physwf.components.ui.controls
 			return mContent;
 		}
 		
+		public function set cdTime(v:uint):void
+		{
+			mCdTime = v;
+		}
+		
+		public function startCd():void
+		{
+			sHelpTime = getTimer();
+			mTime = 0;
+			mIsCding = true;
+			sHelpPoint = new Point(0,0);
+		}
+		
+		public function isCding():Boolean
+		{
+			return mIsCding;
+		}
+		
 		public function update():void
 		{
 			if(mBg.bitmapData != assets.bg)
@@ -105,6 +139,29 @@ package com.physwf.components.ui.controls
 						mStateView.bitmapData = assets.downstate;
 					}
 					break;
+			}
+			
+			if(!mIsCding) return;
+			const R:uint = 14;
+			
+			mTime += (getTimer() - sHelpTime);
+			sHelpTime = getTimer();
+			var rad:Number = (mTime / mCdTime) * Math.PI * 2 - Math.PI * .5;
+			var $x:Number = Math.cos(rad) * R;
+			var $y:Number = Math.sin(rad) * R;
+			mCdShape.graphics.beginGradientFill(GradientType.RADIAL,[0,0],[0.5,0.5],[0,255]);
+			mCdShape.graphics.moveTo(0,0);
+			mCdShape.graphics.lineTo(sHelpPoint.x,sHelpPoint.y);
+			sHelpPoint.x = $x;
+			sHelpPoint.y = $y;
+			mCdShape.graphics.lineTo($x,$y);
+			mCdShape.graphics.lineTo(0,0);
+			mCdShape.graphics.endFill();
+			
+			if(mTime >= mCdTime)
+			{
+				mCdShape.graphics.clear();
+				mIsCding = false;
 			}
 		}
 		

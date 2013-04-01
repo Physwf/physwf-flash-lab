@@ -81,14 +81,14 @@ package com.physwf.engine.fight.manager
 						seq.addCommand(new CmdStand(chara));
 						chara.execute(seq);
 					}
-
-					cInfo.info.hp -= fInfo.hpHurt;
-					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.hpHurt,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
+					var hpHurt:uint = cInfo.info.hp - fInfo.objHp;
+					cInfo.info.hp = fInfo.objHp;
+					trace("战斗结果->","源:"+fInfo.srcId,"对象:"+fInfo.objId,"伤害:"+fInfo.objHp,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
 					if(target)
 					{
 						var targetSeq:LinerCmdSequence = new LinerCmdSequence();
 						var onHurt:CmdOnHurt = new CmdOnHurt(target);
-						onHurt.setHurt(fInfo.hpHurt,skill);
+						onHurt.setHurt(hpHurt,skill);
 						targetSeq.addCommand(onHurt);
 						targetSeq.addCommand(new CmdStand(target));
 						target.createThread(targetSeq);

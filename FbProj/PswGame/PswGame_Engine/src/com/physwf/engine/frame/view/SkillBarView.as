@@ -57,11 +57,12 @@ package com.physwf.engine.frame.view
 			{
 				var cell:Cell = cellFactory.createCell(config);
 				cell.data = skills[i];
+				cell.cdTime = 5000;//ms
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
 				addChild(cell);
 				cells.push(cell);
-				loadIcon(cell,skills[i].id);
+				loadIcon(cell,skills[i].id-100);
 			}
 		}
 		
