@@ -4,6 +4,8 @@ package com.physwf.config
 	import com.physwf.config.struct.cfg_map;
 	import com.physwf.config.struct.cfg_monster;
 	import com.physwf.config.struct.cfg_npc;
+	import com.physwf.config.struct.cfg_player;
+	import com.physwf.config.struct.cfg_skill;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -22,6 +24,8 @@ package com.physwf.config
 		private static var monsterConfig:Dictionary;
 		private static var effectConfig:Dictionary;
 		private static var npcConfig:Dictionary;
+		private static var skillConfig:Dictionary;
+		private static var playerConfig:Dictionary;
 		
 		public function Config()
 		{
@@ -146,6 +150,33 @@ package com.physwf.config
 			else
 			{
 				throw "没有该项配置！";
+			}
+			return null;
+		}
+		
+		public static function getSkillConfig(sid:uint):cfg_skill
+		{
+			if(!skillConfig) skillConfig = configs["skill"];
+			if(skillConfig[sid])
+			{
+				return skillConfig[sid] as cfg_skill;
+			}
+			else
+			{
+				throw "没有该项配置！";
+			}
+			return null;
+		}
+		
+		public static function getPlayerConfig(prof:uint,level:uint):cfg_player
+		{
+			if(!playerConfig) playerConfig = configs["player"];
+			for each(var cfg:cfg_player in playerConfig)
+			{
+				if(cfg.role_type == prof && cfg.Lv == level)
+				{
+					return cfg;
+				}
 			}
 			return null;
 		}
