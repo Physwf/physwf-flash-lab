@@ -31,7 +31,7 @@ package com.physwf.components.effects
 		
 		private var mShape:Shape;
 		private var mData:*;
-		private const BL:Number = 2/100;
+		private const BL:Number = 1/100;
 		
 		public function HeadEffect(layer:Sprite, life:uint, source:DisplayObject=null, target:DisplayObject=null)
 		{
