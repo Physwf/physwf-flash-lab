@@ -43,7 +43,6 @@ package com.physwf.config
 		{
 			var cfg:cfg_player = Config.getPlayerConfig(info.prof,info.level);
 			if(cfg == null) throw "用户配表有问题！";
-			info.hp_max = cfg.hp_max;
 		}
 	}
 }
