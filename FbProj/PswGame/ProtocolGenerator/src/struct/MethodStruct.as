@@ -25,7 +25,7 @@ package struct
 		public static function refreshIndexList():void
 		{
 			indexList = new Vector.<String>();
-			indexList.push("i","j","k","p","q","r");
+			indexList.push("i","j","k","p","q","r","x","y","z","u","v","w","s","t","a","b","c");
 		}
 		
 		public function getRead():String

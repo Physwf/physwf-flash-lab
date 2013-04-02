@@ -14,4 +14,10 @@
  				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/"
  				msgManagerPath = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/com/physwf/components/rpc/msg/MessageManager.as"
  		/>
+ 		<server name="DB" 
+ 				packageName="" 
+ 				extendsName = "com.physwf.components.rpc.msg.MsgBase"
+ 				url="http://10.1.1.5/su/proto/download.php?project=ultraman_db" 
+ 				output="E:/physwf-flash-lab/FbProj/PswGame/PswGame_Protocol/src/"
+ 		/>
  </project>

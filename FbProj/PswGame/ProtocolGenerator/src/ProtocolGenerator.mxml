@@ -74,7 +74,7 @@
 							msgMngPath = config.server.(@name == rBtn.label)[0].@msgManagerPath;
 							rBtn.selected = true;
 						}
-						rBtn.x = 40 + i * rBtn.label.length * 10;
+						rBtn.x = 40 + i * 60;
 						rBtn.y = 30;
 						rBtn.addEventListener(MouseEvent.CLICK,function onClick(e:Event):void
 						{
@@ -84,7 +84,9 @@
 							MsgStruct.extendsName = config.server.(@name == e.target.label)[0].@extendsName;
 							outputDir = config.server.(@name == e.target.label)[0].@output;
 							msgMngPath = config.server.(@name == e.target.label)[0].@msgManagerPath;
-							so.data["name"] = rBtn.label;
+							so.data["name"] = null;
+							so.data["name"] = e.target.label;
+							so.flush(20);
 						});
 						addElement(rBtn);
 					}
@@ -129,7 +131,7 @@
 				var proto:XML = XML(e.target.data);
 				var structList:XMLList = proto.struct_list[0].struct;
 				var structRaw:XML;
-				if(msgMngPath != null) 
+				if(msgMngPath != null && msgMngPath != "") 
 				{
 					msgManagerFile = new File(msgMngPath);
 					msgManagerFs = new FileStream();
@@ -165,6 +167,11 @@
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(classStruct.getDefinitioin());
 					fs.close();
+				}
+				if(proto.@project_name == "ultraman_db") 
+				{
+					Alert.show("Done!","Ok",4,null,function ():void {exit()});
+					return;//只拉取db的结构，不拉取协议
 				}
 				var protoList:XMLList = proto.protocol_list[0].protocol;
 				var msg:XML;
@@ -208,7 +215,7 @@
 			private function verifyName(name:String):Boolean
 			{
 				if(name.slice(0,3) == "cli" ) return true;
-				if(name.slice(0,2) == "db" ) return true;
+//				if(name.slice(0,2) == "db" ) return true;
 				return false;
 			}
 		]]>
