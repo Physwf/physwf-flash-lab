@@ -73,12 +73,6 @@ package com.physwf.components.effects
 		{
 			hpMax = hpMax == 0 ? 1000 : hpMax;
 			var prog:uint = (hp / hpMax) * 100;
-			if(prog<=0) 
-			{
-				prog=0;
-				mData = null;
-				removeChild(mShape);
-			}
 			var n:Number = BL * prog;
 			var p:Number = n - Math.floor(n);
 			var color:uint = ( 0xFF * (1-p) << 16 ) + ( 0xFF * p << 8 );
@@ -94,6 +88,13 @@ package com.physwf.components.effects
 			mShape.graphics.endFill();
 			
 			mShape.x = -mShape.width * .5;
+			
+			if(prog<=0) 
+			{
+				prog=0;
+				mData = null;
+				mShape.parent && removeChild(mShape);
+			}
 		}
 		
 		public function setNPCStatus(status:uint):void

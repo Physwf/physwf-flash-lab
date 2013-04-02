@@ -34,7 +34,6 @@ package com.physwf.components.text
 					}
 					bitmapData.copyPixels(bmd,bmd.rect,new Point(num*bmd.width,0));
 					num++;
-					trace(v);
 					v = v.substring(1,v.length);
 					
 				}
