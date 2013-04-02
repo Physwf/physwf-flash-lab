@@ -64,18 +64,29 @@ package com.physwf.system.entity
 					}
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_LIST,null));
 					break;
-				case MessageEvent.MSG_SUCCESS_+1039:
+				case MessageEvent.MSG_SUCCESS_+1039://怪物刷新
 					if(!svrNpcList || svrNpcList.length <= 0) return;
 					var msg1039:MSG_RES_NOTI_MAP_MONSTERS_1039 = e.message as MSG_RES_NOTI_MAP_MONSTERS_1039;
 					var info:map_monster_t = msg1039.monsters;
-					var remove:Boolean = (info.hp == 0);
-					var mInfo:MonsterInfo = getMonsInfoById(info.instance_id,remove);
-					if(!remove)
+					//先判断当前地图是否存在此怪，不存在则创建
+					var mInfo:MonsterInfo = getMonsInfoById(info.instance_id,false);
+					if(mInfo == null)
 					{
-						mInfo.hp = info.hp;
-						mInfo.mp = info.mp;
+						mInfo = new MonsterInfo();
+						mInfo.instanceID = info.instance_id;
+						mInfo.id = info.monster_id;
 						mInfo.map_x = info.map_x;
 						mInfo.map_y = info.map_y;
+						mInfo.hp = info.hp;
+						mInfo.mp = info.mp;
+						svrNpcList.push(mInfo);
+					}
+					else
+					{
+						mInfo.map_x = info.map_x;
+						mInfo.map_y = info.map_y;
+						mInfo.hp = info.hp;
+						mInfo.mp = info.mp;
 					}
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_REFRESH,mInfo));
 					break;
