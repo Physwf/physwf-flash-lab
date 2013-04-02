@@ -4,4 +4,6 @@
 	<config name="monster" struct="com.physwf.config.struct.cfg_monster"/>
 	<config name="effect" struct="com.physwf.config.struct.cfg_effect"/>
 	<config name="npc" struct="com.physwf.config.struct.cfg_npc"/>
+	<config name="skill" struct="com.physwf.config.struct.cfg_skill"/>
+	<config name="player" struct="com.physwf.config.struct.cfg_player"/>
 </configs>
