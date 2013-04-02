@@ -27,7 +27,7 @@ package com.physwf.engine.world.objects
 		{
 			var skeleton:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("resource/teleport");
 			view = new Animation(skeleton);
-			view.gotoAndPlay("f");
+			view.gotoAndPlay("1");
 			// to do 加载动画
 		}
 		

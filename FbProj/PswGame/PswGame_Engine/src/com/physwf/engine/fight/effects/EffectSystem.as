@@ -18,7 +18,9 @@ package com.physwf.engine.fight.effects
 		
 		public static const DIR_TEXT:String = "resource/text/";
 		
-		public static const STYLE_COOPER:String = "cooper";
+		public static const TYPE_BLOORD_MINUS:String = "bloord_minus";
+		public static const TYPE_BLOORD_PLUS:String = "bloord_plus";
+		public static const TYPE_CRIT_ATK:String = "crit_atk";
 		
 		public static const TYPE_NORMAL:uint = 1;
 		public static const TYPE_DIABLO:uint = 2;

@@ -324,22 +324,16 @@ package com.physwf.engine.world.objects
 		
 		public function refreshMonster(info:MonsterInfo):void
 		{
-			for(var i:int=0;i<mMonsters.length;++i)
+			var mons:Monster = getMonsterByMID(info.id);
+			if(mons)
 			{
-				if(mMonsters[i].id == info.instanceID)
-				{
-					if(info.hp == 0)
-					{
-						mMapView.removeSwapElement(mMonsters[i].view);
-						mMonsters.splice(i,1);
-					}
-					else
-					{
-						mMonsters[i].view.x = info.map_x;
-						mMonsters[i].view.y = info.map_y;
-						//后面还要增加怪物血量的显示更新
-					}
-				}
+				// to do 刷新怪物位置 血量
+			}
+			else
+			{
+				mons = new Monster();
+				mons.initialize(info);
+				addMonster(mons);
 			}
 		}
 		/**

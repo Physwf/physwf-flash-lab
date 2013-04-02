@@ -90,7 +90,6 @@ package com.physwf.engine.fight.manager
 						var onHurt:CmdOnHurt = new CmdOnHurt(target);
 						onHurt.setHurt(hpHurt,skill);
 						targetSeq.addCommand(onHurt);
-						targetSeq.addCommand(new CmdStand(target));
 						target.createThread(targetSeq);
 						targetSeq.execute();
 					}
