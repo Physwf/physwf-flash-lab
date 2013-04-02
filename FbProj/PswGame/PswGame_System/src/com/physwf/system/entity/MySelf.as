@@ -209,6 +209,10 @@ package com.physwf.system.entity
 					userInfo.map_id = user.mapid;
 					userInfo.map_x = user.map_x;
 					userInfo.map_y = user.map_y;
+					userInfo.hp = user.hp;
+					userInfo.hp_max = user.hp_max;
+					userInfo.mp = user.mp;
+					userInfo.mp_max = user.mp_max;
 					
 					petInfo.id = pet_follow.instance_id;
 					petInfo.type = pet_follow.pet_id;

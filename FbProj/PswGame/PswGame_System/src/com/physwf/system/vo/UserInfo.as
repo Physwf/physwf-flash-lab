@@ -23,6 +23,10 @@ package com.physwf.system.vo
 		 */		
 		public var level:uint;
 		/**
+		 * 性别 
+		 */		
+		public var sex:uint;
+		/**
 		 *经验 
 		 */		
 		public var exp:uint;

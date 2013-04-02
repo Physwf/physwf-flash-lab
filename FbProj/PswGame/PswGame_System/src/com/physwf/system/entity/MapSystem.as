@@ -77,6 +77,11 @@ package com.physwf.system.entity
 						userInfo = new UserInfo();
 						userInfo.uid = mapUserInfo.userid;
 						userInfo.prof = mapUserInfo.prof;
+						userInfo.level = mapUserInfo.level;
+						userInfo.hp = mapUserInfo.hp;
+						userInfo.hp_max = mapUserInfo.hp_max;
+						userInfo.mp = mapUserInfo.mp;
+						userInfo.mp_max = mapUserInfo.mp_max;
 						userInfo.createTime = mapUserInfo.role_tm;
 						userInfo.nick = mapUserInfo.nick;
 						userInfo.map_id = mapUserInfo.mapid;
@@ -102,6 +107,12 @@ package com.physwf.system.entity
 					userInfo.createTime = mapUserInfo.role_tm;
 					userInfo.nick = mapUserInfo.nick;
 					userInfo.prof = mapUserInfo.prof;
+					userInfo.sex = mapUserInfo.role_sex;
+					userInfo.level = mapUserInfo.level;
+					userInfo.hp = mapUserInfo.hp;
+					userInfo.hp_max = mapUserInfo.hp_max;
+					userInfo.mp = mapUserInfo.mp;
+					userInfo.mp_max = mapUserInfo.mp_max;
 					userInfo.map_id = mapUserInfo.mapid;
 					userInfo.map_x = mapUserInfo.map_x;
 					userInfo.map_y = mapUserInfo.map_y;
