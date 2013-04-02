@@ -1,5 +1,9 @@
 package com.physwf.components.effects
 {
+	import com.physwf.components.bitmap.display.BitmapFrame;
+	import com.physwf.components.bitmap.display.BitmapPlayer;
+	import com.physwf.components.bitmap.events.PackageEvent;
+	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.ui.SpriteLoader;
 	
 	import flash.display.Bitmap;
@@ -20,12 +24,13 @@ package com.physwf.components.effects
 	 */	
 	public class HeadEffect extends Effect
 	{
-		public static const NPC_ASSETS:String = "resource/ui/npcAssets.swf";
-		public static const NPC_QUES_MARK:uint = 0;
-		public static const NPC_THINK_MARK:uint = 1;
+		public static const NPC_DIR:String = "resource/ui/npc";
+		public static const NPC_QUES_MARK:String = "complete";
+		public static const NPC_EXCL_MARK:String = "accept";
+		public static const NPC_QUES_MARK_GRAY:String = "process";
 		
 		private var mNpcStatus:uint = 3;
-		private var mNpcMark:Bitmap;
+		private var mNpcMark:BitmapPlayer;
 		
 		private var mTxtName:TextField;
 		
@@ -103,28 +108,28 @@ package com.physwf.components.effects
 			}
 			else if(mNpcStatus == 2)
 			{
-				var markAsset:uint = NPC_THINK_MARK;
+				var markAsset:String = NPC_EXCL_MARK;
 			}
 			else if(mNpcStatus == 1)
 			{
 				markAsset = NPC_QUES_MARK;
 			}
-			var sLoader:SpriteLoader = SpriteLoader.getSameSpriteLoader(NPC_ASSETS);
+			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(NPC_DIR);
 			var effect:Sprite = this;
 			function onComplete(e:Event):void 
 			{
-				sLoader.removeEventListener(Event.COMPLETE,onComplete);
-				var ques:BitmapData = sLoader.getAsset(markAsset);
-				mNpcMark ||= new Bitmap();
-				mNpcMark.bitmapData = ques;
+				sLoader.removeEventListener(PackageEvent.PACKAGE_ALL_INITED,onComplete);
+				var action:Vector.<BitmapFrame> = sLoader.getAction(markAsset,"1");
+				mNpcMark ||= new BitmapPlayer();
+				mNpcMark.bitmapFrames = action;
 				mNpcMark.x = - mNpcMark.width * .5; 
-				mNpcMark.y = -14; 
+				mNpcMark.y = 20; 
 				if(!effect.contains(mNpcMark))
 				{
 					effect.addChild(mNpcMark);
 				}
 			}
-			sLoader.addEventListener(Event.COMPLETE,onComplete);
+			sLoader.addEventListener(PackageEvent.PACKAGE_ALL_INITED,onComplete);
 			sLoader.load();
 		}
 		
@@ -134,6 +139,7 @@ package com.physwf.components.effects
 			{
 				x = mTarget.x;
 				y = mTarget.y -  mTarget.height - 10;//暂时先用显示对象的高度 后面要改成配置中的高度
+				mNpcMark && mNpcMark.nextFrame();
 			}
 		}
 		
