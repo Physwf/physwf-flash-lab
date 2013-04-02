@@ -64,6 +64,8 @@ package parser
 				var rx:int = rect.x >= 0 ?Math.ceil(rect.x):Math.floor(rect.x); 
 				var ry:int = rect.y >= 0 ?Math.ceil(rect.y):Math.floor(rect.y); 
 				rect = new Rectangle(rx,ry,Math.ceil(rect.width),Math.ceil(rect.height));
+				if(rect.width == 0) rect.width = 1;
+				if(rect.height == 0) rect.height = 1;
 				var bmd:BitmapData = new BitmapData(rect.width,rect.height,true,0);
 				var keyFrame:BitmapKeyFrame = new BitmapKeyFrame();
 				var frame:BitmapFrame = new BitmapFrame();

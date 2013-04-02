@@ -8,40 +8,57 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.physwf.components.bitmap.display.BitmapPalyer;
+			import com.physwf.components.bitmap.display.BitmapPlayer;
 			import com.physwf.components.bitmap.net.SkeletonLoader;
-			
-			import flash.utils.setTimeout;
+			import com.physwf.components.ds.heap.CNumber;
+			import com.physwf.components.ds.heap.MaxHeap;
 			private var sLoader:SkeletonLoader;
 			private var sp:Sprite;
 			private function init():void
 			{
-				sLoader = SkeletonLoader.getSameSkeletonLoader("C:/Users/Physwf/Desktop/bone");
+				sLoader = SkeletonLoader.getSameSkeletonLoader("C:/Users/Joe/Desktop/bone");
 				sLoader.addEventListener(Event.COMPLETE,onComplete);
 				addEventListener(MouseEvent.CLICK,onClick);
 				sLoader.load();
+				var heap:MaxHeap = new MaxHeap(10);
+				heap.Enqueue(new CNumber(4));
+				heap.Enqueue(new CNumber(8));
+				heap.Enqueue(new CNumber(2));
+				heap.Enqueue(new CNumber(7));
+				heap.Enqueue(new CNumber(0));
+				heap.Enqueue(new CNumber(5));
+				heap.Enqueue(new CNumber(9));
+				heap.Enqueue(new CNumber(3));
+				heap.Enqueue(new CNumber(1));
+				heap.Enqueue(new CNumber(6));
+				trace(heap.toString());
 			}
 			
 			private function onClick(e:MouseEvent):void
 			{
-				var player:BitmapPalyer = new BitmapPalyer();
+				var player:BitmapPlayer = new BitmapPlayer();
 				player.bitmapFrames = sLoader.getAction("left","奸笑");
 				
 				sp = new Sprite();
 				sp.addChild(player);
 				sp.x = 100;
 				sp.y = 100;
+				sp.graphics.beginFill(0xFF0000,1);
+				sp.graphics.drawCircle(0,0,2);
+				sp.graphics.endFill();
+				sp.scaleX = -1;
 				stage.addChild(sp);
-				addEventListener(Event.ENTER_FRAME,function(e:Event):void {
+				
+				addEventListener(Event.ENTER_FRAME,function(e:Event):void 
+				{
 					player.nextFrame();
-					trace(player.currentFrame)
+					trace(player.x,player.y)
 				});
 				
 			}
 			
 			private function onComplete(e:Event):void
 			{
-				
 				
 			}
 		]]>
