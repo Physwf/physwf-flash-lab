@@ -38,7 +38,7 @@
 			{
 				file = new File();
 				file.addEventListener(Event.SELECT,onSelected);
-				file.browse([new FileFilter("Image","*.jpg;*.png")]);
+				file.browse([new FileFilter("Image","*.jpg;*.png;*.bmp")]);
 			}
 			
 			private function onSelected(e:Event):void
@@ -88,7 +88,7 @@
 				var unitY:uint = canvasH / numY;
 				var grah:Graphics = gridCanvas.graphics;
 				grah.clear();
-				grah.lineStyle(1,0x000000);
+				grah.lineStyle(1,0x00FF00);
 				for(var i:int=0;i<numX;++i)
 				{
 					grah.moveTo(i*unitX,0);
