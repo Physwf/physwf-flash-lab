@@ -25,7 +25,7 @@ package com.physwf.engine.world.objects
 		
 		public function Teleport()// to do 传入传送点信息结构体
 		{
-			var skeleton:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("resource/teleport");
+			var skeleton:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("resource/objects/teleport");
 			view = new Animation(skeleton);
 			view.gotoAndPlay("1");
 			// to do 加载动画
