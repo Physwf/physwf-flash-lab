@@ -1,5 +1,9 @@
 package components
 {
+	import com.physwf.components.bitmap.net.SkeletonLoader;
+	import com.physwf.components.charactor.CharacterAnimation;
+	import com.physwf.components.view.Animation;
+	
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -8,10 +12,10 @@ package components
 	public class ItemDisplay
 	{
 		public static var iconDir:String;
-		public static var sceneDir:String;
+		public var sceneDir:String;
 		
 		private var mIcon:Sprite;
-		private var mSceneView:Sprite;
+		private var mSceneView:Animation;
 		private var mName:String;
 		
 		public function ItemDisplay(name:String)
@@ -22,8 +26,6 @@ package components
 			mIcon.graphics.beginFill(0xFFFFFF*Math.random());
 			mIcon.graphics.drawRect(0,0,40,40);
 			mIcon.graphics.endFill();
-			
-			mSceneView = new Sprite();
 		}
 		
 		public function get icon():Sprite
@@ -31,18 +33,18 @@ package components
 			return mIcon;
 		}
 		
-		public function get sceneView():Sprite
+		public function get sceneView():Animation
 		{
 			return mSceneView;
 		}
 		
 		public function load():void
 		{
-			_load(mIcon,iconDir+mName);
-			_load(mSceneView,sceneDir+mName);
+			loadIcon(mIcon,iconDir+mName);
+			loadSceneView();
 		}
 		
-		private function _load(container:Sprite,url:String):void
+		private function loadIcon(container:Sprite,url:String):void
 		{
 			function onCompelte(e:Event):void
 			{
@@ -53,6 +55,13 @@ package components
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onCompelte);
 			loader.load(new URLRequest(url));
+		}
+		
+		private function loadSceneView():void
+		{
+			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(sceneDir);
+			mSceneView = new Animation(sLoader);
+			mSceneView.gotoAndPlay("1");
 		}
 	}
 }

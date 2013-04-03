@@ -2,8 +2,7 @@
 <editor>
 	<read 
 		mapDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
-		itemDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
-		npcDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
+		teleportDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/teleport/"
 		iconDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
 	/>
 	<write>

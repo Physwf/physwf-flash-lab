@@ -97,6 +97,14 @@
 				var read:XML = config.read[0];
 				MapDisplay.mapDir = read.@mapDir;
 				ItemDisplay.iconDir = read.@iconDir;
+				getTeleportList(read.@teleportDir);
+			}
+			
+			private function getTeleportList(dir:String):void
+			{
+				var file:File = new File(dir);
+				var list:Array = file.getDirectoryListing();
+				trace(list)
 			}
 			
 			private function onNew(e:MouseEvent):void
