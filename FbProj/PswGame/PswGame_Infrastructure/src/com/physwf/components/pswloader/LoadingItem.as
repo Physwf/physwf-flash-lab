@@ -1,48 +1,63 @@
 package com.physwf.components.pswloader
 {
+	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.interfaces.INumerical;
 	
+	import flash.events.EventDispatcher;
 	import flash.net.URLStream;
 
-	public class LoadingItem extends URLStream implements INumerical
+	public class LoadingItem extends EventDispatcher implements INumerical,IDisposible
 	{
-		protected var _id:String;
+		public static const LOAD_STATUS_LOADING:uint = 1;
+		public static const LOAD_STATUS_LOADED:uint = 2;
 		
-		protected var _priority:int;
+		public var priority:Number;
 		
-		protected var _isLoaded:Boolean;
-		protected var _isLoading:Boolean;
+		private var mUrl:String;
+		private var mUID:String;
 		
-		public function LoadingItem(url:String,type:String)
+		protected var mContent:*;
+		
+		protected var mLoadStatus:uint;
+		
+		public function LoadingItem(url:String,uid:String)
 		{
+			mUrl = url;
+			mUID = uid;
 		}
 		
-		public function set priority(v:int):void
+		public function load():void
 		{
-			_priority = v;
+			
 		}
 		
-		public function get priority():int
+		public function getContent():*
 		{
-			return _priority;
+			return mContent;
 		}
+		
+		public function get url():String
+		{
+			return mUrl;
+		}
+		
+		public function get uid():String
+		{
+			return mUID;
+		}
+		
+		public function get isLoaded():Boolean { return mLoadStatus == LOAD_STATUS_LOADED; }
+		public function get isLoading():Boolean { return mLoadStatus == LOAD_STATUS_LOADING; }
 		
 		public function get value():Number
 		{
-			return _priority;
+			return priority;
 		}
 		
-//		public function stop():void
-//		{
-//			
-//		}
-		
-		internal function _parseOptions(props:Object):void
+		public function destroy():void
 		{
-			_id = props["id"];
-			_priority = props["priority"];
+			mUrl = null;
+			mContent = null;
 		}
-		
-		
 	}
 }
