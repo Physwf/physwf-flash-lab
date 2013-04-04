@@ -38,8 +38,8 @@ package com.physwf.components.utils {
 		// constant value for _imageType
 		private const TYPE_NONE:uint = 0x00;
 		private const TYPE_INDEX_COLOR:uint = 0x01;
-		private const TYPE_FULL_COLOR:uint = 0x02;
-		private const TYPE_RLE_BIT:uint = 0x08;
+		private static const TYPE_FULL_COLOR:uint = 0x02;
+		private static const TYPE_RLE_BIT:uint = 0x08;
 		
 		private const DIR_RIGHT_UP:int = 0;
 		private const DIR_LEFT_UP:int = 1;
@@ -83,6 +83,15 @@ package com.physwf.components.utils {
 		 */
 		public function TGADecoder() 
 		{
+		}
+		
+		public static function isTGA(data:ByteArray):Boolean
+		{
+			data.position = 2;
+			data.endian = Endian.LITTLE_ENDIAN;
+			var type:uint = data.readByte();
+			if ((type & TYPE_FULL_COLOR) == 0 || (type & TYPE_RLE_BIT) != 0) return false;
+			return true;
 		}
 		
 		public function decode(bytes:ByteArray):BitmapData

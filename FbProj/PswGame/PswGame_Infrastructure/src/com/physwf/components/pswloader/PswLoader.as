@@ -18,6 +18,8 @@ package com.physwf.components.pswloader
 	public class PswLoader extends EventDispatcher implements IDisposible
 	{
 		public static const TYPE_BINARY:String = "binary";
+		public static const TYPE_IMAGE:String = "image";
+		
 		public static const PRIORITY_DEFAULT:Number = 5;
 		
 		private static var _allLoaders:Object = {};//所有的PswLoader实例
@@ -44,7 +46,8 @@ package com.physwf.components.pswloader
 		
 		private var _typeClasses:Object = 
 			{
-				binary: BinaryItem
+				binary: BinaryItem,
+				image:ImageItem
 			};
 		
 		public static const LOAD_FLAG_FINISHED:uint = 0;

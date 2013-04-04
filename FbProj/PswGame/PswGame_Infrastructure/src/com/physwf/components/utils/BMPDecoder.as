@@ -31,9 +31,9 @@ package com.physwf.components.utils{
 	public class BMPDecoder implements IDecoder{
 		//___________________________________________________________ const
 		
-		private const BITMAP_HEADER_TYPE:String = "BM";
+		private static const BITMAP_HEADER_TYPE:String = "BM";
 		
-		private const BITMAP_FILE_HEADER_SIZE:int = 14;
+		private static const BITMAP_FILE_HEADER_SIZE:int = 14;
 		private const BITMAP_CORE_HEADER_SIZE:int = 12;
 		private const BITMAP_INFO_HEADER_SIZE:int = 40;
 		
@@ -189,7 +189,14 @@ package com.physwf.components.utils{
 			}
 		}
 		
-		
+		public static function isBMP(data:ByteArray):Boolean
+		{
+			data.position = 0;
+			var fileHeader:ByteArray = new ByteArray();
+			fileHeader.endian = Endian.LITTLE_ENDIAN;
+			data.readBytes( fileHeader, 0, BITMAP_FILE_HEADER_SIZE )
+			return fileHeader.readUTFBytes( 2 ) != BITMAP_HEADER_TYPE;
+		}
 		/**
 		 * BITMAP CORE HEADER 読み込み 
 		 */

@@ -4,6 +4,7 @@ package com.physwf.components.pswloader
 	import com.physwf.components.interfaces.INumerical;
 	
 	import flash.events.EventDispatcher;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLStream;
 
 	public class LoadingItem extends EventDispatcher implements INumerical,IDisposible
@@ -13,8 +14,8 @@ package com.physwf.components.pswloader
 		
 		public var priority:Number;
 		
-		private var mUrl:String;
-		private var mUID:String;
+		protected var mUrl:String;
+		protected var mUID:String;
 		
 		protected var mContent:*;
 		
@@ -29,6 +30,11 @@ package com.physwf.components.pswloader
 		public function load():void
 		{
 			
+		}
+		
+		protected function onIOError(e:IOErrorEvent):void
+		{
+			trace(this,"Bad url!!!",mUrl);
 		}
 		
 		public function getContent():*
