@@ -9,6 +9,7 @@
 	<fx:Script>
 		<![CDATA[
 			import com.bit101.components.Window;
+			import com.physwf.components.view.Animation;
 			
 			import components.ItemDisplay;
 			import components.MapDisplay;
@@ -31,6 +32,9 @@
 			private var mBuildingBox:WinItemBox;
 			private var mItemBox:WinItemBox;
 			private var mTeleportBox:WinItemBox;
+			
+			private var teleportSceneDir:String;
+			private var npcScenceDir:String;
 			
 			private function init():void
 			{
@@ -66,7 +70,7 @@
 				var npcBox:MenuItem = new MenuItem("&NPC");
 				var buildingBox:MenuItem = new MenuItem("&建筑");
 				viewMenu.addMenuItem(npcBox);
-				viewMenu.addMenuItem(buildingBox);
+//				viewMenu.addMenuItem(buildingBox);
 				viewMenu.addMenuItem(itemBox);
 				viewMenu.addMenuItem(teleBox);
 				
@@ -87,6 +91,8 @@
 				
 				stage.addChild(mMapDisplay);
 				stage.addChild(mUiLayer);
+				
+				addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			}
 			
 			private function onConfigComplete(e:Event):void
@@ -95,16 +101,24 @@
 				target.removeEventListener(Event.COMPLETE,onConfigComplete);
 				var config:XML = XML(target.data);
 				var read:XML = config.read[0];
-				MapDisplay.mapDir = read.@mapDir;
+				MapDisplay.mapDir = (read.map[0]).@dir;
 				ItemDisplay.iconDir = read.@iconDir;
-				getTeleportList(read.@teleportDir);
+				
+				teleportSceneDir = read.teleport[0].@dir;
+				npcScenceDir = read.npc[0].@dir;
 			}
 			
 			private function getTeleportList(dir:String):void
 			{
-				var file:File = new File(dir);
+				var file:File = new File(dir+"teleport/");
 				var list:Array = file.getDirectoryListing();
-				trace(list)
+				for each(file in list)
+				{
+					var item:ItemDisplay = new ItemDisplay("teleport/"+file.name);
+					item.sceneDir = teleportSceneDir;
+					item.load();
+					mTeleportBox.pushItem(item);
+				}
 			}
 			
 			private function onNew(e:MouseEvent):void
@@ -130,23 +144,24 @@
 				var item:ItemDisplay = new ItemDisplay("npc");
 				mNPCBox.pushItem(item);
 			}
-			private function onViewBuiding(e:MouseEvent):void
-			{
-				mBuildingBox ||= new WinItemBox(mUiLayer,"Building");
-				mBuildingBox.setPosition(stage.stageWidth - 280,230);
-				mBuildingBox.toogle();
-			}
 			private function onViewItem(e:MouseEvent):void
 			{
 				mItemBox ||= new WinItemBox(mUiLayer,"Item");
-				mItemBox.setPosition(stage.stageWidth - 280,430);
+				mItemBox.setPosition(stage.stageWidth - 280,235);
 				mItemBox.toogle();
+			}
+			private function onViewBuiding(e:MouseEvent):void
+			{
+				mBuildingBox ||= new WinItemBox(mUiLayer,"Building");
+				mBuildingBox.setPosition(stage.stageWidth - 280,235);
+				mBuildingBox.toogle();
 			}
 			private function onViewTeleport(e:MouseEvent):void
 			{
 				mTeleportBox ||= new WinItemBox(mUiLayer,"Teleport");
-				mTeleportBox.setPosition(stage.stageWidth - 280,630);
+				mTeleportBox.setPosition(stage.stageWidth - 280,440);
 				mTeleportBox.toogle();
+				getTeleportList(ItemDisplay.iconDir);
 			}
 			private function onKeyDown(e:KeyboardEvent):void
 			{
@@ -187,6 +202,14 @@
 			private function onStageResize(e:Event):void
 			{
 				mMenuBar.width = stage.stageWidth;
+			}
+			
+			private function onEnterFrame(e:Event):void
+			{
+				for each(var ani:Animation in ItemDisplay.animations)
+				{
+					ani.update();
+				}
 			}
 		]]>
 	</fx:Script>

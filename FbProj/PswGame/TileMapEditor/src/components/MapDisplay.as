@@ -12,8 +12,9 @@ package components
 		
 		private var mGroundLayer:Sprite;
 		private var mNpcLayer:Sprite;
+		public function npcLayer():Sprite { return mNpcLayer; }
 		private var mTeleprotLayer:Sprite;
-		
+		public function get teleportLayer():Sprite { return mTeleprotLayer; }
 		public function MapDisplay()
 		{
 			mGroundLayer = new Sprite();
@@ -30,6 +31,7 @@ package components
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
 			loader.load(new URLRequest(mapDir+name+"/ground.jpg"));
 		}
+		
 		
 		private function onComplete(e:Event):void
 		{

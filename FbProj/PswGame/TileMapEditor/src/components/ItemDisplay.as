@@ -13,6 +13,7 @@ package components
 	{
 		public static var iconDir:String;
 		public var sceneDir:String;
+		public static var animations:Vector.<Animation> = new Vector.<Animation>();
 		
 		private var mIcon:Sprite;
 		private var mSceneView:Animation;
@@ -49,6 +50,8 @@ package components
 			function onCompelte(e:Event):void
 			{
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onCompelte);
+				loader.content.width = 40;
+				loader.content.height = 40;
 				container.addChild(loader.content);
 				loader.unloadAndStop(true);
 			};
@@ -59,9 +62,11 @@ package components
 		
 		private function loadSceneView():void
 		{
+			var name:String = mName.substring(mName.lastIndexOf("/")+1,mName.lastIndexOf("."));
 			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(sceneDir);
 			mSceneView = new Animation(sLoader);
 			mSceneView.gotoAndPlay("1");
+			animations.push(mSceneView);
 		}
 	}
 }

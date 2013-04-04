@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editor>
-	<read 
-		mapDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
-		teleportDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/teleport/"
-		iconDir = "E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"
-	/>
+	<read iconDir = "F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/">
+		<map dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
+		<teleport dir ="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/objects/teleport" icon="teleport"/>
+		<npc dir ="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/"  icon="npc"/>
+	</read>
 	<write>
 		<xml dir=""/>
 	</write>
