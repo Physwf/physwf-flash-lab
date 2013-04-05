@@ -11,10 +11,10 @@
 			private function init():void
 			{
 				var pLoader:PswLoader = PswLoader.getPswLoader("test");
-				pLoader.add("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/script/map/Script_Map_1.swf",1,PswLoader.TYPE_BINARY);
-				pLoader.add("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/script/map/Script_Map_2.swf",2,PswLoader.TYPE_BINARY);
-				pLoader.add("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/script/map/Script_Map_3.swf",3,PswLoader.TYPE_BINARY);
-				pLoader.add("E:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/script/map/Script_Map_4.swf",4,PswLoader.TYPE_BINARY);
+				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/100.tga",1,PswLoader.TYPE_IMAGE);
+				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/101.tga",2,PswLoader.TYPE_IMAGE);
+				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/200.tga",3,PswLoader.TYPE_IMAGE);
+				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/201.tga",4,PswLoader.TYPE_IMAGE);
 				pLoader.addEventListener(Event.COMPLETE,function ():void
 				{
 					trace("all Load");

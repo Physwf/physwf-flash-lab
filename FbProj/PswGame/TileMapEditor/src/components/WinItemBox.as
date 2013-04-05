@@ -10,7 +10,7 @@ package components
 		private var mLayer:Sprite;
 		private var mWin:Window;
 		private var mItemLayer:Sprite;
-		private var mItemList:Vector.<ItemDisplay>;
+		private var mItemList:Vector.<ObjectDisplay>;
 		
 		public function WinItemBox(layer:Sprite,name:String="Window")
 		{
@@ -21,7 +21,7 @@ package components
 			
 			mItemLayer = new Sprite();
 			mWin.addChild(mItemLayer);
-			mItemList = new Vector.<ItemDisplay>();
+			mItemList = new Vector.<ObjectDisplay>();
 		}
 		
 		public function show():void
@@ -46,7 +46,7 @@ package components
 			}
 		}
 		
-		public function pushItem(item:ItemDisplay):void
+		public function pushItem(item:ObjectDisplay):void
 		{
 			item.icon.x = 5+mItemList.length % 5 * 40;
 			item.icon.y = 5+Math.floor(mItemList.length / 5) * 40;

@@ -8,11 +8,12 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.bit101.components.Window;
 			import com.physwf.components.view.Animation;
 			
-			import components.ItemDisplay;
 			import components.MapDisplay;
+			import components.NPCDisplay;
+			import components.ObjectDisplay;
+			import components.TeleportDisplay;
 			import components.WinItemBox;
 			import components.WinNewMap;
 			
@@ -20,12 +21,15 @@
 			import shinater.swing.MenuBar;
 			import shinater.swing.MenuItem;
 			
+			public static var editor:MapEditor;
+			
 			private var mMenuBar:MenuBar;
 			private var mMapLayer:Sprite;
 			private var mUiLayer:Sprite;
 			
 			private var mNewMapWin:WinNewMap;
 			private var mMapDisplay:MapDisplay;
+			public function get map():MapDisplay { return mMapDisplay; }
 			private var isSpacePressed:Boolean;
 			
 			private var mNPCBox:WinItemBox;
@@ -36,12 +40,12 @@
 			private var teleportSceneDir:String;
 			private var npcScenceDir:String;
 			
+			public var dragItem:Animation;
+			
 			private function init():void
 			{
 				stage?onAddToStage(null):addEventListener(Event.ADDED_TO_STAGE,onAddToStage);
-				var configLoader:URLLoader = new URLLoader();
-				configLoader.addEventListener(Event.COMPLETE,onConfigComplete);
-				configLoader.load(new URLRequest("config/project.xml"))
+				editor = this;
 			}
 			
 			private function onAddToStage(e:Event):void
@@ -93,6 +97,13 @@
 				stage.addChild(mUiLayer);
 				
 				addEventListener(Event.ENTER_FRAME,onEnterFrame);
+				
+				mTeleportBox = new WinItemBox(mUiLayer,"Teleport");
+				mNPCBox = new WinItemBox(mUiLayer,"NPC");
+				
+				var configLoader:URLLoader = new URLLoader();
+				configLoader.addEventListener(Event.COMPLETE,onConfigComplete);
+				configLoader.load(new URLRequest("config/project.xml"))
 			}
 			
 			private function onConfigComplete(e:Event):void
@@ -101,21 +112,26 @@
 				target.removeEventListener(Event.COMPLETE,onConfigComplete);
 				var config:XML = XML(target.data);
 				var read:XML = config.read[0];
-				MapDisplay.mapDir = (read.map[0]).@dir;
-				ItemDisplay.iconDir = read.@iconDir;
 				
-				teleportSceneDir = read.teleport[0].@dir;
-				npcScenceDir = read.npc[0].@dir;
+				MapDisplay.mapDir = (read.map[0]).@dir;
+				
+				TeleportDisplay.IconDir = read.@iconDir+read.teleport[0].@icon;
+				TeleportDisplay.SceneDir = read.teleport[0].@dir;
+				
+				NPCDisplay.IconDir =  read.@iconDir+read.npc[0].@icon;
+				NPCDisplay.SceneDir = read.npc[0].@dir;
+				
+				getTeleportList();
 			}
 			
-			private function getTeleportList(dir:String):void
+			private function getTeleportList():void
 			{
-				var file:File = new File(dir+"teleport/");
+				var file:File = new File(TeleportDisplay.IconDir);
+				trace(TeleportDisplay.IconDir);
 				var list:Array = file.getDirectoryListing();
 				for each(file in list)
 				{
-					var item:ItemDisplay = new ItemDisplay("teleport/"+file.name);
-					item.sceneDir = teleportSceneDir;
+					var item:TeleportDisplay = new TeleportDisplay(file.name);
 					item.load();
 					mTeleportBox.pushItem(item);
 				}
@@ -141,8 +157,6 @@
 				mNPCBox ||= new WinItemBox(mUiLayer,"NPC");
 				mNPCBox.setPosition(stage.stageWidth - 280,30);
 				mNPCBox.toogle();
-				var item:ItemDisplay = new ItemDisplay("npc");
-				mNPCBox.pushItem(item);
 			}
 			private function onViewItem(e:MouseEvent):void
 			{
@@ -161,7 +175,6 @@
 				mTeleportBox ||= new WinItemBox(mUiLayer,"Teleport");
 				mTeleportBox.setPosition(stage.stageWidth - 280,440);
 				mTeleportBox.toogle();
-				getTeleportList(ItemDisplay.iconDir);
 			}
 			private function onKeyDown(e:KeyboardEvent):void
 			{
@@ -206,7 +219,12 @@
 			
 			private function onEnterFrame(e:Event):void
 			{
-				for each(var ani:Animation in ItemDisplay.animations)
+				if(dragItem)
+				{
+					dragItem.x = mMapDisplay.mouseX;
+					dragItem.y = mMapDisplay.mouseY;
+				}
+				for each(var ani:Animation in ObjectDisplay.animations)
 				{
 					ani.update();
 				}

@@ -7,19 +7,22 @@ package components
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 
-	public class ItemDisplay
+	public class ObjectDisplay
 	{
-		public static var iconDir:String;
-		public var sceneDir:String;
 		public static var animations:Vector.<Animation> = new Vector.<Animation>();
+		
+		public var iconDir:String;
+		public var sceneDir:String;
 		
 		private var mIcon:Sprite;
 		private var mSceneView:Animation;
 		private var mName:String;
+		private var mScenceLayer:Sprite;
 		
-		public function ItemDisplay(name:String)
+		public function ObjectDisplay(name:String)
 		{
 			mName = name;
 			mIcon = new Sprite();
@@ -41,7 +44,7 @@ package components
 		
 		public function load():void
 		{
-			loadIcon(mIcon,iconDir+mName);
+			loadIcon(mIcon,iconDir+"/"+mName);
 			loadSceneView();
 		}
 		
@@ -54,6 +57,7 @@ package components
 				loader.content.height = 40;
 				container.addChild(loader.content);
 				loader.unloadAndStop(true);
+				container.addEventListener(MouseEvent.MOUSE_DOWN,onMouseDown);
 			};
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onCompelte);
@@ -67,6 +71,15 @@ package components
 			mSceneView = new Animation(sLoader);
 			mSceneView.gotoAndPlay("1");
 			animations.push(mSceneView);
+		}
+		
+		protected function onMouseDown(e:MouseEvent):void
+		{
+			MapEditor.editor.dragItem = mSceneView;
+			if(mSceneView)
+			{
+				loadSceneView();
+			}
 		}
 	}
 }
