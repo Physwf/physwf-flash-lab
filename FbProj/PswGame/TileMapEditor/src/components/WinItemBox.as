@@ -4,6 +4,7 @@ package components
 	
 	import flash.display.Sprite;
 	import flash.events.EventDispatcher;
+	import display.ObjectDisplay;
 	
 	public class WinItemBox extends EventDispatcher
 	{

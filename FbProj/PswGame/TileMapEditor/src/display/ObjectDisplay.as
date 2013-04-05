@@ -1,4 +1,4 @@
-package components
+package display
 {
 	import com.physwf.components.bitmap.net.SkeletonLoader;
 	import com.physwf.components.charactor.CharacterAnimation;

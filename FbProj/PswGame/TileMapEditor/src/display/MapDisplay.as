@@ -1,4 +1,4 @@
-package components
+package display
 {
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
