@@ -103,9 +103,9 @@
 				}
 			}
 			
-			public function generate():void
+			public function generate(option:String="jpg"):void
 			{
-				mMapDisplay.toPieces();
+				mMapDisplay.toPieces(option);
 				mMapDisplay.toXML();
 			}
 			

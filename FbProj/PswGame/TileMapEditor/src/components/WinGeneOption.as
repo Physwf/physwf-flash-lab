@@ -67,5 +67,12 @@ package components
 		{
 			dispatchEvent(new Event("ok"));
 		}
+		
+		public function get option():String
+		{
+			if(optionJPG.selected) return "jpg";
+			if(optionPNG.selected) return "png";
+			return "deflate";
+		}
 	}
 }

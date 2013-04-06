@@ -96,12 +96,13 @@ package display
 			mNpcLayer.addChild(npc.sceneView);
 		}
 		
-		public function toPieces():void
+		public function toPieces(option:String="jpg"):void
 		{
 			if(!mContent || !mContent.bitmapData) return;
 			var fs:FileStream = new FileStream();
 			var pngEncoder:PNGEncoder = new PNGEncoder();
 			var jpgEncoder:JPGEncoder = new JPGEncoder(100);
+			var pieceData:ByteArray;
 			columns = Math.ceil(mContent.width / size);
 			rows = Math.ceil(mContent.height / size);
 			var source:BitmapData = mContent.bitmapData;
@@ -111,12 +112,21 @@ package display
 				{
 					var piece:BitmapData = new BitmapData(size,size,true,0);
 					piece.copyPixels(source,new Rectangle(j*size,i*size,size,size),new Point());
-//					var pieceData:ByteArray = pngEncoder.encode(piece);
-//					var pieceData:ByteArray = piece.getPixels(piece.rect);
-					var pieceData:ByteArray = jpgEncoder.encode(piece);
-//					pieceData.deflate();
-//					pieceData.deflate();
-					fs.open(new File(piecesDir+mName+"/"+i+"_"+j+".jpg"),FileMode.WRITE);
+					if(option == "jpg")
+					{
+						pieceData = jpgEncoder.encode(piece);
+					}
+					else if(option == "png")
+					{
+						pieceData = pngEncoder.encode(piece);
+					}
+					else 
+					{
+						pieceData = piece.getPixels(piece.rect);
+						pieceData.deflate();
+						option = "swf"
+					}
+					fs.open(new File(piecesDir+mName+"/"+i+"_"+j+"."+option),FileMode.WRITE);
 					fs.writeBytes(pieceData);
 					fs.close();
 				}

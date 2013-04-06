@@ -125,7 +125,9 @@ package components
 		
 		private function onOK(e:Event):void
 		{
-			MapEditor.editor.generate();
+			var option:String = mGeneWin.option;
+			mGeneWin.hide();
+			MapEditor.editor.generate(option);
 		}
 	}
 }
