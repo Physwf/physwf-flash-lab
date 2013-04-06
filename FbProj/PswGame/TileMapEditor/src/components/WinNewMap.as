@@ -24,7 +24,7 @@ package components
 		{
 			mLayer = layer;
 			
-			winNewMap ||= new Window();
+			winNewMap = new Window();
 			
 			winNewMap.width = 300;
 			winNewMap.height = 70;

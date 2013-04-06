@@ -6,6 +6,7 @@
 		<npc dir ="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/"  icon="npc"/>
 	</read>
 	<write>
-		<xml dir=""/>
+		<xml dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Script_Map/src/desc"/>
+		<piece dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
 	</write>
 </editor>

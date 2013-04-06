@@ -14,6 +14,7 @@ package components
 		private var mStage:Stage;
 		
 		private var mNewMapWin:WinNewMap;
+		private var mGeneWin:WinGeneOption;
 		
 		private var mNPCBox:WinItemBox;
 		public function get npcBox():WinItemBox { return mNPCBox; }
@@ -50,12 +51,19 @@ package components
 			viewMenu.addMenuItem(itemBox);
 			viewMenu.addMenuItem(teleBox);
 			
+			var projMenu:Menu = new Menu("项目");
+			mMenuBar.addMenu(projMenu);
+			var generate:MenuItem = new MenuItem("&生成");
+			projMenu.addMenuItem(generate);
+			
 			newItem.addEventListener(MouseEvent.MOUSE_UP,onNew);
 			
 			npcBox.addEventListener(MouseEvent.CLICK,oViewnNpc);
 			itemBox.addEventListener(MouseEvent.CLICK,onViewItem);
 			teleBox.addEventListener(MouseEvent.CLICK,onViewTeleport);
 			buildingBox.addEventListener(MouseEvent.CLICK,onViewBuiding);
+			
+			projMenu.addEventListener(MouseEvent.CLICK,onGenerate);
 			
 			mNPCBox = new WinItemBox(MapEditor.editor.uiLayer,"NPC");
 			mItemBox = new WinItemBox(MapEditor.editor.uiLayer,"Item");
@@ -69,8 +77,11 @@ package components
 		
 		private function onNew(e:MouseEvent):void
 		{
-			mNewMapWin ||= new WinNewMap(MapEditor.editor.uiLayer);
-			mNewMapWin.addEventListener("ok",onWinNewMapOk);
+			if(!mNewMapWin)
+			{
+				mNewMapWin = new WinNewMap(MapEditor.editor.uiLayer);
+				mNewMapWin.addEventListener("ok",onWinNewMapOk);
+			}
 			mNewMapWin.show();
 		}
 		
@@ -101,6 +112,20 @@ package components
 		{
 			mTeleportBox.setPosition(mStage.stageWidth - 280,440);
 			mTeleportBox.toogle();
+		}
+		private function onGenerate(e:MouseEvent):void
+		{
+			if(!mGeneWin)
+			{
+				mGeneWin = new WinGeneOption(MapEditor.editor.uiLayer);
+				mGeneWin.addEventListener("ok",onOK);
+			}
+			mGeneWin.show();
+		}
+		
+		private function onOK(e:Event):void
+		{
+			MapEditor.editor.generate();
 		}
 	}
 }

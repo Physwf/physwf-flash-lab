@@ -76,9 +76,12 @@
 				target.removeEventListener(Event.COMPLETE,onConfigComplete);
 				var config:XML = XML(target.data);
 				var read:XML = config.read[0];
+				var write:XML = config.write[0];
 				
 				MapDisplay.mapDir = (read.map[0]).@dir;
-				
+				MapDisplay.xmlDir = write.xml[0].@dir;
+				MapDisplay.piecesDir = write.piece[0].@dir;
+					
 				TeleportDisplay.IconDir = read.@iconDir+read.teleport[0].@icon;
 				TeleportDisplay.SceneDir = read.teleport[0].@dir;
 				
@@ -99,6 +102,13 @@
 					mMainMenu.teleportBox.pushItem(item);
 				}
 			}
+			
+			public function generate():void
+			{
+				mMapDisplay.toPieces();
+				mMapDisplay.toXML();
+			}
+			
 			private function onKeyDown(e:KeyboardEvent):void
 			{
 				switch(e.keyCode)

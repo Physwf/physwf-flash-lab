@@ -70,12 +70,12 @@ package display
 			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(sceneDir);
 			mSceneView = new Animation(sLoader);
 			mSceneView.gotoAndPlay("1");
-			animations.push(mSceneView);
 		}
 		
 		protected function onMouseDown(e:MouseEvent):void
 		{
 			MapEditor.editor.dragItem = mSceneView;
+			animations.push(mSceneView);
 			if(mSceneView)
 			{
 				loadSceneView();
