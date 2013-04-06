@@ -1,6 +1,7 @@
 package display
 {
 	import com.adobe.images.JPGEncoder;
+	import com.physwf.components.view.Animation;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -37,8 +38,8 @@ package display
 		public function get teleportLayer():Sprite { return mTeleprotLayer; }
 		
 		
-		private var mTeleports:Vector.<TeleportDisplay>;
-		private var mNpcs:Vector.<NPCDisplay>;
+		private var mTeleports:Vector.<Animation>;
+		private var mNpcs:Vector.<Animation>;
 		
 		private var mContent:Bitmap;
 		
@@ -55,8 +56,8 @@ package display
 			mTeleprotLayer = new Sprite();
 			addChild(mTeleprotLayer);
 			
-			mTeleports = new Vector.<TeleportDisplay>();
-			mNpcs = new Vector.<NPCDisplay>();
+			mTeleports = new Vector.<Animation>();
+			mNpcs = new Vector.<Animation>();
 			
 			addEventListener(MouseEvent.MOUSE_UP,onMouseUp);
 		}
@@ -84,15 +85,15 @@ package display
 		
 		public function addTeleport(tlt:TeleportDisplay):void
 		{
-			if(mTeleports.indexOf(tlt)>-1) return;
-			mTeleports.push(tlt);
+			if(mTeleports.indexOf(tlt.sceneView)>-1) return;
+			mTeleports.push(tlt.sceneView);
 			mTeleprotLayer.addChild(tlt.sceneView);
 		}
 		
 		public function addNPC(npc:NPCDisplay):void
 		{
-			if(mNpcs.indexOf(npc)>-1) return ;
-			mNpcs.push(npc);
+			if(mNpcs.indexOf(npc.sceneView)>-1) return ;
+			mNpcs.push(npc.sceneView);
 			mNpcLayer.addChild(npc.sceneView);
 		}
 		
@@ -151,9 +152,9 @@ package display
 				for(var i:uint=0;i<mNpcs.length;++i)
 				{
 					var npc:XML = <npc/>;
-					npc.@id = mNpcs[i].id;
-					npc.@x = mNpcs[i].sceneView.x;
-					npc.@y = mNpcs[i].sceneView.y;
+					npc.@id = mNpcs[i].name;
+					npc.@x = mNpcs[i].x;
+					npc.@y = mNpcs[i].y;
 					npcNode.appendChild(npc);
 				}
 				desc.appendChild(npcNode);
@@ -164,8 +165,8 @@ package display
 				for(i=0;i<mTeleports.length;++i)
 				{
 					var teleport:XML = <teleport/>;
-					teleport.@x = mTeleports[i].sceneView.x;
-					teleport.@y = mTeleports[i].sceneView.y;
+					teleport.@x = mTeleports[i].x;
+					teleport.@y = mTeleports[i].y;
 					teleNode.appendChild(teleport);
 				}
 				desc.appendChild(teleNode);

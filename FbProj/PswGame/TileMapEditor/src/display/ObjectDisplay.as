@@ -69,9 +69,10 @@ package display
 			var name:String = mName.substring(mName.lastIndexOf("/")+1,mName.lastIndexOf("."));
 			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(sceneDir);
 			mSceneView = new Animation(sLoader);
+			mSceneView.name //to do
 			mSceneView.gotoAndPlay("1");
 		}
-		
+		 
 		protected function onMouseDown(e:MouseEvent):void
 		{
 			MapEditor.editor.dragItem = mSceneView;

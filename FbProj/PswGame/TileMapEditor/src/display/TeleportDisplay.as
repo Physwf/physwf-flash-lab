@@ -17,8 +17,9 @@ package display
 		
 		override protected function onMouseDown(e:MouseEvent):void
 		{
-			super.onMouseDown(e);
 			MapEditor.editor.map.addTeleport(this);
+			super.onMouseDown(e);
+			e.stopImmediatePropagation();
 		}
 		
 	}
