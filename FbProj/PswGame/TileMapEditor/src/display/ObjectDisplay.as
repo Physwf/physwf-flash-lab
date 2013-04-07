@@ -69,7 +69,7 @@ package display
 			var name:String = mName.substring(mName.lastIndexOf("/")+1,mName.lastIndexOf("."));
 			var sLoader:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader(sceneDir);
 			mSceneView = new Animation(sLoader);
-			mSceneView.name //to do
+			mSceneView.name = mName.substring(0,mName.lastIndexOf("."));//to do
 			mSceneView.gotoAndPlay("1");
 		}
 		 
