@@ -9,6 +9,9 @@ package
 	
 	public class Script_Map_1 extends MapScriptBase
 	{
+		[Embed(source="desc/1.xml"),mimeType="application/octet-stream"]
+		private var Desc:Class;
+		
 		public function Script_Map_1()
 		{
 			super();
