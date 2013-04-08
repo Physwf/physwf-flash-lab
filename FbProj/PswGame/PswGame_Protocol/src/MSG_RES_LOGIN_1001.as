@@ -31,7 +31,7 @@ package
 			skill_shortcut= new Vector.<uint>();
 			for(var j:int=0;j<10;++j)
 			{
-				var skill_shortcut_item:uint = input.readUnsignedShort();
+				var skill_shortcut_item:uint = input.readUnsignedInt();
 				skill_shortcut.push(skill_shortcut_item)
 			}
 			
