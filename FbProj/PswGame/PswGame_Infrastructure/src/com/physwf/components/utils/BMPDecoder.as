@@ -195,7 +195,7 @@ package com.physwf.components.utils{
 			var fileHeader:ByteArray = new ByteArray();
 			fileHeader.endian = Endian.LITTLE_ENDIAN;
 			data.readBytes( fileHeader, 0, BITMAP_FILE_HEADER_SIZE )
-			return fileHeader.readUTFBytes( 2 ) != BITMAP_HEADER_TYPE;
+			return fileHeader.readUTFBytes( 2 ) == BITMAP_HEADER_TYPE;
 		}
 		/**
 		 * BITMAP CORE HEADER 読み込み 

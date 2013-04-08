@@ -11,6 +11,8 @@ package com.physwf.components.pswloader
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
+
 	/**
 	 * 图片项目。
 	 * 内置图片格式分析。 
@@ -22,7 +24,7 @@ package com.physwf.components.pswloader
 		/**
 		 * 各种图片文件头 
 		 */	
-		public static const HEAD_JPG:uint = 0xffd8;
+		public static const HEAD_JPG:uint = 0xd8ff;
 		
 		private static const TYPE_JPG:uint = 1;
 		private static const TYPE_PNG:uint = 2;
@@ -31,7 +33,7 @@ package com.physwf.components.pswloader
 		private static const TYPE_TGA:uint = 5;
 		private static const TYPE_BMP:uint = 6;
 		
-		public function ImageItem(url:String,uid:String)
+		public function ImageItem(url:String,uid:String,...args)
 		{
 			super(url,uid);
 		}
@@ -52,6 +54,7 @@ package com.physwf.components.pswloader
 			stream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
 			var data:ByteArray = new ByteArray();
 			stream.readBytes(data);
+			data.endian = Endian.LITTLE_ENDIAN;
 			
 			switch(analyze(data))
 			{

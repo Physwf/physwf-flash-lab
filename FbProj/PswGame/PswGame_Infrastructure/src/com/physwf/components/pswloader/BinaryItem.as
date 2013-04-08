@@ -7,7 +7,7 @@ package com.physwf.components.pswloader
 
 	public class BinaryItem extends LoadingItem
 	{
-		public function BinaryItem(url:String,uid:String)
+		public function BinaryItem(url:String,uid:String,...args)
 		{
 			super(url,uid);
 		}

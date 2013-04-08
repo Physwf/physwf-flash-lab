@@ -87,9 +87,11 @@ package com.physwf.components.utils {
 		
 		public static function isTGA(data:ByteArray):Boolean
 		{
-			data.position = 2;
+			data.position = 0;
+			var fileHead:ByteArray = new ByteArray();
+			data.readBytes(fileHead,2,1);
 			data.endian = Endian.LITTLE_ENDIAN;
-			var type:uint = data.readByte();
+			var type:uint = fileHead.readByte();
 			if ((type & TYPE_FULL_COLOR) == 0 || (type & TYPE_RLE_BIT) != 0) return false;
 			return true;
 		}

@@ -19,6 +19,7 @@ package com.physwf.components.pswloader
 	{
 		public static const TYPE_BINARY:String = "binary";
 		public static const TYPE_IMAGE:String = "image";
+		public static const TYPE_PIECE:String = "piece";
 		
 		public static const PRIORITY_DEFAULT:Number = 5;
 		
@@ -28,7 +29,7 @@ package com.physwf.components.pswloader
 		/**
 		 * 最大并发数,当最大并发数改变时，PswLoader不会立即清理多出的加载线程
 		 */		
-		public static var maxConnections:uint = 1;
+		public static var maxConnections:uint = 10;
 		/**
 		 * 当前并发数，一般不会超过最大并发数，除非最大并发数主动改变，以至于大于最大并发数。此时numConnection不会增加，而是逐渐降低到最大并发数
 		 */		
@@ -36,6 +37,7 @@ package com.physwf.components.pswloader
 		
 		private var mItems:Object;//当前PswLoader的加载实例
 		private var mNumItems:uint;
+		private var mWaitItems:Object;//当前PswLoader正在等待start的加载项
 		private var mContents:Object;//当前PswLoader所加载到的项目内容
 		
 		private var mName:String;
@@ -47,7 +49,8 @@ package com.physwf.components.pswloader
 		private var _typeClasses:Object = 
 			{
 				binary: BinaryItem,
-				image:ImageItem
+				image:ImageItem,
+				piece:PieceItem
 			};
 		
 		public static const LOAD_FLAG_FINISHED:uint = 0;
@@ -80,6 +83,7 @@ package com.physwf.components.pswloader
 			_numInstance ++;
 			
 			mItems = {};
+			mWaitItems = {};
 			mContents = {};
 		}
 		
@@ -97,36 +101,44 @@ package com.physwf.components.pswloader
 			return "Pl" + _numInstance;
 		}
 		
-		public function add(url:String,priority:Number,type:String=null):LoadingItem
+		public function add(url:String,priority:Number,type:String=null,...args):LoadingItem
 		{
 			//already exist
 			if(mItems[url]) return mItems[url] as LoadingItem;
 			type ||= guessType(url);
 			var TypeClass:Class = _typeClasses[type];
-			var item:LoadingItem = new TypeClass(url,_numInstance.toString(16)+"_"+mNumItems.toString(16));
+			var item:LoadingItem = new TypeClass(url,_numInstance.toString(16)+"_"+mNumItems.toString(16),args);
 			mNumItems++;
 			mItems[url] = item;
 			item.priority = priority;
 			//只在两种情况下立即进入队列 1,正在加载 2,已经暂停并且加载模式为手动
-			if(mLoadFlag == LOAD_FLAG_LOADING || (mMode == MODE_AUTO && mLoadFlag != LOAD_FLAG_PAUSED) )
+			if(mMode == MODE_AUTO && mLoadFlag != LOAD_FLAG_PAUSED)
 			{
 				_itemPrioList.Enqueue(item);
-				_loadNext();
-				mLoadFlag = LOAD_FLAG_LOADING;
+				
+				if(mLoadFlag != LOAD_FLAG_LOADING) 
+				{
+					_loadNext();
+				}
+			}
+			else
+			{
+				mWaitItems[url] = item;
 			}
 			return item;
 		}
 		
-		internal function _loadNext():void
+		private function _loadNext():void
 		{
 			if(mLoadFlag == LOAD_FLAG_PAUSED) return;//paused
 			
-			if(numConnection<maxConnections)
+			if(numConnection<maxConnections && _itemPrioList.size > 0)
 			{
 				var item:LoadingItem = _itemPrioList.Dequeue() as LoadingItem;
 				item.addEventListener(Event.COMPLETE,onItemComplete,false,Number.MIN_VALUE);
 				item.load();
 				numConnection++;
+				_loadNext();
 			}
 		}
 		
@@ -135,13 +147,10 @@ package com.physwf.components.pswloader
 			var item:LoadingItem = e.target as LoadingItem;
 			item.removeEventListener(Event.COMPLETE,onItemComplete,false);
 			mContents[item.url] = item.getContent();
-			trace(item.url);
+//			trace(item.url);
 			numConnection--;
 			
-			if(_itemPrioList.size>0)
-			{
-				_loadNext();
-			}
+			_loadNext();
 			
 			delete mItems[item.url];
 			mNumItems --;
@@ -156,9 +165,10 @@ package com.physwf.components.pswloader
 		public function start():void
 		{
 			if(mLoadFlag == LOAD_FLAG_LOADING) return;
-			for each(var item:LoadingItem in mItems)
+			for(var key:String in mItems)
 			{
-				_itemPrioList.Enqueue(item);
+				_itemPrioList.Enqueue(mWaitItems[key]);
+				delete mWaitItems[key];
 			}
 			mLoadFlag = LOAD_FLAG_LOADING;
 			_loadNext();

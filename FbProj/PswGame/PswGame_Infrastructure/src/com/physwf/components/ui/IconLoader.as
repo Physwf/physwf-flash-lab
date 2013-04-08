@@ -18,17 +18,28 @@ package com.physwf.components.ui
 	 * @author joe
 	 * 
 	 */
-	public class IconManager
+	public class IconLoader
 	{
 		public static var iconDir:String;
-		
+		private static var iLoaders:Dictionary = new Dictionary();
 		private static var iconList:Dictionary = new Dictionary();
+		private var mName:String;
 		
-		public function IconManager()
+		public function IconLoader(name:String)
 		{
+			mName = name;
 		}
 		
-		public static function setCell(cell:Cell,iconId:uint,format:String=".jpg"):void
+		public static function getSameIconLoader(name:String):IconLoader
+		{
+			var iLoader:IconLoader = iLoaders[name] as IconLoader;
+			if(iLoader) return iLoader;
+			iLoader = new IconLoader(name);
+			iLoaders[name] = iLoader;
+			return iLoader;
+		}
+		
+		public function setCell(cell:Cell,iconId:uint,format:String=".jpg"):void
 		{
 			if(!iconList[iconId])
 			{
@@ -41,8 +52,9 @@ package com.physwf.components.ui
 			}
 		}
 		
-		private static function load(cell:Cell,id:uint,format:String):void
+		private function load(cell:Cell,id:uint,format:String):void
 		{
+			var url:String = iconDir+mName+"/"+id+format;
 			switch(format)
 			{
 				case ".jpg":
@@ -54,20 +66,20 @@ package com.physwf.components.ui
 						cell.contentData = Bitmap(loader.content).bitmapData;
 					};
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onLoaderComplete);
-					loader.load(new URLRequest(iconDir+id+format));
+					loader.load(new URLRequest(url));
 					break;
 				case ".bmp":
 					var decoder:IDecoder = new BMPDecoder();
-					select(decoder,cell,iconDir+id+format);
+					select(decoder,cell,url);
 					break;
 				case ".tga":
 					decoder = new TGADecoder();
-					select(decoder,cell,iconDir+id+format);
+					select(decoder,cell,url);
 					break;
 			}
 		}
 		
-		private static function select(decoder:IDecoder,cell:Cell,url:String):void
+		private function select(decoder:IDecoder,cell:Cell,url:String):void
 		{
 			var stream:URLStream = new URLStream();
 			function onStreamComplete(e:Event):void

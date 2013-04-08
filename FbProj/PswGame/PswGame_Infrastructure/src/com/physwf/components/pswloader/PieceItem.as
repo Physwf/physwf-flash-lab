@@ -7,15 +7,13 @@ package com.physwf.components.pswloader
 	 */	
 	public class PieceItem extends ImageItem
 	{
-		private var mX:uint;//切片的x坐标
-		public function get x():uint { return x; }
-		private var mY:uint;//切片的y坐标
-		public function get y():uint { return y; }
+		public var x:uint;//切片的x坐标
+		public var y:uint;//切片的y坐标
 		
-		public function PieceItem(url:String, uid:String,x:uint,y:uint,postfix:String=".jpg")
+		public function PieceItem(url:String, uid:String,...args)
 		{
-			mUrl = url + x + "_" + y + postfix;
-			mX = x;	 mY = y;
+			var postfix:String = args[0]?args[0]:".jpg";
+			mUrl = url+postfix;
 			super(mUrl, uid);
 		}
 	}
