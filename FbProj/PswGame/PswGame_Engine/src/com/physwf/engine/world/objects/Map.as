@@ -4,6 +4,7 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
+	import com.physwf.components.map.piece.PieceGround;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.command.CmdGoAlong;
 	import com.physwf.engine.common.command.CmdGoTo;
@@ -199,16 +200,27 @@ package com.physwf.engine.world.objects
 		public function load():void
 		{
 			var id:uint = MySelf.userInfo.map_id;
-			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(
-				Event.COMPLETE,
-				function (e:Event):void 
-				{
-					mMapView.clearBottom();
-					mMapView.fillBottom(loader.content);
-					mCamera.moveToTarget();
-				});
-			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
+			var ground:PieceGround = new PieceGround();
+			ground.id = id;
+			ground.focusX = MySelf.userInfo.map_x;
+			ground.focusY = MySelf.userInfo.map_y;
+			ground.addEventListener(PieceGround.KEY,function (e:Event):void 
+			{
+				mMapView.clearBottom();
+				mMapView.fillBottom(ground);
+				mCamera.moveToTarget();
+			});
+			ground.load();
+//			var loader:Loader = new Loader();
+//			loader.contentLoaderInfo.addEventListener(
+//				Event.COMPLETE,
+//				function (e:Event):void 
+//				{
+//					mMapView.clearBottom();
+//					mMapView.fillBottom(loader.content);
+//					mCamera.moveToTarget();
+//				});
+//			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
 //			var ground:TileGround = new TileGround();
 //			ground.addEventListener(Event.COMPLETE ,function (e:Event):void
 //			{

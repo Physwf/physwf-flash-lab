@@ -1,7 +1,7 @@
 package com.physwf.engine.frame.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.ui.IconManager;
+	import com.physwf.components.ui.IconLoader;
 	import com.physwf.components.ui.SpriteLoader;
 	import com.physwf.components.ui.config.CellConfig;
 	import com.physwf.components.ui.controls.Cell;
@@ -55,6 +55,7 @@ package com.physwf.engine.frame.view
 			const interval:uint = 3;
 			var config:CellConfig = FrameAssets.SKILL_CELL;
 			//temp 后面需要读取快捷列表
+			var iLoader:IconLoader = IconLoader.getSameIconLoader("skills");
 			for(var i:int=0;i<skills.length;++i)
 			{
 				var cell:Cell = cellFactory.createCell(config);
@@ -66,28 +67,10 @@ package com.physwf.engine.frame.view
 				cell.y = offsetY;
 				addChild(cell);
 				cells.push(cell);
-				loadIcon(cell,skill.id);
+				iLoader.setCell(cell,skill.id,".tga");
 			}
 			
 			
-		}
-		
-		private function loadIcon(cell:Cell,iconID:uint):void
-		{
-			//to do 临时写的加载，后面考虑统一加载
-//			var stream:URLStream = new URLStream();
-//			function onComplete(e:Event):void
-//			{
-//				stream.removeEventListener(Event.COMPLETE,onComplete);
-//				var tgaData:ByteArray = new ByteArray();
-//				stream.readBytes(tgaData,0,stream.bytesAvailable);
-//				var tgaDecoder:TGADecoder = new TGADecoder(tgaData);
-//				cell.content = tgaDecoder.bitmap;
-//			};
-//			stream.addEventListener(Event.COMPLETE,onComplete);
-//			stream.load(new URLRequest("resource/icons/skills/"+iconID+".tga"));
-			
-			IconManager.setCell(cell,iconID,".tga");
 		}
 		
 		public function update():void

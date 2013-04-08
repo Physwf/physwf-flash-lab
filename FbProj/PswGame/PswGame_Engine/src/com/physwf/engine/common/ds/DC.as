@@ -34,7 +34,9 @@ package com.physwf.engine.common.ds
 		
 		public function remove(id:uint):uint
 		{
-			delete dic[id];
+			var ret:uint = dic[id] as uint;
+			delete dic[id]
+			return ret;
 		}
 	}
 }

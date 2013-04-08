@@ -1,7 +1,7 @@
 package com.physwf.engine.bag.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
-	import com.physwf.components.ui.IconManager;
+	import com.physwf.components.ui.IconLoader;
 	import com.physwf.components.ui.config.PanelConfig;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.components.ui.factory.CellFactory;
@@ -109,28 +109,15 @@ package com.physwf.engine.bag.view
 		{
 			var items:Vector.<BagItemInfo> = System.bag.bagItems;
 			var count:uint = items.length;
+			var iLoader:IconLoader = IconLoader.getSameIconLoader("items");
 			for(var i:int=0;i<count;++i)
 			{
 				//临时写，后面需要考虑版本控制和加载优化
-				trace(items[i].item.itemID);
 				var grid:uint = items[i].girdTag //- GRID_OFFSET;
 				var cell:Cell = cells[grid];
-				loadIcon(cell,items[i].item.itemID);
+				iLoader.setCell(cell,items[i].item.itemID,".jpg");
 			}
 		}
 		
-		private function loadIcon(cell:Cell,iconID:uint):void
-		{
-//			var loader:Loader = new Loader();
-//			function onComplete(e:Event):void
-//			{
-//				var target:LoaderInfo = e.target as LoaderInfo;
-//				cell.content = Bitmap(target.content).bitmapData;
-//				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onComplete);
-//			};
-//			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
-//			loader.load(new URLRequest("resource/icons/"+iconID+".jpg"));
-			IconManager.setCell(cell,iconID,".jpg");
-		}
 	}
 }
