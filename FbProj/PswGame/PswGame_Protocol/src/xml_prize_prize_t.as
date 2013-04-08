@@ -7,7 +7,7 @@ package
 	
 	public class xml_prize_prize_t implements IExternalizable
 	{
-		public var prize_id:uint;
+		public var id:uint;
 		public var item:Vector.<xml_prize_prize_item_t>;
 		
 		public function xml_prize_prize_t()
@@ -16,7 +16,7 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
-			prize_id = input.readUnsignedShort();
+			id = input.readUnsignedShort();
 			var itemLen:uint =input.readUnsignedInt();
 			item= new Vector.<xml_prize_prize_item_t>();
 			for(var i:int=0;i<itemLen;++i)
@@ -29,7 +29,7 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
-			output.writeShort(prize_id);
+			output.writeShort(id);
 			output.writeUnsignedInt(item.length);
 			for(var j:int=0;j<item.length;++j)
 			{

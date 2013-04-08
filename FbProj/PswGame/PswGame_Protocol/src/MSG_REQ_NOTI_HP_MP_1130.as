@@ -5,18 +5,17 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQGATEWAY_REPORT_TO_MAPSERV_5000 extends MsgBase
+	final public class MSG_REQ_NOTI_HP_MP_1130 extends MsgBase
 	{
-		public var area_id:uint;
 		
-		public function MSG_REQGATEWAY_REPORT_TO_MAPSERV_5000()
+		public function MSG_REQ_NOTI_HP_MP_1130()
 		{
-			super(5000)
+			super(1130)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeShort(area_id);			
+			
 		}
 	}
 }

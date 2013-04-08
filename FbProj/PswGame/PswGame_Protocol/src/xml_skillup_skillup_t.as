@@ -12,6 +12,7 @@ package
 		public var skill_exp:uint;
 		public var skill_money:uint;
 		public var groove:uint;
+		public var user_lv:uint;
 		
 		public function xml_skillup_skillup_t()
 		{
@@ -23,7 +24,8 @@ package
 			skill_lv = input.readUnsignedShort();
 			skill_exp = input.readUnsignedInt();
 			skill_money = input.readUnsignedInt();
-			groove = input.readUnsignedByte();			
+			groove = input.readUnsignedByte();
+			user_lv = input.readUnsignedByte();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -32,7 +34,8 @@ package
 			output.writeShort(skill_lv);
 			output.writeUnsignedInt(skill_exp);
 			output.writeUnsignedInt(skill_money);
-			output.writeByte(groove);			
+			output.writeByte(groove);
+			output.writeByte(user_lv);			
 		}
 	}
 }

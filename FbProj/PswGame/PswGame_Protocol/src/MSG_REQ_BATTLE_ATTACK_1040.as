@@ -11,6 +11,7 @@ package
 		public var obj_type:uint;
 		public var obj_id:uint;
 		public var skill_id:uint;
+		public var direction:uint;
 		
 		public function MSG_REQ_BATTLE_ATTACK_1040()
 		{
@@ -22,7 +23,8 @@ package
 			output.writeByte(src_type);
 			output.writeByte(obj_type);
 			output.writeUnsignedInt(obj_id);
-			output.writeShort(skill_id);			
+			output.writeShort(skill_id);
+			output.writeByte(direction);			
 		}
 	}
 }

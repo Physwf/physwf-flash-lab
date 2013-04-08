@@ -8,6 +8,7 @@ package
 	final public class MSG_REQ_SET_SKILL_CHANT_1048 extends MsgBase
 	{
 		public var skill_id:uint;
+		public var direction:uint;
 		
 		public function MSG_REQ_SET_SKILL_CHANT_1048()
 		{
@@ -16,7 +17,8 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeShort(skill_id);			
+			output.writeShort(skill_id);
+			output.writeByte(direction);			
 		}
 	}
 }

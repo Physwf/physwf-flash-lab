@@ -9,6 +9,7 @@ package
 	{
 		public var src_type:uint;
 		public var src_id:uint;
+		public var direction:uint;
 		public var obj_type:uint;
 		public var obj_id:uint;
 		public var skill_id:uint;
@@ -23,6 +24,7 @@ package
 		{
 			src_type = input.readUnsignedByte();
 			src_id = input.readUnsignedInt();
+			direction = input.readUnsignedByte();
 			obj_type = input.readUnsignedByte();
 			obj_id = input.readUnsignedInt();
 			skill_id = input.readUnsignedShort();
@@ -34,6 +36,7 @@ package
 		{
 			output.writeByte(src_type);
 			output.writeUnsignedInt(src_id);
+			output.writeByte(direction);
 			output.writeByte(obj_type);
 			output.writeUnsignedInt(obj_id);
 			output.writeShort(skill_id);

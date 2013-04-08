@@ -13,7 +13,7 @@ package
 		public var genius_lv:uint;
 		public var genius_exp:uint;
 		public var genius_money:uint;
-		public var skill_vec:Vector.<uint>;
+		public var grid:Vector.<uint>;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
 		public var phy_def:uint;
@@ -36,12 +36,12 @@ package
 			genius_lv = input.readUnsignedByte();
 			genius_exp = input.readUnsignedInt();
 			genius_money = input.readUnsignedInt();
-			var skill_vecLen:uint =input.readUnsignedInt();
-			skill_vec= new Vector.<uint>();
-			for(var i:int=0;i<skill_vecLen;++i)
+			var gridLen:uint =input.readUnsignedInt();
+			grid= new Vector.<uint>();
+			for(var i:int=0;i<gridLen;++i)
 			{
-				var skill_vec_item:uint = input.readUnsignedShort();;
-				skill_vec.push(skill_vec_item);
+				var grid_item:uint = input.readUnsignedShort();;
+				grid.push(grid_item);
 			}
 			phy_atk = input.readUnsignedByte();
 			solar_atk = input.readUnsignedByte();
@@ -62,10 +62,10 @@ package
 			output.writeByte(genius_lv);
 			output.writeUnsignedInt(genius_exp);
 			output.writeUnsignedInt(genius_money);
-			output.writeUnsignedInt(skill_vec.length);
-			for(var j:int=0;j<skill_vec.length;++j)
+			output.writeUnsignedInt(grid.length);
+			for(var j:int=0;j<grid.length;++j)
 			{
-				output.writeShort(skill_vec[j]);
+				output.writeShort(grid[j]);
 			}
 			output.writeByte(phy_atk);
 			output.writeByte(solar_atk);

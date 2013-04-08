@@ -9,6 +9,7 @@ package
 	{
 		public var monster_id:uint;
 		public var items:Vector.<xml_drop_drop_group_item_t>;
+		public var item_last:uint;
 		public var pet_id:uint;
 		
 		public function MSG_RES_NOTI_DROP_ITEM_1055(mid:uint)
@@ -27,6 +28,7 @@ package
 				items_item.readExternal(input);;
 				items.push(items_item);
 			}
+			item_last = input.readUnsignedInt();
 			pet_id = input.readUnsignedShort();			
 		}
 	}

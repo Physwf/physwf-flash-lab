@@ -11,6 +11,11 @@ package
 		public var role_tm:uint;
 		public var role_sex:uint;
 		public var prof:uint;
+		public var level:uint;
+		public var hp:uint;
+		public var mp:uint;
+		public var hp_max:uint;
+		public var mp_max:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
 		public var mapid:uint;
@@ -29,6 +34,11 @@ package
 			role_tm = input.readUnsignedInt();
 			role_sex = input.readUnsignedByte();
 			prof = input.readUnsignedByte();
+			level = input.readUnsignedShort();
+			hp = input.readUnsignedInt();
+			mp = input.readUnsignedInt();
+			hp_max = input.readUnsignedInt();
+			mp_max = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
 			mapid = input.readUnsignedInt();
 			map_x = input.readUnsignedInt();
@@ -50,6 +60,11 @@ package
 			output.writeUnsignedInt(role_tm);
 			output.writeByte(role_sex);
 			output.writeByte(prof);
+			output.writeShort(level);
+			output.writeUnsignedInt(hp);
+			output.writeUnsignedInt(mp);
+			output.writeUnsignedInt(hp_max);
+			output.writeUnsignedInt(mp_max);
 			if(nick_data)
 			{
 				output.writeBytes(nick_data)
