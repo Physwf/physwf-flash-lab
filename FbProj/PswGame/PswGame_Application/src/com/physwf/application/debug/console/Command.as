@@ -31,7 +31,7 @@ package com.physwf.application.debug.console
 			var cmdset:Dictionary = cmds[codes[0]];
 			if(cmdset)
 			{
-				Engine.world.switchMap(codes[2],0,0);
+				Engine.world.switchMap(codes[2],650,500);
 			}
 		}
 	}

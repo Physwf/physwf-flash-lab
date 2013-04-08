@@ -1,6 +1,9 @@
 package com.physwf.application.input
 {
+	import com.physwf.components.ui.DragManager;
+	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.common.events.CellEvent;
 	import com.physwf.engine.common.events.CharacterEvent;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.world.objects.Character;
@@ -11,6 +14,7 @@ package com.physwf.application.input
 	import com.physwf.system.vo.MonsterInfo;
 	import com.physwf.system.vo.UserInfo;
 	
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
@@ -28,7 +32,9 @@ package com.physwf.application.input
 		public function initialize():void
 		{
 			mRoot.addEventListener(MouseEvent.MOUSE_MOVE,onMouseMove);
-			Engine.map.view.swapLayer.addEventListener(MouseEvent.CLICK,onMouseClick);
+			mRoot.addEventListener(MouseEvent.MOUSE_DOWN,onMouseDown);
+			mRoot.addEventListener(MouseEvent.MOUSE_UP,onMouseUp);
+			mRoot.addEventListener(MouseEvent.CLICK,onMouseClick);
 		}
 		
 		private function onMouseMove(e:MouseEvent):void
@@ -47,6 +53,41 @@ package com.physwf.application.input
 			{
 				Mouse.cursor = MouseCursor.AUTO;
 			}
+		}
+		
+		private function onMouseDown(e:MouseEvent):void
+		{
+			var target:* = e.target;
+			if(target is Cell)
+			{
+				var cell:Cell = target as Cell;
+				if(cell.location == Cell.LOCATION_SKILLBAR)
+				{
+					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_PRESSED,cell));
+				}
+				else if(cell.location == Cell.LOCATION_BAG)
+				{
+					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_PRESSED,cell));
+				}
+			}
+		}
+		
+		private function onMouseUp(e:MouseEvent):void
+		{
+			var target:* = e.target;
+			if(target is Cell)
+			{
+				var cell:Cell = target as Cell;
+				if(cell.location == Cell.LOCATION_SKILLBAR)
+				{
+					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_RELEASED,cell));
+				}
+				else if(cell.location == Cell.LOCATION_BAG)
+				{
+					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_RELEASED,cell));
+				}
+			}
+			DragManager.instance.dragItem = null;
 		}
 		
 		private function onMouseClick(e:MouseEvent):void
@@ -68,6 +109,19 @@ package com.physwf.application.input
 			else if(manager is NPC)
 			{
 //				new CharacterEvent(CharacterEvent.
+			}
+			else if(manager is Cell)
+			{
+				var cell:Cell = target as Cell;
+				if(cell.location == Cell.LOCATION_SKILLBAR)
+				{
+					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
+				}
+				else if(cell.location == Cell.LOCATION_BAG)
+				{
+					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
+				}
+				e.stopImmediatePropagation();
 			}
 		}
 		
