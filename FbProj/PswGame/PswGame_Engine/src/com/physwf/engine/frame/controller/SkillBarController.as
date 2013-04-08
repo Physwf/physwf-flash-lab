@@ -1,7 +1,9 @@
 package com.physwf.engine.frame.controller
 {
+	import com.physwf.components.ui.DragManager;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.common.events.CellEvent;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.view.SkillBarView;
 	import com.physwf.system.vo.SkillInfo;
@@ -17,16 +19,29 @@ package com.physwf.engine.frame.controller
 		
 		public function initialize(view:SkillBarView):void
 		{
-			view.addEventListener(MouseEvent.CLICK,onMouseClick);
+			Engine.frame.addEventListener(CellEvent.CELL_CLICKED,onCellEvent);
+			Engine.frame.addEventListener(CellEvent.CELL_PRESSED,onCellEvent);
+			Engine.frame.addEventListener(CellEvent.CELL_RELEASED,onCellEvent);
 		}
 		
-		private function onMouseClick(e:MouseEvent):void
+		private function onCellEvent(e:CellEvent):void
 		{
-			var cell:Cell = e.target as Cell;
+			var cell:Cell = e.cell;
+			switch(e.type)
+			{
+				case CellEvent.CELL_CLICKED:
+					Engine.challenge.selectSill = cell.data as SkillInfo;
+					cell.startCd();
+					break;
+				case CellEvent.CELL_PRESSED:
+					DragManager.instance.dragItem = cell.content.bitmapData.clone();
+					break;
+				case CellEvent.CELL_RELEASED:
+					cell.contentData = DragManager.instance.dragItem;
+					break;
+			}
 			if(cell)
 			{
-				Engine.challenge.selectSill = cell.data as SkillInfo;
-				cell.startCd();
 //				Mouse.cursor = FrameAssets.CURSOR_AIM_NAME;
 			}
 		}

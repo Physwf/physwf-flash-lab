@@ -2,28 +2,18 @@ package com.physwf.engine.frame.view
 {
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.ui.IconLoader;
-	import com.physwf.components.ui.SpriteLoader;
 	import com.physwf.components.ui.config.CellConfig;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.components.ui.factory.BarFactory;
 	import com.physwf.components.ui.factory.CellFactory;
 	import com.physwf.components.ui.factory.FactoryManager;
 	import com.physwf.components.ui.layout.HBar;
-	import com.physwf.components.utils.TGADecoder;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.controller.SkillBarController;
 	import com.physwf.system.System;
 	import com.physwf.system.vo.SkillInfo;
 	
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.geom.Point;
-	import flash.net.URLRequest;
-	import flash.net.URLStream;
-	import flash.ui.Mouse;
-	import flash.ui.MouseCursorData;
-	import flash.utils.ByteArray;
 
 	public class SkillBarView extends Sprite implements IUpdatable
 	{
@@ -62,6 +52,7 @@ package com.physwf.engine.frame.view
 				var skill:SkillInfo = skills[i];
 				if(skill == null) continue;
 				cell.data = skill;
+				cell.location = Cell.LOCATION_SKILLBAR;
 				cell.cdTime = 5000;//ms
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
@@ -69,8 +60,6 @@ package com.physwf.engine.frame.view
 				cells.push(cell);
 				iLoader.setCell(cell,skill.id,".tga");
 			}
-			
-			
 		}
 		
 		public function update():void

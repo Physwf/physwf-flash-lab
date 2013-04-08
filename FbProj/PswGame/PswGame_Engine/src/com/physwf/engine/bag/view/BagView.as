@@ -10,6 +10,7 @@ package com.physwf.engine.bag.view
 	import com.physwf.components.ui.layout.IPopup;
 	import com.physwf.components.ui.layout.Panel;
 	import com.physwf.engine.bag.config.BagAssets;
+	import com.physwf.engine.bag.controller.BagController;
 	import com.physwf.system.System;
 	import com.physwf.system.vo.BagItemInfo;
 	import com.physwf.system.vo.ItemInfo;
@@ -36,6 +37,8 @@ package com.physwf.engine.bag.view
 		
 		private var isShow:Boolean = false;
 		
+		private var controller:BagController;
+		
 		public function BagView()
 		{
 			var pFactory:PanelFactory = FactoryManager.panelFactory;
@@ -50,6 +53,9 @@ package com.physwf.engine.bag.view
 			cellLayer.x = 35;
 			cellLayer.y = 40;
 			createCells();
+			
+			controller = new BagController();
+			controller.initialize(this);
 		}
 		
 		private function createCells():void
@@ -60,6 +66,7 @@ package com.physwf.engine.bag.view
 			for(var i:uint=0;i<numCells;++i)
 			{
 				var cell:Cell = cFactory.createCell(BagAssets.CELL_BAG);
+				cell.location = Cell.LOCATION_BAG;
 				cells.push(cell);
 				cell.x = i%NUM_CELL_X * CELL_SIZE;
 				cell.y = Math.floor(i/NUM_CELL_X) * CELL_SIZE;
