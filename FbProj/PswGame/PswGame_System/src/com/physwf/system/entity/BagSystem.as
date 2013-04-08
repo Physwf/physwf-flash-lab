@@ -59,6 +59,25 @@ package com.physwf.system.entity
 			msg.obj_grid = destGrid;
 			RPCConnectioin.online.call(msg);
 		}
+		/**
+		 * 背包改变。包括改变格子，换装 
+		 * @param items
+		 * 
+		 */		
+		public function changeBag(items:Vector.<BagItemInfo>):void
+		{
+			var msg:MSG_REQ_CHANGE_EQUIPS_1091 = new MSG_REQ_CHANGE_EQUIPS_1091();
+			msg.grids = new Vector.<bag_item_t>();
+			for(var i:uint=0;i<items.length;++i)
+			{
+				var item:bag_item_t = new bag_item_t();
+				item.grid = items[i].girdTag;
+				item.item_cnt = items[i].count;
+				item.item_id = items[i].item.itemID;
+				msg.grids.push(item);
+			}
+			RPCConnectioin.online.call(msg);
+		}
 		
 		private function onBagMessage(e:MessageEvent):void
 		{
@@ -119,8 +138,8 @@ package com.physwf.system.entity
 			{
 				var itemInfo:ItemInfo = new ItemInfo();
 				itemInfo.itemID = items[i].item_id;
-				itemInfo.count = items[i].item_cnt;
 				var bagItem:BagItemInfo = new BagItemInfo();
+				bagItem.count = items[i].item_cnt;
 				bagItem.item = itemInfo;
 				bagItem.girdTag = items[i].grid;
 				offsetItems.push(bagItem);

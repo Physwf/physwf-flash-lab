@@ -44,10 +44,6 @@ package com.physwf.system.vo
 		 */		
 		public var durability:uint;
 		/**
-		 *当前拥有数量 
-		 */		
-		public var count:uint;
-		/**
 		 *最大拥有数量 
 		 */		
 		public var maxNum:uint;

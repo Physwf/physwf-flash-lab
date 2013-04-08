@@ -43,7 +43,7 @@ package com.physwf.system.entity
 					{
 						var item:ItemInfo = new ItemInfo();
 						item.itemID = items[i].item_id;
-						item.count = items[i].item_cnt;
+						info.count = items[i].item_cnt;
 						info.items.push(item);
 					}
 					dispatchEvent(new LootEvent(LootEvent.DROP_NOTI_NEW,info));
@@ -58,7 +58,7 @@ package com.physwf.system.entity
 					{
 						item = new ItemInfo();
 						item.itemID = items[i].item_id;
-						item.count = items[i].item_cnt;
+						info.count = items[i].item_cnt;
 						info.items.push(item);
 					}
 					dispatchEvent(new LootEvent(LootEvent.DROP_PICKED_UP,info));
