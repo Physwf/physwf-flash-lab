@@ -24,6 +24,8 @@ package com.physwf.components.screen
 			mEffect.name = "effect";
 			mTip = new Layer(root);
 			mTip.name = "tip";
+			mTip.mouseEnabled = false;
+			mTip.mouseChildren = false;
 			mRoot = root;
 		}
 		

@@ -19,7 +19,11 @@ package com.physwf.components.ui.controls
 		public static const STATE_OVER:uint = 1;
 		public static const STATE_DOWN:uint = 2;
 		
+		public static const LOCATION_SKILLBAR:String = "l_s";
+		public static const LOCATION_BAG:String = "l_b";
+		
 		public var data:*;//格子所对应的数据
+		public var location:String;//格子所属的位置 如背包，技能栏等,其值为LOCATION_SKILLBAR，LOCATION_BAG
 		
 		private var mBg:Bitmap;
 		private var mContent:Bitmap;
