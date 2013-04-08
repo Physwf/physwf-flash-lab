@@ -36,6 +36,8 @@
 			private var isSpacePressed:Boolean;
 			
 			public var dragItem:Animation;
+			private var DIR_DOCUMENT:String;
+			
 			
 			private function init():void
 			{
@@ -75,6 +77,10 @@
 				var target:URLLoader = e.target as URLLoader;
 				target.removeEventListener(Event.COMPLETE,onConfigComplete);
 				var config:XML = XML(target.data);
+				
+				DIR_DOCUMENT = config.@document;
+				config = XML(String(config).replace(/%DOCUMENT%/g,DIR_DOCUMENT));
+				
 				var read:XML = config.read[0];
 				var write:XML = config.write[0];
 				

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editor>
-	<read iconDir = "F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/">
-		<map dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
-		<teleport dir ="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/objects/teleport" icon="teleport"/>
-		<npc dir ="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/"  icon="npc"/>
+<editor document="E:/physwf-flash-lab/FbProj/PswGame">
+	<read iconDir = "%DOCUMENT%/PswGame_Shell/resource/icons/">
+		<map dir="%DOCUMENT%/PswGame_Shell/resource/map/"/>
+		<teleport dir ="%DOCUMENT%/PswGame_Shell/resource/objects/teleport" icon="teleport"/>
+		<npc dir ="%DOCUMENT%/PswGame_Shell/resource/"  icon="npc"/>
 	</read>
 	<write>
-		<xml dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Script_Map/src/desc"/>
-		<piece dir="F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/map/"/>
+		<xml dir="%DOCUMENT%/PswGame_Script_Map/src/desc"/>
+		<piece dir="%DOCUMENT%/PswGame_Shell/resource/map/"/>
 	</write>
 </editor>
