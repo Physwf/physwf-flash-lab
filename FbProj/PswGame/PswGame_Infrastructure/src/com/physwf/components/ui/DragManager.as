@@ -45,7 +45,7 @@ package com.physwf.components.ui
 		
 		public function get dragItem():BitmapData
 		{
-			return mDragItem.bitmapData;
+			return mDragItem?mDragItem.bitmapData:null;
 		}
 		
 		public function update():void

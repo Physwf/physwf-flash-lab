@@ -2,6 +2,7 @@ package com.physwf.components.pswloader
 {
 	import com.physwf.components.ds.heap.MaxHeap;
 	import com.physwf.components.interfaces.IDisposible;
+	import com.physwf.components.interfaces.INumerical;
 	
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
@@ -9,6 +10,8 @@ package com.physwf.components.pswloader
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.utils.ByteArray;
+	
+	import mx.collections.errors.ItemPendingError;
 
 	/**
 	 * 该Loader参考了BulkLoader的设计，但进行了一定程度的简化。 
@@ -25,7 +28,7 @@ package com.physwf.components.pswloader
 		
 		private static var _allLoaders:Object = {};//所有的PswLoader实例
 		private static var _numInstance:uint;//实例数
-		private static var _itemPrioList:MaxHeap = new MaxHeap(100);//优先加载队列，所有PswLoader实例共享
+		private static var _itemPrioList:MaxHeap = new MaxHeap(200);//优先加载队列，所有PswLoader实例共享
 		/**
 		 * 最大并发数,当最大并发数改变时，PswLoader不会立即清理多出的加载线程
 		 */		
@@ -37,7 +40,7 @@ package com.physwf.components.pswloader
 		
 		private var mItems:Object;//当前PswLoader的加载实例
 		private var mNumItems:uint;
-		private var mWaitItems:Object;//当前PswLoader正在等待start的加载项
+		private var mWaitItems:Vector.<LoadingItem>;//当前PswLoader正在等待start的加载项
 		private var mContents:Object;//当前PswLoader所加载到的项目内容
 		
 		private var mName:String;
@@ -83,7 +86,7 @@ package com.physwf.components.pswloader
 			_numInstance ++;
 			
 			mItems = {};
-			mWaitItems = {};
+			mWaitItems = new Vector.<LoadingItem>();
 			mContents = {};
 		}
 		
@@ -109,6 +112,7 @@ package com.physwf.components.pswloader
 			var TypeClass:Class = _typeClasses[type];
 			var item:LoadingItem = new TypeClass(url,_numInstance.toString(16)+"_"+mNumItems.toString(16),args);
 			mNumItems++;
+			
 			mItems[url] = item;
 			item.priority = priority;
 			//只在两种情况下立即进入队列 1,正在加载 2,已经暂停并且加载模式为手动
@@ -123,7 +127,7 @@ package com.physwf.components.pswloader
 			}
 			else
 			{
-				mWaitItems[url] = item;
+				mWaitItems.push(item);
 			}
 			return item;
 		}
@@ -135,7 +139,7 @@ package com.physwf.components.pswloader
 			if(numConnection<maxConnections && _itemPrioList.size > 0)
 			{
 				var item:LoadingItem = _itemPrioList.Dequeue() as LoadingItem;
-				item.addEventListener(Event.COMPLETE,onItemComplete,false,Number.MIN_VALUE);
+				item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
 				item.load();
 				numConnection++;
 				_loadNext();
@@ -145,9 +149,9 @@ package com.physwf.components.pswloader
 		private function onItemComplete(e:Event):void
 		{
 			var item:LoadingItem = e.target as LoadingItem;
-			item.removeEventListener(Event.COMPLETE,onItemComplete,false);
+			item.removeEventListener(Event.COMPLETE,onItemComplete);
 			mContents[item.url] = item.getContent();
-//			trace(item.url);
+			
 			numConnection--;
 			
 			_loadNext();
@@ -165,11 +169,11 @@ package com.physwf.components.pswloader
 		public function start():void
 		{
 			if(mLoadFlag == LOAD_FLAG_LOADING) return;
-			for(var key:String in mItems)
+			for(var i:uint=0;i<mWaitItems.length;++i)
 			{
-				_itemPrioList.Enqueue(mWaitItems[key]);
-				delete mWaitItems[key];
+				_itemPrioList.Enqueue(mWaitItems[i]);
 			}
+			mWaitItems = new Vector.<LoadingItem>();
 			mLoadFlag = LOAD_FLAG_LOADING;
 			_loadNext();
 		}

@@ -22,7 +22,7 @@ package com.physwf.components.ds.heap
 		
 		public function toString():String
 		{
-			return int(_n) +"\n";
+			return _n +"";
 		}
 	}
 }
