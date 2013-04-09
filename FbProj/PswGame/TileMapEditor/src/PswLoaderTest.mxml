@@ -7,9 +7,30 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.physwf.components.ds.heap.CNumber;
+			import com.physwf.components.ds.heap.MaxHeap;
+			import com.physwf.components.pswloader.LoadingItem;
 			import com.physwf.components.pswloader.PswLoader;
 			private function init():void
 			{
+				var q:MaxHeap = new MaxHeap(100);
+//				q.Enqueue(new CNumber(1));
+//				trace(q.Dequeue());
+				for(var i:uint=0;i<100;++i)
+				{
+					var v:Number = Math.random()*Math.random();
+					trace(v,"equeue");
+//					var item:CNumber = new CNumber(v);
+					var item:LoadingItem = new LoadingItem("","");
+					item.priority = v;
+					q.Enqueue(item);
+				}
+				trace(q.toString());
+				for(i=0;i<100;++i)
+				{
+					trace(q.Dequeue().value)
+				}
+				return;
 				var pLoader:PswLoader = PswLoader.getPswLoader("test");
 				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/100.tga",1,PswLoader.TYPE_IMAGE);
 				pLoader.add("F:/physwf-flash-lab/FbProj/PswGame/PswGame_Shell/resource/icons/skills/101.tga",2,PswLoader.TYPE_IMAGE);
