@@ -36,6 +36,7 @@ package com.physwf.components.ui
 				mLayer.addChild(mDragItem);
 				mOffsetX = v.width * .5;
 				mOffsetY = v.height * .5;
+				update();
 			}
 			else
 			{

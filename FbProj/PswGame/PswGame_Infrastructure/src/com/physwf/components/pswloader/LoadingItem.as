@@ -65,5 +65,14 @@ package com.physwf.components.pswloader
 			mUrl = null;
 			mContent = null;
 		}
+		/**
+		 * 真他妈见鬼了，把这个toString去掉会导致堆排序出问题。 
+		 * @return 
+		 * 
+		 */		
+		override public function toString():String
+		{
+			return "\n priority:"+priority;
+		}
 	}
 }
