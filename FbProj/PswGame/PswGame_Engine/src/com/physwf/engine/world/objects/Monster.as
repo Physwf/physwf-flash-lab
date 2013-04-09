@@ -6,7 +6,7 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.charactor.factory.ICharacterFactory;
 	import com.physwf.components.charactor.factory.MonsterFactory;
 	import com.physwf.components.effects.HeadEffect;
-	import com.physwf.config.ConfigReader;
+	import com.physwf.engine.common.config.ConfigReader;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.system.vo.MonsterInfo;

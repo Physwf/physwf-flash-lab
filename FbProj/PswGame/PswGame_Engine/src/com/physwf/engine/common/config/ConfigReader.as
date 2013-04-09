@@ -1,4 +1,4 @@
-package com.physwf.config
+package com.physwf.engine.common.config
 {
 	import com.physwf.config.struct.cfg_monster;
 	import com.physwf.config.struct.cfg_player;
@@ -6,6 +6,7 @@ package com.physwf.config
 	import com.physwf.system.vo.MonsterInfo;
 	import com.physwf.system.vo.SkillInfo;
 	import com.physwf.system.vo.UserInfo;
+	import com.physwf.config.Config;
 
 	/**
 	 * 配置读取。

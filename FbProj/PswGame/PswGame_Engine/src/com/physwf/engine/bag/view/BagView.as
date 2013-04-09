@@ -122,6 +122,7 @@ package com.physwf.engine.bag.view
 				//临时写，后面需要考虑版本控制和加载优化
 				var grid:uint = items[i].girdTag //- GRID_OFFSET;
 				var cell:Cell = cells[grid];
+				cell.data = items[i];
 				iLoader.setCell(cell,items[i].item.itemID,".jpg");
 			}
 		}
