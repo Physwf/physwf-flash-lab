@@ -18,7 +18,7 @@ package
 		public var accu_max:uint;
 		public var duration_time:uint;
 		public var function_id:uint;
-		public var function_value:uint;
+		public var function_key:uint;
 		public var pet_id:uint;
 		
 		public function xml_item_item_t()
@@ -38,7 +38,7 @@ package
 			accu_max = input.readUnsignedShort();
 			duration_time = input.readUnsignedInt();
 			function_id = input.readUnsignedInt();
-			function_value = input.readUnsignedInt();
+			function_key = input.readUnsignedInt();
 			pet_id = input.readUnsignedShort();			
 		}
 		
@@ -55,7 +55,7 @@ package
 			output.writeShort(accu_max);
 			output.writeUnsignedInt(duration_time);
 			output.writeUnsignedInt(function_id);
-			output.writeUnsignedInt(function_value);
+			output.writeUnsignedInt(function_key);
 			output.writeShort(pet_id);			
 		}
 	}

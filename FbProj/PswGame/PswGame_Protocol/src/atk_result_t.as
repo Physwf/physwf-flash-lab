@@ -10,11 +10,8 @@ package
 		public var src_type:uint;
 		public var src_id:uint;
 		public var direction:uint;
-		public var obj_type:uint;
-		public var obj_id:uint;
 		public var skill_id:uint;
-		public var obj_hp:uint;
-		public var obj_mp:uint;
+		public var objs:Vector.<btl_obj_t>;
 		
 		public function atk_result_t()
 		{
@@ -25,11 +22,15 @@ package
 			src_type = input.readUnsignedByte();
 			src_id = input.readUnsignedInt();
 			direction = input.readUnsignedByte();
-			obj_type = input.readUnsignedByte();
-			obj_id = input.readUnsignedInt();
 			skill_id = input.readUnsignedShort();
-			obj_hp = input.readUnsignedInt();
-			obj_mp = input.readUnsignedInt();			
+			var objsLen:uint =input.readUnsignedInt();
+			objs= new Vector.<btl_obj_t>();
+			for(var i:int=0;i<objsLen;++i)
+			{
+				var objs_item:btl_obj_t = new btl_obj_t()
+				objs_item.readExternal(input);;
+				objs.push(objs_item);
+			}			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -37,11 +38,12 @@ package
 			output.writeByte(src_type);
 			output.writeUnsignedInt(src_id);
 			output.writeByte(direction);
-			output.writeByte(obj_type);
-			output.writeUnsignedInt(obj_id);
 			output.writeShort(skill_id);
-			output.writeUnsignedInt(obj_hp);
-			output.writeUnsignedInt(obj_mp);			
+			output.writeUnsignedInt(objs.length);
+			for(var j:int=0;j<objs.length;++j)
+			{
+				objs[j].writeExternal(output);
+			}			
 		}
 	}
 }

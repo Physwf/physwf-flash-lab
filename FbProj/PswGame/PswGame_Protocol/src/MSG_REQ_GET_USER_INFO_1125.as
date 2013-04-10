@@ -5,22 +5,20 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_SET_USER_SHORTCUT_1201 extends MsgBase
+	final public class MSG_REQ_GET_USER_INFO_1125 extends MsgBase
 	{
-		public var shortcuts:Vector.<uint>;
+		public var user_id:uint;
+		public var role_tm:uint;
 		
-		public function MSG_REQ_SET_USER_SHORTCUT_1201()
+		public function MSG_REQ_GET_USER_INFO_1125()
 		{
-			super(1201)
+			super(1125)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			for(var i:int=0;i<10;++i)
-			{
-				output.writeUnsignedInt(shortcuts[i])
-			}
-			
+			output.writeUnsignedInt(user_id);
+			output.writeUnsignedInt(role_tm);			
 		}
 	}
 }

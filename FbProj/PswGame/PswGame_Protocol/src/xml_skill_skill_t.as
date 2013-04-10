@@ -18,11 +18,12 @@ package
 		public var hp_consumed:uint;
 		public var sp_consumed:uint;
 		public var cd:uint;
+		public var mouse:uint;
 		public var target_type:uint;
 		public var range_num:uint;
 		public var atk_distance:uint;
-		public var weapon_damage:uint;
-		public var pro_damage:uint;
+		public var add_damage:uint;
+		public var damage_type:uint;
 		public var enmity_type:uint;
 		public var enmity:uint;
 		public var per_damage:uint;
@@ -32,8 +33,6 @@ package
 		public var skill_radius:uint;
 		public var height:uint;
 		public var width:uint;
-		public var offset_x:uint;
-		public var offset_y:uint;
 		public var speed:uint;
 		public var falldown:uint;
 		public var invoke_skill_id:uint;
@@ -41,6 +40,8 @@ package
 		public var chant_time:uint;
 		public var chant_break:uint;
 		public var genius_id:uint;
+		public var trap_duration:uint;
+		public var trap_damage:uint;
 		
 		public function xml_skill_skill_t()
 		{
@@ -59,11 +60,12 @@ package
 			hp_consumed = input.readUnsignedShort();
 			sp_consumed = input.readUnsignedShort();
 			cd = input.readUnsignedShort();
+			mouse = input.readUnsignedByte();
 			target_type = input.readUnsignedByte();
 			range_num = input.readUnsignedShort();
 			atk_distance = input.readUnsignedShort();
-			weapon_damage = input.readUnsignedShort();
-			pro_damage = input.readUnsignedShort();
+			add_damage = input.readUnsignedShort();
+			damage_type = input.readUnsignedShort();
 			enmity_type = input.readUnsignedShort();
 			enmity = input.readUnsignedShort();
 			per_damage = input.readUnsignedShort();
@@ -79,15 +81,15 @@ package
 			skill_radius = input.readUnsignedShort();
 			height = input.readUnsignedShort();
 			width = input.readUnsignedShort();
-			offset_x = input.readUnsignedShort();
-			offset_y = input.readUnsignedShort();
 			speed = input.readUnsignedShort();
 			falldown = input.readUnsignedShort();
 			invoke_skill_id = input.readUnsignedShort();
 			invoke_skill_odds = input.readUnsignedShort();
 			chant_time = input.readUnsignedInt();
 			chant_break = input.readUnsignedByte();
-			genius_id = input.readUnsignedShort();			
+			genius_id = input.readUnsignedShort();
+			trap_duration = input.readUnsignedInt();
+			trap_damage = input.readUnsignedByte();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -103,11 +105,12 @@ package
 			output.writeShort(hp_consumed);
 			output.writeShort(sp_consumed);
 			output.writeShort(cd);
+			output.writeByte(mouse);
 			output.writeByte(target_type);
 			output.writeShort(range_num);
 			output.writeShort(atk_distance);
-			output.writeShort(weapon_damage);
-			output.writeShort(pro_damage);
+			output.writeShort(add_damage);
+			output.writeShort(damage_type);
 			output.writeShort(enmity_type);
 			output.writeShort(enmity);
 			output.writeShort(per_damage);
@@ -121,15 +124,15 @@ package
 			output.writeShort(skill_radius);
 			output.writeShort(height);
 			output.writeShort(width);
-			output.writeShort(offset_x);
-			output.writeShort(offset_y);
 			output.writeShort(speed);
 			output.writeShort(falldown);
 			output.writeShort(invoke_skill_id);
 			output.writeShort(invoke_skill_odds);
 			output.writeUnsignedInt(chant_time);
 			output.writeByte(chant_break);
-			output.writeShort(genius_id);			
+			output.writeShort(genius_id);
+			output.writeUnsignedInt(trap_duration);
+			output.writeByte(trap_damage);			
 		}
 	}
 }

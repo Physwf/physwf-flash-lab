@@ -5,10 +5,10 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_RES_SET_TRAP_1124 extends MsgBase
+	final public class MSG_RES_ATTACK_BY_OBJ_1040 extends MsgBase
 	{
 		
-		public function MSG_RES_SET_TRAP_1124(mid:uint)
+		public function MSG_RES_ATTACK_BY_OBJ_1040(mid:uint)
 		{
 			super(mid);
 		}

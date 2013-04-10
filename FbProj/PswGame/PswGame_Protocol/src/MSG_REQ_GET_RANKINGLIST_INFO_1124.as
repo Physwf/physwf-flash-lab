@@ -5,18 +5,18 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_GET_MAP_USER_DETAIL_INFO_1033 extends MsgBase
+	final public class MSG_REQ_GET_RANKINGLIST_INFO_1124 extends MsgBase
 	{
-		public var user:uid_role_t;
+		public var ranking_type:uint;
 		
-		public function MSG_REQ_GET_MAP_USER_DETAIL_INFO_1033()
+		public function MSG_REQ_GET_RANKINGLIST_INFO_1124()
 		{
-			super(1033)
+			super(1124)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			user.writeExternal(output)			
+			output.writeUnsignedInt(ranking_type);			
 		}
 	}
 }
