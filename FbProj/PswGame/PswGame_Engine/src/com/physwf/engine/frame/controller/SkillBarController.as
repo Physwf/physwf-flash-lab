@@ -9,10 +9,16 @@ package com.physwf.engine.frame.controller
 	import com.physwf.system.vo.SkillInfo;
 	
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
+	import flash.geom.Point;
 	import flash.ui.Mouse;
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
 
 	public class SkillBarController
 	{
+		private var timeout:uint;
+		
 		public function SkillBarController()
 		{
 		}
@@ -34,10 +40,24 @@ package com.physwf.engine.frame.controller
 					cell.startCd();
 					break;
 				case CellEvent.CELL_PRESSED:
-					DragManager.instance.dragItem = cell.content.bitmapData.clone();
+					if(cell.data == null) return;
+					DragManager.instance.cellDraged = cell;
+					timeout = setTimeout(function():void
+					{
+						DragManager.instance.dragItem = cell.content.bitmapData;
+						DragManager.instance.dragInfo = cell.data;
+					},500);
 					break;
 				case CellEvent.CELL_RELEASED:
-					cell.contentData = DragManager.instance.dragItem;
+					clearTimeout(timeout);
+					if(cell != DragManager.instance.cellDraged)
+					{
+						cell.contentData = DragManager.instance.dragItem;
+						cell.data = DragManager.instance.dragInfo;
+					}
+					DragManager.instance.cellDraged = null;
+					DragManager.instance.dragItem = null;
+					DragManager.instance.dragInfo = null;
 					break;
 			}
 			if(cell)

@@ -20,6 +20,7 @@ package com.physwf.engine.frame.view
 		private var bar:HBar;
 		private var cells:Vector.<Cell>;
 		private var controller:SkillBarController;
+		private const NUM_SLOTS:uint = 8;
 		
 		public function SkillBarView()
 		{
@@ -46,19 +47,21 @@ package com.physwf.engine.frame.view
 			var config:CellConfig = FrameAssets.SKILL_CELL;
 			//temp 后面需要读取快捷列表
 			var iLoader:IconLoader = IconLoader.getSameIconLoader("skills");
-			for(var i:int=0;i<skills.length;++i)
+			for(var i:int=0;i<NUM_SLOTS;++i)
 			{
 				var cell:Cell = cellFactory.createCell(config);
-				var skill:SkillInfo = skills[i];
-				if(skill == null) continue;
-				cell.data = skill;
 				cell.location = Cell.LOCATION_SKILLBAR;
 				cell.cdTime = 5000;//ms
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
 				addChild(cell);
 				cells.push(cell);
-				iLoader.setCell(cell,skill.id,".tga");
+				var skill:SkillInfo = (i<skills.length) ? skills[i] : null;
+				cell.data = skill;
+				if(skill) 
+				{
+					iLoader.setCell(cell,skill.id,".tga");
+				}
 			}
 		}
 		

@@ -93,6 +93,22 @@ package com.physwf.application.input
 		private function onMouseClick(e:MouseEvent):void
 		{
 			var target:* = e.target;
+			
+			if(target is Cell)
+			{
+				var cell:Cell = target as Cell;
+				if(cell.location == Cell.LOCATION_SKILLBAR)
+				{
+					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
+				}
+				else if(cell.location == Cell.LOCATION_BAG)
+				{
+					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
+				}
+				e.stopImmediatePropagation();
+				return;
+			}
+			
 			var manager:Character = Character.managers[target] as Character;
 			if(manager is Monster)
 			{
@@ -109,19 +125,6 @@ package com.physwf.application.input
 			else if(manager is NPC)
 			{
 //				new CharacterEvent(CharacterEvent.
-			}
-			else if(manager is Cell)
-			{
-				var cell:Cell = target as Cell;
-				if(cell.location == Cell.LOCATION_SKILLBAR)
-				{
-					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
-				}
-				else if(cell.location == Cell.LOCATION_BAG)
-				{
-					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
-				}
-				e.stopImmediatePropagation();
 			}
 		}
 		

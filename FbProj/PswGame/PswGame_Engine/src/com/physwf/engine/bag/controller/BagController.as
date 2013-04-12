@@ -7,12 +7,13 @@ package com.physwf.engine.bag.controller
 	import com.physwf.engine.common.events.CellEvent;
 	
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
+	import flash.geom.Point;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 
 	public class BagController
 	{
-		private var cellDraged:Cell;
 		private var timeout:uint;
 		
 		public function BagController()
@@ -36,22 +37,22 @@ package com.physwf.engine.bag.controller
 					break;
 				case CellEvent.CELL_PRESSED:
 					if(cell.data == null) return;
-					cellDraged = cell;
+					DragManager.instance.cellDraged = cell;
 					timeout = setTimeout(function():void
 					{
-						DragManager.instance.dragItem = cell.content.bitmapData.clone();
+						DragManager.instance.dragItem = cell.content.bitmapData;
 						DragManager.instance.dragInfo = cell.data;
-					},100);
+					},500);
+					
 					break;
 				case CellEvent.CELL_RELEASED:
 					clearTimeout(timeout);
-					if(cellDraged && cell != cellDraged)
+					if(cell != DragManager.instance.cellDraged)
 					{
 						cell.contentData = DragManager.instance.dragItem;
 						cell.data = DragManager.instance.dragInfo;
-						cellDraged.contentData=null;
 					}
-					cellDraged = null;
+					DragManager.instance.cellDraged = null;
 					DragManager.instance.dragItem = null;
 					DragManager.instance.dragInfo = null;
 					break;
