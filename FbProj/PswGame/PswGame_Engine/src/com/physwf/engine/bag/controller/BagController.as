@@ -37,9 +37,9 @@ package com.physwf.engine.bag.controller
 					break;
 				case CellEvent.CELL_PRESSED:
 					if(cell.data == null) return;
-					DragManager.instance.cellDraged = cell;
 					timeout = setTimeout(function():void
 					{
+						DragManager.instance.cellDraged = cell;
 						DragManager.instance.dragItem = cell.content.bitmapData;
 						DragManager.instance.dragInfo = cell.data;
 					},500);
@@ -47,7 +47,7 @@ package com.physwf.engine.bag.controller
 					break;
 				case CellEvent.CELL_RELEASED:
 					clearTimeout(timeout);
-					if(cell != DragManager.instance.cellDraged)
+					if(DragManager.instance.cellDraged && cell != DragManager.instance.cellDraged)
 					{
 						cell.contentData = DragManager.instance.dragItem;
 						cell.data = DragManager.instance.dragInfo;

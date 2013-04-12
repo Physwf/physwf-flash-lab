@@ -36,21 +36,22 @@ package com.physwf.engine.frame.controller
 			switch(e.type)
 			{
 				case CellEvent.CELL_CLICKED:
+					if(cell.data == null) return;
 					Engine.challenge.selectSill = cell.data as SkillInfo;
 					cell.startCd();
 					break;
 				case CellEvent.CELL_PRESSED:
 					if(cell.data == null) return;
-					DragManager.instance.cellDraged = cell;
 					timeout = setTimeout(function():void
 					{
+						DragManager.instance.cellDraged = cell;
 						DragManager.instance.dragItem = cell.content.bitmapData;
 						DragManager.instance.dragInfo = cell.data;
 					},500);
 					break;
 				case CellEvent.CELL_RELEASED:
 					clearTimeout(timeout);
-					if(cell != DragManager.instance.cellDraged)
+					if(DragManager.instance.cellDraged && cell != DragManager.instance.cellDraged)
 					{
 						cell.contentData = DragManager.instance.dragItem;
 						cell.data = DragManager.instance.dragInfo;
