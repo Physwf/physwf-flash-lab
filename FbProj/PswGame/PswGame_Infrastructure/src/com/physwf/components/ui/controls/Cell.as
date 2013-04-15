@@ -3,6 +3,7 @@ package com.physwf.components.ui.controls
 	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.ui.assets.CellAssets;
+	import com.physwf.components.utils.AlgebraUtils;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -146,21 +147,55 @@ package com.physwf.components.ui.controls
 			}
 			
 			if(!mIsCding) return;
-			const R:uint = 14;
+			const R:uint = 15;
+			
 			
 			mTime += (getTimer() - sHelpTime);
 			sHelpTime = getTimer();
-			var rad:Number = (mTime / mCdTime) * Math.PI * 2 - Math.PI * .5;
-			var $x:Number = Math.cos(rad) * R;
-			var $y:Number = Math.sin(rad) * R;
-			mCdShape.graphics.beginGradientFill(GradientType.RADIAL,[0,0],[0.5,0.5],[0,255]);
+			var r:Number = (mTime / mCdTime) * Math.PI * 2;
+			var p:Point = AlgebraUtils.radToCoord(r);
+			mCdShape.graphics.clear();
 			mCdShape.graphics.moveTo(0,0);
-			mCdShape.graphics.lineTo(sHelpPoint.x,sHelpPoint.y);
-			sHelpPoint.x = $x;
-			sHelpPoint.y = $y;
-			mCdShape.graphics.lineTo($x,$y);
-			mCdShape.graphics.lineTo(0,0);
-			mCdShape.graphics.endFill();
+			mCdShape.graphics.beginGradientFill(GradientType.RADIAL,[0,0],[0.5,0.5],[0,255]);
+			if(r<Math.PI * .25)
+			{
+				mCdShape.graphics.lineTo(0,-R);
+				mCdShape.graphics.lineTo(-R,-R);
+				mCdShape.graphics.lineTo(-R,R);
+				mCdShape.graphics.lineTo(R,R);
+				mCdShape.graphics.lineTo(R,-R);
+				mCdShape.graphics.lineTo(p.x*R,p.y*R);
+			}
+			else if(r>=Math.PI * .25 && r < Math.PI * .75)
+			{
+				mCdShape.graphics.lineTo(0,-R);
+				mCdShape.graphics.lineTo(-R,-R);
+				mCdShape.graphics.lineTo(-R,R);
+				mCdShape.graphics.lineTo(R,R);
+				mCdShape.graphics.lineTo(p.x*R,p.y*R);
+			}
+			else if(r >= Math.PI * .75 && r < Math.PI * 1.25)
+			{
+				mCdShape.graphics.lineTo(0,-R);
+				mCdShape.graphics.lineTo(-R,-R);
+				mCdShape.graphics.lineTo(-R,R);
+				mCdShape.graphics.lineTo(p.x*R,p.y*R);
+			}
+			else if(r >= Math.PI * 1.25 && r < Math.PI * 1.75)
+			{
+				mCdShape.graphics.lineTo(0,-R);
+				mCdShape.graphics.lineTo(-R,-R);
+				mCdShape.graphics.lineTo(p.x*R,p.y*R);
+			}
+			else if(r >= Math.PI * 1.75 && r < Math.PI * 2)
+			{
+				mCdShape.graphics.lineTo(0,-R);
+				mCdShape.graphics.lineTo(p.x*R,p.y*R);
+			}
+			else
+			{
+				mCdShape.graphics.clear();
+			}
 			
 			if(mTime >= mCdTime)
 			{
