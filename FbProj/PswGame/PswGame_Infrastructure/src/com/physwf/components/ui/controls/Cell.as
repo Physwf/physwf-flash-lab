@@ -23,8 +23,11 @@ package com.physwf.components.ui.controls
 		public static const LOCATION_SKILLBAR:String = "l_s";
 		public static const LOCATION_BAG:String = "l_b";
 		
+		public static var shareCdTime:uint = 2000;//公共cd时间
+		
 		public var data:*;//格子所对应的数据
 		public var location:String;//格子所属的位置 如背包，技能栏等,其值为LOCATION_SKILLBAR，LOCATION_BAG
+		public var cdTime:uint;
 		
 		private var mBg:Bitmap;
 		private var mContent:Bitmap;
@@ -100,13 +103,18 @@ package com.physwf.components.ui.controls
 			return mContent;
 		}
 		
-		public function set cdTime(v:uint):void
-		{
-			mCdTime = v;
-		}
-		
 		public function startCd():void
 		{
+			mCdTime = cdTime;
+			sHelpTime = getTimer();
+			mTime = 0;
+			mIsCding = true;
+			sHelpPoint = new Point(0,0);
+		}
+		
+		public function startShareCd():void
+		{
+			mCdTime = shareCdTime;
 			sHelpTime = getTimer();
 			mTime = 0;
 			mIsCding = true;
