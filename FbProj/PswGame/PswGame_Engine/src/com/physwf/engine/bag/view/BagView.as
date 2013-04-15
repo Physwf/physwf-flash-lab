@@ -9,19 +9,14 @@ package com.physwf.engine.bag.view
 	import com.physwf.components.ui.factory.PanelFactory;
 	import com.physwf.components.ui.layout.IPopup;
 	import com.physwf.components.ui.layout.Panel;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.bag.config.BagAssets;
 	import com.physwf.engine.bag.controller.BagController;
 	import com.physwf.system.System;
 	import com.physwf.system.vo.BagItemInfo;
-	import com.physwf.system.vo.ItemInfo;
 	
-	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Loader;
-	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.net.URLRequest;
 	
 	public class BagView extends Sprite implements IUpdatable,IPopup
 	{
@@ -33,7 +28,6 @@ package com.physwf.engine.bag.view
 		
 		private var bgPanel:Panel;
 		private var cellLayer:Sprite;
-		private var cells:Vector.<Cell>;
 		
 		private var isShow:Boolean = false;
 		
@@ -42,7 +36,6 @@ package com.physwf.engine.bag.view
 		public function BagView()
 		{
 			var pFactory:PanelFactory = FactoryManager.panelFactory;
-			
 			
 			var config:PanelConfig = BagAssets.PANEL_BAG;
 			bgPanel = pFactory.createPanel(config);
@@ -61,13 +54,14 @@ package com.physwf.engine.bag.view
 		private function createCells():void
 		{
 			var cFactory:CellFactory = FactoryManager.cellFactroy;
-			cells = new Vector.<Cell>();
 			var numCells:uint = NUM_CELL_X * NUM_CELL_Y;
 			for(var i:uint=0;i<numCells;++i)
 			{
 				var cell:Cell = cFactory.createCell(BagAssets.CELL_BAG);
 				cell.location = Cell.LOCATION_BAG;
-				cells.push(cell);
+				
+				Engine.cm.addBagCell(cell);
+				
 				cell.x = i%NUM_CELL_X * CELL_SIZE;
 				cell.y = Math.floor(i/NUM_CELL_X) * CELL_SIZE;
 				cellLayer.addChild(cell);
@@ -77,10 +71,6 @@ package com.physwf.engine.bag.view
 		public function update():void
 		{
 			bgPanel.update();
-			for(var i:int=0;i<cells.length;++i)
-			{
-				cells[i].update();
-			}
 		}
 		
 		public function hide():void
@@ -121,7 +111,7 @@ package com.physwf.engine.bag.view
 			{
 				//临时写，后面需要考虑版本控制和加载优化
 				var grid:uint = items[i].girdTag //- GRID_OFFSET;
-				var cell:Cell = cells[grid];
+				var cell:Cell = Engine.cm.getBagCell(grid);
 				cell.data = items[i];
 				iLoader.setCell(cell,items[i].item.itemID,".jpg");
 			}

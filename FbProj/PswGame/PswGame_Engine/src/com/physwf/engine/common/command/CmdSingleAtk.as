@@ -6,6 +6,7 @@ package com.physwf.engine.common.command
 	import com.physwf.components.effects.EffectConfig;
 	import com.physwf.components.effects.EffectFactory;
 	import com.physwf.components.effects.IEffectFactory;
+	import com.physwf.config.Config;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.Fight;
 	import com.physwf.engine.fight.effects.EffectSystem;
@@ -15,7 +16,6 @@ package com.physwf.engine.common.command
 	import com.physwf.system.entity.MySelf;
 	
 	import flash.events.Event;
-	import com.physwf.config.Config;
 
 	/**
 	 *单体攻击，只对一个目标进行攻击 
@@ -40,6 +40,7 @@ package com.physwf.engine.common.command
 		{
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skillID:uint = mSkill.id;
+			mSkill.effectId = 1;
 			var type:uint = Config.getEffectConfig(mSkill.effectId).type;
 			var config:EffectConfig = EffectSystem.getConfig(mSkill.effectId);
 			trace("type=",type,"effectId",mSkill.effectId);
@@ -50,8 +51,9 @@ package com.physwf.engine.common.command
 			var rad:Number = Math.atan2(mTarget.view.y - mChara.view.y,mTarget.view.x -mChara.view.x);
 			mChara.view.direction = ISODirection.radianToDirect8(rad);
 			mChara.attack();
-			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,1);
+			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,skillID);
 			super.execute();
+			dispatchEvent(new Event(FINISH));
 		}
 	}
 }

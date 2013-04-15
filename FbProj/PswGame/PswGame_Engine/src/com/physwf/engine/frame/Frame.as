@@ -5,6 +5,7 @@ package com.physwf.engine.frame
 	import com.physwf.components.ui.DragManager;
 	import com.physwf.components.ui.IconLoader;
 	import com.physwf.engine.Engine;
+	import com.physwf.engine.common.CM;
 	import com.physwf.engine.frame.manager.SkillBar;
 	import com.physwf.engine.frame.manager.ToolBar;
 	
@@ -23,6 +24,9 @@ package com.physwf.engine.frame
 		{
 			Engine.frame = this;
 			
+			Engine.cm = new CM();
+			Engine.cm.initialize();
+			
 			IconLoader.iconDir = "resource/icons/";
 			DragManager.instance = new DragManager(ScreenManager.main.tip);
 			
@@ -37,6 +41,7 @@ package com.physwf.engine.frame
 			mToolBar.update();
 			mSkillBar.update();
 			DragManager.instance.update();
+			Engine.cm.update();
 		}
 		
 	}

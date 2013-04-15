@@ -8,6 +8,7 @@ package com.physwf.engine.frame.view
 	import com.physwf.components.ui.factory.CellFactory;
 	import com.physwf.components.ui.factory.FactoryManager;
 	import com.physwf.components.ui.layout.HBar;
+	import com.physwf.engine.Engine;
 	import com.physwf.engine.frame.config.FrameAssets;
 	import com.physwf.engine.frame.controller.SkillBarController;
 	import com.physwf.system.System;
@@ -18,7 +19,6 @@ package com.physwf.engine.frame.view
 	public class SkillBarView extends Sprite implements IUpdatable
 	{
 		private var bar:HBar;
-		private var cells:Vector.<Cell>;
 		private var controller:SkillBarController;
 		private const NUM_SLOTS:uint = 8;
 		
@@ -38,7 +38,6 @@ package com.physwf.engine.frame.view
 			var shortcuts:Vector.<uint> = System.skill.shortcutSkill;
 			
 			var cellFactory:CellFactory = FactoryManager.cellFactroy;
-			cells = new Vector.<Cell>();
 			
 			const num:uint = shortcuts.length;
 			const offsetX:uint = 62;
@@ -51,15 +50,17 @@ package com.physwf.engine.frame.view
 			{
 				var cell:Cell = cellFactory.createCell(config);
 				cell.location = Cell.LOCATION_SKILLBAR;
-				cell.cdTime = 5000;//ms
 				cell.x = offsetX + (config.size+interval) * i;
 				cell.y = offsetY;
 				addChild(cell);
-				cells.push(cell);
+				
+				Engine.cm.addSkillCell(cell);
+				
 				var skill:SkillInfo = (i<skills.length) ? skills[i] : null;
 				cell.data = skill;
 				if(skill) 
 				{
+					cell.cdTime = 5000;//ms
 					iLoader.setCell(cell,skill.id,".tga");
 				}
 			}
@@ -68,10 +69,6 @@ package com.physwf.engine.frame.view
 		public function update():void
 		{
 			bar.update();
-			for(var i:uint=0;i<cells.length;++i)
-			{
-				cells[i].update();
-			}
 		}
 	}
 }
