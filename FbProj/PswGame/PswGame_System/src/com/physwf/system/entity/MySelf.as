@@ -168,12 +168,9 @@ package com.physwf.system.entity
 					userInfo.map_x = msg1001.user.map_x;
 					userInfo.map_y = msg1001.user.map_y;
 					userInfo.resource_id = msg1001.user.role_sex;
-					userInfo.strength = msg1001.user.strength;
-					userInfo.physical = msg1001.user.physique;
 					userInfo.hp = msg1001.user.hp;
 					userInfo.mp = msg1001.user.mp;
 					userInfo.energy = msg1001.user.energy;
-					userInfo.hp_max = msg1001.user.hp_max;
 					userInfo.attack = msg1001.user.level;
 					var skills:Vector.<SkillInfo> = new Vector.<SkillInfo>();
 					for(i=0;i<msg1001.skills.length;++i)
