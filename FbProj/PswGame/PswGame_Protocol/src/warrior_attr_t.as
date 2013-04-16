@@ -7,6 +7,8 @@ package
 	
 	public class warrior_attr_t implements IExternalizable
 	{
+		public var hp_max:uint;
+		public var mp_max:uint;
 		public var phy_atk:uint;
 		public var solar_atk:uint;
 		public var phy_def:uint;
@@ -31,6 +33,8 @@ package
 		
 		public function readExternal(input:IDataInput):void
 		{
+			hp_max = input.readUnsignedInt();
+			mp_max = input.readUnsignedInt();
 			phy_atk = input.readUnsignedInt();
 			solar_atk = input.readUnsignedInt();
 			phy_def = input.readUnsignedInt();
@@ -52,6 +56,8 @@ package
 		
 		public function writeExternal(output:IDataOutput):void
 		{
+			output.writeUnsignedInt(hp_max);
+			output.writeUnsignedInt(mp_max);
 			output.writeUnsignedInt(phy_atk);
 			output.writeUnsignedInt(solar_atk);
 			output.writeUnsignedInt(phy_def);

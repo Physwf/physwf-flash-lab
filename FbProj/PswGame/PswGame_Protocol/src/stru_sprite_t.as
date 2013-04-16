@@ -29,9 +29,10 @@ package
 		public var vigour:uint;
 		public var items:Vector.<bag_item_t>;
 		public var equips:Vector.<stru_equip_t>;
-		public var pets:Vector.<stru_pet_t>;
+		public var pets:Vector.<stru_pet_base_t>;
 		public var tasks:Vector.<stru_task_t>;
 		public var skills:Vector.<stru_skill_t>;
+		public var ssid_vec:Vector.<key_value_t>;
 		
 		public function stru_sprite_t()
 		{
@@ -76,10 +77,10 @@ package
 				equips.push(equips_item);
 			}
 			var petsLen:uint =input.readUnsignedInt();
-			pets= new Vector.<stru_pet_t>();
+			pets= new Vector.<stru_pet_base_t>();
 			for(var q:int=0;q<petsLen;++q)
 			{
-				var pets_item:stru_pet_t = new stru_pet_t()
+				var pets_item:stru_pet_base_t = new stru_pet_base_t()
 				pets_item.readExternal(input);;
 				pets.push(pets_item);
 			}
@@ -98,6 +99,14 @@ package
 				var skills_item:stru_skill_t = new stru_skill_t()
 				skills_item.readExternal(input);;
 				skills.push(skills_item);
+			}
+			var ssid_vecLen:uint =input.readUnsignedInt();
+			ssid_vec= new Vector.<key_value_t>();
+			for(var v:int=0;v<ssid_vecLen;++v)
+			{
+				var ssid_vec_item:key_value_t = new key_value_t()
+				ssid_vec_item.readExternal(input);;
+				ssid_vec.push(ssid_vec_item);
 			}			
 		}
 		
@@ -156,6 +165,11 @@ package
 			for(var u:int=0;u<skills.length;++u)
 			{
 				skills[u].writeExternal(output);
+			}
+			output.writeUnsignedInt(ssid_vec.length);
+			for(var w:int=0;w<ssid_vec.length;++w)
+			{
+				ssid_vec[w].writeExternal(output);
 			}			
 		}
 	}

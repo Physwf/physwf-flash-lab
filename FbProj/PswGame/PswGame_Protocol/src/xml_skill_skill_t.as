@@ -22,8 +22,7 @@ package
 		public var target_type:uint;
 		public var range_num:uint;
 		public var atk_distance:uint;
-		public var add_damage:uint;
-		public var damage_type:uint;
+		public var direct_damage:uint;
 		public var enmity_type:uint;
 		public var enmity:uint;
 		public var per_damage:uint;
@@ -42,6 +41,12 @@ package
 		public var genius_id:uint;
 		public var trap_duration:uint;
 		public var trap_damage:uint;
+		public var add_phy_atk:uint;
+		public var add_solar_atk:uint;
+		public var add_earth_atk:uint;
+		public var add_water_atk:uint;
+		public var add_fire_atk:uint;
+		public var add_wind_atk:uint;
 		
 		public function xml_skill_skill_t()
 		{
@@ -64,8 +69,7 @@ package
 			target_type = input.readUnsignedByte();
 			range_num = input.readUnsignedShort();
 			atk_distance = input.readUnsignedShort();
-			add_damage = input.readUnsignedShort();
-			damage_type = input.readUnsignedShort();
+			direct_damage = input.readUnsignedShort();
 			enmity_type = input.readUnsignedShort();
 			enmity = input.readUnsignedShort();
 			per_damage = input.readUnsignedShort();
@@ -89,7 +93,13 @@ package
 			chant_break = input.readUnsignedByte();
 			genius_id = input.readUnsignedShort();
 			trap_duration = input.readUnsignedInt();
-			trap_damage = input.readUnsignedByte();			
+			trap_damage = input.readUnsignedByte();
+			add_phy_atk = input.readUnsignedInt();
+			add_solar_atk = input.readUnsignedInt();
+			add_earth_atk = input.readUnsignedShort();
+			add_water_atk = input.readUnsignedShort();
+			add_fire_atk = input.readUnsignedShort();
+			add_wind_atk = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -109,8 +119,7 @@ package
 			output.writeByte(target_type);
 			output.writeShort(range_num);
 			output.writeShort(atk_distance);
-			output.writeShort(add_damage);
-			output.writeShort(damage_type);
+			output.writeShort(direct_damage);
 			output.writeShort(enmity_type);
 			output.writeShort(enmity);
 			output.writeShort(per_damage);
@@ -132,7 +141,13 @@ package
 			output.writeByte(chant_break);
 			output.writeShort(genius_id);
 			output.writeUnsignedInt(trap_duration);
-			output.writeByte(trap_damage);			
+			output.writeByte(trap_damage);
+			output.writeUnsignedInt(add_phy_atk);
+			output.writeUnsignedInt(add_solar_atk);
+			output.writeShort(add_earth_atk);
+			output.writeShort(add_water_atk);
+			output.writeShort(add_fire_atk);
+			output.writeShort(add_wind_atk);			
 		}
 	}
 }

@@ -27,6 +27,11 @@ package
 		public var wind_def:uint;
 		public var fire_atk:uint;
 		public var fire_def:uint;
+		public var strength:uint;
+		public var solar:uint;
+		public var physique:uint;
+		public var spirit:uint;
+		public var agility:uint;
 		
 		public function xml_attr_attr_t()
 		{
@@ -53,7 +58,12 @@ package
 			wind_atk = input.readUnsignedShort();
 			wind_def = input.readUnsignedShort();
 			fire_atk = input.readUnsignedShort();
-			fire_def = input.readUnsignedShort();			
+			fire_def = input.readUnsignedShort();
+			strength = input.readUnsignedShort();
+			solar = input.readUnsignedShort();
+			physique = input.readUnsignedShort();
+			spirit = input.readUnsignedShort();
+			agility = input.readUnsignedShort();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -77,7 +87,12 @@ package
 			output.writeShort(wind_atk);
 			output.writeShort(wind_def);
 			output.writeShort(fire_atk);
-			output.writeShort(fire_def);			
+			output.writeShort(fire_def);
+			output.writeShort(strength);
+			output.writeShort(solar);
+			output.writeShort(physique);
+			output.writeShort(spirit);
+			output.writeShort(agility);			
 		}
 	}
 }

@@ -19,14 +19,6 @@ package
 		public var hp:uint;
 		public var mp:uint;
 		public var sp:uint;
-		public var hp_max:uint;
-		public var mp_max:uint;
-		public var strength:uint;
-		public var solar:uint;
-		public var physique:uint;
-		public var spirit:uint;
-		public var agility:uint;
-		public var warrior_attr:warrior_attr_t;
 		public var vigour:uint;
 		public var energy:uint;
 		
@@ -47,15 +39,6 @@ package
 			hp = input.readUnsignedInt();
 			mp = input.readUnsignedInt();
 			sp = input.readUnsignedShort();
-			hp_max = input.readUnsignedInt();
-			mp_max = input.readUnsignedInt();
-			strength = input.readUnsignedShort();
-			solar = input.readUnsignedShort();
-			physique = input.readUnsignedShort();
-			spirit = input.readUnsignedShort();
-			agility = input.readUnsignedShort();
-			warrior_attr= new warrior_attr_t();
-			warrior_attr.readExternal(input)
 			vigour = input.readUnsignedShort();
 			energy = input.readUnsignedShort();			
 		}
@@ -83,14 +66,6 @@ package
 			output.writeUnsignedInt(hp);
 			output.writeUnsignedInt(mp);
 			output.writeShort(sp);
-			output.writeUnsignedInt(hp_max);
-			output.writeUnsignedInt(mp_max);
-			output.writeShort(strength);
-			output.writeShort(solar);
-			output.writeShort(physique);
-			output.writeShort(spirit);
-			output.writeShort(agility);
-			warrior_attr.writeExternal(output)
 			output.writeShort(vigour);
 			output.writeShort(energy);			
 		}

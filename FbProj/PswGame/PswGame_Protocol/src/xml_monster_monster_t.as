@@ -18,7 +18,6 @@ package
 		public var phy_def:uint;
 		public var solar_def:uint;
 		public var crit:uint;
-		public var crit_damage:uint;
 		public var crit_tenacity:uint;
 		public var hit:uint;
 		public var dodge:uint;
@@ -66,7 +65,6 @@ package
 			phy_def = input.readUnsignedInt();
 			solar_def = input.readUnsignedInt();
 			crit = input.readUnsignedByte();
-			crit_damage = input.readUnsignedByte();
 			crit_tenacity = input.readUnsignedByte();
 			hit = input.readUnsignedShort();
 			dodge = input.readUnsignedShort();
@@ -111,7 +109,6 @@ package
 			output.writeUnsignedInt(phy_def);
 			output.writeUnsignedInt(solar_def);
 			output.writeByte(crit);
-			output.writeByte(crit_damage);
 			output.writeByte(crit_tenacity);
 			output.writeShort(hit);
 			output.writeShort(dodge);
