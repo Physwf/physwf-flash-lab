@@ -8,6 +8,5 @@ package com.physwf.system.vo
 		public var mp:uint;
 		public var hp_max:uint;
 		public var mp_max:uint;
-		public var path:Vector.<uint>;
 	}
 }

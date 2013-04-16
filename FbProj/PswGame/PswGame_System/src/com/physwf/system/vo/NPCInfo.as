@@ -8,5 +8,7 @@ package com.physwf.system.vo
 		public var type:uint;//功能
 		public var map_x:uint;
 		public var map_y:uint;
+		public var end:Vector.<uint>;
+		public var path:Vector.<uint>;
 	}
 }

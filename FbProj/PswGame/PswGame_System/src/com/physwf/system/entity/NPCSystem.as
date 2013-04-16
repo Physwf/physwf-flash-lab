@@ -58,6 +58,7 @@ package com.physwf.system.entity
 						mons.id = monsters[i].monster_id;
 						mons.map_x = monsters[i].map_x;
 						mons.map_y = monsters[i].map_y;
+						mons.end = new <uint>[mons.map_x,mons.map_y];
 						mons.hp = monsters[i].hp;
 						mons.mp = monsters[i].mp;
 						svrNpcList.push(mons);
@@ -77,6 +78,7 @@ package com.physwf.system.entity
 						mInfo.id = info.monster_id;
 						mInfo.map_x = info.map_x;
 						mInfo.map_y = info.map_y;
+						mons.end = new <uint>[mInfo.map_x,mInfo.map_y];
 						mInfo.hp = info.hp;
 						mInfo.mp = info.mp;
 						svrNpcList.push(mInfo);
@@ -94,14 +96,15 @@ package com.physwf.system.entity
 					if(!svrNpcList || svrNpcList.length <= 0) return;
 					var msg1043:MSG_RES_NOTI_MONSTER_MOVE_1043 = e.message as MSG_RES_NOTI_MONSTER_MOVE_1043;
 					mInfo = getMonsInfoById(msg1043.monster_instance_id,false);
-//					trace(msg1043.monster_instance_id,"msg1043.monster_instance_id");
 					var list:Vector.<map_pos_t> = msg1043.move_list;
 					var path:Vector.<uint> = new Vector.<uint>();
+					path.push(mInfo.end[0]/10,mInfo.end[1]/10);
 					for(i=0;i<list.length;++i)
 					{
 						path.push(list[i].map_x/10);
 						path.push(list[i].map_y/10);
 					}
+					mInfo.end = new <uint>[list[i-1].map_x,list[i-1].map_y];
 					mInfo.path = path;
 					dispatchEvent(new NPCEvent(NPCEvent.NPC_MOVE,mInfo));
 					break;

@@ -97,8 +97,12 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1042://目标被打死
 					var msg1041:MSG_RES_NOTI_OBJ_DEAD_1042 = e.message as MSG_RES_NOTI_OBJ_DEAD_1042;
 					fInfo = new FightInfo();
-					fInfo.objType = msg1041.obj_type;
-					fInfo.objId = msg1041.obj_id;
+					fObjs = new Vector.<FightObject>();
+					fObj = new FightObject();
+					fObj.type = msg1041.obj_type;
+					fObj.id = msg1041.obj_id;
+					fObjs.push(fObj);
+					fInfo.objects = fObjs;
 					dispatchEvent(new FightEvent(FightEvent.FIGHT_DEATH,fInfo));
 					break;
 				case MessageEvent.MSG_SUCCESS_+1045://通知玩家死亡类型

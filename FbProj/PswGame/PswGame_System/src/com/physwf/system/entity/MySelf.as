@@ -181,6 +181,7 @@ package com.physwf.system.entity
 						var sInfo:SkillInfo = new SkillInfo();
 						sInfo.id = msg1001.skills[i].skill_id;
 						sInfo.level = msg1001.skills[i].skill_lv;
+						sInfo.range = 100;//temp
 						skills.push(sInfo);
 					}
 					System.skill.skills = skills;
