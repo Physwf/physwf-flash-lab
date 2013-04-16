@@ -33,6 +33,8 @@ package com.physwf.engine.fight.manager
 	public class Challenge extends EventDispatcher implements IUpdatable
 	{
 		public var target:Character;//选中的目标
+		public var targets:Vector.<Character>;
+		
 		public var basicSkill:SkillInfo;//基础技能
 		public var selectSill:SkillInfo;//点击技能栏选择的技能
 		
@@ -56,76 +58,12 @@ package com.physwf.engine.fight.manager
 		
 		public function onWorldDestroy():void
 		{
-			System.fight.removeEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
-			System.fight.removeEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
 			System.fight.removeEventListener(DeathEvent.SELF_DEATH,onDeathEvent);//temp
 		}
 		
 		public function onWorldReady():void
 		{
-			System.fight.addEventListener(FightEvent.FIGHT_RESULT,onFightEvent);
-			System.fight.addEventListener(FightEvent.FIGHT_DEATH,onFightEvent);
 			System.fight.addEventListener(DeathEvent.SELF_DEATH,onDeathEvent);//temp
-		}
-		
-		private function onFightEvent(e:FightEvent):void
-		{
-			switch(e.type)
-			{
-				case FightEvent.FIGHT_RESULT:
-					var fInfo:FightInfo = e.info;
-					var cInfo:Object = {};
-					var chara:Character = getCharacterByID(fInfo.srcType,fInfo.srcId,cInfo);
-					if(chara != Player.self)
-					{
-						var attack:CmdSingleAtk = new CmdSingleAtk(chara);
-						var skill:SkillInfo = basicSkill;//temp
-						attack.skill = skill;
-						attack.setTarget(target);
-						var seq:LinerCmdSequence = new LinerCmdSequence();
-						seq.addCommand(attack);
-						seq.addCommand(new CmdStand(chara));
-						chara.execute(seq);
-					}
-					var objs:Vector.<FightObject> = fInfo.objects;
-					for(var i:uint =0 ;i<objs.length;++i)
-					{
-						var target:Character = getCharacterByID(objs[i].type,objs[i].id,cInfo)
-						var hpHurt:uint = cInfo.info.hp - objs[i].hp;
-						cInfo.info.hp = objs[i].hp;
-						trace("战斗结果->","源:"+fInfo.srcId,"对象:"+objs[i].id,"伤害:"+objs[i].hp,"技能:"+fInfo.skillID,"hp:"+cInfo.info.hp);
-						if(target)
-						{
-							var targetSeq:LinerCmdSequence = new LinerCmdSequence();
-							var onHurt:CmdOnHurt = new CmdOnHurt(target);
-							onHurt.setHurt(hpHurt,skill);
-							targetSeq.addCommand(onHurt);
-							target.createThread(targetSeq);
-							targetSeq.execute();
-						}
-					}
-					break;
-				case FightEvent.FIGHT_DEATH:
-					cInfo = {};
-					fInfo = e.info;
-					objs = fInfo.objects;
-					for(i =0 ;i<objs.length;++i)
-					{
-						chara = getCharacterByID(objs[i].type,objs[i].id,cInfo);
-						if(chara is Player)
-						{
-							dispatchEvent(new CharacterEvent(CharacterEvent.PLAYER_DIE,chara));
-						}
-						else if(chara is Monster)
-						{
-							dispatchEvent(new CharacterEvent(CharacterEvent.MONSTER_DIE,chara));
-							var mInfo:MonsterInfo = System.npc.getMonsInfoById(chara.id,true);
-							Engine.map.delMonster(mInfo);
-						}
-						chara.die();
-					}
-					break;
-			}
 		}
 		
 		private function onDeathEvent(e:DeathEvent):void
@@ -138,33 +76,15 @@ package com.physwf.engine.fight.manager
 			}
 		}
 		
-		private function getCharacterByID(type:uint,id:uint,info_out:Object):Character
-		{
-			if(type == Fight.FIGHT_CHARA_TYPE_PLAYER)
-			{
-				var player:Player = Engine.map.getPlayerByUID(id);
-				info_out.info = player.info;
-				return player;
-			}
-			else if(type == Fight.FIGHT_CHARA_TYPE_PET)
-			{
-				return null;
-			}
-			else if(type == Fight.FIGHT_CHARA_TYPE_NPC)
-			{
-				var monster:Monster = Engine.map.getMonsterByMID(id);
-//				trace(monster.info.hp,"monster.info.hp");
-				info_out.info = monster.info;
-				//ConfigReader.readMonster(info_out.info.id,info_out.info);//temp
-				return monster;
-			}
-			return null;
-		}
-		
 		public function setTarget(tgt:Character,id:uint):void
 		{
 			target = tgt;
 			targetID = id;
+		}
+		
+		public function setTargets(tgts:Vector.<Character>):void
+		{
+			targets = tgts;
 		}
 		
 		private function getCmd(tgt:Character,id:uint):ICommand
@@ -175,7 +95,7 @@ package com.physwf.engine.fight.manager
 			var skills:Vector.<SkillInfo> = System.skill.skills;
 			var random:uint = Math.random() * skills.length;
 			var skill:SkillInfo = skills[random];
-			trace(skill,skill.id,"skill");
+//			trace(skill,skill.id,"skill");
 			var attack:CmdSingleAtk = new CmdSingleAtk(Player.self);
 			attack.setTarget(tgt);
 			attack.skill = skill;
@@ -209,17 +129,20 @@ package com.physwf.engine.fight.manager
 			var seq:CommandSequence = e.target as CommandSequence;
 			seq.removeEventListener(Command.FINISH,onSeqFinish);
 			isIdle = true;
+			trace("seq finish",getTimer());
 		}
 		
 		public function update():void
 		{
 			if(target && isIdle)
 			{
-				if(getTimer() - lastAtk > 6000)
+				if(getTimer() - lastAtk > 2000)
 				{
+					
+					isIdle = false;
 					var cmd:ICommand = getCmd(target,targetID);
 					Player.self.execute(cmd);
-					isIdle = false;
+					trace("cmd exe",getTimer());
 				}
 			}
 		}

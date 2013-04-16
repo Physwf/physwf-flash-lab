@@ -5,6 +5,7 @@ package com.physwf.engine.fight
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.fight.manager.Challenge;
+	import com.physwf.engine.fight.manager.Field;
 	import com.physwf.engine.world.events.WorldEvent;
 	import com.physwf.system.System;
 
@@ -15,6 +16,7 @@ package com.physwf.engine.fight
 		public static const FIGHT_CHARA_TYPE_NPC:uint = 3;
 		
 		private var mChallenge:Challenge;
+		private var mField:Field;
 		
 		public function Fight()
 		{
@@ -26,6 +28,8 @@ package com.physwf.engine.fight
 			mChallenge.initialize();
 			mChallenge.basicSkill = System.skill.basicSill;
 			
+			mField = new Field();
+			
 			Challenge.targetEffect = new TargetEffect(Engine.map.view.underEffect,0);
 			Challenge.targetEffect.hide();
 				
@@ -36,16 +40,19 @@ package com.physwf.engine.fight
 		private function onWorldDestroy(e:WorldEvent):void
 		{
 			mChallenge.onWorldDestroy();
+			mField.onWorldDestroy();
 		}
 		
 		private function onWorldReady(e:WorldEvent):void
 		{
 			mChallenge.onWorldReady();
+			mField.onWorldReady();
 		}
 		
 		public function update():void
 		{
 			mChallenge.update();
+			mField.update();
 			
 			var effects:Vector.<Effect> = Effect.effects;
 			for(var i:uint=0;i<effects.length;++i)

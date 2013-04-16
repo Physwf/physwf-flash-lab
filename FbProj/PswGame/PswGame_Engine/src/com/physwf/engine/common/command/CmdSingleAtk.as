@@ -40,10 +40,8 @@ package com.physwf.engine.common.command
 		{
 			//如果 选择了技能则释放所选的技能否则释放基础技能
 			var skillID:uint = mSkill.id;
-			mSkill.effectId = 1;
 			var type:uint = Config.getEffectConfig(mSkill.effectId).type;
 			var config:EffectConfig = EffectSystem.getConfig(mSkill.effectId);
-			trace("type=",type,"effectId",mSkill.effectId);
 			var factory:IEffectFactory = EffectSystem.getFactory(type);
 			var effect:Effect = factory.createEffect(config,Engine.map.view.upperEffect,mChara.view,mTarget.view);
 			effect.x = mChara.view.x;
@@ -51,9 +49,12 @@ package com.physwf.engine.common.command
 			var rad:Number = Math.atan2(mTarget.view.y - mChara.view.y,mTarget.view.x -mChara.view.x);
 			mChara.view.direction = ISODirection.radianToDirect8(rad);
 			mChara.attack();
-			System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,skillID);
+			if(mChara == Player.self)
+			{
+				System.fight.attack(Fight.FIGHT_CHARA_TYPE_PLAYER,Fight.FIGHT_CHARA_TYPE_NPC,mTarget.id,skillID);
+				trace("System.fight.attack",mTarget.id,"mTarget.id");
+			}
 			super.execute();
-			dispatchEvent(new Event(FINISH));
 		}
 	}
 }
