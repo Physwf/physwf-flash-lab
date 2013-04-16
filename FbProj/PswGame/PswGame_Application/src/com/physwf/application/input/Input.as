@@ -1,6 +1,5 @@
 package com.physwf.application.input
 {
-	import com.physwf.components.ui.DragManager;
 	import com.physwf.components.ui.controls.Cell;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.events.CellEvent;
@@ -14,7 +13,6 @@ package com.physwf.application.input
 	import com.physwf.system.vo.MonsterInfo;
 	import com.physwf.system.vo.UserInfo;
 	
-	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
@@ -61,14 +59,7 @@ package com.physwf.application.input
 			if(target is Cell)
 			{
 				var cell:Cell = target as Cell;
-				if(cell.location == Cell.LOCATION_SKILLBAR)
-				{
-					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_PRESSED,cell));
-				}
-				else if(cell.location == Cell.LOCATION_BAG)
-				{
-					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_PRESSED,cell));
-				}
+				Engine.cm.dispatchEvent(new CellEvent(CellEvent.CELL_PRESSED,cell));
 			}
 		}
 		
@@ -78,16 +69,8 @@ package com.physwf.application.input
 			if(target is Cell)
 			{
 				var cell:Cell = target as Cell;
-				if(cell.location == Cell.LOCATION_SKILLBAR)
-				{
-					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_RELEASED,cell));
-				}
-				else if(cell.location == Cell.LOCATION_BAG)
-				{
-					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_RELEASED,cell));
-				}
+				Engine.cm.dispatchEvent(new CellEvent(CellEvent.CELL_RELEASED,cell));
 			}
-			DragManager.instance.dragItem = null;
 		}
 		
 		private function onMouseClick(e:MouseEvent):void
@@ -97,14 +80,7 @@ package com.physwf.application.input
 			if(target is Cell)
 			{
 				var cell:Cell = target as Cell;
-				if(cell.location == Cell.LOCATION_SKILLBAR)
-				{
-					Engine.frame.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
-				}
-				else if(cell.location == Cell.LOCATION_BAG)
-				{
-					Engine.bag.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
-				}
+				Engine.cm.dispatchEvent(new CellEvent(CellEvent.CELL_CLICKED,cell));
 				e.stopImmediatePropagation();
 				return;
 			}
