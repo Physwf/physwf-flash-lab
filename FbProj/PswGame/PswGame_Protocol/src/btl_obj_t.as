@@ -11,6 +11,7 @@ package
 		public var obj_id:uint;
 		public var obj_hp:uint;
 		public var obj_mp:uint;
+		public var is_crit:uint;
 		
 		public function btl_obj_t()
 		{
@@ -21,7 +22,8 @@ package
 			obj_type = input.readUnsignedByte();
 			obj_id = input.readUnsignedInt();
 			obj_hp = input.readUnsignedInt();
-			obj_mp = input.readUnsignedInt();			
+			obj_mp = input.readUnsignedInt();
+			is_crit = input.readUnsignedByte();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -29,7 +31,8 @@ package
 			output.writeByte(obj_type);
 			output.writeUnsignedInt(obj_id);
 			output.writeUnsignedInt(obj_hp);
-			output.writeUnsignedInt(obj_mp);			
+			output.writeUnsignedInt(obj_mp);
+			output.writeByte(is_crit);			
 		}
 	}
 }

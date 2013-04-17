@@ -9,6 +9,7 @@ package
 	{
 		public var adored_user_id:uint;
 		public var adored_role_tm:uint;
+		public var adored_times:uint;
 		
 		public function MSG_REQ_ADORE_SUBMIT_1201()
 		{
@@ -18,7 +19,8 @@ package
 		override protected function writeBody(output:IDataOutput):void
 		{
 			output.writeUnsignedInt(adored_user_id);
-			output.writeUnsignedInt(adored_role_tm);			
+			output.writeUnsignedInt(adored_role_tm);
+			output.writeUnsignedInt(adored_times);			
 		}
 	}
 }
