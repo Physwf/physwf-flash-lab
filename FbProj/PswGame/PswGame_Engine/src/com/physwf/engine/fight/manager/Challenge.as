@@ -136,7 +136,7 @@ package com.physwf.engine.fight.manager
 		{
 			if(target && isIdle)
 			{
-				if(getTimer() - lastAtk > 2000)
+				if(getTimer() - lastAtk > 1200)
 				{
 					
 					isIdle = false;

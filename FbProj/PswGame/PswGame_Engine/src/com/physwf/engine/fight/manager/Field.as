@@ -112,6 +112,10 @@ package com.physwf.engine.fight.manager
 						{
 							dispatchEvent(new CharacterEvent(CharacterEvent.MONSTER_DIE,srcChara));
 							var mInfo:MonsterInfo = System.npc.getMonsInfoById(srcChara.id,true);
+							if(srcChara == Engine.challenge.target)
+							{
+								Engine.challenge.setTarget(null,0);
+							}
 							Engine.map.delMonster(mInfo);
 						}
 						srcChara.die();
