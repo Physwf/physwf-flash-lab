@@ -25,7 +25,7 @@ package com.physwf.system.entity
 		{
 			var msg:MSG_REQ_PICK_UP_ITEM_1056 = new MSG_REQ_PICK_UP_ITEM_1056();
 			msg.items = items;
-			msg.monster_id = monsterId;
+			msg.instance_id = monsterId;
 			RPCConnectioin.online.call(msg);
 		}
 		
@@ -51,7 +51,7 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+1056:
 					var msg1056:MSG_RES_PICK_UP_ITEM_1056 = e.message as MSG_RES_PICK_UP_ITEM_1056;
 					info = new LootInfo();
-					info.monsterId = msg1056.monster_id;
+					info.monsterId = msg1056.instance_id;
 					info.items = new Vector.<ItemInfo>();
 					items = msg1056.items;
 					for(i=0;i<items.length;++i)
