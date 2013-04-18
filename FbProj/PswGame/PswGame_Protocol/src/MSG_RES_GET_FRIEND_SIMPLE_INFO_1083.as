@@ -12,7 +12,7 @@ package
 		public var nick:String;
 		public var nick_data:ByteArray
 		public var level:uint;
-		public var exp:uint;
+		public var prof:uint;
 		public var sex:uint;
 		public var equips:Vector.<uint>;
 		
@@ -27,7 +27,7 @@ package
 			role_tm = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
 			level = input.readUnsignedShort();
-			exp = input.readUnsignedInt();
+			prof = input.readUnsignedByte();
 			sex = input.readUnsignedByte();
 			equips= new Vector.<uint>();
 			for(var i:int=0;i<16;++i)

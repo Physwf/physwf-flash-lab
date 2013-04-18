@@ -5,18 +5,20 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_CATCH_PET_1068 extends MsgBase
+	final public class MSG_REQ_SET_CUR_TITLE_1203 extends MsgBase
 	{
-		public var instance_id:uint;
+		public var title_id:uint;
+		public var flag:uint;
 		
-		public function MSG_REQ_CATCH_PET_1068()
+		public function MSG_REQ_SET_CUR_TITLE_1203()
 		{
-			super(1068)
+			super(1203)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeShort(instance_id);			
+			output.writeUnsignedInt(title_id);
+			output.writeByte(flag);			
 		}
 	}
 }

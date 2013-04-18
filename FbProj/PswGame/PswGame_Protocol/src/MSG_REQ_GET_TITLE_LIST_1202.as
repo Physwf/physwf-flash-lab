@@ -5,18 +5,17 @@ package
 	import flash.utils.IDataOutput;
 	import flash.utils.ByteArray;
 	
-	final public class MSG_REQ_CATCH_PET_1068 extends MsgBase
+	final public class MSG_REQ_GET_TITLE_LIST_1202 extends MsgBase
 	{
-		public var instance_id:uint;
 		
-		public function MSG_REQ_CATCH_PET_1068()
+		public function MSG_REQ_GET_TITLE_LIST_1202()
 		{
-			super(1068)
+			super(1202)
 		}
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeShort(instance_id);			
+			
 		}
 	}
 }

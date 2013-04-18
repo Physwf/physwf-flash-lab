@@ -7,7 +7,7 @@ package
 	
 	final public class MSG_REQ_PICK_UP_ITEM_1056 extends MsgBase
 	{
-		public var monster_id:uint;
+		public var instance_id:uint;
 		public var items:Vector.<uint>;
 		
 		public function MSG_REQ_PICK_UP_ITEM_1056()
@@ -17,7 +17,7 @@ package
 		
 		override protected function writeBody(output:IDataOutput):void
 		{
-			output.writeUnsignedInt(monster_id);
+			output.writeUnsignedInt(instance_id);
 			output.writeUnsignedInt(items.length);
 			for(var i:int=0;i<items.length;++i)
 			{

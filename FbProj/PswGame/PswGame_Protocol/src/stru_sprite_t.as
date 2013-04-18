@@ -27,6 +27,7 @@ package
 		public var mp:uint;
 		public var energy:uint;
 		public var vigour:uint;
+		public var current_title:uint;
 		public var items:Vector.<bag_item_t>;
 		public var equips:Vector.<stru_equip_t>;
 		public var pets:Vector.<stru_pet_base_t>;
@@ -60,6 +61,7 @@ package
 			mp = input.readUnsignedInt();
 			energy = input.readUnsignedShort();
 			vigour = input.readUnsignedShort();
+			current_title = input.readUnsignedInt();
 			var itemsLen:uint =input.readUnsignedInt();
 			items= new Vector.<bag_item_t>();
 			for(var i:int=0;i<itemsLen;++i)
@@ -141,6 +143,7 @@ package
 			output.writeUnsignedInt(mp);
 			output.writeShort(energy);
 			output.writeShort(vigour);
+			output.writeUnsignedInt(current_title);
 			output.writeUnsignedInt(items.length);
 			for(var j:int=0;j<items.length;++j)
 			{

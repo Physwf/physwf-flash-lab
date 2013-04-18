@@ -21,6 +21,7 @@ package
 		public var sp:uint;
 		public var vigour:uint;
 		public var energy:uint;
+		public var current_title:uint;
 		
 		public function stru_user_t()
 		{
@@ -40,7 +41,8 @@ package
 			mp = input.readUnsignedInt();
 			sp = input.readUnsignedShort();
 			vigour = input.readUnsignedShort();
-			energy = input.readUnsignedShort();			
+			energy = input.readUnsignedShort();
+			current_title = input.readUnsignedInt();			
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -67,7 +69,8 @@ package
 			output.writeUnsignedInt(mp);
 			output.writeShort(sp);
 			output.writeShort(vigour);
-			output.writeShort(energy);			
+			output.writeShort(energy);
+			output.writeUnsignedInt(current_title);			
 		}
 	}
 }

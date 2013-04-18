@@ -10,6 +10,7 @@ package
 		public var user:stru_user_t;
 		public var skills:Vector.<stru_skill_t>;
 		public var skill_shortcut:Vector.<uint>;
+		public var adore_times_per_day:uint;
 		
 		public function MSG_RES_LOGIN_1001(mid:uint)
 		{
@@ -34,7 +35,8 @@ package
 				var skill_shortcut_item:uint = input.readUnsignedInt();
 				skill_shortcut.push(skill_shortcut_item)
 			}
-			
+
+			adore_times_per_day = input.readUnsignedInt();			
 		}
 	}
 }
