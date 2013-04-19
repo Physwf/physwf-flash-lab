@@ -18,6 +18,7 @@ package
 		public var mp_max:uint;
 		public var nick:String;
 		public var nick_data:ByteArray
+		public var title:uint;
 		public var mapid:uint;
 		public var map_x:uint;
 		public var map_y:uint;
@@ -40,6 +41,7 @@ package
 			hp_max = input.readUnsignedInt();
 			mp_max = input.readUnsignedInt();
 			nick = input.readUTFBytes(16);
+			title = input.readUnsignedInt();
 			mapid = input.readUnsignedInt();
 			map_x = input.readUnsignedInt();
 			map_y = input.readUnsignedInt();
@@ -76,6 +78,7 @@ package
 				nickData.length = 16;
 				output.writeBytes(nickData)
 			}
+			output.writeUnsignedInt(title);
 			output.writeUnsignedInt(mapid);
 			output.writeUnsignedInt(map_x);
 			output.writeUnsignedInt(map_y);

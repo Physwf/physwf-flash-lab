@@ -7,6 +7,7 @@ package
 	
 	final public class MSG_RES_SET_CUR_TITLE_1203 extends MsgBase
 	{
+		public var user_id:uint;
 		public var title_id:uint;
 		
 		public function MSG_RES_SET_CUR_TITLE_1203(mid:uint)
@@ -16,6 +17,7 @@ package
 		
 		override protected function readBody(input:IDataInput):void
 		{
+			user_id = input.readUnsignedInt();
 			title_id = input.readUnsignedInt();			
 		}
 	}
