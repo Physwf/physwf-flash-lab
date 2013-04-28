@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="804" height="568" initialize="init()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import components.ToolIcon;
+			
+			import nochump.util.zip.ZipEntry;
+			import nochump.util.zip.ZipFile;
+			
+			import spark.components.Button;
+			
+			private var configFile:File;
+			private var dir_tools:String;
+			
+			public function init():void
+			{
+				stage?onAddStage(null):addEventListener(Event.ADDED_TO_STAGE,onAddStage);
+				return;
+				
+				
+			}
+			
+			private function onAddStage(e:Event):void
+			{
+				var appDir:File = File.applicationDirectory;
+				configFile = appDir.resolvePath("config/tools.xml");
+				var tools:XML;
+				function onConfigLoaded(e:Event):void
+				{
+					var data:ByteArray = configFile.data;
+					tools = XML(data.readUTFBytes(data.bytesAvailable));
+					trace(tools.tool);
+					var fatherDir:File = appDir.resolvePath("..");
+					var tools_url:String = fatherDir.nativePath + "/tools/";
+					ToolIcon.dir_icon_assets = appDir.nativePath + "/icons/";
+					dir_tools = tools.@local_dir;
+					
+					var i:uint=0;
+					for each(var tool:XML in tools.tool)
+					{
+						var icon:ToolIcon = new ToolIcon(tool.@name);
+						icon.x = 70 + i*100;
+						icon.y = 70 + i*100;
+						icon.addEventListener(MouseEvent.CLICK,onIconClick);
+						stage.addChild(icon);
+					}
+					
+				};
+				configFile.addEventListener(Event.COMPLETE,onConfigLoaded);
+				configFile.load();
+				
+			}
+			
+			private function onIconClick(e:MouseEvent):void
+			{
+				var url:String = dir_tools + "PswTool_" + e.target.name+".swc";
+				var stream:URLStream = new URLStream();
+				stream.addEventListener(Event.COMPLETE,onComplete);
+				stream.load(new URLRequest(url));
+			}
+			
+			private var domain:ApplicationDomain;
+			private function onComplete(e:Event):void
+			{
+				var stream:URLStream = e.target as URLStream;
+				var data:ByteArray = new ByteArray();
+				stream.readBytes(data,0,stream.bytesAvailable);
+				
+				var zipFile:ZipFile = new ZipFile(data);
+				var assets:Array = zipFile.entries;
+				for each(var asset:ZipEntry in assets)
+				{
+					//if(asset.isDirectory())
+					{
+						var assetsData:ByteArray = zipFile.getInput(asset);
+						var file:File = new File("F:/physwf-flash-lab/FbProj/PswTool/PswTool_Platform/assets/ProtoGenerator/"+asset.name);
+						var fs:FileStream = new FileStream();
+						fs.open(file,FileMode.WRITE);
+						fs.writeBytes(assetsData);
+						fs.close();
+					}
+				}
+				
+				var zipEntry:ZipEntry = zipFile.getEntry("library.swf");
+				var bytes:ByteArray = zipFile.getInput(zipEntry);
+				
+				var loader:Loader = new Loader();
+				domain = new ApplicationDomain(ApplicationDomain.currentDomain);
+				var lc:LoaderContext = new LoaderContext(false,domain);
+				lc.allowCodeImport = true;
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onLoaderComplete);
+				loader.loadBytes(bytes,lc);
+				
+			}
+			
+			private function onLoaderComplete(e:Event):void
+			{
+				var Main:Class = domain.getDefinition("ProtoGenerator") as Class;
+				new Main()["execute"](this);
+			}
+		]]>
+	</fx:Script>
+</s:WindowedApplication>
