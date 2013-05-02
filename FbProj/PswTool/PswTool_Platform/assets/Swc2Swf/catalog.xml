@@ -199,8 +199,8 @@
         <dep id="spark.components:Button" type="e" /> 
         <dep id="spark.skins.spark.windowChrome:MacCloseButtonSkin" type="e" /> 
         <dep id="mx.controls:Spacer" type="e" /> 
-        <dep id="spark.components:Group" type="e" /> 
         <dep id="spark.layouts:HorizontalLayout" type="e" /> 
+        <dep id="spark.components:Group" type="e" /> 
         <dep id="mx.binding:BindingManager" type="e" /> 
         <dep id="spark.skins.spark.windowChrome:MacMinimizeButtonSkin" type="e" /> 
         <dep id="spark.components:Label" type="e" /> 
@@ -219,8 +219,8 @@
         <dep id="mx.graphics:LinearGradient" type="s" /> 
         <dep id="spark.components:Button" type="s" /> 
         <dep id="mx.controls:Spacer" type="s" /> 
-        <dep id="spark.components:Group" type="s" /> 
         <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
         <dep id="AS3" type="n" /> 
         <dep id="mx.core:mx_internal" type="n" /> 
         <dep id="mx.core:IStateClient2" type="i" /> 
@@ -243,8 +243,8 @@
         <dep id="spark.skins.spark.windowChrome:MaximizeButtonSkin" type="e" /> 
         <dep id="mx.graphics:GradientEntry" type="e" /> 
         <dep id="spark.components:Button" type="e" /> 
-        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
         <dep id="spark.components:Group" type="e" /> 
+        <dep id="spark.layouts:HorizontalLayout" type="e" /> 
         <dep id="spark.skins.spark.windowChrome:MinimizeButtonSkin" type="e" /> 
         <dep id="mx.binding:BindingManager" type="e" /> 
         <dep id="spark.components:Label" type="e" /> 
@@ -264,8 +264,8 @@
         <dep id="spark.components.windowClasses:TitleBar" type="s" /> 
         <dep id="mx.graphics:LinearGradient" type="s" /> 
         <dep id="spark.components:Button" type="s" /> 
-        <dep id="spark.components:Group" type="s" /> 
         <dep id="spark.layouts:HorizontalLayout" type="s" /> 
+        <dep id="spark.components:Group" type="s" /> 
         <dep id="AS3" type="n" /> 
         <dep id="mx.core:mx_internal" type="n" /> 
         <dep id="mx.core:IStateClient2" type="i" /> 
@@ -473,12 +473,13 @@
         <dep id="AS3" type="n" /> 
         <dep id="Object" type="i" /> 
       </script>
-      <script name="Swc2Swf" mod="1367498690604" signatureChecksum="574144399" >
+      <script name="Swc2Swf" mod="1367501238160" signatureChecksum="574144399" >
         <def id="Swc2Swf" /> 
         <dep id="spark.components:Window" type="e" /> 
         <dep id="flash.events:Event" type="e" /> 
         <dep id="flash.utils:ByteArray" type="e" /> 
         <dep id="mx.controls:Alert" type="e" /> 
+        <dep id="trace" type="e" /> 
         <dep id="spark.components:Button" type="e" /> 
         <dep id="Math" type="e" /> 
         <dep id="flash.filesystem:FileMode" type="e" /> 
@@ -763,7 +764,7 @@
         <dep id="mx.core:IWindow" type="i" /> 
         <dep id="spark.components:SkinnableContainer" type="i" /> 
       </script>
-      <script name="_1b0b234251bfaf103efaf7eb14543f81e0dc268289b7fa46260509865e81412f_flash_display_Sprite" mod="1367498728539" signatureChecksum="3579935063" >
+      <script name="_1b0b234251bfaf103efaf7eb14543f81e0dc268289b7fa46260509865e81412f_flash_display_Sprite" mod="1367502854730" signatureChecksum="3579935063" >
         <def id="_1b0b234251bfaf103efaf7eb14543f81e0dc268289b7fa46260509865e81412f_flash_display_Sprite" /> 
         <dep id="flash.system:Security" type="e" /> 
         <dep id="AS3" type="n" /> 
@@ -785,11 +786,12 @@
         <metadata name="IMXMLObject" />
       </keep-as3-metadata>
       <digests>
-        <digest type="SHA-256" signed="false" value="8703dd53c0901b999a5b6cc42d63dd54a1b7be1b5741d06f3d42e6d6bb0da737"   />
+        <digest type="SHA-256" signed="false" value="c4a57047f709e7f3bac3bd73cd60e8c27240f2c7f0684ed1675843d1a03f8766"   />
       </digests>
     </library>
   </libraries>
   <files>
+    <file path="config/projects.xml" mod="1367502849332" />
     <file path="locale/en_US/core.properties" mod="1294361940000" />
     <file path="spark/components/Window.png" mod="1275454372000" />
   </files>

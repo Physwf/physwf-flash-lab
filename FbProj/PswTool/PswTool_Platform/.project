@@ -3,6 +3,9 @@
 	<name>PswTool_Platform</name>
 	<comment></comment>
 	<projects>
+		<project>PswTool_Common</project>
+		<project>PswTool_ProtoGenerator</project>
+		<project>PswTool_SWC2SWF</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

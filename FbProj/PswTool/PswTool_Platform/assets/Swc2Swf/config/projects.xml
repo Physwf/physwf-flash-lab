@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+	<project 
+		name="PswGame_Infrastructure" 
+		binPath="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Components/bin/PFGame_Components.swc" 
+		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Shell/dlls/components.swf"
+	/>
+	<project 
+		name="PswGame_System" 
+		binPath="F:/physwf-flash-lab/FbProj/PFGame/PFGame_System/bin/PFGame_System.swc" 
+		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Shell/dlls/system.swf"
+	/>
+	<project 
+		name="PswGame_Protocol" 
+		binPath="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Protocol/bin/PFGame_Protocol.swc" 
+		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Shell/dlls/protocol.swf"
+	/>
+	<project 
+		name="PswGame_Engine" 
+		binPath="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Engine/bin/PFGame_Engine.swc" 
+		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Shell/dlls/engine.swf"
+	/>
+	<project 
+		name="PswGame_Config" 
+		binPath="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Config/bin/PFGame_Config.swc" 
+		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Shell/dlls/config.swf"
+	/>
+</projects>

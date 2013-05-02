@@ -17,13 +17,11 @@
 			
 			private var configFile:File;
 			private var dir_tools:String;
+			private var toolNameClicked:String;
 			
 			public function init():void
 			{
 				stage?onAddStage(null):addEventListener(Event.ADDED_TO_STAGE,onAddStage);
-				return;
-				
-				
 			}
 			
 			private function onAddStage(e:Event):void
@@ -35,18 +33,26 @@
 				{
 					var data:ByteArray = configFile.data;
 					tools = XML(data.readUTFBytes(data.bytesAvailable));
-					trace(tools.tool);
+					
 					var fatherDir:File = appDir.resolvePath("..");
 					var tools_url:String = fatherDir.nativePath + "/tools/";
 					ToolIcon.dir_icon_assets = appDir.nativePath + "/icons/";
-					dir_tools = tools.@local_dir;
 					
 					var i:uint=0;
 					for each(var tool:XML in tools.tool)
 					{
 						var icon:ToolIcon = new ToolIcon(tool.@name);
-						icon.x = 70 + i*100;
-						icon.y = 70 + i*100;
+						if(tool.@dir == "local")
+						{
+							icon.dir = tools.@local_dir;
+						}
+						else if(tool.@dir == "remote")
+						{
+							icon.dir = tools.@remote_dir;
+						}
+						icon.x = 70 + (i%6) * 100;
+						icon.y = 70 + Math.floor(i/6) * 100;
+						i++;
 						icon.addEventListener(MouseEvent.CLICK,onIconClick);
 						stage.addChild(icon);
 					}
@@ -59,7 +65,9 @@
 			
 			private function onIconClick(e:MouseEvent):void
 			{
-				var url:String = dir_tools + "PswTool_" + e.target.name+".swc";
+				var icon:ToolIcon = e.target as ToolIcon;
+				var url:String = icon.dir + "PswTool_" + e.target.name+".swc";
+				toolNameClicked = e.target.name;
 				var stream:URLStream = new URLStream();
 				stream.addEventListener(Event.COMPLETE,onComplete);
 				stream.load(new URLRequest(url));
@@ -79,7 +87,7 @@
 					//if(asset.isDirectory())
 					{
 						var assetsData:ByteArray = zipFile.getInput(asset);
-						var file:File = new File("F:/physwf-flash-lab/FbProj/PswTool/PswTool_Platform/assets/ProtoGenerator/"+asset.name);
+						var file:File = new File("F:/physwf-flash-lab/FbProj/PswTool/PswTool_Platform/assets/"+toolNameClicked+"/"+asset.name);
 						var fs:FileStream = new FileStream();
 						fs.open(file,FileMode.WRITE);
 						fs.writeBytes(assetsData);
@@ -101,7 +109,7 @@
 			
 			private function onLoaderComplete(e:Event):void
 			{
-				var Main:Class = domain.getDefinition("ProtoGenerator") as Class;
+				var Main:Class = domain.getDefinition(toolNameClicked) as Class;
 				new Main()["execute"](this);
 			}
 		]]>

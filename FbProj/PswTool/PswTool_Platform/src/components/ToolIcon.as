@@ -11,6 +11,7 @@ package components
 	public class ToolIcon extends Sprite
 	{
 		public static var dir_icon_assets:String;
+		public var dir:String;
 		
 		private var label:TextField;
 		

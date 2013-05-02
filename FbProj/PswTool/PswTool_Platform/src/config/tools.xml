@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tools use="local" local_dir="F:\physwf-flash-lab\FbProj\PswTool\PswTool_Platform\tools\">
-	<tool name="ProtoGenerator"></tool>
+<tools 
+		local_dir="F:/physwf-flash-lab/FbProj/PswTool/PswTool_Platform/tools/" 
+		romote_dir=""
+		game_proj_dir="F:/physwf-flash-lab/FbProj/PFGame/">
+	
+	<tool name="ProtoGenerator" dir="local"></tool>
+	<tool name="Swc2Swf" dir="local"></tool>
 </tools>
