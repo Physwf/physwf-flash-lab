@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<startup name="startup">
+	<!-- 
+	字段解释：
+	type为模块类型（exe为可执行程序，加载完成后将自动执行，dll为库,考虑后面用int作为其值类型）
+	name为模块名称
+	url为模块路径
+	domain为模块所在域 0为系统域，1为游戏域，2为地图域
+	useSub指示是否用所在域的子域  
+	 -->
+	 <item name="components" type="dll" url="dlls/components.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="system" type="dll"  url="dlls/system.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="protocol" type="dll" url="dlls/protocol.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="login" type="exe" thread="0" url="plugins/LoginPlugin.swf">
+		<domain level="1" useSub="1" name="login"/>
+	</item>
+	<item name="config" type="dll"  url="dlls/config.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+	<item name="engine" type="dll"  url="dlls/engine.swf">
+		<domain level="1" useSub="0"/>
+	</item>
+<!--	<item name="startup" type="exe" thread="0" url="plugins/StartupPlugin.swf">-->
+<!--		<domain level="1" useSub="1" name="startup"/>-->
+<!--	</item>-->
+<!--	<item name="world" type="exe" thread="0" url="plugins/WorldPlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+<!--	<item name="frame" type="exe" thread="1" url="plugins/FramePlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+<!--	<item name="bag" type="exe" thread="2" url="plugins/BagPlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+<!--	<item name="fight" type="exe" thread="3" url="plugins/FightPlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+<!--	<item name="input" type="exe" thread="4" url="plugins/InputPlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+<!--	<item name="debug" type="exe" thread="5" url="plugins/DebugPlugin.swf">-->
+<!--		<domain level="1" useSub="0"/>-->
+<!--	</item>-->
+</startup>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  -->
+<root pid="10" pname="atm">
+	<ip nsp="tel" host="192.151.240.149" port="21001"/>
+</root>
