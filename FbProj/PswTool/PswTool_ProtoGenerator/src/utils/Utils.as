@@ -22,7 +22,7 @@ package utils
 				case FieldStruct.TYPE_INT32:
 					return "int";
 					break;
-				case FieldStruct.TYPE_CAHR:
+				case FieldStruct.TYPE_STR:
 					return "String";
 				default:
 					return type;

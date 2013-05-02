@@ -18,7 +18,7 @@ package struct
 		public static const TYPE_INT16:String = "int32";
 		public static const TYPE_INT32:String = "int32";
 		
-		public static const TYPE_CAHR:String = "char";
+		public static const TYPE_STR:String = "string16";
 		
 		public var name:String;
 		public var mode:String;
@@ -48,18 +48,19 @@ package struct
 			switch(mode)
 			{
 				case MODE_SINGLE:
-					//不做处理
+					if(type == FieldStruct.TYPE_STR) 
+						$type = "String";
 					break;
 				case MODE_ARRAY:
 					//如果是字符串，不做处理，否则用矢量数组替换原有类型
-					if(type == FieldStruct.TYPE_CAHR) 
+					if(type == FieldStruct.TYPE_STR) 
 						$type = "String";
 					else
 						$type = "Vector.<"+$type+">";
 					break;
 				case MODE_VARLIST:
 					//同上
-					if(type == FieldStruct.TYPE_CAHR) 
+					if(type == FieldStruct.TYPE_STR) 
 						$type = "String";
 					else
 						$type = "Vector.<"+$type+">";
@@ -67,7 +68,7 @@ package struct
 					break;
 			}
 			declar = "public var "+name+":"+$type+";";
-			if(type == FieldStruct.TYPE_CAHR)
+			if(type == FieldStruct.TYPE_STR)
 			{
 				declar += "\n\t\tpublic var "+ name + "_data:ByteArray";
 			}

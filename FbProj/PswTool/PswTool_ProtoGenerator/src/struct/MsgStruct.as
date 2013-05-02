@@ -41,12 +41,12 @@ package struct
 		
 		public function get reqName():String
 		{
-			return "MSG_REQ" + name.toLocaleUpperCase()+"_"+msgID;
+			return "MSG_REQ_" + name.toLocaleUpperCase()+"_"+msgID;
 		}
 		
 		public function get resName():String
 		{
-			return "MSG_RES" + name.toLocaleUpperCase()+"_"+msgID;
+			return "MSG_RES_" + name.toLocaleUpperCase()+"_"+msgID;
 		}
 		
 		public function getMsgRequest():String
@@ -58,6 +58,7 @@ package struct
 			else template = template.replace("{extends}","");
 			checkInputEmpty();
 			MethodStruct.refreshIndexList();
+			MethodStruct.refreshFlag();
 			for(var i:int=0;i<fieldsInput.length;++i)
 			{
 				template = template.replace("{filed}",fieldsInput[i].getDeclaration() + (i+1<fieldsInput.length?"\n\t\t{filed}":"\n\t\t"));
@@ -80,6 +81,7 @@ package struct
 			else template = template.replace("{extends}","");
 			checkOutputEmpty();
 			MethodStruct.refreshIndexList();
+			MethodStruct.refreshFlag();
 			for(var i:int=0;i<fieldsOutput.length;++i)
 			{
 				template = template.replace("{filed}",fieldsOutput[i].getDeclaration() + (i+1<fieldsOutput.length?"\n\t\t{filed}":"\n\t\t"));

@@ -24,7 +24,7 @@ package
 	
 	import templates.StructTemplate;
 	
-	public class ProtoGenerator extends Sprite implements ITool
+	public class ProtoGenerator implements ITool
 	{
 		private var assetsDir:File;
 		private var mRoot:Application;
@@ -32,8 +32,12 @@ package
 		private var config:XML;
 		//			private var platform_url:String="http://10.1.1.5/su/proto/download.php?project=ultraman_login";
 		private var struct_url:String;
-		private var proto_url:String="C:/Users/Physwf/SkyDrive/文档/ultraman_login_proto.xml";
-		private var outputDir:String = "F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"
+		private var switch_url:String;
+		private var role_url:String;
+		
+		private var proto_url_list:XMLList;
+		private var struct_output_dir:String;
+		private var proto_output_dir:String = "F:/physwf-flash-lab/FbProj/PswGame/ProtocolGenerator/output/"
 		private var structTemplate:String;
 		
 		private var msgTemplate:String = null;
@@ -61,7 +65,7 @@ package
 			win.width = 400;
 			win.height = 150;
 			win.open();
-			mRoot.addElement(win);
+//			mRoot.addElement(win);
 			var btnDo:Button = new Button();
 			btnDo.x = 300;
 			btnDo.y = 90;
@@ -73,7 +77,7 @@ package
 		
 		public function exit():void
 		{
-			mRoot.removeElement(win);
+			win.close();
 		}
 		
 		private function init():void
@@ -88,7 +92,7 @@ package
 		
 		private function onDoClick(e:MouseEvent):void
 		{
-			merge_xml = <ice_protocol><protocols/></ice_protocol>;
+			merge_xml = <ice_protocol></ice_protocol>;
 			getStruct();
 		}
 		
@@ -99,6 +103,9 @@ package
 			{
 				config = XML(configFile.data.readUTFBytes(configFile.data.length));
 				struct_url = config.@struct_url;
+				switch_url = config.@switch_url;
+				role_url = config.@role_url;
+				struct_output_dir = config.@struct_output_dir;
 				for(var i:int=0;i<config.server.length();++i)
 				{
 					var rBtn:RadioButton = new RadioButton();
@@ -106,35 +113,36 @@ package
 					if(so.data["name"] == rBtn.label) 
 					{
 						rBtn.selected = true;
-						proto_url = config.server.(@name == rBtn.label)[0].@url;
+						proto_url_list = config.server.(@name == rBtn.label)[0].url;
 						StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 						MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 						MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
-						outputDir = config.server.(@name == rBtn.label)[0].@output;
+						proto_output_dir = config.server.(@name == rBtn.label)[0].@output;
 						msgMngPath = config.server.(@name == rBtn.label)[0].@msgManagerPath;
 					}
 					else if(so.data["name"] == null) 
 					{
 						so.data["name"] = rBtn.label;
-						proto_url = config.server.(@name == rBtn.label)[0].@url;
+						proto_url_list = config.server.(@name == rBtn.label)[0].url;
 						StructStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 						MsgStruct.packageName = config.server.(@name == rBtn.label)[0].@packageName;
 						MsgStruct.extendsName = config.server.(@name == rBtn.label)[0].@extendsName;
-						outputDir = config.server.(@name == rBtn.label)[0].@output;
+						proto_output_dir = config.server.(@name == rBtn.label)[0].@output;
 						msgMngPath = config.server.(@name == rBtn.label)[0].@msgManagerPath;
 						rBtn.selected = true;
 					}
-					rBtn.x = 40 + i * rBtn.label.length * 10;
-					rBtn.y = 30;
+					rBtn.x = 40 + (i%5) * 70;
+					rBtn.y = 30 + Math.floor(i/5) * 20;
 					rBtn.addEventListener(MouseEvent.CLICK,function onClick(e:Event):void
 					{
-						proto_url = config.server.(@name == e.target.label)[0].@url;
+						proto_url_list = config.server.(@name == e.target.label)[0].url;
 						StructStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
 						MsgStruct.packageName = config.server.(@name == e.target.label)[0].@packageName;
 						MsgStruct.extendsName = config.server.(@name == e.target.label)[0].@extendsName;
-						outputDir = config.server.(@name == e.target.label)[0].@output;
+						proto_output_dir = config.server.(@name == e.target.label)[0].@output;
 						msgMngPath = config.server.(@name == e.target.label)[0].@msgManagerPath;
 						so.data["name"] = rBtn.label;
+						so.flush();
 					});
 					win.addElement(rBtn);
 				}
@@ -175,18 +183,56 @@ package
 		
 		private function onStructLoaded(e:Event):void
 		{
-			merge_xml.protocols.appendChild(XML(e.target.data).protocols.structs);
+			merge_xml.appendChild(XML(e.target.data).protocols.structs);
 			
-			var protoLoader:URLLoader = new URLLoader();
-			protoLoader.addEventListener(Event.COMPLETE,onProtoLoaded);
-			protoLoader.load(new URLRequest(proto_url));
+			loadNext();
+		}
+		
+		private function loadNext():Boolean
+		{
+			if(proto_url_list.length()==0)
+			{
+				return false;
+			}
+			else 
+			{
+				var proto_url:String = proto_url_list[0].@value;
+				var protoLoader:URLLoader = new URLLoader();
+				protoLoader.addEventListener(Event.COMPLETE,onProtoLoaded);
+				protoLoader.load(new URLRequest(proto_url));
+				delete proto_url_list[0];
+				return true;
+			}
+		}
+		
+		private function rewriteProto(proto:XML):void
+		{
+			var struct_list:XML = proto.structs[0];
+			for each(var protos:XML in proto.protocols)
+			{
+				var protoList:XMLList = protos.protocol;
+				for each(var protoItem:XML in protoList)
+				{
+					for(var i:uint=0;i<2;++i)
+					{
+						struct_list.appendChild(protoItem.struct[i]);
+					}
+				}
+			}
 		}
 		
 		private function onProtoLoaded(e:Event):void
 		{
-			merge_xml.protocols.appendChild(XML(e.target.data).protocols.protocol);
-			trace(merge_xml);
-			var structList:XMLList = merge_xml.protocols[0].structs[0].struct;
+			var proto:XML = XML(e.target.data);
+			merge_xml.appendChild(proto.protocols);
+			
+			if(loadNext()) return;
+			
+			rewriteProto(merge_xml);
+			
+//			trace(merge_xml);
+			
+			var structList:XMLList = merge_xml.structs[0].struct;
 			var structRaw:XML;
 			if(msgMngPath) 
 			{
@@ -207,55 +253,58 @@ package
 				StructTemplate.serverType = serverType;
 				var classStruct:StructStruct = new StructStruct(structRaw);
 				classStruct.template = structTemplate;
-				var file:File = new File(outputDir+classStruct.name+".as");
+				var file:File = new File(struct_output_dir+classStruct.name+".as");
 				var fs:FileStream = new FileStream();
 				fs.open(file,FileMode.WRITE);
 				fs.writeUTFBytes(classStruct.getDefinitioin());
 				fs.close();
 			}
-			var protoList:XMLList = merge_xml.protocols[0].protocol;
-			var msg:XML;
-			for(i=0;i<protoList.length();++i)
+			for each(var protos:XML in merge_xml.protocols)
 			{
-				msg = protoList[i];
-				var rawInput:XML = structList.(@name == msg.@struct_in)[0];
-				var rawOutput:XML = structList.(@name == msg.@struct_out)[0];
-				
-				var msgStruct:MsgStruct = new MsgStruct(msg,rawInput,rawOutput);
-				
-				msgStruct.template = msgTemplate;
-				file = new File(outputDir+msgStruct.reqName+".as");
-				fs = new FileStream();
-				fs.open(file,FileMode.WRITE);
-				fs.writeUTFBytes(msgStruct.getMsgRequest());
-				fs.close();
-				
-				msgStruct.template = msgTemplate;
-				file = new File(outputDir+msgStruct.resName+".as");
-				fs = new FileStream();
-				fs.open(file,FileMode.WRITE);
-				fs.writeUTFBytes(msgStruct.getMsgRespond());
-				fs.close();
-				
-				if(msgMngPath&&i+1<protoList.length())
+				var protoList:XMLList = protos.protocol;
+				var msg:XML;
+				for(i=0;i<protoList.length();++i)
 				{
-					msgManagerContent =	msgManagerContent.replace("{register}","regMsg("+msgStruct.msgID+","+msgStruct.resName+");\n\t\t\t{register}");
-				}
-				else
-				{
-					msgManagerContent = msgManagerContent.replace("{register}","regMsg("+msgStruct.msgID+","+msgStruct.resName+");");
-					msgManagerFs.open(msgManagerFile,FileMode.WRITE);
-					msgManagerFs.writeUTFBytes(msgManagerContent);
-					msgManagerFs.close();
+					msg = protoList[i];
+					var rawInput:XML = structList.(@name == msg.@struct_in)[0];
+					var rawOutput:XML = structList.(@name == msg.@struct_out)[0];
+					
+					var msgStruct:MsgStruct = new MsgStruct(msg,rawInput,rawOutput);
+					
+					msgStruct.template = msgTemplate;
+					file = new File(proto_output_dir+msgStruct.reqName+".as");
+					fs = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeUTFBytes(msgStruct.getMsgRequest());
+					fs.close();
+					
+					msgStruct.template = msgTemplate;
+					file = new File(proto_output_dir+msgStruct.resName+".as");
+					fs = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeUTFBytes(msgStruct.getMsgRespond());
+					fs.close();
+					
+					if(msgMngPath&&i<protoList.length())
+					{
+						trace(msgStruct.msgID+","+msgStruct.resName);
+						msgManagerContent =	msgManagerContent.replace("{register}","regMsg("+msgStruct.msgID+","+msgStruct.resName+");\n\t\t\t{register}");
+					}
 				}
 			}
-			Alert.show("Done!","Ok",4,null,function ():void {exit()()});
+			if(msgMngPath)
+			{
+				msgManagerContent = msgManagerContent.replace("{register}","");
+				msgManagerFs.open(msgManagerFile,FileMode.WRITE);
+				msgManagerFs.writeUTFBytes(msgManagerContent);
+				msgManagerFs.close();
+			}
+			Alert.show("Done!","Ok",4,win,function ():void {exit()});
 		}
 		
 		private function verifyName(name:String):Boolean
 		{
-			if(name.slice(0,3) == "cli" ) return true;
-			if(name.slice(0,2) == "db" ) return true;
+			if(name.substr(name.length - 3,3) == "_in" || name.substr(name.length - 4,4) == "_out") return true;//过滤_in _out协议内部的结构体
 			return false;
 		}
 	}

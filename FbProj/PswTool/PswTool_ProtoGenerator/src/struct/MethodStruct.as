@@ -1,8 +1,8 @@
 package struct
 {
-	import utils.Utils;
-	
 	import flash.utils.ByteArray;
+	
+	import utils.Utils;
 
 	public class MethodStruct
 	{
@@ -12,6 +12,8 @@ package struct
 		public var size:int;
 		
 		private static var indexList:Vector.<String>;
+		
+		private static var useIndexFlag:Boolean = false;
 		
 		public function MethodStruct(rawData:XML)
 		{
@@ -24,8 +26,27 @@ package struct
 		
 		public static function refreshIndexList():void
 		{
+//			useIndexFlag = false;
 			indexList = new Vector.<String>();
-			indexList.push("i","j","k","p","q","r");
+			indexList.push("i","j","k","p","q","r","u","v","w","t","a","b","c","d","e","f","g","h","m","n","o","s","l","x","y","z","ii");
+		}
+		
+		public static function refreshFlag():void
+		{
+			useIndexFlag = false;
+		}
+		
+		private function getForLoop(Len:String):String
+		{
+			if(useIndexFlag)
+			{
+				return "\t\t\tfor(i=0;i<"+Len+";i++)\n";
+			}
+			else 
+			{
+				useIndexFlag = true;
+				return  "\t\t\tfor(var i:uint=0;i<"+Len+";i++)\n";
+			}
 		}
 		
 		public function getRead():String
@@ -61,8 +82,8 @@ package struct
 					return name+" = input.readUnsignedInt();";
 				case FieldStruct.TYPE_INT32:
 					return name+" = input.readUnsignedInt();";
-				case FieldStruct.TYPE_CAHR:
-					throw "参数类型有误！";
+				case FieldStruct.TYPE_STR:
+					return name+" = input.readUTF();";
 				default:
 					return 	name +"= new "+ type + "();\n" +
 					"\t\t\t"+name+".readExternal(input)";
@@ -72,20 +93,20 @@ package struct
 		private function getArrayReadBody():String
 		{
 			var loopBody:String;
-			var indexVar:String
+			var indexVar:String="i";
 			switch(type)
 			{
-				case FieldStruct.TYPE_CAHR:
-					var readStr:String = name + " = input.readUTFBytes("+size+");";//定长数组 {args} = size,变长数组{args} = input.readUnsignedInt();
-//					var readByteArr:String =  name+ "Data = new ByteArray();" +
-//						"\n\t\t\tinput.readBytes("+name+"Data,0,"+size+");"
+				case FieldStruct.TYPE_STR:
+					//var readStr:String = name + " = input.readUTFBytes("+size+");";
+					var readStr:String = name + " = input.readUTF();";
 					return readStr;
 				default:
-					indexVar = getIJK();
+//					indexVar = getIJK();
 					loopBody =  getReadLoopBody(indexVar);
 			}
 			var forLoop:String = ""+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
-				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
+//				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
+				getForLoop(size.toString(10)) +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody}\n" +
 				"\t\t\t\t"+name+".push("+name+"_item)\n" +
@@ -127,19 +148,20 @@ package struct
 		private function getVarlistReadBody():String
 		{
 			var loopBody:String;
-			var indexVar:String;
+			var indexVar:String="i";
 			var readLen:String = "var "+name+"Len:uint =input.readUnsignedInt();\n";
 			switch(type)
 			{
-				case FieldStruct.TYPE_CAHR:
+				case FieldStruct.TYPE_STR:
 					return readLen +
 					"\t\t\t"+name + "=input.readUTFBytes("+name+"Len);";
 				default:
-					indexVar = getIJK();
+//					indexVar = getIJK();
 					loopBody =  getReadLoopBody(indexVar);
 			}
 			var forLoop:String = "\t\t\t"+name +"= new Vector.<"+ Utils.transformType(type) + ">();\n" +
-				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+"Len;++"+indexVar+")\n" +
+//				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+"Len;++"+indexVar+")\n" +
+				getForLoop(name+"Len") +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
 				"\t\t\t\t"+name+".push("+name+"_item);\n" +
@@ -181,8 +203,8 @@ package struct
 					return "output.writeShort("+name+");";
 				case FieldStruct.TYPE_INT32:
 					return "output.writeInt("+name+");";
-				case FieldStruct.TYPE_CAHR:
-					throw "参数类型有误！";
+				case FieldStruct.TYPE_STR:
+					return "output.writeUTF("+name+");";
 				default:
 					return 	name + ".writeExternal(output)";
 			}
@@ -191,10 +213,10 @@ package struct
 		private function getArrayWriteBody():String
 		{
 			var loopBody:String;
-			var indexVar:String
+			var indexVar:String="i";
 			switch(type)
 			{
-				case FieldStruct.TYPE_CAHR:
+				case FieldStruct.TYPE_STR:
 					var writeStr:String = "\n\t\t\t\tvar "+name+"Data:ByteArray = new ByteArray();" +
 					"\n\t\t\t\t" + name+"Data.writeUTFBytes("+name+")" +
 					"\n\t\t\t\t"+ name+"Data.length = "+ size +";"+
@@ -209,11 +231,12 @@ package struct
 							writeStr +
 						"\n\t\t\t}" ;
 				default:
-					indexVar = getIJK();
+//					indexVar = getIJK();
 					loopBody =  getWriteLoopBody(indexVar);
 			}
 			var forLoop:String = "" +
-				"for(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
+//				"for(var "+indexVar+":int=0;"+indexVar+"<"+size+";++"+indexVar+")\n" +
+				getForLoop(size.toString(10)) +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody}\n" +
 				"\t\t\t}\n";
@@ -250,19 +273,20 @@ package struct
 		private function getVarlistWriteBody():String
 		{
 			var loopBody:String;
-			var indexVar:String
+			var indexVar:String="i";
 			var writeLen:String = "output.writeUnsignedInt("+name+".length);\n";
 			switch(type)
 			{
-				case FieldStruct.TYPE_CAHR:
+				case FieldStruct.TYPE_STR:
 					return writeLen +
 					"\t\t\t" + "output.writeUTFBytes("+name+");";
 				default:
-					indexVar = getIJK();
+//					indexVar = getIJK();
 					loopBody =  getWriteLoopBody(indexVar);
 			}
 			var forLoop:String = "" +
-				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+".length;++"+indexVar+")\n" +
+//				"\t\t\tfor(var "+indexVar+":int=0;"+indexVar+"<"+name+".length;++"+indexVar+")\n" +
+				getForLoop(name+".length") +
 				"\t\t\t{\n" +
 				"\t\t\t\t{loopBody};\n" +
 				"\t\t\t}";
