@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <project name="PF" struct_url="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/share.xml" struct_output_dir="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Protocol/src/">
  		<server name="Login" 
-		 		packageName="com.physwf.application.login.msg" 
-		 		extendsName = "" 
-		 		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Application/src/com/physwf/application/login/msg/" 
+		 		packageName="" 
+		 		extendsName = "com.physwf.components.rpc.msg.MsgBase" 
+		 		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Protocol/src/" 
 		 		msgManagerPath = "F:/physwf-flash-lab/FbProj/PFGame/PFGame_Application/src/com/physwf/application/login/msg/MessageManager.as">
  			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/login.xml"></url>
  			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/role.xml"></url>
