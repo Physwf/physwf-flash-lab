@@ -142,6 +142,7 @@ package com.physwf.components.rpc
 		{
 			if(rawSocket.connected) rawSocket.close();
 		}
+		
 		public function call(msg:MsgBase):void
 		{
 			if(!rawSocket.connected) throw "网络连接已经断开！";
