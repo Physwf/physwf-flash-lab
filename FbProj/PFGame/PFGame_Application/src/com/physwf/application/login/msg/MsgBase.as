@@ -1,6 +1,7 @@
 package com.physwf.application.login.msg
 {
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
@@ -9,6 +10,7 @@ package com.physwf.application.login.msg
 	{
 		public static const HEAD_LENGTH:int = 18;
 		public static var UID:uint;
+		private var compressed:uint;
 		private var length:uint;
 		public var msgid:uint;
 		public var userID:uint;
@@ -23,9 +25,12 @@ package com.physwf.application.login.msg
 		
 		public function writeExternal(output:IDataOutput):void
 		{
+			output.endian = Endian.LITTLE_ENDIAN;
 			var body:ByteArray = new ByteArray();
+			body.endian = Endian.LITTLE_ENDIAN;
 			writeBody(body);
 			var head:ByteArray = new ByteArray();
+			head.endian = Endian.LITTLE_ENDIAN;
 			writeHead(head,body);
 			output.writeBytes(head);
 			output.writeBytes(body);
@@ -38,18 +43,13 @@ package com.physwf.application.login.msg
 		
 		private function writeHead(output:IDataOutput,body:ByteArray):void
 		{
-			output.writeUnsignedInt(HEAD_LENGTH + body.length);
-			output.writeShort(msgid);
+			output.writeShort(0);//是否压缩
+			output.writeUnsignedInt(HEAD_LENGTH + body.length);//包体长度
+			output.writeUnsignedInt(msgid);
 			output.writeUnsignedInt(userID);
-			output.writeInt(0);
-			var sum:uint = 0;
+			output.writeUnsignedInt(0);//序列号
+			output.writeUnsignedInt(0);//错误码
 			body.position = 0;
-			for(var i:int = 0; i < body.length; i++)
-			{
-				sum += body.readUnsignedByte();
-			}
-			sum %= 100000;
-			output.writeInt(sum);
 			//trace("req:命令号->"+msgid,"用户id->"+userID,"包长->"+body.length);
 		}
 		
@@ -61,6 +61,7 @@ package com.physwf.application.login.msg
 		
 		private function readHead(input:IDataInput):void
 		{
+			compressed = input.readUnsignedShort();
 			length = input.readUnsignedInt();
 			msgid = input.readUnsignedShort();
 			userID = input.readUnsignedInt();
