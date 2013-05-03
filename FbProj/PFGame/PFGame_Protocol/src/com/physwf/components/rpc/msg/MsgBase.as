@@ -1,9 +1,11 @@
 package com.physwf.components.rpc.msg
 {
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
+
 	/**
 	 * 	uint16_t	magic;//是否压缩
 		uint32_t	len; len:包体长度
@@ -32,8 +34,10 @@ package com.physwf.components.rpc.msg
 		public function writeExternal(output:IDataOutput):void
 		{
 			var body:ByteArray = new ByteArray();
+			body.endian = Endian.LITTLE_ENDIAN;
 			writeBody(body);
 			var head:ByteArray = new ByteArray();
+			head.endian = Endian.LITTLE_ENDIAN;
 			writeHead(head,body);
 			output.writeBytes(head);
 			output.writeBytes(body);
