@@ -1,7 +1,7 @@
 package com.physwf.application.login.rpc
 {
 	import com.physwf.application.login.msg.MessageManager;
-	import com.physwf.application.login.msg.MsgBase;
+	import com.physwf.components.rpc.msg.MsgBase;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
