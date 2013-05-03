@@ -1,5 +1,6 @@
 package com.physwf.system.entity
 {
+	import com.physwf.components.rpc.RPCConnectioin;
 	import com.physwf.components.rpc.events.MessageEvent;
 	import com.physwf.system.vo.LoginInfo;
 	import com.physwf.system.vo.UserInfo;
@@ -24,14 +25,18 @@ package com.physwf.system.entity
 		
 		public function initialize():void
 		{
-			
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1002,onMessage);//login or enter world
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1003,onMessage);//enter map
 		}
 		/**
-		 * 登陆 
+		 * 登陆/enter map 
 		 * 
 		 */		
-		public function login():void
+		public function login(wid:uint):void
 		{
+			var msg:MSG_REQ_WORLD_USER_ENTER_0x1002 = new MSG_REQ_WORLD_USER_ENTER_0x1002();
+			msg.world_id = wid;
+			RPCConnectioin.online.call(msg);
 		}
 		/**
 		 * 移动 old
@@ -61,6 +66,12 @@ package com.physwf.system.entity
 		 */		
 		public function enterMap(mapid:uint,x:uint,y:uint):void
 		{
+			var msg:MSG_REQ_WORLD_ENTER_MAP_0x1003 = new MSG_REQ_WORLD_ENTER_MAP_0x1003();
+			msg.map_id = mapid;
+			msg.pos = new world_user_pos_t();
+			msg.pos.x = x;
+			msg.pos.y = y;
+			RPCConnectioin.online.call(msg);
 		}
 		/**
 		 *离开当前地图 
@@ -80,6 +91,13 @@ package com.physwf.system.entity
 		
 		private function onMessage(e:MessageEvent):void
 		{
+			switch(e.type)
+			{
+				case MessageEvent.MSG_SUCCESS_+0x1002:
+					break;
+				case MessageEvent.MSG_SUCCESS_+0x1003:
+					break;
+			}
 		}
 	}
 }
