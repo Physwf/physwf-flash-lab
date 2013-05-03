@@ -17,8 +17,9 @@ package com.physwf.components.rpc.msg
 	 */	
 	public class MsgBase implements IExternalizable
 	{
-		public static const HEAD_LENGTH:int = 18;
+		public static const HEAD_LENGTH:int = 22;
 		public static var UID:uint;
+		private var compressed:uint;//是否压缩
 		private var length:uint;
 		public var msgid:uint;
 		public var userID:uint;
@@ -68,8 +69,9 @@ package com.physwf.components.rpc.msg
 		
 		private function readHead(input:IDataInput):void
 		{
+			compressed = input.readUnsignedShort();
 			length = input.readUnsignedInt();
-			msgid = input.readUnsignedShort();
+			msgid = input.readUnsignedInt();
 			userID = input.readUnsignedInt();
 			seqIndex = input.readUnsignedInt();
 			statusCode = input.readUnsignedInt();
