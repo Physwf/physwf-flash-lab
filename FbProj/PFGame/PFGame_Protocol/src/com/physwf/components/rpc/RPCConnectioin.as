@@ -3,6 +3,7 @@ package com.physwf.components.rpc
 	import com.physwf.components.rpc.events.MessageEvent;
 	import com.physwf.components.rpc.msg.MessageManager;
 	import com.physwf.components.rpc.msg.MsgBase;
+	import com.physwf.components.utils.ByteUtils;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -75,10 +76,11 @@ package com.physwf.components.rpc
 			{
 				if(buffer.bytesAvailable >= MsgBase.HEAD_LENGTH)
 				{
-					var msgLen:int = buffer.readUnsignedInt() - MsgBase.HEAD_LENGTH;
-					if(buffer.bytesAvailable >= msgLen)
+					var compressed:uint = buffer.readUnsignedShort();//2
+					var msgLen:int = buffer.readUnsignedInt();//4
+					if(buffer.bytesAvailable >= msgLen + 16)
 					{
-						var mid:uint = buffer.readUnsignedShort();
+						var mid:uint = buffer.readUnsignedInt();//4
 						var MSG:Class = MessageManager.instance.getMSG(mid);
 //						if(!MSG) 
 //						{
@@ -86,13 +88,14 @@ package com.physwf.components.rpc
 //							return;
 //						}
 						var msg:MsgBase = new MSG(mid) as MsgBase;
-						buffer.position -= 6;
+						msg.compressed = compressed;
+						buffer.position -= 8;// 4 + 4
 						msg.readExternal(buffer);
 						msgQueue.push(msg);
 					}
 					else
 					{
-						buffer.position -= MsgBase.HEAD_LENGTH;
+						buffer.position -= 6;// 2+ 4
 						buffer.readBytes(helpBuffer,0,buffer.bytesAvailable);
 					}
 				}
@@ -150,6 +153,7 @@ package com.physwf.components.rpc
 			msgData.endian = Endian.LITTLE_ENDIAN;
 			msg.writeExternal(msgData);
 			rawSocket.writeBytes(msgData);
+			ByteUtils.printf(msgData);
 			rawSocket.flush();
 		}
 	}

@@ -19,6 +19,19 @@ package com.physwf.components.rpc.msg
 		
 		public function registerMessage():void
 		{
+			regMsg(0x0001,MSG_RES_LOGIN_VERIFY_USER_0x0001);
+			regMsg(0x9000,MSG_RES_ROLE_CREATE_ROLE_0x9000);
+			regMsg(0x9001,MSG_RES_ROLE_EXIST_ROLE_0x9001);
+			regMsg(0x6000,MSG_RES_SWITCH_WORLD_NOTIFY_USER_NUM_0x6000);
+			regMsg(0x6001,MSG_RES_SWITCH_USER_VERIFY_DONE_0x6001);
+			regMsg(0x6002,MSG_RES_SWITCH_USER_LEAVE_GATEWAY_0x6002);
+			regMsg(0x6003,MSG_RES_SWITCH_USER_INTO_WORLD_0x6003);
+			regMsg(0x6004,MSG_RES_SWITCH_GET_WORLD_LIST_0x6004);
+			regMsg(0x6005,MSG_RES_SWITCH_USER_LEAVE_WORLD_0x6005);
+			regMsg(0x6100,MSG_RES_WORLD_REQ_FRIEND_SIMPLE_INFO_0x6100);
+			regMsg(0x6101,MSG_RES_WORLD_SEND_FRIEND_SIMPLE_INFO_0x6101);
+			regMsg(0x6102,MSG_RES_WORLD_REQ_ZHUFU_0x6102);
+			regMsg(0x6103,MSG_RES_WORLD_NOTIFY_RECV_ZHUFU_0x6103);
 			regMsg(0x1000,MSG_RES_WORLD_KICK_USER_0x1000);
 			regMsg(0x1001,MSG_RES_WORLD_LEAVE_USER_0x1001);
 			regMsg(0x1002,MSG_RES_WORLD_USER_ENTER_0x1002);
@@ -118,6 +131,11 @@ package com.physwf.components.rpc.msg
 		public function setMsgUID(v:uint):void
 		{
 			MsgBase.UID = v;
+		}
+		
+		public function dispose():void
+		{
+			mMsgDic = null;
 		}
 	}
 }

@@ -19,7 +19,7 @@ package com.physwf.components.rpc.msg
 	{
 		public static const HEAD_LENGTH:int = 22;
 		public static var UID:uint;
-		private var compressed:uint;//是否压缩
+		public var compressed:uint;//是否压缩
 		private var length:uint;
 		public var msgid:uint;
 		public var userID:uint;
@@ -52,30 +52,34 @@ package com.physwf.components.rpc.msg
 		private function writeHead(output:IDataOutput,body:ByteArray):void
 		{
 			output.writeShort(0);//是否压缩
-			output.writeUnsignedInt(HEAD_LENGTH + body.length);//包体长度
+			output.writeUnsignedInt(body.length);//包体长度
 			output.writeUnsignedInt(msgid);
 			output.writeUnsignedInt(userID);
 			output.writeUnsignedInt(0);//序列号
 			output.writeUnsignedInt(0);//错误码
 			body.position = 0;
-			//trace("req:命令号->"+msgid,"用户id->"+userID,"包长->"+body.length);
+			trace("req:命令号->"+msgid.toString(16),"用户id->"+userID,"包体长->"+body.length);
 		}
 		
 		public function readExternal(input:IDataInput):void
 		{
 			readHead(input);
+			if(statusCode>0) 
+			{
+				trace("statusCode:",statusCode);
+				return;
+			}
 			readBody(input);
 		}
 		
 		private function readHead(input:IDataInput):void
 		{
-			compressed = input.readUnsignedShort();
 			length = input.readUnsignedInt();
 			msgid = input.readUnsignedInt();
 			userID = input.readUnsignedInt();
 			seqIndex = input.readUnsignedInt();
 			statusCode = input.readUnsignedInt();
-			//trace("res:命令号->"+msgid,"用户id->"+userID,"包长->"+length,"序列->"+seqIndex,"状态码->"+statusCode)
+			trace("res:命令号->"+msgid.toString(16),"用户id->"+userID,"包长->"+length,"序列->"+seqIndex,"状态码->"+statusCode)
 		}
 		
 		protected function readBody(input:IDataInput):void
