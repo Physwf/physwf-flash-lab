@@ -18,11 +18,11 @@ package com.physwf.system
 
 		public static function initialize():void
 		{
-			RPCConnectioin.online = new RPCConnectioin();
-			RPCConnectioin.online.initialze();
+			RPCConnectioin.online = RPCConnectioin.login;
+//			RPCConnectioin.online.initialze();
 			
-			MessageManager.instance.initialize();
-			MessageManager.instance.registerMessage();
+//			MessageManager.instance.initialize();
+//			MessageManager.instance.registerMessage();
 			MessageManager.instance.setMsgUID(uint(MySelf.loginInfo.userID));
 			
 			_myself = new MySelf();
