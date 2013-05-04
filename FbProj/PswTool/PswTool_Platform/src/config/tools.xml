@@ -6,4 +6,5 @@
 	
 	<tool name="ProtoGenerator" dir="local"></tool>
 	<tool name="Swc2Swf" dir="local"></tool>
+	<tool name="MapEditor" dir="local"></tool>
 </tools>
