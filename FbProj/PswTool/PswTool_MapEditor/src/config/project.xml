@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editor document="F:/physwf-flash-lab/FbProj/PFGame">
+	<read iconDir = "%DOCUMENT%/PFGame_Shell/resource/icons/">
+		<map dir="%DOCUMENT%/PFGame_Shell/resource/map/"/>
+		<teleport dir ="%DOCUMENT%/PFGame_Shell/resource/objects/teleport" icon="teleport"/>
+		<npc dir ="%DOCUMENT%/PFGame_Shell/resource/"  icon="npc"/>
+	</read>
+	<write>
+		<xml dir="%DOCUMENT%/PFGame_Script_Map/src/desc"/>
+		<piece dir="%DOCUMENT%/PFGame_Shell/resource/map/"/>
+	</write>
+</editor>
