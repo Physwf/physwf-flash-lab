@@ -4,10 +4,11 @@
 		 		packageName="" 
 		 		extendsName = "com.physwf.components.rpc.msg.MsgBase" 
 		 		output="F:/physwf-flash-lab/FbProj/PFGame/PFGame_Protocol/src/" 
-		 		msgManagerPath = "F:/physwf-flash-lab/FbProj/PFGame/PFGame_Application/src/com/physwf/application/login/msg/MessageManager.as">
+		 		msgManagerPath = "F:/physwf-flash-lab/FbProj/PFGame/PFGame_Protocol/src/com/physwf/components/rpc/msg/MessageManager.as">
  			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/login.xml"></url>
  			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/role.xml"></url>
  			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/switch.xml"></url>
+ 			<url value="http://game-jk.googlecode.com/svn/trunk/share/proto/xml/world.xml"></url>
  		</server>
  		<server name="World" 
 		 		packageName="" 
