@@ -24,21 +24,24 @@ package com.physwf.application.startup
 		public function initialize(root:Sprite):void
 		{
 			System.initialize();
-			var ip:Object = {host:MySelf.loginInfo.serverInfo.ip,port:MySelf.loginInfo.serverInfo.port};
-			System.estabConnection(ip,onConect);
+//			var ip:Object = {host:MySelf.loginInfo.serverInfo.ip,port:MySelf.loginInfo.serverInfo.port};
+//			System.estabConnection(ip,onConect);
 			ScreenManager.main = new ScreenManager(root);
+			onConect();
 		}
 		
 		private function onConect():void
 		{
 			System.myself.addEventListener(MyEvent.LOGIN_SUCCESS,onLoginSuccess);
-			System.myself.login();
+			var wid:uint = MySelf.loginInfo.serverInfo.id;
+			System.myself.login(wid);
 		}
 		
 		private function onLoginSuccess(e:MyEvent):void
 		{
 			System.myself.removeEventListener(MyEvent.LOGIN_SUCCESS,onLoginSuccess);
-			loadConfig();
+			//loadConfig();
+			dispatchEvent(new Event("finished"));
 		}
 		
 		private function loadConfig():void

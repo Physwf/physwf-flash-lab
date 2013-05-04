@@ -1,9 +1,8 @@
 package com.physwf.application.login.services
 {
 	import com.physwf.application.login.cache.LoginContext;
-	import com.physwf.application.login.msg.MessageManager;
 	import com.physwf.components.rpc.RPCConnectioin;
-	import com.physwf.components.rpc.msg.MsgBase;
+	import com.physwf.components.rpc.msg.MessageManager;
 	import com.physwf.system.entity.MySelf;
 
 	public class LoginService
@@ -17,6 +16,7 @@ package com.physwf.application.login.services
 		public function initialize():void
 		{
 			MessageManager.instance.initialize();
+			MessageManager.instance.registerMessage();
 			RPCConnectioin.login = new RPCConnectioin();
 			RPCConnectioin.login.initialze();
 		}
@@ -35,6 +35,7 @@ package com.physwf.application.login.services
 			msg.user_name = uid;
 			msg.pw = password;// MD5.hash(MD5.hash(password));//要哈希
 			msg.from_site = "temp";
+			msg.game_area = 1;
 			RPCConnectioin.login.call(msg);
 		}
 		//check role exsit 
@@ -61,7 +62,6 @@ package com.physwf.application.login.services
 		
 		public function close():void
 		{
-			MessageManager.instance.dispose();
 			RPCConnectioin.login.close();
 		}
 	}

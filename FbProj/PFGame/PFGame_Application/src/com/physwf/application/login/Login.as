@@ -3,13 +3,13 @@ package com.physwf.application.login
 	import com.physwf.application.login.cache.LoginContext;
 	import com.physwf.application.login.cache.OnlineInfo;
 	import com.physwf.application.login.controller.LoginController;
-	import com.physwf.application.login.rpc.RPCClient;
 	import com.physwf.application.login.services.LoginService;
 	import com.physwf.application.login.view.Loading;
 	import com.physwf.application.login.view.SelectAreaPanel;
 	import com.physwf.application.login.view.SelectRolePanel;
 	import com.physwf.application.login.view.SignInPanel;
 	import com.physwf.application.login.view.StartPanel;
+	import com.physwf.components.rpc.RPCConnectioin;
 	import com.physwf.shell.interfaces.IDestroyable;
 	import com.physwf.system.entity.MySelf;
 	import com.physwf.system.vo.LoginInfo;
@@ -141,9 +141,10 @@ package com.physwf.application.login
 				MySelf.loginInfo.serverInfo = selectAreaPanel.getSelectArea();
 				mRoot.removeChild(selectAreaPanel);
 				selectAreaPanel.dispose();
-				setpSelectRole();
+//				setpSelectRole();
+				finish();
 			};
-			LoginService.instance.getServerList();
+			LoginService.instance.getServerList();//get world list
 		}
 		
 		private function setpSelectRole():void
@@ -162,14 +163,14 @@ package com.physwf.application.login
 				selectRolePanel.dispose();
 				finish();
 			};
-			LoginService.instance.connectLoginServer(MySelf.loginInfo.host,MySelf.loginInfo.port,LoginService.instance.getRoles);
-//			LoginService.instance.getRoles();
+//			LoginService.instance.connectLoginServer(MySelf.loginInfo.host,MySelf.loginInfo.port,LoginService.instance.getRoles);
+			LoginService.instance.getRoles();
 		}
 		
 		private function finish():void
 		{
 			dispatchEvent(new Event("finished"));
-			RPCClient.close();
+//			RPCConnectioin.login.close();
 		}
 			
 		public function dispose():void
