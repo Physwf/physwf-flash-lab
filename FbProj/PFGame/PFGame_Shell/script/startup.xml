@@ -26,12 +26,12 @@
 	<item name="engine" type="dll"  url="dlls/engine.swf">
 		<domain level="1" useSub="0"/>
 	</item>
-<!--	<item name="startup" type="exe" thread="0" url="plugins/StartupPlugin.swf">-->
-<!--		<domain level="1" useSub="1" name="startup"/>-->
-<!--	</item>-->
-<!--	<item name="world" type="exe" thread="0" url="plugins/WorldPlugin.swf">-->
-<!--		<domain level="1" useSub="0"/>-->
-<!--	</item>-->
+	<item name="startup" type="exe" thread="0" url="plugins/StartupPlugin.swf">
+		<domain level="1" useSub="1" name="startup"/>
+	</item>
+	<item name="world" type="exe" thread="0" url="plugins/WorldPlugin.swf">
+		<domain level="1" useSub="0"/>
+	</item>
 <!--	<item name="frame" type="exe" thread="1" url="plugins/FramePlugin.swf">-->
 <!--		<domain level="1" useSub="0"/>-->
 <!--	</item>-->
