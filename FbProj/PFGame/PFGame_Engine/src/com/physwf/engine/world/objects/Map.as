@@ -164,6 +164,7 @@ package com.physwf.engine.world.objects
 				mCamera.moveToTarget();
 			});
 			ground.load();
+			
 //			var loader:Loader = new Loader();
 //			loader.contentLoaderInfo.addEventListener(
 //				Event.COMPLETE,
@@ -174,6 +175,7 @@ package com.physwf.engine.world.objects
 //					mCamera.moveToTarget();
 //				});
 //			loader.load(new URLRequest("resource/map/"+id+"/ground.jpg"));
+			
 //			var ground:TileGround = new TileGround();
 //			ground.addEventListener(Event.COMPLETE ,function (e:Event):void
 //			{

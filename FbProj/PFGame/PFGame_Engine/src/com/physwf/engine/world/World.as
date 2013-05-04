@@ -45,6 +45,8 @@ package com.physwf.engine.world
 		{
 			System.myself.addEventListener(MyEvent.ENTER_MAP_SUCCESS,onFirstEnterMap);
 			//初始化进入地图
+			MySelf.userInfo.map_x = 800;
+			MySelf.userInfo.map_y = 400;
 			System.myself.enterMap(MySelf.userInfo.map_id,MySelf.userInfo.map_x,MySelf.userInfo.map_y);
 			ScreenManager.main.frameRate = 30;
 		}
