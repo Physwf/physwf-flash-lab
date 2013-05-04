@@ -15,7 +15,7 @@ package com.physwf.components.utils
 		 * @param segmentLen 每个片段的字节长度，片段与片段之间用空白字符分割
 		 * 
 		 */
-		public static function printf(bytes:ByteArray,system:uint = 16,segmentLen:uint = 4):void
+		public static function printf(bytes:ByteArray,system:uint = 16,segmentLen:uint = 1):void
 		{
 			var pos:uint = bytes.position;
 			bytes.position = 0;
