@@ -48,7 +48,11 @@ package com.physwf.system.entity
 		 */		
 		public function move(x:uint,y:uint,dir:uint):void
 		{
-			dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
+			var msg:MSG_REQ_WORLD_USER_MOVE_0x1004 = new MSG_REQ_WORLD_USER_MOVE_0x1004();
+			msg.pos = new world_user_pos_t();
+			msg.pos.x = x;
+			msg.pos.y = y;
+			RPCConnectioin.online.call(msg);
 		}
 		/**
 		 * 玩家移动
@@ -81,6 +85,8 @@ package com.physwf.system.entity
 		 */		
 		public function leaveMap():void
 		{
+			var msg:MSG_REQ_WORLD_LEAVE_USER_0x1001 = new MSG_REQ_WORLD_LEAVE_USER_0x1001();
+			RPCConnectioin.online.call(msg);
 		}
 		
 		public function changeEquips():void
@@ -106,6 +112,18 @@ package com.physwf.system.entity
 				case MessageEvent.MSG_SUCCESS_+0x1003:
 					var msg1003:MSG_RES_WORLD_ENTER_MAP_0x1003 = e.message as MSG_RES_WORLD_ENTER_MAP_0x1003;
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
+					break;
+				case MessageEvent.MSG_SUCCESS_+0x1004://人物移动，
+					var msg1004:MSG_RES_WORLD_USER_MOVE_0x1004 = e.message as MSG_RES_WORLD_USER_MOVE_0x1004;
+					
+					if(msg1004.uid == userInfo.uid)
+					{
+						dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
+					}
+					else
+					{
+						
+					}
 					break;
 			}
 		}
