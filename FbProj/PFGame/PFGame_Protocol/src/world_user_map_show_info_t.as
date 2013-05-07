@@ -25,7 +25,7 @@ package
 			sex = input.readUnsignedByte();
 			attire = input.readUnsignedInt();
 			pos= new world_user_pos_t();
-			pos.readExternal(input)			
+			pos.readExternal(input);		
 		}
 		
 		public function writeExternal(output:IDataOutput):void
@@ -34,7 +34,7 @@ package
 			output.writeUTF(nick);
 			output.writeByte(sex);
 			output.writeUnsignedInt(attire);
-			pos.writeExternal(output)			
+			pos.writeExternal(output);			
 		}
 	}
 }
