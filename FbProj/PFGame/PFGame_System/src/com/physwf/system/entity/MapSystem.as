@@ -29,18 +29,18 @@ package com.physwf.system.entity
 		
 		public function onMapSwitchStart():void
 		{
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1004,onMessage);//user move
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1005,onMessage);//user leave map notify
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1006,onMessage);//user enter map notify
-			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1007,onMessage);//map user list
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1033,onMessage);//user move
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1005,onMessage);//user leave map notify
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1006,onMessage);//user enter map notify
+			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1007,onMessage);//map user list
 		}
 		
 		public function onMapSwitchEnd():void
 		{
-			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1004,onMessage);//user move
-			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1005,onMessage);//user leave map notify
-			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1006,onMessage);//user enter map notify
-			RPCConnectioin.online.removeEventListener(MessageEvent.MSG_SUCCESS_+0x1007,onMessage);//map user list
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1033,onMessage);//user move
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1005,onMessage);//user leave map notify
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1006,onMessage);//user enter map notify
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1007,onMessage);//map user list
 		}
 		
 		public function getMapUserList():void
@@ -53,12 +53,12 @@ package com.physwf.system.entity
 		{
 			switch(e.type)
 			{
-				case MessageEvent.MSG_SUCCESS_+0x1004://user move
+				case MessageEvent.MSG_SUCCESS_+0x1033://user move
 					if(!mapUserList) return;
-					var msg1004:MSG_RES_WORLD_USER_MOVE_0x1004 = e.message as MSG_RES_WORLD_USER_MOVE_0x1004;
-					var uInfo:UserInfo = getMapUserInfoById(msg1004.uid);
-					uInfo.target_x = msg1004.pos.x;
-					uInfo.target_y = msg1004.pos.y;
+					var msg1033:MSG_RES_WORLD_USER_MOVE_NOTIFY_0x1033 = e.message as MSG_RES_WORLD_USER_MOVE_NOTIFY_0x1033;
+					var uInfo:UserInfo = getMapUserInfoById(msg1033.uid);
+					uInfo.target_x = msg1033.pos.x;
+					uInfo.target_y = msg1033.pos.y;
 					dispatchEvent(new MapEvent(MapEvent.MAP_USER_MOVE,uInfo));
 					break;
 				case MessageEvent.MSG_SUCCESS_+0x1005://user leave map notify

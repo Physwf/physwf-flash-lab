@@ -28,6 +28,7 @@ package com.physwf.system.entity
 		{
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1002,onMessage);//login or enter world
 			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1003,onMessage);//enter map
+			RPCConnectioin.online.addEventListener(MessageEvent.MSG_SUCCESS_+0x1004,onMessage);//move
 		}
 		/**
 		 * 登陆/enter map 
@@ -105,7 +106,7 @@ package com.physwf.system.entity
 					var msg1002:MSG_RES_WORLD_USER_ENTER_0x1002 = e.message as MSG_RES_WORLD_USER_ENTER_0x1002;
 					MySelf.userInfo = new UserInfo();
 					MySelf.userInfo.nick = msg1002.user_info.nick;
-					MySelf.userInfo.map_id = msg1002.user_info.map_id;
+					MySelf.userInfo.map_id = msg1002.user_info.map_id?msg1002.user_info.map_id:1;
 					MySelf.userInfo.sex = msg1002.user_info.sex;
 					dispatchEvent(new MyEvent(MyEvent.LOGIN_SUCCESS));
 					break;
@@ -115,15 +116,9 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+0x1004://人物移动，
 					var msg1004:MSG_RES_WORLD_USER_MOVE_0x1004 = e.message as MSG_RES_WORLD_USER_MOVE_0x1004;
-					
-					if(msg1004.uid == userInfo.uid)
-					{
-						dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
-					}
-					else
-					{
-						
-					}
+					userInfo.target_x = msg1004.pos.x;
+					userInfo.target_y = msg1004.pos.y;
+					dispatchEvent(new MyEvent(MyEvent.SELF_MOVE_ALLOWED));
 					break;
 			}
 		}
