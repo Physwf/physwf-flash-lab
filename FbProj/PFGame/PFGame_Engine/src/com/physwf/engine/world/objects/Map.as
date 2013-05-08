@@ -118,7 +118,7 @@ package com.physwf.engine.world.objects
 //					var goAlong:CmdGoAlong = new CmdGoAlong(player);
 //					goAlong.setPath(e.userInfo.path);
 					var goTo:CmdGoTo = new CmdGoTo(player);
-					goTo.setDest(e.userInfo.path[0],e.userInfo.path[1]);
+					goTo.setDest(e.userInfo.target_x,e.userInfo.target_y);
 					var standCmd:CmdStand = new CmdStand(player);
 					cmdSeq.addCommand(goTo);
 					cmdSeq.addCommand(standCmd);
@@ -140,12 +140,11 @@ package com.physwf.engine.world.objects
 				case MyEvent.SELF_MOVE_ALLOWED:
 					var cmdSeq:LinerCmdSequence = new LinerCmdSequence();
 					var goCmd:CmdGoTo= new CmdGoTo(Player.self);
-					goCmd.setDest(mController.targetX,mController.targetY);
+					goCmd.setDest(MySelf.userInfo.target_x,MySelf.userInfo.target_y);
 					var standCmd:CmdStand = new CmdStand(Player.self);
 					cmdSeq.addCommand(goCmd);
 					cmdSeq.addCommand(standCmd);
 					Player.self.execute(cmdSeq);
-//					Player.self.goto(mController.targetX,mController.targetY);
 					break;
 			}
 		}
