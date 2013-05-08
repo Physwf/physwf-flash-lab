@@ -105,7 +105,7 @@ package com.physwf.application.login
 				mRoot.removeChild(signInPanel);
 				signInPanel.dispose();
 				Loading.removeLightLoading(mRoot);
-				setpSelectArea();
+				setpSelectRole();
 			};
 				
 			signInPanel.onSignIn = function():void
@@ -141,10 +141,10 @@ package com.physwf.application.login
 				MySelf.loginInfo.serverInfo = selectAreaPanel.getSelectArea();
 				mRoot.removeChild(selectAreaPanel);
 				selectAreaPanel.dispose();
-//				setpSelectRole();
 				finish();
 			};
-			LoginService.instance.getServerList();//get world list
+			LoginService.instance.getServerList();
+			
 		}
 		
 		private function setpSelectRole():void
@@ -153,15 +153,11 @@ package com.physwf.application.login
 			
 			LoginController.instance.onGetRoles = function ():void
 			{
-				selectRolePanel.setRoles(OnlineInfo.roles);
-				mRoot.addChild(selectRolePanel);
+				setpSelectArea();
 			};
-			selectRolePanel.onRoleSelected = function ():void
+			LoginController.instance.onNoRoles = function ():void
 			{
-				MySelf.loginInfo.roleInfo = selectRolePanel.getRoleSelected();
-				mRoot.removeChild(selectRolePanel);
-				selectRolePanel.dispose();
-				finish();
+				LoginService.instance.createRole("nick",0);
 			};
 //			LoginService.instance.connectLoginServer(MySelf.loginInfo.host,MySelf.loginInfo.port,LoginService.instance.getRoles);
 			LoginService.instance.getRoles();

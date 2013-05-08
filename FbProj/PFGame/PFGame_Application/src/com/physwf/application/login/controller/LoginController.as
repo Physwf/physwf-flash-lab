@@ -15,6 +15,7 @@ package com.physwf.application.login.controller
 		public var onLoginError:Function;
 		public var onGetServerList:Function;
 		public var onGetRoles:Function;
+		public var onNoRoles:Function;
 		public var onRoleCreated:Function;
 		
 		public function LoginController()
@@ -44,10 +45,13 @@ package com.physwf.application.login.controller
 					onLoginSuccess();
 					break;
 				case MessageEvent.MSG_SUCCESS_ + 0x9001://check role exsit yes
+					onGetRoles();
 					break;
 				case MessageEvent.MSG_ERROR_ + 0x9001://check role exsit no
+					onNoRoles();
 					break;
 				case MessageEvent.MSG_SUCCESS_ + 0x9000:// create role
+					onGetRoles();
 					break;
 				case MessageEvent.MSG_SUCCESS_ + 0x6004://get world list
 					var msg6004:MSG_RES_SWITCH_GET_WORLD_LIST_0x6004 = e.message as MSG_RES_SWITCH_GET_WORLD_LIST_0x6004;
