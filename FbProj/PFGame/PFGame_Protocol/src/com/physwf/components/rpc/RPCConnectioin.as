@@ -84,7 +84,7 @@ package com.physwf.components.rpc
 						var MSG:Class = MessageManager.instance.getMSG(mid);
 //						if(!MSG) 
 //						{
-//							trace("未知的协议id:",mid);
+//							trace("未知的协议id:",mid.toString(16));
 //							return;
 //						}
 						var msg:MsgBase = new MSG(mid) as MsgBase;
@@ -153,7 +153,7 @@ package com.physwf.components.rpc
 			msgData.endian = Endian.LITTLE_ENDIAN;
 			msg.writeExternal(msgData);
 			rawSocket.writeBytes(msgData);
-			ByteUtils.printf(msgData);
+//			ByteUtils.printf(msgData);
 			rawSocket.flush();
 		}
 	}
