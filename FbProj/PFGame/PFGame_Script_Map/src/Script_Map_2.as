@@ -2,20 +2,18 @@ package
 {
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.script.MapScriptBase;
-	import com.physwf.engine.world.objects.NPC;
 	import com.physwf.engine.world.objects.Teleport;
 	
-	import flash.display.Sprite;
 	import flash.utils.ByteArray;
-	
-	public class Script_Map_1 extends MapScriptBase
+
+	public class Script_Map_2  extends MapScriptBase
 	{
-		[Embed(source="desc/1.xml",mimeType="application/octet-stream")]
+		[Embed(source="desc/2.xml",mimeType="application/octet-stream")]
 		private var Desc:Class;
 		
-		public function Script_Map_1()
+		public function Script_Map_2()
 		{
-			 
+			
 		}
 		
 		override public function initialize():void
