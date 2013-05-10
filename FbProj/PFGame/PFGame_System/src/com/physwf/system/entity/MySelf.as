@@ -86,8 +86,6 @@ package com.physwf.system.entity
 		 */		
 		public function leaveMap():void
 		{
-			var msg:MSG_REQ_WORLD_LEAVE_USER_0x1001 = new MSG_REQ_WORLD_LEAVE_USER_0x1001();
-			RPCConnectioin.online.call(msg);
 		}
 		
 		public function changeEquips():void
@@ -112,6 +110,9 @@ package com.physwf.system.entity
 					break;
 				case MessageEvent.MSG_SUCCESS_+0x1003:
 					var msg1003:MSG_RES_WORLD_ENTER_MAP_0x1003 = e.message as MSG_RES_WORLD_ENTER_MAP_0x1003;
+					MySelf.userInfo.map_id = msg1003.map_id;
+					MySelf.userInfo.map_x = msg1003.pos.x;
+					MySelf.userInfo.map_y = msg1003.pos.y;
 					dispatchEvent(new MyEvent(MyEvent.ENTER_MAP_SUCCESS));
 					break;
 				case MessageEvent.MSG_SUCCESS_+0x1004://人物移动，
