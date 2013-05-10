@@ -5,7 +5,6 @@ package com.physwf.components.pswloader
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
-	import flash.net.URLStream;
 
 	public class LoadingItem extends EventDispatcher implements INumerical,IDisposible
 	{
@@ -13,6 +12,7 @@ package com.physwf.components.pswloader
 		public static const LOAD_STATUS_LOADED:uint = 2;
 		
 		public var priority:Number;
+		public var isDistroyed:Boolean;
 		
 		protected var mUrl:String;
 		protected var mUID:String;
@@ -29,11 +29,12 @@ package com.physwf.components.pswloader
 		
 		public function load():void
 		{
-			
+			mLoadStatus = LOAD_STATUS_LOADING;
 		}
 		
 		protected function onIOError(e:IOErrorEvent):void
 		{
+			mLoadStatus = 0;
 			trace(this,"Bad url!!!",mUrl);
 		}
 		
@@ -60,8 +61,14 @@ package com.physwf.components.pswloader
 			return priority;
 		}
 		
+		public function stop():void
+		{
+			mLoadStatus = 0;
+		}
+		
 		public function destroy():void
 		{
+			isDistroyed = true;
 			mUrl = null;
 			mContent = null;
 		}

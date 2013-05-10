@@ -4,6 +4,7 @@ package com.physwf.components.pswloader
 	import com.physwf.components.utils.TGADecoder;
 	
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
@@ -33,6 +34,9 @@ package com.physwf.components.pswloader
 		private static const TYPE_TGA:uint = 5;
 		private static const TYPE_BMP:uint = 6;
 		
+		private var mStream:URLStream;
+		private var sHelpLoader:Loader;
+		
 		public function ImageItem(url:String,uid:String,...args)
 		{
 			super(url,uid);
@@ -40,41 +44,61 @@ package com.physwf.components.pswloader
 		
 		override public function load():void
 		{
-			var stream:URLStream = new URLStream();
-			stream.addEventListener(Event.COMPLETE,onComplete);
-			stream.addEventListener(IOErrorEvent.IO_ERROR,onIOError);
-			stream.load(new URLRequest(mUrl));
+			mStream = new URLStream();
+			mStream.addEventListener(Event.COMPLETE,onComplete);
+			mStream.addEventListener(IOErrorEvent.IO_ERROR,onIOError);
+			mStream.load(new URLRequest(mUrl));
+			super.load();
 		}
 		
+		override public function stop():void
+		{
+//			trace("mLoadStatus:"+mLoadStatus)
+			if(mLoadStatus == LOAD_STATUS_LOADING)
+			{
+				mStream.removeEventListener(Event.COMPLETE,onComplete);
+				mStream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
+				mStream.close();
+				if(sHelpLoader)
+				{
+					sHelpLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onLoaderComplete);
+					sHelpLoader.close();
+					sHelpLoader.unloadAndStop(true);
+				}
+			}
+			super.stop();
+		}
 		
 		private function onComplete(e:Event):void
 		{
-			var stream:URLStream = e.target as URLStream;
-			stream.removeEventListener(Event.COMPLETE,onComplete);
-			stream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
+			mStream.removeEventListener(Event.COMPLETE,onComplete);
+			mStream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
 			var data:ByteArray = new ByteArray();
-			stream.readBytes(data);
+			mStream.readBytes(data);
 			data.endian = Endian.LITTLE_ENDIAN;
+			mLoadStatus = LOAD_STATUS_LOADED;
 			
 			switch(analyze(data))
 			{
 				case TYPE_JPG:
 				case TYPE_PNG:
 				case TYPE_GIF:
-					var loader:Loader = new Loader();
-					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onLoaderComplete);
-					loader.loadBytes(data);
+					sHelpLoader = new Loader();
+					sHelpLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,onLoaderComplete);
+					sHelpLoader.loadBytes(data);
 					break;
 				case TYPE_TGA:
 					var tgaDecoder:TGADecoder = new TGADecoder();
 					tgaDecoder.decode(data);
 					mContent = tgaDecoder.bitmap;
+					mLoadStatus = LOAD_STATUS_LOADED;
 					dispatchEvent(new Event(Event.COMPLETE));
 					break;
 				case TYPE_BMP:
 					var bmpDecoder:BMPDecoder = new BMPDecoder();
 					bmpDecoder.decode(data);
 					mContent = bmpDecoder.bitmap;
+					mLoadStatus = LOAD_STATUS_LOADED;
 					dispatchEvent(new Event(Event.COMPLETE));
 					break;
 				default:
@@ -140,11 +164,24 @@ package com.physwf.components.pswloader
 		
 		private function onLoaderComplete(e:Event):void
 		{
+			mLoadStatus = LOAD_STATUS_LOADED;
 			var target:LoaderInfo = e.target as LoaderInfo;
 			target.removeEventListener(Event.COMPLETE,onLoaderComplete);
 			mContent = Bitmap(target.loader.content).bitmapData;
 			target.loader.unload();
+			if(isDistroyed) return;
 			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
+		override public function destroy():void
+		{
+			mStream = null;
+			sHelpLoader = null;
+			if(mContent)
+			{
+				BitmapData(mContent).dispose();
+			}
+			super.destroy();
 		}
 	}
 }

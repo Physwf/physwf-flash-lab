@@ -1,5 +1,6 @@
 package com.physwf.components.map.piece
 {
+	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.pswloader.LoadingItem;
 	import com.physwf.components.pswloader.PieceItem;
 	import com.physwf.components.pswloader.PswLoader;
@@ -10,8 +11,8 @@ package com.physwf.components.map.piece
 	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
-
-	public class PieceGround extends Bitmap implements IEventDispatcher
+	
+	public class BitmapPieceGround extends Bitmap implements IEventDispatcher, IDisposible
 	{
 		public static const KEY:String = "key";
 		public static const COMPLETE:String = "complete";
@@ -19,9 +20,11 @@ package com.physwf.components.map.piece
 		public var id:uint;
 		public var focusX:uint;
 		public var focusY:uint;
+		private var mBitmapData:BitmapData;
 		
-		public function PieceGround()
+		public function BitmapPieceGround()
 		{
+			super(null, "auto", false);
 		}
 		
 		public function load():void
@@ -42,8 +45,8 @@ package com.physwf.components.map.piece
 			var column:uint = data.readUnsignedByte();
 			var size:uint = data.readUnsignedShort();
 			
-			bitmapData && bitmapData.dispose();//to do考虑大对象的销毁
-			bitmapData = new BitmapData((column+1)*size,(row+1)*size,false,0x0);
+			mBitmapData = new BitmapData((column+1)*size,(row+1)*size,false,0x0);
+			bitmapData = mBitmapData;
 			
 			var pLoader:PswLoader = PswLoader.getPswLoader("piece");
 			var pieceItem:PieceItem;
@@ -67,10 +70,17 @@ package com.physwf.components.map.piece
 			var item:PieceItem = e.target as PieceItem;
 			item.removeEventListener(Event.COMPLETE,onPieceComplete);
 			var bmd:BitmapData = item.getContent() as BitmapData;
-			bitmapData.copyPixels(bmd,bmd.rect,new Point(item.x ,item.y));
-//			trace(item.priority,"item.priority");
-//			trace(Math.abs(item.x-focusX),"item.x");
-//			trace(Math.abs(item.y-focusY),"item.y");
+			mBitmapData.copyPixels(bmd,bmd.rect,new Point(item.x ,item.y));
+			item.destroy();
+		}
+		
+		public function destroy():void
+		{
+			mBitmapData && mBitmapData.dispose();
+			var kLoader:PswLoader = PswLoader.getPswLoader("key");
+			kLoader.destroy();
+			var iLoader:PswLoader = PswLoader.getPswLoader("piece");
+			iLoader.destroy();
 		}
 	}
 }

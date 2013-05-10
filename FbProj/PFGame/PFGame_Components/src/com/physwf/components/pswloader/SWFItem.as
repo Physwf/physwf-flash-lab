@@ -19,6 +19,8 @@ package com.physwf.components.pswloader
 	{
 		public var domain:ApplicationDomain;//为该swf指定的应用程序域
 		
+		private var mStream:URLStream;
+		
 		public function SWFItem(url:String,uid:String)
 		{
 			super(url,uid);
@@ -26,19 +28,31 @@ package com.physwf.components.pswloader
 		
 		override public function load():void
 		{
-			var stream:URLStream = new URLStream();
-			stream.addEventListener(Event.COMPLETE,onComplete);
-			stream.addEventListener(IOErrorEvent.IO_ERROR,onIOError);
-			stream.load(new URLRequest(mUrl));
+			mStream = new URLStream();
+			mStream.addEventListener(Event.COMPLETE,onComplete);
+			mStream.addEventListener(IOErrorEvent.IO_ERROR,onIOError);
+			mStream.load(new URLRequest(mUrl));
+			super.load();
+		}
+		
+		override public function stop():void
+		{
+			if(mLoadStatus == LOAD_STATUS_LOADING)
+			{
+				mStream.removeEventListener(Event.COMPLETE,onComplete);
+				mStream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
+				mStream.close();
+			}
+			super.stop();
 		}
 		
 		private function onComplete(e:Event):void
 		{
+			mLoadStatus = LOAD_STATUS_LOADED;
 			var swfData:ByteArray = new ByteArray();
-			var stream:URLStream = e.target as URLStream;
-			stream.removeEventListener(Event.COMPLETE,onComplete);
-			stream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
-			stream.readBytes(swfData);
+			mStream.removeEventListener(Event.COMPLETE,onComplete);
+			mStream.removeEventListener(IOErrorEvent.IO_ERROR,onIOError);
+			mStream.readBytes(swfData);
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onSwfComplete);
 			loader.loadBytes(swfData,new LoaderContext(false,domain));

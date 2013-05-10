@@ -41,6 +41,7 @@ package com.physwf.components.pswloader
 		private var mItems:Object;//当前PswLoader的加载实例
 		private var mNumItems:uint;
 		private var mWaitItems:Vector.<LoadingItem>;//当前PswLoader正在等待start的加载项
+		private var mNumConnections:uint;//当前PswLoader实例占据的链接数
 		private var mContents:Object;//当前PswLoader所加载到的项目内容
 		
 		private var mName:String;
@@ -139,9 +140,17 @@ package com.physwf.components.pswloader
 			if(numConnection<maxConnections && _itemPrioList.size > 0)
 			{
 				var item:LoadingItem = _itemPrioList.Dequeue() as LoadingItem;
+				if(item.isDistroyed) 
+				{
+					_loadNext();
+					return;
+				}
 				item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
 				item.load();
+				
 				numConnection++;
+				mNumConnections++;
+				
 				_loadNext();
 			}
 		}
@@ -151,8 +160,9 @@ package com.physwf.components.pswloader
 			var item:LoadingItem = e.target as LoadingItem;
 			item.removeEventListener(Event.COMPLETE,onItemComplete);
 			mContents[item.url] = item.getContent();
-			
+			trace(item.url);
 			numConnection--;
+			mNumConnections --;
 			
 			_loadNext();
 			
@@ -169,6 +179,10 @@ package com.physwf.components.pswloader
 		public function start():void
 		{
 			if(mLoadFlag == LOAD_FLAG_LOADING) return;
+			if(mLoadFlag == LOAD_FLAG_FINISHED)
+			{
+				dispatchEvent(new Event(Event.COMPLETE));
+			}
 			for(var i:uint=0;i<mWaitItems.length;++i)
 			{
 				_itemPrioList.Enqueue(mWaitItems[i]);
@@ -224,6 +238,19 @@ package com.physwf.components.pswloader
 		public function destroy():void
 		{
 			delete _allLoaders[mName];
+			var item:LoadingItem;
+			for (var key:String in mItems)
+			{
+				item = mItems[key];
+				delete mItems[key];
+				item.removeEventListener(Event.COMPLETE,onItemComplete);
+				item.stop();
+				item.destroy();
+			}
+			
+			numConnection -= mNumConnections;
+			_numInstance--;
+			
 			mName = null;
 			mContents = null;
 		}
