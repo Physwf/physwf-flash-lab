@@ -4,11 +4,12 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
-	import com.physwf.components.map.piece.PieceGround;
+	import com.physwf.components.map.piece.SpritePieceGround;
 	import com.physwf.engine.Engine;
 	import com.physwf.engine.common.command.CmdGoAlong;
 	import com.physwf.engine.common.command.CmdGoTo;
 	import com.physwf.engine.common.command.CmdStand;
+	import com.physwf.engine.script.IMapScript;
 	import com.physwf.engine.world.controllers.MapController;
 	import com.physwf.engine.world.controllers.SelfController;
 	import com.physwf.engine.world.events.WorldEvent;
@@ -37,6 +38,7 @@ package com.physwf.engine.world.objects
 		private var mAppDomain:ApplicationDomain;
 		
 		private var mMapView:MapView;
+		private var mGround:SpritePieceGround;
 		private var mCamera:Camera;
 		
 		private var mController:MapController;
@@ -44,6 +46,7 @@ package com.physwf.engine.world.objects
 		private var mCharactors:Vector.<Player>;
 		private var mTeleprots:Vector.<Teleport>;
 		
+		private var mScript:IMapScript;
 		
 		public function Map()
 		{
@@ -152,17 +155,17 @@ package com.physwf.engine.world.objects
 		public function load():void
 		{
 			var id:uint = MySelf.userInfo.map_id;
-			var ground:PieceGround = new PieceGround();
-			ground.id = id;
-			ground.focusX = MySelf.userInfo.map_x;
-			ground.focusY = MySelf.userInfo.map_y;
-			ground.addEventListener(PieceGround.KEY,function (e:Event):void 
+			mGround = new SpritePieceGround();
+			mGround.id = id;
+			mGround.focusX = MySelf.userInfo.map_x;
+			mGround.focusY = MySelf.userInfo.map_y;
+			mGround.addEventListener(SpritePieceGround.KEY,function (e:Event):void 
 			{
 				mMapView.clearBottom();
-				mMapView.fillBottom(ground);
+				mMapView.fillBottom(mGround);
 				mCamera.moveToTarget();
 			});
-			ground.load();
+			mGround.load();
 			
 //			var loader:Loader = new Loader();
 //			loader.contentLoaderInfo.addEventListener(
@@ -198,6 +201,7 @@ package com.physwf.engine.world.objects
 		 */		
 		public function unload():void
 		{
+			mGround&&mGround.destroy();
 			mMapView.clearBottom();
 			mMapView.landform = null;
 		}
@@ -210,10 +214,26 @@ package com.physwf.engine.world.objects
 		 */		
 		public function loadMapScript():void
 		{
+			var id:uint = MySelf.userInfo.map_id;
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function (e:Event):void
+			{
+				mScript = loader.content as IMapScript;
+				mScript.initialize();
+				loader.unload();
+				dispatchEvent(new WorldEvent(WorldEvent.NPCS_READY));
+			});
+			var contex:LoaderContext = new LoaderContext(false,mAppDomain);
+			loader.load(new URLRequest("script/map/Script_Map_"+id+".swf"),contex);
 		}
-		
+		/**
+		 * 卸载脚本 
+		 * 
+		 */		
 		public function unloadMapScript():void
 		{
+			mScript && mScript.destroy();
+			mScript = null;
 		}
 		
 		public function addPlayer(chara:Player):void
@@ -255,16 +275,16 @@ package com.physwf.engine.world.objects
 		 */		
 		public function sweep():void
 		{
-			for(var i:uint=0;i<mCharactors.length;++i)
+			while(mCharactors.length>1)
 			{
-				if(mCharactors[i] == Player.self) continue;
-				mMapView.removeSwapElement(mCharactors[i].view);
-				mCharactors.splice(i,1);
+				if(mCharactors[0] == Player.self) continue;
+				mMapView.removeSwapElement(mCharactors[0].view);
+				mCharactors.splice(0,1);
 			}
-			for(i=0;i<mTeleprots.length;++i)
+			while(mTeleprots.length)
 			{
-				mMapView.removeSwapElement(mTeleprots[i].view);
-				mTeleprots.splice(i,1);
+				mMapView.removeSwapElement(mTeleprots[0].view);
+				mTeleprots.splice(0,1);
 			}
 		}
 		/**

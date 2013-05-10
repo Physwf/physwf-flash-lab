@@ -36,7 +36,6 @@ package com.physwf.engine.world
 			map.initialize();
 			Character.astar = new BiHeapAStar();
 			
-			Teleport.initialize();
 			
 			Engine.world = this;
 		}
@@ -71,9 +70,10 @@ package com.physwf.engine.world
 			System.map.onMapSwitchStart();
 			
 			Player.self.hide();
-			map.sweep();
 			
-			System.myself.leaveMap();
+			map.sweep();
+			map.unload();
+			map.unloadMapScript();
 			
 			map.dispatchEvent(new WorldEvent(WorldEvent.WORLD_DESTROY));
 			
@@ -91,8 +91,7 @@ package com.physwf.engine.world
 			System.map.onMapSwitchEnd();
 			
 			map.domain = Application.application.sandBox.curMapDomain;
-			map.unload();
-			map.unloadMapScript();
+			
 			//必须在这个事件之后才能请求地图上的玩家列表,否则玩家的寻路数据为空
 			map.addEventListener(WorldEvent.MAP_READY,onWorldReady);
 			map.load();
@@ -109,6 +108,7 @@ package com.physwf.engine.world
 		private function onUsersReady(e:WorldEvent):void
 		{
 			map.removeEventListener(WorldEvent.USERS_READY,onUsersReady);
+			map.loadMapScript();
 		}
 			
 		private function onNpcReady(e:WorldEvent):void
