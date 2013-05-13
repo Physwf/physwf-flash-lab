@@ -140,17 +140,14 @@ package com.physwf.components.pswloader
 			if(numConnection<maxConnections && _itemPrioList.size > 0)
 			{
 				var item:LoadingItem = _itemPrioList.Dequeue() as LoadingItem;
-				if(item.isDistroyed) 
+				if(!item.isDistroyed) 
 				{
-					_loadNext();
-					return;
+					item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
+					item.load();
+					
+					numConnection++;
+					mNumConnections++;
 				}
-				item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
-				item.load();
-				
-				numConnection++;
-				mNumConnections++;
-				
 				_loadNext();
 			}
 		}
