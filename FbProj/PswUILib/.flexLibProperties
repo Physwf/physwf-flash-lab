@@ -5,7 +5,7 @@
     <classEntry path="com.physwf.uicomponets.containers.Window"/>
     <classEntry path="com.physwf.uicomponets.controls.CheckBox"/>
     <classEntry path="com.physwf.uicomponets.controls.RadioButton"/>
-    <classEntry path="com.physwf.uicomponets.Components"/>
+    <classEntry path="com.physwf.uicomponets.Component"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,8 +1,8 @@
 package com.physwf.uicomponets.containers
 {
-	import com.physwf.uicomponets.Components;
+	import com.physwf.uicomponets.Component;
 
-	public class Window extends Components
+	public class Window extends Component
 	{
 		public function Window()
 		{

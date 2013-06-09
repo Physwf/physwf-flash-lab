@@ -1,8 +1,8 @@
 package com.physwf.uicomponets.controls
 {
-	import com.physwf.uicomponets.Components;
+	import com.physwf.uicomponets.Component;
 
-	public class RadioButton extends Components
+	public class RadioButton extends Component
 	{
 		public function RadioButton()
 		{

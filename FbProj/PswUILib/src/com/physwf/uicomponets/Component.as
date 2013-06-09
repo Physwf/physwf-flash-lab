@@ -8,18 +8,20 @@ package com.physwf.uicomponets
 	/**
 	 * 所有的组件基类。
 	 * 该组件包含且只包含一个位图，位图的数据为一个精灵图序列，通过指定位图的scrollRect属性来选取精灵图序列中的某一个内容，从而初始化或者改变组件的状态。 
-	 * @author yuelei.qiao
+	 * @author Joe Physwf
 	 * 
 	 */	
-	public class Components extends Sprite
+	public class Component extends Sprite
 	{
 		protected var mDisplay:Bitmap;
 		protected var mSpriteSheet:BitmapData;
 		protected var mStates:Vector.<Rectangle>;//组件的各种状态，可能只有一个
 		
-		public function Components()
+		public function Component()
 		{
 			super();
+			mouseEnabled = false;
+			mouseChildren = false;
 			mDisplay = new Bitmap();
 			addChild(mDisplay);
 			mStates = new Vector.<Rectangle>();

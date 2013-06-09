@@ -1,8 +1,8 @@
 package com.physwf.uicomponets.controls
 {
-	import com.physwf.uicomponets.Components;
+	import com.physwf.uicomponets.Component;
 	
-	public class Button extends Components
+	public class Button extends Component
 	{
 		public function Button()
 		{
