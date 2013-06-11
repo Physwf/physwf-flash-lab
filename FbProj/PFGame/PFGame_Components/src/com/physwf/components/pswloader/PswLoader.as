@@ -40,7 +40,7 @@ package com.physwf.components.pswloader
 		
 		private var mItems:Object;//当前PswLoader的加载实例
 		private var mNumItems:uint;
-		private var mWaitItems:Vector.<LoadingItem>;//当前PswLoader正在等待start的加载项
+		private var mWaitItems:Vector.<File>;//当前PswLoader正在等待start的加载项
 		private var mNumConnections:uint;//当前PswLoader实例占据的链接数
 		private var mContents:Object;//当前PswLoader所加载到的项目内容
 		
@@ -52,9 +52,9 @@ package com.physwf.components.pswloader
 		
 		private var _typeClasses:Object = 
 			{
-				binary: BinaryItem,
-				image:ImageItem,
-				piece:PieceItem
+				binary: BinaryFile,
+				image:ImageFile,
+				piece:MapPiece
 			};
 		
 		public static const LOAD_FLAG_FINISHED:uint = 0;
@@ -87,7 +87,7 @@ package com.physwf.components.pswloader
 			_numInstance ++;
 			
 			mItems = {};
-			mWaitItems = new Vector.<LoadingItem>();
+			mWaitItems = new Vector.<File>();
 			mContents = {};
 		}
 		
@@ -105,13 +105,13 @@ package com.physwf.components.pswloader
 			return "Pl" + _numInstance;
 		}
 		
-		public function add(url:String,priority:Number,type:String=null,...args):LoadingItem
+		public function add(url:String,priority:Number,type:String=null,...args):File
 		{
 			//already exist
-			if(mItems[url]) return mItems[url] as LoadingItem;
+			if(mItems[url]) return mItems[url] as File;
 			type ||= guessType(url);
 			var TypeClass:Class = _typeClasses[type];
-			var item:LoadingItem = new TypeClass(url,_numInstance.toString(16)+"_"+mNumItems.toString(16),args);
+			var item:File = new TypeClass(url,_numInstance.toString(16)+"_"+mNumItems.toString(16),args);
 			mNumItems++;
 			
 			mItems[url] = item;
@@ -139,7 +139,7 @@ package com.physwf.components.pswloader
 			
 			if(numConnection<maxConnections && _itemPrioList.size > 0)
 			{
-				var item:LoadingItem = _itemPrioList.Dequeue() as LoadingItem;
+				var item:File = _itemPrioList.Dequeue() as File;
 				if(!item.isDistroyed) 
 				{
 					item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
@@ -154,7 +154,7 @@ package com.physwf.components.pswloader
 		
 		private function onItemComplete(e:Event):void
 		{
-			var item:LoadingItem = e.target as LoadingItem;
+			var item:File = e.target as File;
 			item.removeEventListener(Event.COMPLETE,onItemComplete);
 			mContents[item.url] = item.getContent();
 			trace(item.url);
@@ -184,7 +184,7 @@ package com.physwf.components.pswloader
 			{
 				_itemPrioList.Enqueue(mWaitItems[i]);
 			}
-			mWaitItems = new Vector.<LoadingItem>();
+			mWaitItems = new Vector.<File>();
 			mLoadFlag = LOAD_FLAG_LOADING;
 			_loadNext();
 		}
@@ -235,7 +235,7 @@ package com.physwf.components.pswloader
 		public function destroy():void
 		{
 			delete _allLoaders[mName];
-			var item:LoadingItem;
+			var item:File;
 			for (var key:String in mItems)
 			{
 				item = mItems[key];

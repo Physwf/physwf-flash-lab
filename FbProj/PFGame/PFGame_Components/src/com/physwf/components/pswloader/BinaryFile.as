@@ -6,11 +6,11 @@ package com.physwf.components.pswloader
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
 
-	public class BinaryItem extends LoadingItem
+	public class BinaryFile extends File
 	{
 		private var mStream:URLStream;
 		
-		public function BinaryItem(url:String,uid:String,...args)
+		public function BinaryFile(url:String,uid:String,...args)
 		{
 			super(url,uid);
 		}

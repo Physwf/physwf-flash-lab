@@ -15,13 +15,13 @@ package com.physwf.components.pswloader
 	 * @author Physwf
 	 * 
 	 */
-	public class SWFItem extends LoadingItem
+	public class SWFFile extends File
 	{
 		public var domain:ApplicationDomain;//为该swf指定的应用程序域
 		
 		private var mStream:URLStream;
 		
-		public function SWFItem(url:String,uid:String)
+		public function SWFFile(url:String,uid:String)
 		{
 			super(url,uid);
 		}

@@ -20,7 +20,7 @@ package com.physwf.components.pswloader
 	 * 附注:各种图片的文件头
 	 * @author Physwf
 	 */
-	public class ImageItem extends LoadingItem
+	public class ImageFile extends File
 	{
 		/**
 		 * 各种图片文件头 
@@ -37,7 +37,7 @@ package com.physwf.components.pswloader
 		private var mStream:URLStream;
 		private var sHelpLoader:Loader;
 		
-		public function ImageItem(url:String,uid:String,...args)
+		public function ImageFile(url:String,uid:String,...args)
 		{
 			super(url,uid);
 		}

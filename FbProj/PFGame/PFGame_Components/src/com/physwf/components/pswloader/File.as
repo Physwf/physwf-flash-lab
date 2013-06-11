@@ -6,7 +6,7 @@ package com.physwf.components.pswloader
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 
-	public class LoadingItem extends EventDispatcher implements INumerical,IDisposible
+	public class File extends EventDispatcher implements INumerical,IDisposible
 	{
 		public static const LOAD_STATUS_LOADING:uint = 1;
 		public static const LOAD_STATUS_LOADED:uint = 2;
@@ -21,7 +21,7 @@ package com.physwf.components.pswloader
 		
 		protected var mLoadStatus:uint;
 		
-		public function LoadingItem(url:String,uid:String)
+		public function File(url:String,uid:String)
 		{
 			mUrl = url;
 			mUID = uid;
