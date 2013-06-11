@@ -1,5 +1,7 @@
-package com.physwf.components.pswloader
+package com.physwf.components.map.piece
 {
+	import com.physwf.components.pswloader.ImageFile;
+
 	/**
 	 * 用来加载地图切片 
 	 * @author Physwf

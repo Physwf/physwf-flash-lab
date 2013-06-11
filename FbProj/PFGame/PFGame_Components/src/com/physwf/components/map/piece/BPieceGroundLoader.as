@@ -2,7 +2,6 @@ package com.physwf.components.map.piece
 {
 	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.pswloader.File;
-	import com.physwf.components.pswloader.MapPiece;
 	import com.physwf.components.pswloader.PswLoader;
 	import com.physwf.components.resource.ResourceCache;
 	

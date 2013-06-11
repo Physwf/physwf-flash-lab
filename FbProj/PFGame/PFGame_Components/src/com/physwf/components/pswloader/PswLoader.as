@@ -12,6 +12,7 @@ package com.physwf.components.pswloader
 	import flash.utils.ByteArray;
 	
 	import mx.collections.errors.ItemPendingError;
+	import com.physwf.components.map.piece.MapPiece;
 
 	/**
 	 * 该Loader参考了BulkLoader的设计，但进行了一定程度的简化。 
