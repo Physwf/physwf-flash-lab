@@ -16,6 +16,7 @@ package com.physwf.components.bitmap.net
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import flash.utils.getTimer;
 	
 
 	public class BitmapDataPackageLoader extends EventDispatcher implements IDisposible
@@ -138,8 +139,18 @@ package com.physwf.components.bitmap.net
 		
 		public function destroy():void
 		{
-			
+			var begin:uint =getTimer();
+			while(packages.length)
+			{
+				if(getTimer() - begin > 1) break;//destroy的时间控制不能超过1ms
+				var pack:BitmapDataPackage = packages.shift();
+				pack.destroy();
+			}
 		}
-
+		
+		public function get isDestroied():Boolean
+		{
+			return (packages.length == 0);
+		}
 	} // end class
 } // end package

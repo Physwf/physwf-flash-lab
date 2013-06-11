@@ -3,12 +3,15 @@ package com.physwf.components.bitmap.net {
 	import com.physwf.components.bitmap.data.BitmapDataPackage;
 	import com.physwf.components.bitmap.display.BitmapFrame;
 	import com.physwf.components.bitmap.events.PackageEvent;
+	import com.physwf.components.resource.ResourceCache;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
+
 	/**
 	 * 骨骼加载器。
 	 * 该组件在原有的代码上(author jack)进行了比较大的修正简化。
@@ -23,7 +26,7 @@ package com.physwf.components.bitmap.net {
 	 * @author joe
 	 * 
 	 */
-	public class SkeletonLoader extends EventDispatcher
+	public class SkeletonLoader extends ResourceCache
 	{
 		public static const POSTFIX_SWF:String = ".swf";
 		public static const KEYNAME:String = "key";
@@ -33,7 +36,7 @@ package com.physwf.components.bitmap.net {
 		public static const LOAD_FLAG_NO:uint = 0;
 		public static const LOAD_FLAG_LOADING:uint = 1;
 		public static const LOAD_FLAG_YES:uint = 3;
-		
+		/*每一个BitmapDataPackageLoader对应一个目录，用来加载相应目录下的位图资源*/
 		public var bitmapDataPackageLoaders:Vector.<BitmapDataPackageLoader>;
 		
 		private var _url:String;
@@ -70,6 +73,7 @@ package com.physwf.components.bitmap.net {
 				sLoader = new SkeletonLoader(url,keyName,postFix);
 				SkeletonLoaderPool.addLoader(tag,sLoader);
 			}
+			sLoader.incRefCount();
 			return sLoader;
 		}
 		/**
@@ -94,7 +98,7 @@ package com.physwf.components.bitmap.net {
 		 */		
 		public function getAction(directLabel:String,actionLabel:String):Vector.<BitmapFrame>
 		{
-			if(_bigKey.directions.indexOf(directLabel)>-1)
+			if(_bigKey.directions.indexOf(directLabel)>-1)//此处索引查询同后续循环查找有些功能重叠，考虑将两者简化合并
 			{
 				for(var i:int=0;i<bitmapDataPackageLoaders.length;++i)
 				{
@@ -201,6 +205,26 @@ package com.physwf.components.bitmap.net {
 			{
 				bLoader.loadFrame(labels[i]);
 			}
+		}
+		
+		override public function destroy():void
+		{
+			var begin:uint = getTimer();
+			while(bitmapDataPackageLoaders.length)
+			{
+				if(getTimer() - begin > 1) break;//destroy的时间控制不能超过1ms
+				var bLoader:BitmapDataPackageLoader = bitmapDataPackageLoaders.shift();
+				bLoader.destroy();
+				if(!bLoader.isDestroied)
+				{
+					bitmapDataPackageLoaders.unshift(bLoader);
+				}
+			}
+		}
+		
+		override public function get isDestroied():Boolean
+		{
+			return (bitmapDataPackageLoaders.length == 0);
 		}
 	} // end class
 } // end package

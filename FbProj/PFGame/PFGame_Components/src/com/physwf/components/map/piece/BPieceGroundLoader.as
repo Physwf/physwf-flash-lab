@@ -4,6 +4,7 @@ package com.physwf.components.map.piece
 	import com.physwf.components.pswloader.LoadingItem;
 	import com.physwf.components.pswloader.PieceItem;
 	import com.physwf.components.pswloader.PswLoader;
+	import com.physwf.components.resource.ResourceCache;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -12,19 +13,32 @@ package com.physwf.components.map.piece
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	
-	public class BitmapPieceGround extends Bitmap implements IEventDispatcher, IDisposible
+	public class BPieceGroundLoader extends ResourceCache
 	{
 		public static const KEY:String = "key";
 		public static const COMPLETE:String = "complete";
 		
+		public var content:Bitmap;
+		
 		public var id:uint;
 		public var focusX:uint;
 		public var focusY:uint;
+		
+		private var mUrl:String;
+		
 		private var mBitmapData:BitmapData;
 		
-		public function BitmapPieceGround()
+		public function BPieceGroundLoader(url:String)
 		{
-			super(null, "auto", false);
+			mUrl = url;
+			content = new Bitmap(null, "auto", false);
+		}
+		
+		public static function create(url:String):BPieceGroundLoader
+		{
+			var loader:BPieceGroundLoader = new BPieceGroundLoader(url);
+			loader.incRefCount();
+			return loader;
 		}
 		
 		public function load():void
@@ -46,7 +60,7 @@ package com.physwf.components.map.piece
 			var size:uint = data.readUnsignedShort();
 			
 			mBitmapData = new BitmapData((column+1)*size,(row+1)*size,false,0x0);
-			bitmapData = mBitmapData;
+			content.bitmapData = mBitmapData;
 			
 			var pLoader:PswLoader = PswLoader.getPswLoader("piece");
 			var pieceItem:PieceItem;
@@ -74,13 +88,19 @@ package com.physwf.components.map.piece
 			item.destroy();
 		}
 		
-		public function destroy():void
+		override public function destroy():void
 		{
 			mBitmapData && mBitmapData.dispose();
 			var kLoader:PswLoader = PswLoader.getPswLoader("key");
 			kLoader.destroy();
 			var iLoader:PswLoader = PswLoader.getPswLoader("piece");
 			iLoader.destroy();
+			mIsDetroied = true;
+		}
+		private var mIsDetroied:Boolean = false;
+		override public function get isDestroied():Boolean
+		{
+			return mIsDetroied;
 		}
 	}
 }

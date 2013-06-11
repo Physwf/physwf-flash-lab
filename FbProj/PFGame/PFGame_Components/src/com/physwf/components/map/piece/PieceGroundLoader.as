@@ -1,36 +1,53 @@
 package com.physwf.components.map.piece
 {
-	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.pswloader.LoadingItem;
 	import com.physwf.components.pswloader.PieceItem;
 	import com.physwf.components.pswloader.PswLoader;
+	import com.physwf.components.resource.ResourceCache;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
-
-	public class SpritePieceGround extends Sprite implements IEventDispatcher,IDisposible
+	import flash.utils.getTimer;
+	
+	public class PieceGroundLoader extends ResourceCache
 	{
 		public static const KEY:String = "key";
 		public static const COMPLETE:String = "complete";
 		
-		public var id:uint;
+		public var content:Sprite;
+		
 		public var focusX:uint;
 		public var focusY:uint;
 		
-		public function SpritePieceGround()
+		private var mUrl:String;
+		
+		private var mPieces:Vector.<BitmapData>;
+		
+		public function PieceGroundLoader(url:String)
 		{
-			mouseEnabled = false;
+			mUrl = url;
+			content = new Sprite();
+			content.mouseEnabled = false;
+			content.mouseChildren = false;
+			mPieces = new Vector.<BitmapData>();
+		}
+		
+		public static function create(url:String):PieceGroundLoader
+		{
+			var loader:PieceGroundLoader = new PieceGroundLoader(url);
+			loader.incRefCount();
+			return loader;
 		}
 		
 		public function load():void
 		{
 			var pLoader:PswLoader = PswLoader.getPswLoader("key");
-			var item:LoadingItem = pLoader.add("resource/map/"+id+"/key.swf",1,PswLoader.TYPE_BINARY);
+			var item:LoadingItem = pLoader.add(mUrl+"/key.swf",1,PswLoader.TYPE_BINARY);
 			item.addEventListener(Event.COMPLETE,onKeyCompelte);
 			pLoader.start();
 		}
@@ -45,9 +62,9 @@ package com.physwf.components.map.piece
 			var column:uint = data.readUnsignedByte();
 			var size:uint = data.readUnsignedShort();
 			
-			graphics.beginFill(0,0);
-			graphics.drawRect(0,0,(column+1)*size,(row+1)*size);
-			graphics.endFill();
+			content.graphics.beginFill(0,0);
+			content.graphics.drawRect(0,0,(column+1)*size,(row+1)*size);
+			content.graphics.endFill();
 			
 			var pLoader:PswLoader = PswLoader.getPswLoader("piece");
 			var pieceItem:PieceItem;
@@ -56,7 +73,7 @@ package com.physwf.components.map.piece
 				for(var j:uint =0;j<column;++j)
 				{
 					var priority:Number = size*size/((j*size-focusX)*(j*size-focusX) + (i*size-focusY)*(i*size-focusY));
-					pieceItem = pLoader.add("resource/map/"+id+"/"+i+"_"+j,priority,PswLoader.TYPE_PIECE,".jpg") as PieceItem;
+					pieceItem = pLoader.add(mUrl+i+"_"+j,priority,PswLoader.TYPE_PIECE,".jpg") as PieceItem;
 					pieceItem.x = j*size;
 					pieceItem.y = i*size;
 					pieceItem.addEventListener(Event.COMPLETE,onPieceComplete);
@@ -74,18 +91,31 @@ package com.physwf.components.map.piece
 			var bitmap:Bitmap = new Bitmap(bmd);
 			bitmap.x = item.x;
 			bitmap.y = item.y;
-			addChild(bitmap);
-//			trace(item.priority,"item.priority");
-//			trace(Math.abs(item.x-focusX),"item.x");
-//			trace(Math.abs(item.y-focusY),"item.y");
-		}
-		
-		public function destroy():void
-		{
+			
+			Sprite(content).addChild(bitmap);
+			
+			mPieces.push(bmd);
+			
 			var kLoader:PswLoader = PswLoader.getPswLoader("key");
 			kLoader.destroy();
 			var iLoader:PswLoader = PswLoader.getPswLoader("piece");
 			iLoader.destroy();
+		}
+		
+		override public function destroy():void
+		{
+			var begin:uint = getTimer();
+			while(mPieces.length)
+			{
+				if(getTimer() - begin >= 3) break;//如果超过3毫秒则退出，等待其他空闲帧在继续
+				var piece:BitmapData = mPieces.shift();
+				piece.dispose();
+			}
+		}
+		
+		override public function get isDestroied():Boolean
+		{
+			return (mPieces.length == 0);
 		}
 	}
 }

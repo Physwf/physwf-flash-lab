@@ -38,7 +38,7 @@ package com.physwf.components.pswloader
 			trace(this,"Bad url!!!",mUrl);
 		}
 		
-		public function getContent():*
+		public function getContent(clearMemery:Boolean=true):*
 		{
 			return mContent;
 		}

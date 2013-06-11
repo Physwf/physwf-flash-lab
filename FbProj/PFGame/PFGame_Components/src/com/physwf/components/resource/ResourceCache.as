@@ -11,8 +11,10 @@ package com.physwf.components.resource
 	 */	
 	public class ResourceCache extends EventDispatcher implements IDisposible
 	{
-		protected static var mResMgr:ResourceManager = new ResourceManager();
+		public static const RM:ResourceManager = new ResourceManager();
 		protected var mRefCount:uint;//引用次数
+		/*资源是否完全销毁，某些大对象的销毁可能很耗时，因此可以分在多个帧周期中进行销毁，从而需要这样一个字段来标识是否完全销毁*/		
+		public function get isDestroied():Boolean { return false; }
 		
 		public function ResourceCache()
 		{
@@ -37,7 +39,7 @@ package com.physwf.components.resource
 			}
 			if(mRefCount == 0)
 			{
-				mResMgr.addToWaitList(this);
+				RM.addToWaitList(this);
 			}
 		}
 		

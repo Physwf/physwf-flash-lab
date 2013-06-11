@@ -93,6 +93,7 @@ package com.physwf.components.pswloader
 					mContent = tgaDecoder.bitmap;
 					mLoadStatus = LOAD_STATUS_LOADED;
 					dispatchEvent(new Event(Event.COMPLETE));
+					data.clear();
 					break;
 				case TYPE_BMP:
 					var bmpDecoder:BMPDecoder = new BMPDecoder();
@@ -100,10 +101,12 @@ package com.physwf.components.pswloader
 					mContent = bmpDecoder.bitmap;
 					mLoadStatus = LOAD_STATUS_LOADED;
 					dispatchEvent(new Event(Event.COMPLETE));
+					data.clear();
 					break;
 				default:
 					trace(this,"unsupported image format!!");
 					dispatchEvent(new Event(Event.COMPLETE));
+					data.clear();
 					break;
 			}
 			
@@ -177,10 +180,6 @@ package com.physwf.components.pswloader
 		{
 			mStream = null;
 			sHelpLoader = null;
-			if(mContent)
-			{
-				BitmapData(mContent).dispose();
-			}
 			super.destroy();
 		}
 	}

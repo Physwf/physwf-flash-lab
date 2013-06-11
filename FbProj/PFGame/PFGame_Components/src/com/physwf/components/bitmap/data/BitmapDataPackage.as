@@ -4,6 +4,7 @@ package com.physwf.components.bitmap.data {
 	import com.physwf.components.bitmap.display.BitmapKeyFrame;
 	import com.physwf.components.bitmap.display.BitmapPlayer;
 	import com.physwf.components.bitmap.net.BitmapDataPackageLoader;
+	import com.physwf.components.interfaces.IDisposible;
 	import com.physwf.components.utils.AlgebraUtils;
 	
 	import flash.display.BitmapData;
@@ -16,12 +17,13 @@ package com.physwf.components.bitmap.data {
 	import flash.utils.IDataInput;
 	import flash.utils.IDataOutput;
 	import flash.utils.IExternalizable;
+
 	/**
 	 * 每一个位图数据包包含一组关键帧数据和一组普通帧数据，每一个普通帧都指向关键中包中的某一个位置（通过frame属性） 
 	 * @author joe
 	 * 
 	 */
-	public class BitmapDataPackage implements IExternalizable
+	public class BitmapDataPackage implements IExternalizable,IDisposible
 	{
 
 		public var endian:int = BitmapDataPackageLoader.PACKAGE_ENDIAN_JACK;
@@ -155,6 +157,15 @@ package com.physwf.components.bitmap.data {
 		private function writeElves(output:IDataOutput):void
 		{
 			
+		}
+		
+		public function destroy():void
+		{
+			while(bitmapKeyFrames.length)
+			{
+				var frame:BitmapKeyFrame = bitmapKeyFrames.shift();
+				frame.bitmapData.dispose();
+			}
 		}
 
 	} // end class

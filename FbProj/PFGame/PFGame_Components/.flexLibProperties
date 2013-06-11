@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.physwf.components.map.piece.BitmapPieceGround"/>
+    <classEntry path="com.physwf.components.map.piece.BPieceGroundLoader"/>
     <classEntry path="com.physwf.components.resource.ResourceCache"/>
     <classEntry path="com.physwf.components.resource.ResourceManager"/>
+    <classEntry path="com.physwf.components.map.piece.PieceGroundLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
