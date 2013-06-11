@@ -4,9 +4,8 @@ package com.physwf.engine.world.objects
 	import com.physwf.components.interfaces.IUpdatable;
 	import com.physwf.components.map.MapView;
 	import com.physwf.components.map.camera.Camera;
-	import com.physwf.components.map.piece.SpritePieceGround;
+	import com.physwf.components.map.piece.PieceGroundLoader;
 	import com.physwf.engine.Engine;
-	import com.physwf.engine.common.command.CmdGoAlong;
 	import com.physwf.engine.common.command.CmdGoTo;
 	import com.physwf.engine.common.command.CmdStand;
 	import com.physwf.engine.script.IMapScript;
@@ -38,7 +37,7 @@ package com.physwf.engine.world.objects
 		private var mAppDomain:ApplicationDomain;
 		
 		private var mMapView:MapView;
-		private var mGround:SpritePieceGround;
+		private var mGround:PieceGroundLoader;
 		private var mCamera:Camera;
 		
 		private var mController:MapController;
@@ -155,14 +154,13 @@ package com.physwf.engine.world.objects
 		public function load():void
 		{
 			var id:uint = MySelf.userInfo.map_id;
-			mGround = new SpritePieceGround();
-			mGround.id = id;
+			mGround = PieceGroundLoader.create("resource/map/"+id);;
 			mGround.focusX = MySelf.userInfo.map_x;
 			mGround.focusY = MySelf.userInfo.map_y;
-			mGround.addEventListener(SpritePieceGround.KEY,function (e:Event):void 
+			mGround.addEventListener(PieceGroundLoader.KEY,function (e:Event):void 
 			{
 				mMapView.clearBottom();
-				mMapView.fillBottom(mGround);
+				mMapView.fillBottom(mGround.content);
 				mCamera.moveToTarget();
 			});
 			mGround.load();
@@ -201,7 +199,7 @@ package com.physwf.engine.world.objects
 		 */		
 		public function unload():void
 		{
-			mGround&&mGround.destroy();
+			mGround&&mGround.release();
 			mMapView.clearBottom();
 			mMapView.landform = null;
 		}
@@ -228,7 +226,6 @@ package com.physwf.engine.world.objects
 		}
 		/**
 		 * 卸载脚本 
-		 * 
 		 */		
 		public function unloadMapScript():void
 		{
