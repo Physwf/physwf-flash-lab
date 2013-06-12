@@ -13,18 +13,33 @@ package com.physwf.uicomponets
 	 */	
 	public class Component extends Sprite
 	{
-		protected var mDisplay:Bitmap;
-		protected var mSpriteSheet:BitmapData;
-		protected var mStates:Vector.<Rectangle>;//组件的各种状态，可能只有一个
+		protected var mTexture:BitmapData;
+		protected var mTexCoords:Vector.<Rectangle>;//纹理坐标
 		
 		public function Component()
 		{
 			super();
-			mouseEnabled = false;
-			mouseChildren = false;
-			mDisplay = new Bitmap();
-			addChild(mDisplay);
-			mStates = new Vector.<Rectangle>();
+			mTexCoords = new Vector.<Rectangle>();
+		}
+		/**
+		 * 设置组建的纹理和坐标 
+		 * @param tex
+		 * @param coords
+		 * 
+		 */		
+		public function setTexAndCoords(tex:BitmapData,coords:Vector.<Rectangle>):void
+		{
+			mTexture = tex;
+			mTexCoords = coords;
+			init();
+		}
+		/**
+		 * 设置纹理后悔调用该初始化方法。 
+		 * 
+		 */		
+		protected function init():void
+		{
+			
 		}
 	}
 }

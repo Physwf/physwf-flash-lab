@@ -2,7 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.physwf.uicomponets.controls.Button"/>
-    <classEntry path="com.physwf.uicomponets.containers.Window"/>
+    <classEntry path="com.physwf.uicomponets.containers.Panel"/>
     <classEntry path="com.physwf.uicomponets.controls.CheckBox"/>
     <classEntry path="com.physwf.uicomponets.controls.RadioButton"/>
     <classEntry path="com.physwf.uicomponets.Component"/>
