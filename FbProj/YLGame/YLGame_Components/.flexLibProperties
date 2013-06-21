@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="components.interfaces.IDisposible"/>
+    <classEntry path="components.interfaces.INumerical"/>
+    <classEntry path="components.interfaces.IUpdatable"/>
+    <classEntry path="components.ds.heap.IHeap"/>
+    <classEntry path="components.ds.heap.MaxHeap"/>
+    <classEntry path="components.pswloader.File"/>
+    <classEntry path="components.pswloader.ImageFile"/>
+    <classEntry path="components.utils.IDecoder"/>
+    <classEntry path="components.utils.BMPDecoder"/>
+    <classEntry path="components.pswloader.BinaryFile"/>
+    <classEntry path="components.pswloader.PswLoader"/>
+    <classEntry path="components.bitmap.display.BitmapFrame"/>
+    <classEntry path="components.bitmap.net.ActionPackageLoader"/>
+    <classEntry path="components.bitmap.net.SkeletonLoader"/>
+    <classEntry path="components.resource.ResourceCache"/>
+    <classEntry path="components.resource.ResourceManager"/>
+    <classEntry path="components.bitmap.display.BitmapPlayer"/>
+    <classEntry path="components.pswloader.JSONFile"/>
+    <classEntry path="components.character.CharactorAnimation"/>
+    <classEntry path="components.view.ISkeleton"/>
+    <classEntry path="components.character.enum.ISODirection"/>
+    <classEntry path="components.character.enum.CharacterAction"/>
+    <classEntry path="components.utils.ImageUtils"/>
+    <classEntry path="components.utils.Stats"/>
+    <classEntry path="components.character.Wear"/>
+    <classEntry path="components.interfaces.IAnimation"/>
+    <classEntry path="components.character.Avatar"/>
+    <classEntry path="components.character.enum.AvatarConfig"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
