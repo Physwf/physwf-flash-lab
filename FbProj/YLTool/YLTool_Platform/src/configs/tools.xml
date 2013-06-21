@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools 
+		local_dir="E:/YLTool/YLTool_Platform/tools/" 
+		romote_dir=""
+		game_proj_dir="E:/YLGame/">
+
+	<tool name="Skeleton" dir="local"></tool>
+</tools>
