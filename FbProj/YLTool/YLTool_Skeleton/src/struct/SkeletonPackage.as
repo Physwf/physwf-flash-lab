@@ -179,6 +179,13 @@ package struct
 			fs.writeBytes(actionPackage);
 			fs.close();
 			
+			var mapKey:File = new File(Skeleton.rootDir+"maps/10001/key.swf");
+			fs.open(mapKey,FileMode.WRITE);
+			fs.writeByte(10);
+			fs.writeByte(10);
+			fs.writeShort(512);
+			fs.close();
+			
 			isBusy = false;
 			loadNext();
 		}

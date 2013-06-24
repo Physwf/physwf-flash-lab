@@ -5,4 +5,5 @@
 		game_proj_dir="E:/YLGame/">
 
 	<tool name="Skeleton" dir="local"></tool>
+	<tool name="EffectEditor" dir="local"></tool>
 </tools>

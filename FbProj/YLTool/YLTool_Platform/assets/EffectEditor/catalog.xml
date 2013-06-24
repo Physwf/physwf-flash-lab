@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+  <versions>
+    <swc version="1.2" />
+    <flex version="4.6.0" build="23201" minimumSupportedVersion="4.0.0" />
+  </versions>
+  <features>
+    <feature-script-deps />
+    <feature-files />
+  </features>
+  <libraries>
+    <library path="library.swf">
+      <script name="common/interfaces/ITool" mod="1371548555940" signatureChecksum="4274008891" >
+        <def id="common.interfaces:ITool" /> 
+        <dep id="spark.components:Application" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="Object" type="i" /> 
+      </script>
+      <script name="EffectEditor" mod="1372057067627" signatureChecksum="837853947" >
+        <def id="EffectEditor" /> 
+        <dep id="spark.components:Window" type="e" /> 
+        <dep id="flash.events:Event" type="e" /> 
+        <dep id="JSON" type="e" /> 
+        <dep id="flash.utils:ByteArray" type="e" /> 
+        <dep id="flash.display:BitmapData" type="e" /> 
+        <dep id="trace" type="e" /> 
+        <dep id="flash.geom:Rectangle" type="e" /> 
+        <dep id="flash.display:Loader" type="e" /> 
+        <dep id="flash.filesystem:FileMode" type="e" /> 
+        <dep id="flash.filesystem:FileStream" type="e" /> 
+        <dep id="flash.display:Bitmap" type="e" /> 
+        <dep id="flash.filesystem:File" type="e" /> 
+        <dep id="XML" type="e" /> 
+        <dep id="flash.utils:Dictionary" type="e" /> 
+        <dep id="spark.components:Window" type="s" /> 
+        <dep id="flash.events:Event" type="s" /> 
+        <dep id="spark.components:Application" type="s" /> 
+        <dep id="flash.utils:ByteArray" type="s" /> 
+        <dep id="flash.display:BitmapData" type="s" /> 
+        <dep id="flash.filesystem:FileStream" type="s" /> 
+        <dep id="flash.geom:Rectangle" type="s" /> 
+        <dep id="XML" type="s" /> 
+        <dep id="flash.display:Loader" type="s" /> 
+        <dep id="flash.filesystem:File" type="s" /> 
+        <dep id="flash.utils:Dictionary" type="s" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="common.interfaces:ITool" type="i" /> 
+        <dep id="Object" type="i" /> 
+      </script>
+      <script name="_9438e9ea344b7d4cd8d4d256302213be3ce5ee846423769070271b7b5d5e7ca0_flash_display_Sprite" mod="1372057090186" signatureChecksum="3461183865" >
+        <def id="_9438e9ea344b7d4cd8d4d256302213be3ce5ee846423769070271b7b5d5e7ca0_flash_display_Sprite" /> 
+        <dep id="flash.system:Security" type="e" /> 
+        <dep id="AS3" type="n" /> 
+        <dep id="flash.display:Sprite" type="i" /> 
+      </script>
+      <digests>
+        <digest type="SHA-256" signed="false" value="dd5faddc7981a9b920391d39ac91b61c88f797f3fff1111020f4cdcf11095c0b"   />
+      </digests>
+    </library>
+  </libraries>
+  <files>
+    <file path="configs/inout.xml" mod="1372042725101" />
+  </files>
+</swc>
