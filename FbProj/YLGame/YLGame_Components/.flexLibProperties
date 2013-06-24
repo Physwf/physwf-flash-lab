@@ -29,6 +29,12 @@
     <classEntry path="components.interfaces.IAnimation"/>
     <classEntry path="components.character.Avatar"/>
     <classEntry path="components.character.enum.AvatarConfig"/>
+    <classEntry path="components.map.MapView"/>
+    <classEntry path="components.map.piece.MapPiece"/>
+    <classEntry path="components.map.piece.PieceGroundLoader"/>
+    <classEntry path="components.effect.Effect"/>
+    <classEntry path="components.effect.EffectLoader"/>
+    <classEntry path="components.effect.EffectConfig"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

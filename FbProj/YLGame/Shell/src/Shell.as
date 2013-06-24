@@ -8,14 +8,16 @@ package
 	import flash.utils.getTimer;
 	
 	import components.bitmap.net.SkeletonLoader;
-	import components.character.Avatar;
 	import components.character.CharactorAnimation;
 	import components.character.enum.AvatarConfig;
 	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.effect.Effect;
+	import components.effect.EffectConfig;
+	import components.map.MapView;
+	import components.map.piece.PieceGroundLoader;
 	import components.utils.Stats;
 	
-	[SWF(width="1024",height="600",frameRate="30", backgroundColor="#0")]
+	[SWF(width="1900",height="900",frameRate="30", backgroundColor="#0")]
 	public class Shell extends Sprite
 	{
 		private var tf:TextField;
@@ -25,7 +27,44 @@ package
 		
 		public function Shell()
 		{
-			skeletonTest();
+			//skeletonTest();
+			//mapTest();
+			effectTest();
+			mStatus = new Stats();
+			addChild(mStatus);
+			trace(2>>1);
+		}
+		
+		private function effectTest():void
+		{
+			var eCfg0:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/basket_atk10",10);
+			var eCfg1:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/wand_atk10",10);
+			var eCfg2:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/treasure_atk1005",10);
+			var eCfg3:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/wand_atked05",10);
+			var eCfg4:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/lantern_atk06",10);
+			var eCfg5:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/brush_atkpro06",10);
+			var eCfg6:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/monster_atkpro01",10);
+			var eCfg7:EffectConfig = new EffectConfig(Effect,"cdn_n/assets/effect/lantern_atked02",10);
+			var configs:Vector.<EffectConfig> = new Vector.<EffectConfig>();
+			configs.push(eCfg0,eCfg1,eCfg2,eCfg3,eCfg4,eCfg5,eCfg6,eCfg7);
+			for(var i:uint = 0; i< 100; i++)
+			{
+				var e:Effect = Effect.create(configs[uint(Math.random() * 8)],this);
+//				e.y = Math.floor(i/4) * 500;
+//				e.x = (i%4) * 400+400;
+				e.x = Math.random() * 1900;
+				e.y = Math.random() * 900-300;
+			}
+			
+			addEventListener(Event.ENTER_FRAME,onEnterFrame);
+		}
+		
+		private function mapTest():void
+		{
+			var mapView:MapView = new MapView();
+			var pgLoader:PieceGroundLoader = PieceGroundLoader.create("cdn_n/assets/maps/10001",mapView.bottom);
+			pgLoader.load();
+			addChild(mapView);
 		}
 		
 		private function skeletonTest():void
@@ -60,8 +99,6 @@ package
 				mCharas.push(chara);
 				
 			}
-			mStatus = new Stats();
-			addChild(mStatus);
 			addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			lastTime = getTimer();
 		}
@@ -71,10 +108,16 @@ package
 			var delta:uint = getTimer() - lastTime;
 			lastTime = getTimer();
 			mStatus.update();
-			for(var i:uint=0;i<mCharas.length;++i)
+//			for(var i:uint=0;i<mCharas.length;++i)
+//			{
+//				mCharas[i].update(delta);
+//			}
+			var effects:Vector.<Effect> = Effect.effects;
+			for(var i:uint=0;i<effects.length;++i)
 			{
-				mCharas[i].update(delta);
+				effects[i].update(delta);
 			}
+			Effect
 		}
 		
 		private function loadMain():void

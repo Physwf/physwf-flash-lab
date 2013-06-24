@@ -9,6 +9,7 @@ package components.pswloader
 	
 	import components.ds.heap.MaxHeap;
 	import components.interfaces.IDisposible;
+	import components.map.piece.MapPiece;
 	import components.pswloader.BinaryFile;
 	import components.pswloader.File;
 	import components.pswloader.ImageFile;
@@ -50,13 +51,17 @@ package components.pswloader
 		
 		private var mMode:String;
 		public function getMode():String { return mMode; }
-		
+		/**
+		 * 是否在PswLoader中缓存。该属性在PswLoader实例化时指定，无法在此之外修改。
+		 * 加载进来的数据首先存储在File中的mContent中，如果该属性值为true则相关的数据的引用将同时存储在PswLoader的mContents中，可通过getXXX()方法获取。如getBitmapData(),getXML()等。
+		 */		
+		private var mCache:Boolean = false;
 		private var _typeClasses:Object = 
 			{
 				binary: BinaryFile,
 				image:ImageFile,
-				json:JSONFile
-				//piece:MapPiece
+				json:JSONFile,
+				piece:MapPiece
 			};
 		
 		public static const LOAD_FLAG_FINISHED:uint = 0;
@@ -73,7 +78,7 @@ package components.pswloader
 		 * @param mode 加载模式，手动manu 自动 auto
 		 * 
 		 */
-		public function PswLoader(name:String,mode:String="manu")
+		public function PswLoader(name:String,mode:String="auto",cache:Boolean = false)
 		{
 			if(_allLoaders[name])
 			{
@@ -86,6 +91,7 @@ package components.pswloader
 			_allLoaders[name] = this;
 			mName = name;
 			mMode = mode;
+			mCache = cache;
 			_numInstance ++;
 			
 			mItems = {};
@@ -93,11 +99,11 @@ package components.pswloader
 			mContents = {};
 		}
 		
-		public static function getSamePswLoader(name:String,mode:String="auto"):PswLoader
+		public static function getSamePswLoader(name:String,mode:String="auto" , cache:Boolean = false):PswLoader
 		{
 			if(!_allLoaders[name]) 
 			{
-				_allLoaders[name] = new PswLoader(name,mode);
+				_allLoaders[name] = new PswLoader(name,mode,cache);
 			}
 			return _allLoaders[name] as PswLoader;
 		}
@@ -146,7 +152,6 @@ package components.pswloader
 				{
 					item.addEventListener(Event.COMPLETE,onItemComplete,false,int.MAX_VALUE);
 					item.load();
-					
 					numConnection++;
 					mNumConnections++;
 				}
@@ -158,7 +163,8 @@ package components.pswloader
 		{
 			var item:File = e.target as File;
 			item.removeEventListener(Event.COMPLETE,onItemComplete);
-			mContents[item.url] = item.getContent();
+			if(mCache)
+				mContents[item.url] = item.getContent();
 			trace(item.url);
 			numConnection--;
 			mNumConnections --;
@@ -185,10 +191,6 @@ package components.pswloader
 			
 			if(mLoadFlag == LOAD_FLAG_LOADING) return;
 			
-			if(mLoadFlag == LOAD_FLAG_FINISHED)
-			{
-				dispatchEvent(new Event(Event.COMPLETE));
-			}
 			mWaitItems = new Vector.<File>();
 			mLoadFlag = LOAD_FLAG_LOADING;
 			_loadNext();
