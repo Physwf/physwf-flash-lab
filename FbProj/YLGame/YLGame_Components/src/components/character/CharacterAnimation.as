@@ -7,7 +7,7 @@ package components.character
 	import components.interfaces.IUpdatable;
 	import components.view.ISkeleton;
 	
-	public class CharactorAnimation extends Sprite implements ISkeleton,IUpdatable
+	public class CharacterAnimation extends Sprite implements ISkeleton,IUpdatable
 	{
 		private var mDirect:uint;
 		private var mAction:uint;
@@ -21,7 +21,7 @@ package components.character
 		public var interval:uint = 50;//最小更新周期
 		private var mAccum:uint;//当前累积时间
 		
-		public function CharactorAnimation()
+		public function CharacterAnimation()
 		{
 			mBody = new Avatar(this,0,5,"body");
 		}

@@ -19,7 +19,7 @@
     <classEntry path="components.resource.ResourceManager"/>
     <classEntry path="components.bitmap.display.BitmapPlayer"/>
     <classEntry path="components.pswloader.JSONFile"/>
-    <classEntry path="components.character.CharactorAnimation"/>
+    <classEntry path="components.character.CharacterAnimation"/>
     <classEntry path="components.view.ISkeleton"/>
     <classEntry path="components.character.enum.ISODirection"/>
     <classEntry path="components.character.enum.CharacterAction"/>
@@ -35,6 +35,20 @@
     <classEntry path="components.effect.Effect"/>
     <classEntry path="components.effect.EffectLoader"/>
     <classEntry path="components.effect.EffectConfig"/>
+    <classEntry path="components.utils.BitArray"/>
+    <classEntry path="components.utils.ByteHelper"/>
+    <classEntry path="components.map.wayfinding.astar.Node"/>
+    <classEntry path="components.map.wayfinding.astar.NodeType"/>
+    <classEntry path="components.map.wayfinding.astar.Line"/>
+    <classEntry path="components.map.data.GridTypeMapData"/>
+    <classEntry path="components.map.wayfinding.astar.PathUtils"/>
+    <classEntry path="components.map.wayfinding.astar.BiHeapAstar"/>
+    <classEntry path="components.ds.heap.MinHeap"/>
+    <classEntry path="components.command.ICommand"/>
+    <classEntry path="components.command.Command"/>
+    <classEntry path="components.command.CommandSequence"/>
+    <classEntry path="components.command.LinerCmdSequence"/>
+    <classEntry path="components.map.camera.Camera"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

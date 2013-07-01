@@ -22,7 +22,7 @@ package components.character.enum
 		
 		public static function nameToId(name:String):uint
 		{
-			return DIC.indexOf(name)
+			return DIC.indexOf(name);
 		}
 	}
 }
