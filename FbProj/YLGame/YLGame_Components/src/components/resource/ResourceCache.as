@@ -22,6 +22,10 @@ package components.resource
 		
 		protected function incRefCount():void
 		{
+			if(mRefCount == 0)
+			{
+				RM.removeFromWaitList(this);
+			}
 			mRefCount++;
 		}
 		

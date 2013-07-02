@@ -7,7 +7,7 @@ package components.resource
 	
 	public class ResourceManager implements IUpdatable
 	{
-		private var mDestroyList:Vector.<*> = Vector.<ResourceCache>([]);
+		private var mDestroyList:Vector.<*> = new Vector.<ResourceCache>();
 		private var mWaitList:Dictionary;
 		private var mLastTime:uint;
 		
