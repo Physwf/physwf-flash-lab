@@ -5,6 +5,7 @@ package components.map.data
 	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
+	import components.map.wayfinding.astar.ISOCoordUtils;
 	import components.map.wayfinding.astar.Node;
 	
 	/**
@@ -35,21 +36,35 @@ package components.map.data
 		{
 			_numNodeX = numNodeX;
 			_numNodeY = numNodeY;
-			_nodeList = new Vector.<Vector.<Node>>(_numNodeX);
-			var canvas:BitmapData = new BitmapData(numNodeX * GRID_SIZE , numNodeY * GRID_SIZE );
+			var max:Point = ISOCoordUtils.screenToGame(numNodeY,numNodeX);
+			var canvas:BitmapData = new BitmapData(max.y, max.y,true,0 );
 			for(var x:uint=0;x<numNodeX;++x)
 			{
-				_nodeList[x] = new Vector.<Node>(_numNodeY);
 				for(var y:uint =0;y<numNodeY;++y)
 				{
-					_nodeList[x][y] = new Node(x,y);
-					_nodeList[x][y].type = navData[y*numNodeY + x];
-					var color:uint = _nodeList[x][y].type != 0 ? 0x7F000000 : 0x7f0000ff;
-					var nodeBmd:BitmapData = new BitmapData(GRID_SIZE,GRID_SIZE,true,color);
-					canvas.copyPixels(nodeBmd,nodeBmd.rect,new Point(x*GRID_SIZE,y*GRID_SIZE));
+					var color:uint = navData[x*numNodeX + y] != 0 ? 0x7F000000 : 0x7f0000ff;
+					var nodeBmd:BitmapData = new BitmapData(58,62,true,color);
+					var dest:Point = ISOCoordUtils.screenToGame(y,x);
+					canvas.copyPixels(nodeBmd,nodeBmd.rect,dest);
 				}
 			}
-			stage.addChild(new Bitmap(canvas));
+			
+			_numNodeX = Math.round(canvas.width / GRID_SIZE);
+			_numNodeY = Math.round(canvas.height / GRID_SIZE);
+			
+			_nodeList = new Vector.<Vector.<Node>>(_numNodeX);
+			for(x=0;x<_numNodeX;++x)
+			{
+				_nodeList[x] = new Vector.<Node>(_numNodeY);
+				for(y =0;y<_numNodeY;++y)
+				{
+					_nodeList[x][y] = new Node(x,y);
+					var _x:uint = x * GRID_SIZE - GRID_SIZE * .5;
+					var _y:uint = y * GRID_SIZE - GRID_SIZE * .5;
+					_nodeList[x][y].type = canvas.getPixel(_x,_y);
+				}
+			}
+//			stage.addChild(new Bitmap(canvas));
 		}
 		
 		public function getNode(x:int, y:int):Node

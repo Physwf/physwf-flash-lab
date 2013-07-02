@@ -49,6 +49,7 @@
     <classEntry path="components.command.CommandSequence"/>
     <classEntry path="components.command.LinerCmdSequence"/>
     <classEntry path="components.map.camera.Camera"/>
+    <classEntry path="components.map.wayfinding.astar.ISOCoordUtils"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
