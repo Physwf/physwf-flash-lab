@@ -27,7 +27,7 @@ package components.resource
 			delete mWaitList[res];
 		}
 		
-		public function update(delta:uint = 0):void
+		public function update(delta:uint):void
 		{
 			//处理等待队列
 			var now:uint = getTimer();

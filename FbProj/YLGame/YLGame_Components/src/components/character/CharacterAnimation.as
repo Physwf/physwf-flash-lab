@@ -70,7 +70,7 @@ package components.character
 		}
 	
 		
-		public function update(delta:uint = 0):void
+		public function update(delta:uint):void
 		{
 			var numStep:uint = mAccum / interval;
 			if(numStep>0)

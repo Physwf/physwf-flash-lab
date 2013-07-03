@@ -51,10 +51,11 @@ package components.map
 			return mSwap.removeChild(element);
 		}
 		
-		public function update(delta:uint=0):void
+		public function update(delta:uint):void
 		{
 			mSwapElements.sort(sortElements);
 			var count:uint = mSwapElements.length;
+			//to do 将深度排序放在多个帧中执行
 			for(var i:uint=0;i<count;++i)
 			{
 				mSwap.setChildIndex(mSwapElements[i],i);

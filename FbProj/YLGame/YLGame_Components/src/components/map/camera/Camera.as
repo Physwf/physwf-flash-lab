@@ -54,7 +54,9 @@ package components.map.camera
 				mViewprot.y = y;
 				mFocus.x = mViewprot.width  * .3 + x;
 				mFocus.y = mViewprot.height * .3 + y;
-				mMap.scrollRect = mViewprot;
+//				mMap.scrollRect = mViewprot;  //scrollRect方法太低效了
+				mMap.x = -x;
+				mMap.y = -y;
 			}
 		}
 		/**

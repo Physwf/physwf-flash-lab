@@ -36,7 +36,7 @@ package components.command
 		{
 		}
 		
-		public function update(delta:uint=0):void
+		public function update(delta:uint):void
 		{
 		}
 		

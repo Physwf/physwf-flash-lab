@@ -49,9 +49,9 @@ package components.command
 			next();
 		}
 		
-		override public function update(delta:uint=0):void
+		override public function update(delta:uint):void
 		{
-			if(mCurCmd) mCurCmd.update();
+			if(mCurCmd) mCurCmd.update(delta);
 		}
 	}
 }

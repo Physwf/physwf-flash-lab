@@ -40,7 +40,7 @@ package components.effect
 			effects.push(this);
 		}
 		
-		public function update(delta:uint=0):void
+		public function update(delta:uint):void
 		{
 			var numStep:uint = mTime / interval;
 			if(numStep>0)
