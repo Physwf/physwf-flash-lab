@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
@@ -15,6 +16,7 @@ package
 		public function MapTest()
 		{
 			mapTest();
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
 		private function mapTest():void

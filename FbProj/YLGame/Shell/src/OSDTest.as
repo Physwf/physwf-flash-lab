@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
@@ -9,7 +10,7 @@ package
 	import components.character.enum.CharacterAction;
 	import components.character.enum.ISODirection;
 	
-	[SWF(width="1900",height="1000",frameRate="30", backgroundColor="#0")]
+	[SWF(width="1900",height="1000",frameRate="60", backgroundColor="#0")]
 	public class OSDTest extends Sprite
 	{
 		private var mCharas:Vector.<CharacterAnimation>;
@@ -18,6 +19,7 @@ package
 		public function OSDTest()
 		{
 			test();
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 
 		private function test():void

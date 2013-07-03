@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.utils.getTimer;
 	
@@ -17,6 +18,7 @@ package
 		public function EffectTest()
 		{
 			effectTest();
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
 		private function effectTest():void
