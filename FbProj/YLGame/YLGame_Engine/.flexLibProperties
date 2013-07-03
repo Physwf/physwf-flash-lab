@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="engine.world.objects.Map"/>
+    <classEntry path="engine.world.objects.Character"/>
+    <classEntry path="engine.common.command.CmdGoTo"/>
+    <classEntry path="engine.common.command.CmdStand"/>
+    <classEntry path="engine.world.controllers.MapController"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
