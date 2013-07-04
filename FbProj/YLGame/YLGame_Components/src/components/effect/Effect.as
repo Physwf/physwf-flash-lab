@@ -24,8 +24,16 @@ package components.effect
 		protected var mLife:uint;//单位ms
 		protected var mBornTime:uint;
 		protected var mCurFrameNum:uint;
-		
-		public function Effect(layer:Sprite,life:uint,source:DisplayObject=null,target:DisplayObject=null)
+		/**
+		 * 后面考虑是否需要将特效包装在一个Sprite中。
+		 * @param layer 特效被添加到的层
+		 * @param top 特效在层中的位置，只有两种选择一种是顶部一种是底部
+		 * @param life 寿命，特效持续的事件
+		 * @param source 特效的发出者
+		 * @param target 特效的目标
+		 * 
+		 */		
+		public function Effect(layer:Sprite,top:Boolean,life:uint,source:DisplayObject=null,target:DisplayObject=null)
 		{
 			mLayer = layer;
 			mLife = life;
@@ -35,7 +43,14 @@ package components.effect
 			mouseChildren = false;
 			mContent = new BitmapPlayer();
 			addChild(mContent);
-			mLayer.addChild(this);
+			if(top)
+			{
+				mLayer.addChild(this);
+			}
+			else
+			{
+				mLayer.addChildAt(this,0);
+			}
 			mBornTime = getTimer();
 			effects.push(this);
 		}
