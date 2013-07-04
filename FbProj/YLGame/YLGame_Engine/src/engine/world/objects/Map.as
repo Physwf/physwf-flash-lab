@@ -2,9 +2,12 @@ package engine.world.objects
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
+	import flash.utils.Timer;
+	import flash.utils.setInterval;
 	
 	import components.interfaces.IUpdatable;
 	import components.map.MapView;
@@ -47,8 +50,8 @@ package engine.world.objects
 			mController = new MapController();
 			mController.initialize(mMapView);
 			
-			
-			for(var i:uint=0;i<300;i++)
+			var t:Timer = new Timer(20,200);
+			t.addEventListener(TimerEvent.TIMER,function(e:Event):void
 			{
 				var c:Character = new Character();
 				c.view.x = 5120* Math.random();
@@ -56,7 +59,18 @@ package engine.world.objects
 				//					c.view.x = mMapView.width * Math.random();
 				//					c.view.y = mMapView.height * Math.random();
 				addCharacter(c);
-			}
+			});
+			t.start();
+			
+//			for(var i:uint=0;i<300;i++)
+//			{
+//				var c:Character = new Character();
+//				c.view.x = 5120* Math.random();
+//				c.view.y = 5120* Math.random();
+//				//					c.view.x = mMapView.width * Math.random();
+//				//					c.view.y = mMapView.height * Math.random();
+//				addCharacter(c);
+//			}
 		}
 		
 		public function load():void
