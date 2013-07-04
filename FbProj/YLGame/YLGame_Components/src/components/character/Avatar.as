@@ -36,6 +36,7 @@ package components.character
 				{ 
 					mElements[id].display.currentFrame = mElements[0].display.currentFrame;
 				});
+			skeleton.load();
 		}
 		
 		public function setDepths(depths:Vector.<uint>):void

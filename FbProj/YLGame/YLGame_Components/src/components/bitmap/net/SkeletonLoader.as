@@ -103,6 +103,7 @@ package components.bitmap.net
 				var id:uint = CharacterAction.nameToId(name);
 				actionPackageLoaders[i] = new ActionPackageLoader(_url,name,key.frames[id]);
 			}
+			_loadFlag = LOAD_FLAG_YES;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
