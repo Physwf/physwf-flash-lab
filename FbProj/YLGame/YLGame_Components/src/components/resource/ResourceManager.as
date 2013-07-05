@@ -7,7 +7,7 @@ package components.resource
 	
 	public class ResourceManager implements IUpdatable
 	{
-		private var mDestroyList:Vector.<*> = new Vector.<ResourceCache>();
+		private var mDestroyList:Array;
 		private var mWaitList:Dictionary;
 		private var mLastTime:uint;
 		
@@ -15,6 +15,7 @@ package components.resource
 		{
 			mWaitList = new Dictionary(true);
 			mLastTime = getTimer();
+			mDestroyList = [];
 		}
 		
 		public function addToWaitList(res:ResourceCache):void
