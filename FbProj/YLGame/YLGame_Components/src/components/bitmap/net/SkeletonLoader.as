@@ -6,7 +6,7 @@ package components.bitmap.net
 	
 	import components.bitmap.data.Key;
 	import components.bitmap.display.BitmapFrame;
-	import components.character.enum.CharacterAction;
+	import components.character.enums.CharacterAction;
 	import components.pswloader.BinaryFile;
 	import components.pswloader.PswLoader;
 	import components.resource.ResourceCache;

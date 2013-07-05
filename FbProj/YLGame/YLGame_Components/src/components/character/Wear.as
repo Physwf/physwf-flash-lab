@@ -6,8 +6,8 @@ package components.character
 	import components.bitmap.display.BitmapFrame;
 	import components.bitmap.display.BitmapPlayer;
 	import components.bitmap.net.SkeletonLoader;
-	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.character.enums.CharacterAction;
+	import components.character.enums.ISODirection;
 	import components.interfaces.IAnimation;
 	import components.view.ISkeleton;
 	

@@ -3,7 +3,7 @@ package components.character
 	import flash.display.Sprite;
 	
 	import components.bitmap.net.SkeletonLoader;
-	import components.character.enum.ISODirection;
+	import components.character.enums.ISODirection;
 	import components.interfaces.IUpdatable;
 	import components.view.ISkeleton;
 	

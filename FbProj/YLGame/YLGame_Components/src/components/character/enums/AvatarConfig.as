@@ -1,4 +1,4 @@
-package components.character.enum
+package components.character.enums
 {
 	public class AvatarConfig
 	{
