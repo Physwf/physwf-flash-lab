@@ -7,7 +7,7 @@ package
 	
 	import engine.world.objects.Map;
 	
-	[SWF(width="1900",height="1000",frameRate="30", backgroundColor="#0")]
+	[SWF(width="1900",height="1000",frameRate="60", backgroundColor="#0")]
 	public class MapTest extends Sprite
 	{
 		private var map:Map;
@@ -22,9 +22,11 @@ package
 		private function mapTest():void
 		{
 			map = new Map();
+			addChild(map.view);
+			map.initialize();
 			map.id = 10001;
 			map.load();
-			addChild(map.view);
+			
 			addEventListener(Event.ENTER_FRAME,onEnterFrame);
 		}
 		
