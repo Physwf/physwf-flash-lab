@@ -21,14 +21,14 @@
     <classEntry path="components.pswloader.JSONFile"/>
     <classEntry path="components.character.CharacterAnimation"/>
     <classEntry path="components.view.ISkeleton"/>
-    <classEntry path="components.character.enum.ISODirection"/>
-    <classEntry path="components.character.enum.CharacterAction"/>
+    <classEntry path="components.character.enums.ISODirection"/>
+    <classEntry path="components.character.enums.CharacterAction"/>
     <classEntry path="components.utils.ImageUtils"/>
     <classEntry path="components.utils.Stats"/>
     <classEntry path="components.character.Wear"/>
     <classEntry path="components.interfaces.IAnimation"/>
     <classEntry path="components.character.Avatar"/>
-    <classEntry path="components.character.enum.AvatarConfig"/>
+    <classEntry path="components.character.enums.AvatarConfig"/>
     <classEntry path="components.map.MapView"/>
     <classEntry path="components.map.piece.MapPiece"/>
     <classEntry path="components.map.piece.PieceGroundLoader"/>

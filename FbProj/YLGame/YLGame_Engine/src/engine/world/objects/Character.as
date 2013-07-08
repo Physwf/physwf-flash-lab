@@ -5,14 +5,13 @@ package engine.world.objects
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.character.CharacterAnimation;
-	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.character.enums.CharacterAction;
+	import components.character.enums.ISODirection;
 	import components.command.ICommand;
 	import components.command.LinerCmdSequence;
 	import components.interfaces.IDisposible;
 	import components.interfaces.IUpdatable;
 	import components.map.wayfinding.astar.IAstar;
-	import components.map.wayfinding.astar.Line;
 	
 	import engine.common.command.CmdStand;
 	
@@ -22,15 +21,11 @@ package engine.world.objects
 		public static var managers:Dictionary;//从显示到manager的映射,用于在战斗系统中通过鼠标事件目标获取角色对象
 		
 		public static var astar:IAstar;
-		private var pathLine:Vector.<Line>;
 		
 		private var target_x:uint;
 		private var target_y:uint;
 		private var _speed:Number = 1/6;
 		public function get speed():Number { return _speed; }
-		private var rad:Number;// 速度的方向
-		private var avrgRad:Number;//路径的方向（取前面若干个点的方向平均）
-		private var line:Line;
 		
 		public var isMoving:Boolean = false;
 		
@@ -49,6 +44,8 @@ package engine.world.objects
 			var nude:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("cdn_n/assets/armor/10_00001");
 			view.body.changeWear(0,nude);
 			view.direction = ISODirection.DOWN;
+			view.x = 5120* Math.random();
+			view.y = 5120* Math.random();
 			execute(new CmdStand(this));
 		}
 		/**

@@ -6,6 +6,7 @@
     <classEntry path="engine.common.command.CmdGoTo"/>
     <classEntry path="engine.common.command.CmdStand"/>
     <classEntry path="engine.world.controllers.MapController"/>
+    <classEntry path="engine.Engine"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

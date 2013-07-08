@@ -14,7 +14,8 @@ package components.map
 		private var mLandform:DisplayObject;
 		private var mMapW:Number;
 		private var mMapH:Number;
-		private var mSwapElements:Vector.<DisplayObject>;
+		private var mElements:Vector.<DisplayObject>;//所有的交换元素
+		private var mSwapElements:Vector.<DisplayObject>;//当前帧需要交换的元素
 		
 		public function MapView()
 		{
@@ -27,7 +28,10 @@ package components.map
 			addChild(mSwap);
 			addChild(mUpperEffct);
 			
-			mSwapElements = new Vector.<DisplayObject>();
+			mouseChildren = false;
+			mouseEnabled = false;
+			
+			mElements = new Vector.<DisplayObject>();
 		}
 		/**
 		 * 
@@ -38,17 +42,28 @@ package components.map
 			removeChild(mBottom);
 		}
 		
-		public function addSwapElement(element:DisplayObject):DisplayObject
+		public function addElement(element:DisplayObject):DisplayObject
 		{
-			mSwapElements.push(element);
+			mElements.push(element);
 			return mSwap.addChild(element);
 		}
 		
-		public function removeSwapElement(element:DisplayObject):DisplayObject
+		public function removeElement(element:DisplayObject):DisplayObject
 		{
-			var i:int= mSwapElements.indexOf(element);
-			mSwapElements.splice(i,1);
+			var i:int= mElements.indexOf(element);
+			mElements.splice(i,1);
 			return mSwap.removeChild(element);
+		}
+		
+		public function rebuild():void
+		{
+			mSwapElements = new Vector.<DisplayObject>();
+		}
+		
+		public function addSwapElement(element:DisplayObject):DisplayObject
+		{
+			mSwapElements.push(element);
+			return element;
 		}
 		
 		public function update(delta:uint):void

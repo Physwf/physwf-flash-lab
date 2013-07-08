@@ -9,6 +9,10 @@ package components.bitmap.display {
 	public class BitmapPlayer extends Bitmap implements IDisposible ,IAnimation
 	{
 		public var interval:uint = 50;
+		
+		private var culled:Boolean = false;
+		public function set cull(v:Boolean):void { culled = v; }//是否被剔除
+		
 		private var mBitmapFrames:Vector.<BitmapFrame>;
 		private var mTotalFrames:int;
 		private var mAccum:uint;
@@ -24,6 +28,7 @@ package components.bitmap.display {
 			
 			currentFrame+=step;
 			if(currentFrame<0 || currentFrame>=mTotalFrames) currentFrame = 0;
+			if(culled) return;
 			var frame:BitmapFrame = mBitmapFrames[currentFrame];
 			if(bitmapData != frame.bitmapData)
 			{

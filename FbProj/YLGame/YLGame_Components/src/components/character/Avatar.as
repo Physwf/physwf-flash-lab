@@ -76,6 +76,14 @@ package components.character
 			}
 		}
 		
+		public function set cull(v:Boolean):void
+		{
+			for(var i:uint=0;i<mNumElements;++i)
+			{
+				mElements[i].cull = v;;
+			}
+		}
+		
 		public function step(step:uint):void
 		{
 			for(var i:uint=0;i<mNumElements;++i)

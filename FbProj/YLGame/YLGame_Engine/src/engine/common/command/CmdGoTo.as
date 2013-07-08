@@ -2,7 +2,7 @@ package engine.common.command
 {
 	import flash.events.Event;
 	
-	import components.character.enum.ISODirection;
+	import components.character.enums.ISODirection;
 	import components.command.Command;
 	import components.map.data.GridTypeMapData;
 	import components.map.wayfinding.astar.Line;

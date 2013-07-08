@@ -23,6 +23,8 @@ package components.character
 		
 		public function CharacterAnimation()
 		{
+			mouseChildren = false;
+			mouseEnabled = false;
 			mBody = new Avatar(this,0,5,"body");
 		}
 		
@@ -69,6 +71,10 @@ package components.character
 			mBody.status = v;
 		}
 	
+		public function set cull(v:Boolean):void
+		{
+			body.cull = v;
+		}
 		
 		public function update(delta:uint):void
 		{

@@ -94,6 +94,11 @@ package components.character
 			}
 		}
 		
+		public function set cull(v:Boolean):void
+		{
+			display.cull = v;;
+		}
+		
 		public function step(step:uint):void
 		{
 			if(isSkeletonReady)

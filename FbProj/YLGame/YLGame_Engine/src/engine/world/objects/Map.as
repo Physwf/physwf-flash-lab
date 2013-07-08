@@ -7,7 +7,6 @@ package engine.world.objects
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	import flash.utils.Timer;
-	import flash.utils.setInterval;
 	
 	import components.interfaces.IUpdatable;
 	import components.map.MapView;
@@ -20,6 +19,7 @@ package engine.world.objects
 	import components.utils.BitArray;
 	import components.utils.ByteHelper;
 	
+	import engine.Engine;
 	import engine.world.controllers.MapController;
 	
 	public class Map extends EventDispatcher implements IUpdatable
@@ -38,6 +38,8 @@ package engine.world.objects
 			mMapView = new MapView();
 			mCamera = new Camera(new Rectangle(0,0,1920,1080));
 			
+			Engine.map = this;
+			
 			mCharactors = new Vector.<Character>();
 			
 			Character.self = new Character();
@@ -50,12 +52,10 @@ package engine.world.objects
 			mController = new MapController();
 			mController.initialize(mMapView);
 			
-			var t:Timer = new Timer(20,200);
+			var t:Timer = new Timer(20,1000);
 			t.addEventListener(TimerEvent.TIMER,function(e:Event):void
 			{
 				var c:Character = new Character();
-				c.view.x = 5120* Math.random();
-				c.view.y = 5120* Math.random();
 				//					c.view.x = mMapView.width * Math.random();
 				//					c.view.y = mMapView.height * Math.random();
 				addCharacter(c);
@@ -71,6 +71,8 @@ package engine.world.objects
 //				//					c.view.y = mMapView.height * Math.random();
 //				addCharacter(c);
 //			}
+			
+			
 		}
 		
 		public function load():void
@@ -184,14 +186,25 @@ package engine.world.objects
 		
 		public function addCharacter(chara:Character):void
 		{
+			trace("add character:"+mCharactors.length);
 			mCharactors.push(chara);
-			mMapView.addSwapElement(chara.view);
+			mMapView.addElement(chara.view);
 		}
 		
 		public function update(delta:uint):void
 		{
+			mMapView.rebuild();
 			for(var i:int=0;i<mCharactors.length;++i)
 			{
+				if(Engine.map.camera.viewprot.contains(mCharactors[i].view.x,mCharactors[i].view.y))
+				{
+					mCharactors[i].view.cull = false;
+					mMapView.addSwapElement(mCharactors[i].view);
+				}
+				else
+				{
+					mCharactors[i].view.cull = true;
+				}
 				mCharactors[i].update(delta);
 			}
 			mMapView.update(delta);
