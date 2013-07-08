@@ -11,6 +11,7 @@ package engine.world.objects
 	import components.command.LinerCmdSequence;
 	import components.interfaces.IDisposible;
 	import components.interfaces.IUpdatable;
+	import components.map.wayfinding.astar.BiHeapAstar;
 	import components.map.wayfinding.astar.IAstar;
 	
 	import engine.common.command.CmdStand;

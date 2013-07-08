@@ -174,7 +174,7 @@ package engine.world.objects
 					}							
 				}
 			}
-			var astar:BiHeapAstar = new BiHeapAstar(mMapView);
+			var astar:BiHeapAstar = new BiHeapAstar();
 			astar.analyze(navData,gridColum,gridRow);
 			Character.astar = astar;
 			
