@@ -25,11 +25,9 @@ package components.map.data
 		
 		private var _nodeList:Vector.<Vector.<Node>>;
 		
-		private var stage:DisplayObjectContainer;
 		
-		public function GridTypeMapData(stage:DisplayObjectContainer)
+		public function GridTypeMapData()
 		{
-			this.stage = stage;
 		}
 		
 		public function initialize(navData:Vector.<uint>,numNodeX:uint,numNodeY:uint):void
@@ -64,7 +62,6 @@ package components.map.data
 					_nodeList[x][y].type = canvas.getPixel(_x,_y);
 				}
 			}
-//			stage.addChild(new Bitmap(canvas));
 		}
 		
 		public function getNode(x:int, y:int):Node

@@ -1,19 +1,17 @@
 package components.map.wayfinding.astar
 {
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
 	import components.ds.heap.MinHeap;
 	import components.map.data.GridTypeMapData;
 	
-	/**
-	 * 二叉堆寻路 
-	 * @author joe
-	 * 
-	 */
-	public class BiHeapAstar implements IAstar
+	public class AsynBiHeapAstar extends EventDispatcher implements IAstar
 	{
-		private var _mapData:GridTypeMapData;
+		private static var _mapData:GridTypeMapData;
+		
 		private var _openList:MinHeap;
 		//		private var _closedList:Vector.<Node>;
 		private var _closeDic:Dictionary;
@@ -23,17 +21,19 @@ package components.map.wayfinding.astar
 		private var _startNode:Node;
 		private var _endNode:Node;
 		
+		private var _minCostNode:Node;
+		
 		private var _heuristic:Function = diagonal;
 		
 		private var _straightCost:Number = 1.0;
 		private var _diagCost:Number = Math.SQRT2;
 		
-		public function BiHeapAstar()
+		public function AsynBiHeapAstar()
 		{
-			_mapData = new GridTypeMapData();
+			
 		}
 		
-		public function analyze(navData:Vector.<uint>,row:uint,column:uint):void
+		public function analyze(navData:Vector.<uint>, row:uint, column:uint):void
 		{
 			_mapData.initialize(navData,row,column);
 		}
@@ -51,36 +51,44 @@ package components.map.wayfinding.astar
 			//			_closedList = new Vector.<Node>();
 			_closeDic = new Dictionary();
 			
-			return search();
-		}
-		
-		private function search():Boolean
-		{
 			var start:uint = getTimer()
 			//			trace("开始寻路",getTimer());
-			if(_startNode == _endNode) return false;
-			var minCostNode:Node = _startNode;
-			if(!_endNode.walkable) return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
-			while(minCostNode != _endNode)
+			if(_startNode == _endNode) 
+			{
+				return false;
+			}
+			_minCostNode = _startNode;
+			if(!_endNode.walkable) 
+			{
+				return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
+			}
+			return false;
+		}
+		
+		public function update(delta:uint):void
+		{
+			var timeout:Boolean =false;
+			var start:uint = getTimer();
+			while(_minCostNode != _endNode)
 			{
 				var neerNode:Node;
 				var x:int,y:int;
 				for(var dx:int=-1;dx<=1;++dx)
 				{
-					x = minCostNode.x + dx;
+					x = _minCostNode.x + dx;
 					for(var dy:int=-1;dy<=1;++dy)
 					{
-						y=minCostNode.y+dy;
+						y=_minCostNode.y+dy;
 						neerNode = _mapData.getNode(x,y);
 						if(!neerNode) continue;
-						if(neerNode == minCostNode) continue;
+						if(neerNode == _minCostNode) continue;
 						if(!neerNode.walkable) continue;
 						var selfCost:Number = _diagCost;
-						if(minCostNode.x == x || minCostNode.y == y)
+						if(_minCostNode.x == x || _minCostNode.y == y)
 						{
 							selfCost = _straightCost;
 						}
-						var gSum:Number = minCostNode.g + selfCost //* neerNode.costMultiply;
+						var gSum:Number = _minCostNode.g + selfCost //* neerNode.costMultiply;
 						var h:Number = _heuristic(neerNode);
 						var f:Number = gSum + h;
 						//						if(_openList.hasItem(neerNode) || (_closedList.indexOf(neerNode)>-1))
@@ -91,7 +99,7 @@ package components.map.wayfinding.astar
 								neerNode.f = f;
 								neerNode.g = gSum;
 								neerNode.h = h;
-								neerNode.parent = minCostNode;
+								neerNode.parent = _minCostNode;
 							}
 						}
 						else
@@ -99,17 +107,89 @@ package components.map.wayfinding.astar
 							neerNode.f = f;
 							neerNode.g = gSum;
 							neerNode.h = h;
-							neerNode.parent = minCostNode;
+							neerNode.parent = _minCostNode;
 							_openList.Enqueue(neerNode);
 						}//end if
 					}//end for y
 				}//end for x
 				
 				//				_closedList.push(minCostNode);
-				_closeDic[minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
+				_closeDic[_minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
+				if(!_openList.size) 
+				{
+					//return false;//no path found
+				}
+				
+				_minCostNode = _openList.Dequeue() as Node;
+				if(getTimer() - start > 5)
+				{
+					timeout = true;
+					break;
+				}
+			}//end while
+			
+			if(!timeout)
+			{
+				buildPath();
+			}
+		}
+		
+		private function search():Boolean
+		{
+			var start:uint = getTimer()
+			//			trace("开始寻路",getTimer());
+			if(_startNode == _endNode) return false;
+			_minCostNode = _startNode;
+			if(!_endNode.walkable) return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
+			while(_minCostNode != _endNode)
+			{
+				var neerNode:Node;
+				var x:int,y:int;
+				for(var dx:int=-1;dx<=1;++dx)
+				{
+					x = _minCostNode.x + dx;
+					for(var dy:int=-1;dy<=1;++dy)
+					{
+						y=_minCostNode.y+dy;
+						neerNode = _mapData.getNode(x,y);
+						if(!neerNode) continue;
+						if(neerNode == _minCostNode) continue;
+						if(!neerNode.walkable) continue;
+						var selfCost:Number = _diagCost;
+						if(_minCostNode.x == x || _minCostNode.y == y)
+						{
+							selfCost = _straightCost;
+						}
+						var gSum:Number = _minCostNode.g + selfCost //* neerNode.costMultiply;
+						var h:Number = _heuristic(neerNode);
+						var f:Number = gSum + h;
+						//						if(_openList.hasItem(neerNode) || (_closedList.indexOf(neerNode)>-1))
+						if((_openList.hasItem(neerNode)) || _closeDic[neerNode] != null)
+						{
+							if(neerNode.f > f)
+							{
+								neerNode.f = f;
+								neerNode.g = gSum;
+								neerNode.h = h;
+								neerNode.parent = _minCostNode;
+							}
+						}
+						else
+						{
+							neerNode.f = f;
+							neerNode.g = gSum;
+							neerNode.h = h;
+							neerNode.parent = _minCostNode;
+							_openList.Enqueue(neerNode);
+						}//end if
+					}//end for y
+				}//end for x
+				
+				//				_closedList.push(minCostNode);
+				_closeDic[_minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
 				if(!_openList.size) return false;//no path found
 				
-				minCostNode = _openList.Dequeue() as Node;
+				_minCostNode = _openList.Dequeue() as Node;
 			}//end while
 			buildPath();
 			trace("寻路结束:",getTimer() - start + "ms");
@@ -131,6 +211,8 @@ package components.map.wayfinding.astar
 			}
 			
 			floyd();
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		/**
 		 * 合并在同一方向上的点(8个可能的方向),该思想参见http://wonderfl.net/c/aWCe或http://www.iamsevent.com/post/34.html
@@ -190,16 +272,9 @@ package components.map.wayfinding.astar
 			return _pathLine;
 		}
 		
-		public function set mapData(data:GridTypeMapData):void
-		{
-			_mapData = data;
-		}
-		
 		public function get mapData():GridTypeMapData
 		{
 			return _mapData;
 		}
-		
-		
 	}
 }
