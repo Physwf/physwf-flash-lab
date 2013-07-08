@@ -49,10 +49,7 @@ package engine.world.objects
 			mCamera.initialize(mMapView);
 			addCharacter(Character.self);
 			
-			mController = new MapController();
-			mController.initialize(mMapView);
-			
-			var t:Timer = new Timer(20,1000);
+			var t:Timer = new Timer(20,200);
 			t.addEventListener(TimerEvent.TIMER,function(e:Event):void
 			{
 				var c:Character = new Character();
@@ -73,6 +70,13 @@ package engine.world.objects
 //			}
 			
 			
+		}
+		
+		
+		public function initialize():void
+		{
+			mController = new MapController();
+			mController.initialize(mMapView);
 		}
 		
 		public function load():void

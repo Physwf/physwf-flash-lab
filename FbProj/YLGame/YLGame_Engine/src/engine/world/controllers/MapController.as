@@ -24,7 +24,7 @@ package engine.world.controllers
 		public function initialize(view:MapView):void
 		{
 			mapView = view;
-			mapView.bottom.addEventListener(MouseEvent.CLICK,onGroundClick);
+			mapView.stage.addEventListener(MouseEvent.CLICK,onGroundClick);
 //			mapView.bottom.addEventListener(MouseEvent.MOUSE_DOWN,onGroundDown);
 //			mapView.bottom.addEventListener(MouseEvent.MOUSE_UP,onGroundUp);
 		}
