@@ -30,7 +30,7 @@
     <classEntry path="components.character.Avatar"/>
     <classEntry path="components.character.enums.AvatarConfig"/>
     <classEntry path="components.map.MapView"/>
-    <classEntry path="components.map.piece.MapPiece"/>
+    <classEntry path="components.map.piece.PieceFile"/>
     <classEntry path="components.map.piece.PieceGroundLoader"/>
     <classEntry path="components.effect.Effect"/>
     <classEntry path="components.effect.EffectLoader"/>
@@ -50,6 +50,11 @@
     <classEntry path="components.command.LinerCmdSequence"/>
     <classEntry path="components.map.camera.Camera"/>
     <classEntry path="components.map.wayfinding.astar.ISOCoordUtils"/>
+    <classEntry path="components.map.wayfinding.astar.AsynBiHeapAstar"/>
+    <classEntry path="components.map.stage3d.Piece"/>
+    <classEntry path="components.map.stage3d.Environment"/>
+    <classEntry path="com.adobe.utils.AGALMiniAssembler"/>
+    <classEntry path="com.adobe.utils.PerspectiveMatrix3D"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

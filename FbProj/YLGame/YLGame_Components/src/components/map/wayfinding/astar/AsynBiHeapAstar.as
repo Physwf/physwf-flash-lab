@@ -72,7 +72,6 @@ package components.map.wayfinding.astar
 		public function update(delta:uint):void
 		{
 			if(!_startLoop) return;
-			trace("looping")
 			var timeout:Boolean =false;
 			var start:uint = getTimer();
 			while(_minCostNode != _endNode)
@@ -124,15 +123,15 @@ package components.map.wayfinding.astar
 				if(!_openList.size) 
 				{
 					_startLoop = false;
-					trace("no path");
+//					trace("no path");
 					//return false;//no path found
 				}
 				
 				_minCostNode = _openList.Dequeue() as Node;
-				if(getTimer() - start > 2)
+				if(getTimer() - start > 3)
 				{
 					timeout = true;
-					trace("time out")
+//					trace("time out")
 					break;
 				}
 			}//end while
