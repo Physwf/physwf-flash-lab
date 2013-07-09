@@ -11,7 +11,8 @@ package engine.world.objects
 	import components.interfaces.IUpdatable;
 	import components.map.MapView;
 	import components.map.camera.Camera;
-	import components.map.piece.PieceGroundLoader;
+	import components.map.piece.PieceLoader;
+	import components.map.wayfinding.astar.AsynBiHeapAstar;
 	import components.map.wayfinding.astar.BiHeapAstar;
 	import components.map.wayfinding.astar.ISOCoordUtils;
 	import components.pswloader.BinaryFile;
@@ -178,10 +179,13 @@ package engine.world.objects
 			astar.analyze(navData,gridColum,gridRow);
 			Character.astar = astar;
 			
-			var pgLoader:PieceGroundLoader = PieceGroundLoader.create("cdn_n/assets/maps/"+id,mMapView.bottom);;
+			var asynAstar:AsynBiHeapAstar = new AsynBiHeapAstar();
+			asynAstar.analyze(navData,gridColum,gridRow);
+			
+			var pgLoader:PieceLoader = PieceLoader.create("cdn_n/assets/maps/"+id,mMapView.bottom);;
 			pgLoader.focusX = Character.self.view.x;
 			pgLoader.focusY = Character.self.view.y;
-			pgLoader.addEventListener(PieceGroundLoader.KEY,function (e:Event):void 
+			pgLoader.addEventListener(PieceLoader.KEY,function (e:Event):void 
 			{
 				mCamera.moveToTarget();
 			});

@@ -41,7 +41,7 @@ package engine.common.command
 			var sy:uint = Math.floor(mChara.view.y / GridTypeMapData.GRID_SIZE);
 			var ex:uint = Math.floor(endX / GridTypeMapData.GRID_SIZE);
 			var ey:uint = Math.floor(endY / GridTypeMapData.GRID_SIZE);
-			
+
 			if(Character.astar.tryFindPath(sx,sy,ex,ey))
 			{
 				pathLine = Character.astar.getPathLine();
@@ -51,7 +51,23 @@ package engine.common.command
 				mChara.run();
 				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
 			}
+			return;
+			mChara.asynAstar.addEventListener(Event.COMPLETE,function(e:Event):void
+			{
+				pathLine = mChara.asynAstar.getPathLine();
+				
+				avrgRad = PathUtils.calAverDirec2(pathLine);
+				line = pathLine.shift();
+				mChara.run();
+				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
+			});
 			
+			if(mChara.asynAstar.tryFindPath(sx,sy,ex,ey))
+			{
+				pathLine = null;
+				line = null;
+			}
+			return;
 		}
 		
 		override public function update(delta:uint):void

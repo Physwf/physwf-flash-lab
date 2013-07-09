@@ -11,7 +11,7 @@ package engine.world.objects
 	import components.command.LinerCmdSequence;
 	import components.interfaces.IDisposible;
 	import components.interfaces.IUpdatable;
-	import components.map.wayfinding.astar.BiHeapAstar;
+	import components.map.wayfinding.astar.AsynBiHeapAstar;
 	import components.map.wayfinding.astar.IAstar;
 	
 	import engine.common.command.CmdStand;
@@ -22,6 +22,7 @@ package engine.world.objects
 		public static var managers:Dictionary;//从显示到manager的映射,用于在战斗系统中通过鼠标事件目标获取角色对象
 		
 		public static var astar:IAstar;
+		public var asynAstar:AsynBiHeapAstar;
 		
 		private var target_x:uint;
 		private var target_y:uint;
@@ -48,6 +49,8 @@ package engine.world.objects
 			view.x = 5120* Math.random();
 			view.y = 5120* Math.random();
 			execute(new CmdStand(this));
+			
+			asynAstar = new AsynBiHeapAstar();
 		}
 		/**
 		 * 创建辅助线程 
@@ -114,7 +117,9 @@ package engine.world.objects
 			{
 				mCmdThreads[i].update(delta);
 			}
+			asynAstar.update(delta);
 			view.update(delta);
+			
 		}
 		
 		public function destroy():void
