@@ -22,6 +22,7 @@ package components.map.wayfinding.astar
 		private var _endNode:Node;
 		
 		private var _minCostNode:Node;
+		private var _startLoop:Boolean = false;
 		
 		private var _heuristic:Function = diagonal;
 		
@@ -30,11 +31,11 @@ package components.map.wayfinding.astar
 		
 		public function AsynBiHeapAstar()
 		{
-			
 		}
 		
 		public function analyze(navData:Vector.<uint>, row:uint, column:uint):void
 		{
+			_mapData = new GridTypeMapData();
 			_mapData.initialize(navData,row,column);
 		}
 		
@@ -47,7 +48,7 @@ package components.map.wayfinding.astar
 			_startNode.h = _heuristic(_startNode);
 			_startNode.f = _startNode.g + _startNode.h;
 			
-			_openList = new MinHeap(100000);
+			_openList = new MinHeap(10000);
 			//			_closedList = new Vector.<Node>();
 			_closeDic = new Dictionary();
 			
@@ -57,16 +58,21 @@ package components.map.wayfinding.astar
 			{
 				return false;
 			}
-			_minCostNode = _startNode;
 			if(!_endNode.walkable) 
 			{
 				return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
 			}
-			return false;
+			_minCostNode = _startNode;
+			
+			_startLoop = true;
+			
+			return true;
 		}
 		
 		public function update(delta:uint):void
 		{
+			if(!_startLoop) return;
+			trace("looping")
 			var timeout:Boolean =false;
 			var start:uint = getTimer();
 			while(_minCostNode != _endNode)
@@ -117,83 +123,25 @@ package components.map.wayfinding.astar
 				_closeDic[_minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
 				if(!_openList.size) 
 				{
+					_startLoop = false;
+					trace("no path");
 					//return false;//no path found
 				}
 				
 				_minCostNode = _openList.Dequeue() as Node;
-				if(getTimer() - start > 5)
+				if(getTimer() - start > 2)
 				{
 					timeout = true;
+					trace("time out")
 					break;
 				}
 			}//end while
 			
 			if(!timeout)
 			{
+				_startLoop = false;
 				buildPath();
 			}
-		}
-		
-		private function search():Boolean
-		{
-			var start:uint = getTimer()
-			//			trace("开始寻路",getTimer());
-			if(_startNode == _endNode) return false;
-			_minCostNode = _startNode;
-			if(!_endNode.walkable) return false;//由于地图过大，试图寻路到不可达区域将会严重耗时
-			while(_minCostNode != _endNode)
-			{
-				var neerNode:Node;
-				var x:int,y:int;
-				for(var dx:int=-1;dx<=1;++dx)
-				{
-					x = _minCostNode.x + dx;
-					for(var dy:int=-1;dy<=1;++dy)
-					{
-						y=_minCostNode.y+dy;
-						neerNode = _mapData.getNode(x,y);
-						if(!neerNode) continue;
-						if(neerNode == _minCostNode) continue;
-						if(!neerNode.walkable) continue;
-						var selfCost:Number = _diagCost;
-						if(_minCostNode.x == x || _minCostNode.y == y)
-						{
-							selfCost = _straightCost;
-						}
-						var gSum:Number = _minCostNode.g + selfCost //* neerNode.costMultiply;
-						var h:Number = _heuristic(neerNode);
-						var f:Number = gSum + h;
-						//						if(_openList.hasItem(neerNode) || (_closedList.indexOf(neerNode)>-1))
-						if((_openList.hasItem(neerNode)) || _closeDic[neerNode] != null)
-						{
-							if(neerNode.f > f)
-							{
-								neerNode.f = f;
-								neerNode.g = gSum;
-								neerNode.h = h;
-								neerNode.parent = _minCostNode;
-							}
-						}
-						else
-						{
-							neerNode.f = f;
-							neerNode.g = gSum;
-							neerNode.h = h;
-							neerNode.parent = _minCostNode;
-							_openList.Enqueue(neerNode);
-						}//end if
-					}//end for y
-				}//end for x
-				
-				//				_closedList.push(minCostNode);
-				_closeDic[_minCostNode] = true;//为了效率的考虑将关闭节点放入一个哈希表（Dictionary）中，通过对象作为键值来访问节点是否存在关闭节点中
-				if(!_openList.size) return false;//no path found
-				
-				_minCostNode = _openList.Dequeue() as Node;
-			}//end while
-			buildPath();
-			trace("寻路结束:",getTimer() - start + "ms");
-			return true;
 		}
 		
 		private function buildPath():void
