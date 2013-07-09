@@ -62,13 +62,13 @@ package components.map.piece
 			mGround.graphics.endFill();
 			
 			var pLoader:PswLoader = PswLoader.getSamePswLoader("piece");
-			var pieceItem:MapPiece;
+			var pieceItem:PieceFile;
 			for(var i:uint=0;i<row;++i)
 			{
 				for(var j:uint =0;j<column;++j)
 				{
 					var priority:Number = size*size/((j*size-focusX)*(j*size-focusX) + (i*size-focusY)*(i*size-focusY));
-					pieceItem = pLoader.add(mUrl+"/0"+i+"_0"+j,priority,PswLoader.TYPE_PIECE,".jpg") as MapPiece;
+					pieceItem = pLoader.add(mUrl+"/0"+i+"_0"+j,priority,PswLoader.TYPE_PIECE,".jpg") as PieceFile;
 					pieceItem.x = i*size;
 					pieceItem.y = j*size;
 					pieceItem.addEventListener(Event.COMPLETE,onPieceComplete);
@@ -80,7 +80,7 @@ package components.map.piece
 		
 		private function onPieceComplete(e:Event):void
 		{
-			var item:MapPiece = e.target as MapPiece;
+			var item:PieceFile = e.target as PieceFile;
 			item.removeEventListener(Event.COMPLETE,onPieceComplete);
 			var bmd:BitmapData = item.getContent() as BitmapData;
 			var bitmap:Bitmap = new Bitmap(bmd);

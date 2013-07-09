@@ -9,7 +9,7 @@ package components.pswloader
 	
 	import components.ds.heap.MaxHeap;
 	import components.interfaces.IDisposible;
-	import components.map.piece.MapPiece;
+	import components.map.piece.PieceFile;
 	import components.pswloader.BinaryFile;
 	import components.pswloader.File;
 	import components.pswloader.ImageFile;
@@ -61,7 +61,7 @@ package components.pswloader
 				binary: BinaryFile,
 				image:ImageFile,
 				json:JSONFile,
-				piece:MapPiece
+				piece:PieceFile
 			};
 		
 		public static const LOAD_FLAG_FINISHED:uint = 0;

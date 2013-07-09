@@ -7,12 +7,12 @@ package components.map.piece
 	 * @author Physwf
 	 * 
 	 */	
-	public class MapPiece extends ImageFile
+	public class PieceFile extends ImageFile
 	{
 		public var x:uint;//切片的x坐标
 		public var y:uint;//切片的y坐标
 		
-		public function MapPiece(url:String, uid:String,...args)
+		public function PieceFile(url:String, uid:String,...args)
 		{
 			var postfix:String = args[0]?args[0]:".jpg";
 			mUrl = url+postfix;
