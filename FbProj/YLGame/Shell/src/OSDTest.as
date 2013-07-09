@@ -7,8 +7,8 @@ package
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.character.CharacterAnimation;
-	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.character.enums.CharacterAction;
+	import components.character.enums.ISODirection;
 	
 	[SWF(width="1900",height="1000",frameRate="60", backgroundColor="#0")]
 	public class OSDTest extends Sprite

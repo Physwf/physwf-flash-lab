@@ -10,13 +10,13 @@ package
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.character.CharacterAnimation;
-	import components.character.enum.AvatarConfig;
-	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.character.enums.AvatarConfig;
+	import components.character.enums.CharacterAction;
+	import components.character.enums.ISODirection;
 	import components.effect.Effect;
 	import components.effect.EffectConfig;
 	import components.map.MapView;
-	import components.map.piece.PieceGroundLoader;
+	import components.map.piece.PieceLoader;
 	import components.utils.Stats;
 	
 	import engine.world.objects.Map;
@@ -31,7 +31,7 @@ package
 		
 		public function Shell()
 		{
-			skeletonTest();
+			//skeletonTest();
 			//mapTest();
 //			mapTest2();
 			
@@ -40,7 +40,7 @@ package
 			
 //			OSDTest();
 //			multiTest();
-//			loadMain();
+			loadMain();
 			var b:ByteArray = new ByteArray();
 			b[0] = 1;
 			trace(1<<0)
@@ -107,7 +107,7 @@ package
 		private function mapTest():void
 		{
 			var mapView:MapView = new MapView();
-			var pgLoader:PieceGroundLoader = PieceGroundLoader.create("cdn_n/assets/maps/10001",mapView.bottom);
+			var pgLoader:PieceLoader = PieceLoader.create("cdn_n/assets/maps/10001",mapView.bottom);
 			pgLoader.load();
 			addChild(mapView);
 		}

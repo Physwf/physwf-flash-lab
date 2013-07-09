@@ -7,8 +7,8 @@ package
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.character.CharacterAnimation;
-	import components.character.enum.CharacterAction;
-	import components.character.enum.ISODirection;
+	import components.character.enums.CharacterAction;
+	import components.character.enums.ISODirection;
 	
 	[SWF(width="1900",height="1000",frameRate="30", backgroundColor="#0")]
 	public class MultiTest extends Sprite
@@ -27,7 +27,7 @@ package
 			mCharas = new Vector.<CharacterAnimation>();
 			var nude:SkeletonLoader = SkeletonLoader.getSameSkeletonLoader("cdn_n/assets/armor/10_00001");
 			
-			for(var i:uint = 0; i< 500; i++)
+			for(var i:uint = 0; i< 1000; i++)
 			{
 				var chara:CharacterAnimation = new CharacterAnimation();
 				
@@ -38,7 +38,7 @@ package
 				chara.body.changeWear(0,nude);
 				
 				//				chara.body.setDepths(AvatarConfig.direct2depths[i]);
-				if(Math.random() > 0.6) 
+				if(Math.random() > 0.8) 
 				{
 					chara.x = Math.random() * stage.stageWidth
 					chara.y = Math.random() * stage.stageHeight;

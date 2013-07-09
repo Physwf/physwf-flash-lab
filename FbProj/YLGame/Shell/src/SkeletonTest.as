@@ -7,8 +7,8 @@ package
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.character.CharacterAnimation;
-	import components.character.enum.AvatarConfig;
-	import components.character.enum.CharacterAction;
+	import components.character.enums.AvatarConfig;
+	import components.character.enums.CharacterAction;
 	
 	[SWF(width="1000",height="600",frameRate="30", backgroundColor="#0")]
 	public class SkeletonTest extends Sprite
