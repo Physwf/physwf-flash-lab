@@ -128,7 +128,7 @@ package components.map.wayfinding.astar
 				}
 				
 				_minCostNode = _openList.Dequeue() as Node;
-				if(getTimer() - start > 3)
+				if(getTimer() - start > 5)
 				{
 					timeout = true;
 //					trace("time out")
