@@ -11,7 +11,7 @@ package components.map.piece
 	import components.pswloader.PswLoader;
 	import components.resource.ResourceCache;
 	
-	public class PieceGroundLoader extends ResourceCache
+	public class PieceLoader extends ResourceCache
 	{
 		public static const KEY:String = "key";
 		public static const COMPLETE:String = "complete";
@@ -25,16 +25,16 @@ package components.map.piece
 		
 		private var mPieces:Vector.<BitmapData>;
 		
-		public function PieceGroundLoader(url:String,ground:Sprite)
+		public function PieceLoader(url:String,ground:Sprite)
 		{
 			mUrl = url;
 			mGround = ground;
 			mPieces = new Vector.<BitmapData>();
 		}
 		
-		public static function create(url:String,ground:Sprite):PieceGroundLoader
+		public static function create(url:String,ground:Sprite):PieceLoader
 		{
-			var loader:PieceGroundLoader = new PieceGroundLoader(url,ground);
+			var loader:PieceLoader = new PieceLoader(url,ground);
 			loader.incRefCount();
 			return loader;
 		}
