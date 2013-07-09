@@ -1,4 +1,4 @@
-package components.map.stage3d
+package components.map.gpu
 {
 	import flash.display.BitmapData;
 	import flash.display3D.Context3D;

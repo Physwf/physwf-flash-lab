@@ -1,4 +1,4 @@
-package components.map.stage3d
+package components.map.gpu
 {
 	import com.adobe.utils.AGALMiniAssembler;
 	import com.adobe.utils.PerspectiveMatrix3D;
