@@ -55,6 +55,7 @@
     <classEntry path="components.map.gpu.Environment"/>
     <classEntry path="com.adobe.utils.AGALMiniAssembler"/>
     <classEntry path="com.adobe.utils.PerspectiveMatrix3D"/>
+    <classEntry path="components.map.piece.GPUPieceLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

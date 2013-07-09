@@ -46,13 +46,9 @@ package components.map.gpu
 			mVertexBuffer.uploadFromVector(vertexData,0,4);
 			mIndexBuffer.uploadFromVector(indexData,0,6);
 			
-			context3D.setVertexBufferAt(0,mVertexBuffer,0,Context3DVertexBufferFormat.FLOAT_2);
-			context3D.setVertexBufferAt(1,mVertexBuffer,3,Context3DVertexBufferFormat.FLOAT_2);
-			
 			mTexture = context3D.createTexture(mWidth,mHeight,Context3DTextureFormat.BGRA,false);
 			var c:uint = 0xFFFFFFFF * Math.random();
 			mTexture.uploadFromBitmapData(new BitmapData(mWidth,mHeight,true,c),0);
-//			context3D.setTextureAt(0,mTexture);
 		}
 		
 		public function uploadTexture(source:BitmapData):void
@@ -64,7 +60,8 @@ package components.map.gpu
 		{
 			var context3D:Context3D = Environment.context3D;
 			context3D.setTextureAt(0,mTexture);
-//			context3D.setProgram(Environment.program);
+			context3D.setVertexBufferAt(0,mVertexBuffer,0,Context3DVertexBufferFormat.FLOAT_2);
+			context3D.setVertexBufferAt(1,mVertexBuffer,3,Context3DVertexBufferFormat.FLOAT_2);
 			context3D.drawTriangles(mIndexBuffer);
 		}
 	}
