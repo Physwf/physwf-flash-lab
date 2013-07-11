@@ -80,6 +80,13 @@ package components.map.wayfinding.astar
 						{
 							selfCost = _straightCost;
 						}
+						// else 分支 过滤斜对角穿墙的问题
+						else// 如果相邻点是对角的
+						{
+							// 如果 正交点都为不可行走区域 则跳过
+							if(!_mapData.getNode(x-dx,y).walkable) continue;
+							if(!_mapData.getNode(x,y-dy).walkable) continue;
+						}
 						var gSum:Number = minCostNode.g + selfCost //* neerNode.costMultiply;
 						var h:Number = _heuristic(neerNode);
 						var f:Number = gSum + h;
