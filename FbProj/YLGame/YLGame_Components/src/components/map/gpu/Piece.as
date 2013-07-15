@@ -11,7 +11,9 @@ package components.map.gpu
 	public class Piece
 	{
 		private var mX:int;
+		public function get x():int { return mX; }
 		private var mY:int;
+		public function get y():int { return mY; }
 		private var mWidth:uint;
 		private var mHeight:uint;
 		

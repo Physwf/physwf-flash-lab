@@ -91,6 +91,7 @@ package components.map.wayfinding.astar
 					var weightY:Number = _ey - _sy;
 					_length = Math.sqrt(weightX*weightX+weightY*weightY);
 				}
+				_direcRad = Math.atan2(_ey - _sy,_ex - _sx);//有八个可能值
 				_lenInvalide = false;
 			}
 			return _length;

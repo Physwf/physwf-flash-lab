@@ -10,6 +10,7 @@ package components.map.gpu
 	import flash.display3D.Program3D;
 	import flash.events.Event;
 	import flash.geom.Matrix3D;
+	import flash.geom.Rectangle;
 
 	public class Environment
 	{
@@ -18,6 +19,7 @@ package components.map.gpu
 		public static var program:Program3D;
 		
 		private static var pieces:Vector.<Piece>;
+		private static var drawPieces:Vector.<Piece>;
 		
 		public function Environment()
 		{
@@ -82,12 +84,35 @@ package components.map.gpu
 			pieces.push(piece);
 		}
 		
+		public static function rebuild(viewport:Rectangle):void
+		{
+			drawPieces = new Vector.<Piece>();
+			for(var i:uint=0;i<pieces.length;++i)
+			{
+				if(viewport.contains(pieces[i].x,pieces[i].y))
+				{
+					drawPieces.push(pieces[i]);
+				}
+			}
+		}
+		
+		public static function addDrawPiece(piece:Piece):void
+		{
+			drawPieces.push(piece);
+		}
+		
+		private static var done:Boolean = false;
 		public static function render():void
 		{
+			if(done) return;
 			context3D.clear(0,0,0,1);
 			for(var i:uint=0;i<pieces.length;++i)
 			{
 				pieces[i].render();
+			}
+			if(pieces.length == 100)
+			{
+				done = true;
 			}
 			context3D.present();
 		}

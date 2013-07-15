@@ -164,6 +164,42 @@ package components.map.wayfinding.astar
 					if(len-i<2) break;
 				}
 			}
+			
+			i = 1;
+			while(i<_pathLine.length)
+			{
+				var sx:Number = _pathLine[i-1].sx / GridTypeMapData.GRID_SIZE;
+				var sy:Number = _pathLine[i-1].sy / GridTypeMapData.GRID_SIZE;
+				var ex:Number = _pathLine[i].ex / GridTypeMapData.GRID_SIZE;
+				var ey:Number = _pathLine[i].ey / GridTypeMapData.GRID_SIZE;
+				var dx:int = ex - sx;
+				var dy:int = ey - sy;
+				len = Math.max(Math.abs(dx),Math.abs(dy));
+				var stepX:Number = dx / len;
+				var stepY:Number = dy / len;
+				var block:Boolean = false;
+				for(var j:uint=1;j<len-1;++j)
+				{
+					var x:uint = Math.floor(sx+stepX * j);
+					var y:uint = Math.floor(sy+stepY * j);
+					if(!_mapData.getNode(x,y).walkable)
+					{
+						block = true;
+						break;
+					}
+				}
+				if(block)
+				{
+					i++;
+				}
+				else
+				{
+					_pathLine[i].sx = _pathLine[i-1].sx;
+					_pathLine[i].sy = _pathLine[i-1].sy;
+					_pathLine.splice(i-1,1);
+				}
+				
+			}
 		}
 		
 		private function manhattan(node:Node):Number

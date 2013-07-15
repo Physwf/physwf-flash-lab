@@ -1,8 +1,6 @@
 package components.map.data
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObjectContainer;
 	import flash.geom.Point;
 	
 	import components.map.wayfinding.astar.ISOCoordUtils;

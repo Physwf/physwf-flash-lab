@@ -8,6 +8,7 @@ package engine.common.command
 	import components.map.wayfinding.astar.Line;
 	import components.map.wayfinding.astar.PathUtils;
 	
+	import engine.Engine;
 	import engine.world.objects.Character;
 	
 	/**
@@ -46,11 +47,21 @@ package engine.common.command
 			{
 				pathLine = Character.astar.getPathLine();
 				
-				avrgRad = PathUtils.calAverDirec2(pathLine);
+				Engine.map.view.upperEffect.graphics.clear();
+				Engine.map.view.upperEffect.graphics.lineStyle(1,0xFF0000);
+				for(var i:uint=0;i<pathLine.length;++i)
+				{
+					Engine.map.view.upperEffect.graphics.moveTo(pathLine[i].sx,pathLine[i].sy);
+					Engine.map.view.upperEffect.graphics.lineTo(pathLine[i].ex,pathLine[i].ey);
+				}
+				
 				line = pathLine.shift();
 				mChara.run();
-				mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
+				mChara.view.direction = ISODirection.radianToDirect8(line.directRad);
+				
+				
 			}
+			
 			return;
 			mChara.asynAstar.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
@@ -82,16 +93,11 @@ package engine.common.command
 				{
 					remainSpeed = dist - line.length;
 					
-					if(pathLine.length>3)
-					{
-						avrgRad = PathUtils.calAverDirec2(pathLine);
-						mChara.view.direction = ISODirection.radianToDirect8(avrgRad);
-					}
-					
 					if(pathLine.length)
 					{
 						line = pathLine.shift();
 						line.subLen(remainSpeed);
+						mChara.view.direction = ISODirection.radianToDirect8(line.directRad);
 					}
 					else
 					{
