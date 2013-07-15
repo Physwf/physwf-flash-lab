@@ -1,9 +1,9 @@
 package components.map.camera
 {
-	import components.map.MapView;
-	
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
+	
+	import components.map.MapView;
 	
 	public class Camera
 	{
@@ -20,10 +20,12 @@ package components.map.camera
 		private var mX:uint=0;
 		private var mY:uint=0;
 		
+		private var percentX:Number = .5;
+		
 		public function Camera(viewport:Rectangle)
 		{
 			mViewprot = viewport;
-			mFocus = new Rectangle(viewport.width * .3,viewport.height * .3,viewport.width * .4,viewport.height * .4);
+			mFocus = new Rectangle(viewport.width * percentX,viewport.height * percentX,viewport.width * (1-2*percentX),viewport.height * (1-2*percentX));
 			sHalfW = mViewprot.width * .5;
 			sHalfH = mViewprot.height * .5;
 			sHelpW = mFocus.width * .5;
@@ -52,8 +54,8 @@ package components.map.camera
 			{
 				mViewprot.x = x;
 				mViewprot.y = y;
-				mFocus.x = mViewprot.width  * .3 + x;
-				mFocus.y = mViewprot.height * .3 + y;
+				mFocus.x = mViewprot.width  * percentX + x;
+				mFocus.y = mViewprot.height * percentX + y;
 //				mMap.scrollRect = mViewprot;  //scrollRect方法太低效了
 				mMap.x = -x;
 				mMap.y = -y;
