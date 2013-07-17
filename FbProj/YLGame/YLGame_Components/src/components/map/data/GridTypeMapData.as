@@ -13,7 +13,7 @@ package components.map.data
 	 */	
 	public class GridTypeMapData
 	{
-		public static const GRID_SIZE:uint = 10;
+		public static const GRID_SIZE:uint = 32;
 		
 		private var _startNode:Node;
 		private var _endNode:Node;

@@ -119,7 +119,7 @@ package components.map.wayfinding.astar
 				minCostNode = _openList.Dequeue() as Node;
 			}//end while
 			buildPath();
-			trace("寻路结束:",getTimer() - start + "ms");
+			trace("Astar寻路:",getTimer() - start + "ms");
 			return true;
 		}
 		
