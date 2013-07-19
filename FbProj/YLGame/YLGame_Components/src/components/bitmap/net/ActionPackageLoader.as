@@ -6,6 +6,7 @@ package components.bitmap.net
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 	
 	import components.bitmap.display.BitmapFrame;
 	import components.pswloader.BinaryFile;
@@ -73,7 +74,9 @@ package components.bitmap.net
 			{
 				mLoadStatus = LOAD_FLAG_LOADING;
 			}
-			loadPackage();
+			//loadPackage();
+			loadJSON();
+			loadImage();
 		}
 		
 		private function loadPackage():void
@@ -116,6 +119,7 @@ package components.bitmap.net
 		
 		private function onPackComplete(e:Event):void
 		{
+			trace(name+" start:"+getTimer());
 			var packFile:BinaryFile = e.target as BinaryFile;
 			var packData:ByteArray = packFile.getContent();
 			packData.position = 0;
@@ -137,28 +141,32 @@ package components.bitmap.net
 				actionPackage[dir][index].x = x;
 				actionPackage[dir][index].y = y;
 			}
+			trace(name+" complete:"+getTimer());
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function onAllCompete():void
 		{
 			if(!mData || !mSprite) return;
+			trace(name+" start:"+getTimer());
 			var frames:Array = mData.frames;
+			var indexs:Vector.<int> = new Vector.<int>(5,true);
 			for each(var frame:Object in frames)
 			{
 				var fName:String = frame.filename;
 				var nameArr:Array = fName.split("/");
-				var dir:int = uint(nameArr[0])
+				var dir:int = uint(nameArr[0]);
 				var bitmapFrame:BitmapFrame = new BitmapFrame();
 				bitmapFrame.x = frame.sourceSize.w/2 - frame.spriteSourceSize.x;
 				bitmapFrame.y = - frame.spriteSourceSize.y;
 				var bmd:BitmapData = new BitmapData(frame.frame.w,frame.frame.h,true,0);
 				bmd.copyPixels(mSprite,new Rectangle(frame.frame.x,frame.frame.y,frame.frame.w,frame.frame.h),new Point());
 				bitmapFrame.bitmapData = bmd;
-				actionPackage[dir].push(bitmapFrame);
+				var i:int = indexs[dir]++;
+				actionPackage[dir][i] = bitmapFrame;
 			}
-			mSprite.dispose();//to do 销毁大对象
-			
+			//mSprite.dispose();//to do 销毁大对象
+			trace(name+" complete:"+getTimer());
 			mLoadStatus = LOAD_FLAG_YES;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
