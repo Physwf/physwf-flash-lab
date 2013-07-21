@@ -80,7 +80,7 @@ package components.bitmap.net
 				_loadFlag = LOAD_FLAG_LOADING;
 			}
 			var pLoader:PswLoader = PswLoader.getSamePswLoader("skeleton");
-			var keyFile:BinaryFile = pLoader.add(_url+"/key.swf",1,PswLoader.TYPE_BINARY)  as BinaryFile;
+			var keyFile:BinaryFile = pLoader.add(_url+"/key.swf",PswLoader.PRIORITY_SKELETON,PswLoader.TYPE_BINARY)  as BinaryFile;
 			keyFile.addEventListener(Event.COMPLETE,onKeyComplete);
 			pLoader.start();
 		}

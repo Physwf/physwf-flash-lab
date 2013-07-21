@@ -28,6 +28,9 @@ package components.pswloader
 		
 		public static const PRIORITY_DEFAULT:Number = 5;
 		
+		public static const PRIORITY_MAP:Number = 1.0;
+		public static const PRIORITY_SKELETON:Number = 2.0;
+		
 		private static var _allLoaders:Object = {};//所有的PswLoader实例
 		private static var _numInstance:uint;//实例数
 		private static var _itemPrioList:MaxHeap = new MaxHeap(200);//优先加载队列，所有PswLoader实例共享
@@ -165,7 +168,6 @@ package components.pswloader
 			item.removeEventListener(Event.COMPLETE,onItemComplete);
 			if(mCache)
 				mContents[item.url] = item.getContent();
-			trace(item.url);
 			numConnection--;
 			mNumConnections --;
 			

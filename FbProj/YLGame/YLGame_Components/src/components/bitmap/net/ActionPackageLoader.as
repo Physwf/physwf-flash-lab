@@ -74,15 +74,16 @@ package components.bitmap.net
 			{
 				mLoadStatus = LOAD_FLAG_LOADING;
 			}
-			//loadPackage();
-			loadJSON();
-			loadImage();
+			trace("action start:"+getTimer());
+			loadPackage();
+//			loadJSON();
+//			loadImage();
 		}
 		
 		private function loadPackage():void
 		{
 			var pswLoader:PswLoader = PswLoader.getSamePswLoader("skeleton");
-			var packFile:BinaryFile = pswLoader.add(mURL+"/"+mName + ".swf",1,PswLoader.TYPE_BINARY) as BinaryFile;
+			var packFile:BinaryFile = pswLoader.add(mURL+"/"+mName + ".swf",PswLoader.PRIORITY_SKELETON,PswLoader.TYPE_BINARY) as BinaryFile;
 			packFile.addEventListener(Event.COMPLETE,onPackComplete);
 			pswLoader.start();
 		}
@@ -90,14 +91,14 @@ package components.bitmap.net
 		private function loadJSON():void
 		{
 			var pswLoader:PswLoader = PswLoader.getSamePswLoader("skeleton");
-			var jFile:JSONFile = pswLoader.add(mURL+"/"+mName + ".json",1,PswLoader.TYPE_JSON) as JSONFile;
+			var jFile:JSONFile = pswLoader.add(mURL+"/"+mName + ".json",PswLoader.PRIORITY_SKELETON,PswLoader.TYPE_JSON) as JSONFile;
 			jFile.addEventListener(Event.COMPLETE,onJSONComplete);
 		}
 		
 		private function loadImage():void
 		{
 			var pswLoader:PswLoader = PswLoader.getSamePswLoader("skeleton");
-			var iFile:ImageFile = pswLoader.add(mURL+"/"+mName + ".png",1,PswLoader.TYPE_IMAGE) as ImageFile;
+			var iFile:ImageFile = pswLoader.add(mURL+"/"+mName + ".png",PswLoader.PRIORITY_SKELETON,PswLoader.TYPE_IMAGE) as ImageFile;
 			iFile.addEventListener(Event.COMPLETE,onImageComplete);
 		}
 		
@@ -119,6 +120,7 @@ package components.bitmap.net
 		
 		private function onPackComplete(e:Event):void
 		{
+			trace("action complete:"+getTimer());
 			trace(name+" start:"+getTimer());
 			var packFile:BinaryFile = e.target as BinaryFile;
 			var packData:ByteArray = packFile.getContent();
@@ -148,6 +150,7 @@ package components.bitmap.net
 		private function onAllCompete():void
 		{
 			if(!mData || !mSprite) return;
+			trace("action complete:"+getTimer());
 			trace(name+" start:"+getTimer());
 			var frames:Array = mData.frames;
 			var indexs:Vector.<int> = new Vector.<int>(5,true);

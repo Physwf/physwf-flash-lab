@@ -2,6 +2,7 @@ package components.character
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.utils.getTimer;
 	
 	import components.bitmap.net.SkeletonLoader;
 	import components.interfaces.IAnimation;
@@ -34,8 +35,10 @@ package components.character
 			skeleton.addEventListener(Event.COMPLETE,
 				function(e:Event):void 
 				{ 
+					trace("skeleton complete:",getTimer() - start);
 					mElements[id].display.currentFrame = mElements[0].display.currentFrame;
 				});
+			var start:uint = getTimer();
 			skeleton.load();
 		}
 		
