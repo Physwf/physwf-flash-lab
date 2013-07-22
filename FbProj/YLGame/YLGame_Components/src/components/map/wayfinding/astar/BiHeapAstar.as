@@ -33,7 +33,7 @@ package components.map.wayfinding.astar
 			_mapData = new GridTypeMapData();
 		}
 		
-		public function analyze(navData:Vector.<uint>,row:uint,column:uint):void
+		public function analyze(navData:Vector.<int>,row:uint,column:uint):void
 		{
 			_mapData.initialize(navData,row,column);
 		}

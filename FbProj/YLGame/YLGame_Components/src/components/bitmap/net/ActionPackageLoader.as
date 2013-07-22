@@ -74,10 +74,10 @@ package components.bitmap.net
 			{
 				mLoadStatus = LOAD_FLAG_LOADING;
 			}
-			trace("action start:"+getTimer());
-			loadPackage();
-//			loadJSON();
-//			loadImage();
+			trace("action load start:"+getTimer());
+//			loadPackage();
+			loadJSON();
+			loadImage();
 		}
 		
 		private function loadPackage():void
@@ -120,8 +120,8 @@ package components.bitmap.net
 		
 		private function onPackComplete(e:Event):void
 		{
-			trace("action complete:"+getTimer());
-			trace(name+" start:"+getTimer());
+			trace("action load complete:"+getTimer());
+			var start:uint = getTimer();
 			var packFile:BinaryFile = e.target as BinaryFile;
 			var packData:ByteArray = packFile.getContent();
 			packData.position = 0;
@@ -143,15 +143,15 @@ package components.bitmap.net
 				actionPackage[dir][index].x = x;
 				actionPackage[dir][index].y = y;
 			}
-			trace(name+" complete:"+getTimer());
+			trace(name+" parse complete:",getTimer()-start);
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function onAllCompete():void
 		{
 			if(!mData || !mSprite) return;
-			trace("action complete:"+getTimer());
-			trace(name+" start:"+getTimer());
+			trace("action load complete:"+getTimer());
+			var start:uint = getTimer();
 			var frames:Array = mData.frames;
 			var indexs:Vector.<int> = new Vector.<int>(5,true);
 			for each(var frame:Object in frames)
@@ -169,7 +169,7 @@ package components.bitmap.net
 				actionPackage[dir][i] = bitmapFrame;
 			}
 			//mSprite.dispose();//to do 销毁大对象
-			trace(name+" complete:"+getTimer());
+			trace(name+" parse complete:",getTimer()-start);
 			mLoadStatus = LOAD_FLAG_YES;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}

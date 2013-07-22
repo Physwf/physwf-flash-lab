@@ -10,7 +10,7 @@ package components.map.wayfinding.astar
 	 */
 	public interface IAstar 
 	{
-		function analyze(navData:Vector.<uint>,row:uint,column:uint):void;
+		function analyze(navData:Vector.<int>,row:uint,column:uint):void;
 		/**
 		 * 尝试在起点和终点之间寻到一条道路 
 		 * @param sx

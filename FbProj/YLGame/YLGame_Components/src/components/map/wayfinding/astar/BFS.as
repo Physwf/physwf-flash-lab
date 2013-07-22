@@ -21,7 +21,7 @@ package components.map.wayfinding.astar
 			_mapData = new GridTypeMapData();
 		}
 		
-		public function analyze(navData:Vector.<uint>,row:uint,column:uint):void
+		public function analyze(navData:Vector.<int>,row:uint,column:uint):void
 		{
 			_mapData.initialize(navData,row,column);
 		}
@@ -55,19 +55,25 @@ package components.map.wayfinding.astar
 					{
 						y = testNode.y+dy;
 						neighbor = _mapData.getNode(x,y);
-						if(!neighbor) continue;
-						if(!neighbor.walkable) continue;
 						if(testedNodes[neighbor]) continue;
 						testedNodes[neighbor] = true;
+						if(!neighbor) continue;
+						if(!neighbor.walkable) continue;
+						
+						if(testNode.x != x && testNode.y != y)
+						{
+							if(!_mapData.getNode(x-dx,y).walkable && !_mapData.getNode(x,y-dy).walkable) continue;
+						}
 						neighbor.parent = testNode;
 						neighbor.f = i;
 						if(neighbor == _endNode)
 						{
+							trace("BFS寻路,找到终点:",getTimer() - start + "ms");
+							start = getTimer();
 							buildPath();
-							trace("BFS寻路:",getTimer() - start + "ms");
+							trace("BFS寻路,建立路径:",getTimer() - start + "ms");
 							return true;
 						}
-						
 						queue.Enqueue(neighbor);
 					}
 				}
@@ -113,7 +119,6 @@ package components.map.wayfinding.astar
 					if(len-i<2) break;
 				}
 			}
-			
 			i = 1;
 			while(i<_pathLine.length)
 			{

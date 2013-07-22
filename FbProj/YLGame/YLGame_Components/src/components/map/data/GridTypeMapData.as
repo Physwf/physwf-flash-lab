@@ -28,10 +28,21 @@ package components.map.data
 		{
 		}
 		
-		public function initialize(navData:Vector.<uint>,numNodeX:uint,numNodeY:uint):void
+		public function initialize(navData:Vector.<int>,numNodeX:uint,numNodeY:uint):void
 		{
 			_numNodeX = numNodeX;
 			_numNodeY = numNodeY;
+			_nodeList = new Vector.<Vector.<Node>>(_numNodeX,true);
+			for(x=0;x<_numNodeX;++x)
+			{
+				_nodeList[x] = new Vector.<Node>(_numNodeY,true);
+				for(y =0;y<_numNodeY;++y)
+				{
+					_nodeList[x][y] = new Node(x, y);
+					_nodeList[x][y].type = navData[y*numNodeX+x] > 0 ? 0 : 1;
+				}
+			}
+			return;
 			var max:Point = ISOCoordUtils.screenToGame(numNodeY,numNodeX);
 			var canvas:BitmapData = new BitmapData(max.y, max.y,true,0 );
 			for(var x:uint=0;x<numNodeX;++x)
