@@ -75,9 +75,9 @@ package components.bitmap.net
 				mLoadStatus = LOAD_FLAG_LOADING;
 			}
 			trace("action load start:"+getTimer());
-//			loadPackage();
-			loadJSON();
-			loadImage();
+			loadPackage();
+//			loadJSON();
+//			loadImage();
 		}
 		
 		private function loadPackage():void
@@ -104,6 +104,7 @@ package components.bitmap.net
 		
 		private function onJSONComplete(e:Event):void
 		{
+			trace("jasn load complete:"+getTimer());
 			var jFile:JSONFile = e.target as JSONFile;
 			jFile.removeEventListener(Event.COMPLETE,onJSONComplete);
 			mData = jFile.getContent();
@@ -112,6 +113,7 @@ package components.bitmap.net
 		
 		private function onImageComplete(e:Event):void
 		{
+			trace("png load complete:"+getTimer());
 			var iFile:ImageFile = e.target as ImageFile;
 			iFile.removeEventListener(Event.COMPLETE,onImageComplete);
 			mSprite = iFile.getContent();
@@ -120,7 +122,7 @@ package components.bitmap.net
 		
 		private function onPackComplete(e:Event):void
 		{
-			trace("action load complete:"+getTimer());
+			trace("binary load complete:"+getTimer());
 			var start:uint = getTimer();
 			var packFile:BinaryFile = e.target as BinaryFile;
 			var packData:ByteArray = packFile.getContent();
@@ -143,14 +145,14 @@ package components.bitmap.net
 				actionPackage[dir][index].x = x;
 				actionPackage[dir][index].y = y;
 			}
-			trace(name+" parse complete:",getTimer()-start);
+			trace(name+" binary parse complete:",getTimer()-start);
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		private function onAllCompete():void
 		{
 			if(!mData || !mSprite) return;
-			trace("action load complete:"+getTimer());
+			trace("all load complete:"+getTimer());
 			var start:uint = getTimer();
 			var frames:Array = mData.frames;
 			var indexs:Vector.<int> = new Vector.<int>(5,true);
@@ -169,7 +171,7 @@ package components.bitmap.net
 				actionPackage[dir][i] = bitmapFrame;
 			}
 			//mSprite.dispose();//to do 销毁大对象
-			trace(name+" parse complete:",getTimer()-start);
+			trace(name+" png parse complete:",getTimer()-start);
 			mLoadStatus = LOAD_FLAG_YES;
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
